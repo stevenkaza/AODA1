@@ -1,8 +1,12 @@
 #include "vcutil.h"
-
+/*Pre assumption:
+	Assume vcf and filep are not NULL */ 
 VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
 {
-
+ 	filep->ncards = 0; 
+	filep->cardp = NULL;
+	
+	/*Now we have to figure out what we do with each vcard and the flow of the program */ 
 
 }
 
