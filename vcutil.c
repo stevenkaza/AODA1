@@ -21,9 +21,9 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
 
         filep->ncards = 0;
         filep->cardp = NULL;
-        VcStatus newStatus = NULL;
+        VcStatus newStatus;
+	newStatus  = NULL;
 
-        newStatus = malloc(sizeof(VcStatus));
 
         if (vcf==NULL)
         {
@@ -31,7 +31,7 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
                 newStatus->code =  IOERR;
         }
 
-        newStatus->code = readVcard(vcf,filep->card);
+        newStatus.code = readVcard(vcf,filep->cardp);
 
         return newStatus;
 
@@ -54,7 +54,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 {
     char buff[1000];
     if (vcf==NULL)
-        VcStatus->code = IOERR; 
+        VcStatus.code = IOERR; 
      /*Checks for begin, and version  */ 
 
     getUnfolded(vcf,&buff);
@@ -66,7 +66,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     /* For each line in the vcard, unfold */ 
     int position; 
     char lineAhead[100];
-    while(fgets(buff,75,fp)!=NULL)
+    while(fgets(buff,75,vcf)!=NULL)
     {
       position = Contains(buff,'\r');
       /*CRLF CHECKING Part1: CR Check */
@@ -84,7 +84,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
         
       }
         /* Grabbing the next line and appending it to buff */ 
-        fgets(lineAhead,100,fp);
+        fgets(lineAhead,100,vcf);
         strncat(buff,lineAhead,strlen(lineAhead));
 
     }
