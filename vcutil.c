@@ -81,6 +81,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
         }
         position = Contains(buff,'\r');
         
+        
       }
         /* Grabbing the next line and appending it to buff */ 
         fgets(lineAhead,100,fp);
