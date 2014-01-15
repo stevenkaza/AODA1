@@ -4,7 +4,8 @@
 int main()
 {
 
-	FILE * vcf = fopen("vCard.vcf","r"); 
+	FILE * vcf = fopen("samples-10.vcf","r"); 
+	VcStatus newStatus; 
 	if (vcf==NULL)
 	    return 1; 
 	
@@ -12,8 +13,12 @@ int main()
          VcFile * filep = NULL;
 	 filep = malloc(sizeof(VcFile)); 
 	 
-	 readVcFile(vcf,filep);
+	 newStatus = readVcFile(vcf,filep);
+	 if (newStatus.code == OK)
+	 	printf("Success \n");
+	 else
+	 	printf("No way. Problem \n");
 
-
+	return 0; 
 
 }

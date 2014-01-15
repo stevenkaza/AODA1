@@ -32,6 +32,10 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
         }
 
         newStatus = readVcard(vcf,filep->cardp);
+        if (newStatus.code == OK)
+            printf("File was parsed \n");
+        else
+            printf("Houston, we have a problem \n");
 
         return newStatus;
 
@@ -60,40 +64,65 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
      /*Checks for begin, and version  */ 
     while (buff!=NULL)
     {
-        getUnfolded(vcf,&buff);
+        newStatus=getUnfolded(vcf,&buff);
+        if (newStatus.code == OK)
+        {
+            /*Send the buff for parsing */
+            printf("Parsing Buffer \n"); 
+            return newStatus;
+        }
+        else if (newStatus.code == BEGEND)
+            printf("Beggining not found \n");
+            return newStatus;
     }
 
 }
 
 VcStatus getUnfolded ( FILE * const vcf, char **const buff )
 {
-    /* For each line in the vcard, unfold */ 
+    /* For each line in the vcard, unfold */
+    /*Its only returning the line that begins with the whitespace.... Why? */ \.
+    /* Should only assign to the buff once it has been unfolded */ 
     int position; 
-    char lineAhead[100];
+    char lineAhead[30];
     VcStatus newStatus; 
+    FILE * copy; 
     *buff = (char*)calloc(75,sizeof(char));
     while(fgets(*buff,75,vcf)!=NULL)
     {
+      position=0;
+      /*Checking to see if the line has a CR */ 
       position = Contains(*buff,'\r');
       /*CRLF CHECKING Part1: CR Check */
-      printf("%s\n",*buff);
+      while (position>0)
       {
         /*CRLF CHECKING Part 2: LF check */ 
         if (checkPosition(*buff,position)==1)
         {
-            /*This means the current line has the end in it */ 
-            return newStatus; 
+            fgets(lineAhead,30,vcf);
+            if (lineAhead[0]==' ')
+            {
+                removeSpaces(lineAhead);
+                strncat(*buff,lineAhead,strlen(lineAhead));
+                printf("%s\n",*buff);
+                return newStatus;
+            }
         }
-        position = Contains(*buff,'\r');
-        
+        /*Scans untill a folded line is reached */ 
+        /* If it does, return the folded line */ 
+        /* Otherwise scan the entire file 
+        / * Buffer must contain the files next unfolded line line with trailing EOL removed, Caller is responsible
+        / * To free Buff. VcStatus is   OK and indicates the lines that were unfolded. and line no = 50 and = 100 read. Buff ignored in this case
+
         
       }
-        /* Grabbing the next line and appending it to buff */ 
+        /* Grabbing the next line and appending it to buff 
         fgets(lineAhead,100,vcf);
         strncat(*buff,lineAhead,strlen(lineAhead));
-
+    */ 
     }
     *buff = NULL;
+    return newStatus;
 
     
 
@@ -130,7 +159,32 @@ int Contains(char * string, char  pattern)
 int checkPosition(char * string, int position)
 {
     int i = 0; 
-    if (string[position+1] == '\n')
+    if ((string[position+1] == '\n'))// && (string[position+2]==' '))
+    {
         return 1; 
+    }
     return 0; 
+}
+
+
+void removeSpaces(char * string)  /*Function to remove spaces, found from  http://roseindia.net/c-tutorials/c-string-remove-spaces.shtml */ 
+{
+        
+
+  char *p1 = string;
+  char *p2 = string;
+  p1 = string;
+ while(*p1 != 0) 
+  {
+         
+  if(isspace(*p1)) /*if a space is found, rearange the pointers so the spaces are ignored */ 
+  {
+    ++p1;
+  }
+  else
+   *p2++ = *p1++; 
+  }
+  *p2 = 0; 
+
+
 }
