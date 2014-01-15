@@ -58,8 +58,10 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
     if (vcf==NULL)
         newStatus.code = IOERR; 
      /*Checks for begin, and version  */ 
-
-    getUnfolded(vcf,&buff);
+    while (buff!=NULL)
+    {
+        getUnfolded(vcf,&buff);
+    }
 
 }
 
@@ -69,12 +71,12 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     int position; 
     char lineAhead[100];
     VcStatus newStatus; 
+    *buff = (char*)calloc(75,sizeof(char));
     while(fgets(*buff,75,vcf)!=NULL)
     {
       position = Contains(*buff,'\r');
       /*CRLF CHECKING Part1: CR Check */
-
-      while (position==0)
+      printf("%s\n",*buff);
       {
         /*CRLF CHECKING Part 2: LF check */ 
         if (checkPosition(*buff,position)==1)
@@ -91,6 +93,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
         strncat(*buff,lineAhead,strlen(lineAhead));
 
     }
+    *buff = NULL;
 
     
 

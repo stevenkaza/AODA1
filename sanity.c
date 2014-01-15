@@ -4,15 +4,15 @@
 int main()
 {
 
-	FILE * fp = fopen("vSample","r"); 
-	if (fp==NULL)
+	FILE * vcf = fopen("vCard.vcf","r"); 
+	if (vcf==NULL)
 	    return 1; 
 	
 	
-         VcFile * vcf = NULL;
-	 vcf = malloc(sizeof(VcFile)); 
+         VcFile * filep = NULL;
+	 filep = malloc(sizeof(VcFile)); 
 	 
-	 readVcFile(fp,vcf);
+	 readVcFile(vcf,filep);
 
 
 
