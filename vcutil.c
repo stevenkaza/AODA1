@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "vcutil.h"
+#include "helper.h"
 
 /*
  vcStatusReadVcFILE( FILE * const, vcf, VcFile * const file) ;
@@ -22,16 +23,15 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
         filep->ncards = 0;
         filep->cardp = NULL;
         VcStatus newStatus;
-	newStatus  = NULL;
 
 
         if (vcf==NULL)
         {
                 printf("file pointer NULL \n");
-                newStatus->code =  IOERR;
+                newStatus.code =  IOERR;
         }
 
-        newStatus.code = readVcard(vcf,filep->cardp);
+        newStatus = readVcard(vcf,filep->cardp);
 
         return newStatus;
 
@@ -52,9 +52,11 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
 
 VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 {
-    char buff[1000];
+    VcStatus newStatus; 
+    char * buff;
+    
     if (vcf==NULL)
-        VcStatus.code = IOERR; 
+        newStatus.code = IOERR; 
      /*Checks for begin, and version  */ 
 
     getUnfolded(vcf,&buff);
@@ -66,26 +68,27 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     /* For each line in the vcard, unfold */ 
     int position; 
     char lineAhead[100];
-    while(fgets(buff,75,vcf)!=NULL)
+    VcStatus newStatus; 
+    while(fgets(*buff,75,vcf)!=NULL)
     {
-      position = Contains(buff,'\r');
+      position = Contains(*buff,'\r');
       /*CRLF CHECKING Part1: CR Check */
 
       while (position==0)
       {
         /*CRLF CHECKING Part 2: LF check */ 
-        if (checkPosition(buff,position)==1)
+        if (checkPosition(*buff,position)==1)
         {
             /*This means the current line has the end in it */ 
-            return buff;
+            return newStatus; 
         }
-        position = Contains(buff,'\r');
+        position = Contains(*buff,'\r');
         
         
       }
         /* Grabbing the next line and appending it to buff */ 
         fgets(lineAhead,100,vcf);
-        strncat(buff,lineAhead,strlen(lineAhead));
+        strncat(*buff,lineAhead,strlen(lineAhead));
 
     }
 
