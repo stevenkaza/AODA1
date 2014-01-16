@@ -63,15 +63,14 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
     if (vcf==NULL)
         newStatus.code = IOERR; 
      /*Checks for begin, and version  */ 
-    while (feof(vcf)==0)
+    while (state==0)
     {
         newStatus=getUnfolded(vcf,&buff);
         if (newStatus.code == OK)
         {
             /*Send the buff for parsing */
-            buff[strlen(buff)]='\0';
-            printf(" buff = %s \n",buff); 
-            free(buff);
+          //  printf("Parsing Buffer %s \n",buff); 
+
         }
         else if (newStatus.code == BEGEND)
             printf("Beggining not found \n");
@@ -82,7 +81,6 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             break;
         }
     }
-    *buff=NULL;
     return newStatus;
 
 }
@@ -92,79 +90,140 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     /* For each line in the vcard, unfold */
     /*Its only returning the line that begins with the whitespace.... Why? */ 
     /* Should only assign to the buff once it has been unfolded */ 
-    int rFlag=0; 
-    int crlfFlag=0; 
-    static int storedFlag; 
-    static char ch;
+    int position; 
+    char lineAhead[200];
+    static char staticLine[200];
+    char  currentLine[200]; 
+    char lineBefore[100];
+
     static char nextLine[75];
-    static int staticFlag; 
-    int foldedFlag=0;
+    int result = 0; 
     int foldedState;  /* 0 if line is unfolded ok, 1 if needs to be folded */ 
-    char tempString[200];
-    int i=0;
-    int lineDoneFlag = 0; 
+    char *pos;
+
     VcStatus newStatus; 
-    do 
-    {
-        if (staticFlag!=1)
-         ch = fgetc(vcf);
-        switch (ch)
+    FILE  * copy; 
+    /* The first time the program runs, ideally we call fgets twice, 
+    for currentLine and for lineAhead
+    
+       I then check to see if the lineAhead is a folded one.
+       If it is, remove spaces, strcat it to the current line, 
+       assign it to buff, and return it. Also I grab the next line and assign
+       it to staticLine. This method is unique so thats why It checks to see
+        that staticLine has a strlen at zero at first.
+
+      In the event that the program is called and staticLine has a strlen greater than zero,
+      a similar thing takes place. The next line is grabbed and checked to see if it is folded, if it is wrap it around, otherwise, 
+      return it as as to buff */
+        if (strlen(staticLine)>0)
         {
-            case '\r':
+           if(fgets(lineAhead,75,vcf)==NULL)
+           {
+             *buff = NULL;
+             return newStatus; 
+           }
+            if (isFolded(lineAhead)==1)
             {
-                rFlag = 1; 
-                break;
+                removeNewLine(staticLine);
+             //   if ((pos=strchr(staticLine, '\r')) != NULL)
+                //    *pos = '\0';
+                staticLine[strlen(staticLine)-1] = '\0';
+                removeSpaces(lineAhead);
+                strncat(staticLine,lineAhead,strlen(lineAhead)-1);
             }
-            /*Things */ 
-            case '\n':
+        }
+        else /*First time function is called */ 
+        {
+            if(fgets(staticLine,75,vcf)==NULL) /* Grab  two lines from the file */ 
             {
-                if (rFlag==1)
-                    crlfFlag=1; 
-                break;
+                *buff = NULL;
+                return newStatus; 
             }
-            /*Stuff */ 
-            case ' ':
+            if(fgets(lineAhead,75,vcf)==NULL) 
             {
-                if (crlfFlag==1)
-                    crlfFlag=0;
-                break;
+                *buff = NULL;
+                return newStatus; 
             }
-            case '\t':
-                 if (crlfFlag==1)
-                    crlfFlag=0;
-                break;
-                /* Flags */ 
-            default:
+            if (isFolded(lineAhead)==1) /* If lineAhead is folded... do your magic */ 
             {
-                //if (foldedFlag==1) /*We gotta keep reading it untill we find a \r\n with no whitespace following */ 
-                if (crlfFlag==1)
-                {
-                    staticFlag=1;
-                    lineDoneFlag=1;
-                    //tempString[i++]=ch;
-                }
-               else if (crlfFlag==0)
-               {
-                    tempString[i++] = ch; 
-                    staticFlag=0; 
-                }
+                removeNewLine(staticLine);
+                staticLine[strlen(staticLine)-1] = '\0';
+                removeSpaces(lineAhead);
+                printf("static = %s\n",staticLine);
+                strncat(staticLine,lineAhead,strlen(lineAhead)-1);
+            }
+        }
 
-                break;
-            }
-        }/*Switch Ends */ 
+        *buff = (char*)calloc(strlen(staticLine),sizeof(char));
+        strcpy(*buff,staticLine);
+        staticLine[0]='\0';
+        strcpy(staticLine,lineAhead);
+        newStatus.code= OK;
+        return newStatus;
+   
+    
 
-        if (lineDoneFlag==1)
-            break;
 
-    }while (ch!=EOF);
-    if (ch==EOF)
-        tempString[i]='\0';
-    else
-        tempString[i]='\0';
-    *buff = (char*)calloc(strlen(tempString)+1,sizeof(char));
-    strncpy(*buff,tempString,strlen(tempString)+1);
-    newStatus.code = OK;
-    return newStatus;
+
+
+
+
+
+
+/*
+
+
+
+
+
+
+
+
+   
+    if (foldedState==1)
+    {
+        if (strlen(staticLine>0))
+            strcpy(*buff,staticLine); /*This Might Leak 
+        
+        foldedState=0; /* Buff should now  be unfolded, but the next line also might hav a white space  
+
+    }
+
+    while (foldedState!=1 || *buff!=NULL)
+    {
+        /* Scanning for unfolded *
+        fgets(*buff,100,vcf);
+        strcpy(staticLine,*buff);dV
+        copy = vcf; 
+        /* If line is OK, return it 
+        /* how do we know if a line is OK */
+        /* If the next one doesnt start with a whitespace :P 
+        fgets(*buff,75,copy);
+        /* Checking the next line 
+        if (*buff[0]==' ')
+        {
+            printf("This line is a folder! ");
+            foldedState = 1; 
+        }
+    }
+
+    if (foldedState==1)
+    {
+        removeSpaces(*buff);
+        /* Copying buff into a static line, meaning its time to fuck around with *buff and set
+        it back to static line  in a recursive call 
+        strncat(staticLine,buff,sizeof(buff));
+        /*EXIT INDICATING THAT A LINE NEEDS TO BE FOLDED */ 
+        /* Recursive call to do the folding 
+        return VcStatus;
+
+    }
+    
+*/
+
+
+
+    
 
 }
 

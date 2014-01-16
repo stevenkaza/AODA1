@@ -6,6 +6,7 @@ int main()
 
 	FILE * vcf = fopen("samples-10.vcf","r"); 
 	VcStatus newStatus; 
+	int wow; 
 	if (vcf==NULL)
 	    return 1; 
 	
@@ -14,6 +15,7 @@ int main()
 	 filep = malloc(sizeof(VcFile)); 
 	 
 	 newStatus = readVcFile(vcf,filep);
+	
 	 if (newStatus.code == OK)
 	 	printf("Success \n");
 	 else
