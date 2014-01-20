@@ -194,7 +194,7 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
 
     tempString = (char*)calloc(strlen(buff)+1,sizeof(char));
     strcpy(tempString,buff);
-    hasProps(tempString);
+
      grabName(tempString);
     /* Iterate through tempString */ 
 
@@ -236,6 +236,9 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
       propName=strtok(buff,";");
     
       printf("prop name = %s\n",propName);
+
+
+
 
 
   /* propName = strtok(buff,";")
