@@ -174,7 +174,6 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
 }
 
 
-
 VcError parseVcProp ( const char * buff, VcProp * const propp)
 {
       /* String Matching */ 
@@ -183,19 +182,23 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
     char *partype;      // TYPE=string
     char *parval;       // VALUE=string
     char * propName; 
+    char * copyString;
     int colonFlag = 0; 
     int semiFlag = 0; 
     char *value;        // property value string
     void *hook;
-    
+    char * string; 
     int i = 0; 
 
     char * tempString;
 
     tempString = (char*)calloc(strlen(buff)+1,sizeof(char));
+    copyString = (char*)calloc(strlen(buff)+1,sizeof(char));
     strcpy(tempString,buff);
-    hasProps(tempString);
-     grabName(tempString);
+    strcpy(copyString,buff);
+ /*   hasProps(tempString);
+    trbName(tempString);
+    setName(
     /* Iterate through tempString */ 
 
     /* If we find a colon before a semi colon, then we know there are no types */ 
@@ -230,12 +233,22 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
     if (colonFlag == 1) 
         /* Grab everything after the colon and store it in par value string */ 
 	//printf("%s\n",buff);
-	propName=strtok(buff,":");
+	propName=strtok(tempString,":");
     
     else if (semiFlag==1) /* Semi was found before a colon, indicating the string                      has types that NEED to be parsed */ 
-      propName=strtok(buff,";");
+      propName=strtok(tempString,";");
     
-      printf("prop name = %s\n",propName);
+
+
+   if (colonFlag ==1)
+   {
+   	value = strtok(copyString,":");
+	value = strtok(NULL,"\n");
+   	printf("value = %s\n",value);
+   
+   }
+
+
 
 
   /* propName = strtok(buff,";")
