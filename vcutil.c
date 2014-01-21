@@ -60,7 +60,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
     char * buff;
     int state = 0; 
     VcProp * prop; 
-    
+    prop=   malloc(sizeof(VcProp));
     if (vcf==NULL)
         newStatus.code = IOERR; 
      /*Checks for begin, and version  */ 
@@ -189,7 +189,7 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
     void *hook;
     char * string; 
     int i = 0; 
-
+    propp->value=NULL;
     char * tempString;
 
     tempString = (char*)calloc(strlen(buff)+1,sizeof(char));
@@ -238,17 +238,47 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
     else if (semiFlag==1) /* Semi was found before a colon, indicating the string                      has types that NEED to be parsed */ 
       propName=strtok(tempString,";");
     
-
+	
 
    if (colonFlag ==1)
    {
    	value = strtok(copyString,":");
 	value = strtok(NULL,"\n");
-   	printf("value = %s\n",value);
-   
+	propp->value = (char *)malloc((strlen(buff)+1)*sizeof(char));
+	strcpy(propp->value,value);
+        printf("%s\n",propp->value);
    }
+    
+else if (semiFlag ==1)
+{
 
+	int i = 0; 
+	for (i=0;i<strlen(buff);i++)
+	{
+		switch(buff[i])
+		{
+			case 't':
+			{
+				typeFlag =1; 
+			}
+			case 'y':
+			{
+				if (typeFlag!=1)
+				{
+					typeFlag=0;
 
+				}
+			}
+
+			case 'p':
+				if (typeFlag
+		/* Use Flag based approach here to get everything
+		* after the type */ 
+		}
+
+	}
+
+}
 
 
   /* propName = strtok(buff,";")
