@@ -25,14 +25,14 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
         VcStatus newStatus;
 
 
-        if (vcf==NULL)
+      if (vcf==NULL)
         {
                 printf("file pointer NULL \n");
                 newStatus.code =  IOERR;
         }
 
         newStatus = readVcard(vcf,filep->cardp);
-        if (newStatus.code == OK)
+      if (newStatus.code == OK)
             printf("File was parsed \n");
         else
             printf("Houston, we have a problem \n");
@@ -67,7 +67,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
     while (feof(vcf)==0)
     {
         newStatus=getUnfolded(vcf,&buff);
-        if (newStatus.code == OK)
+      if (newStatus.code == OK)
         {
             /*Send the buff for parsing */
 	    
@@ -80,7 +80,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
         }
         else if (newStatus.code == BEGEND)
             printf("Beggining not found \n");
-        if (buff=='\0')
+      if (buff=='\0')
         {
             state =1; 
             printf("BROKEN\n");
@@ -111,7 +111,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     VcStatus newStatus; 
     do 
     {
-        if (staticFlag!=1)
+      if (staticFlag!=1)
          ch = fgetc(vcf);
         switch (ch)
         {
@@ -123,26 +123,26 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
             /*Things */ 
             case '\n':
             {
-                if (rFlag==1)
+              if (rFlag==1)
                     crlfFlag=1; 
                 break;
             }
             /*Stuff */ 
             case ' ':
             {
-                if (crlfFlag==1)
-                    crlfFlag=0;
+              if (crlfFlag==1)
+                    crlfFlag=0;     
                 break;
             }
             case '\t':
-                 if (crlfFlag==1)
+               if (crlfFlag==1)
                     crlfFlag=0;
                 break;
                 /* Flags */ 
             default:
             {
                 //if (foldedFlag==1) /*We gotta keep reading it untill we find a \r\n with no whitespace following */ 
-                if (crlfFlag==1)
+              if (crlfFlag==1)
                 {
                     staticFlag=1;
                     lineDoneFlag=1;
@@ -158,7 +158,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
             }
         }/*Switch Ends */ 
 
-        if (lineDoneFlag==1)
+      if (lineDoneFlag==1)
             break;
 
     }while (ch!=EOF);
@@ -179,23 +179,34 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
       /* String Matching */ 
     VcPname name;       // property name
     // storage for 0-2 parameters (NULL if not present)
-    char *partype;      // TYPE=string
+    char partype[50];      // TYPE=string
     char *parval;       // VALUE=string
     char * propName; 
     char * copyString;
+    char * copyString2;
+
     int colonFlag = 0; 
     int semiFlag = 0; 
     char *value;        // property value string
     void *hook;
+    int typeIndex = 0; 
     char * string; 
+    char * firstHalf; 
+    int typeFlag=0; 
     int i = 0; 
     propp->value=NULL;
+    propp->partype=NULL;
     char * tempString;
+    int typeString = 0; 
 
     tempString = (char*)calloc(strlen(buff)+1,sizeof(char));
     copyString = (char*)calloc(strlen(buff)+1,sizeof(char));
+    copyString2 = (char*)calloc(strlen(buff)+1,sizeof(char));
+
     strcpy(tempString,buff);
     strcpy(copyString,buff);
+    strcpy(copyString2,buff);
+
  /*   hasProps(tempString);
     trbName(tempString);
     setName(
@@ -203,100 +214,208 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
 
     /* If we find a colon before a semi colon, then we know there are no types */ 
 
+    if (semiFirst(tempString)==0)
+    {
+      //  printf("come on\n");
+       propName=strtok(tempString,":");
+       value = strtok(NULL,"\n");
+       propp->value = (char *)malloc((strlen(buff)+1)*sizeof(char));
+       strcpy(propp->value,value);
+    //   printf("%s\n",buff );
+       assignPropName(propp,propName);
+     }
+      // printf("%s\n",buff);
+
+    
+
+    /* We know that there are no types, since parameter types
+                           only exist if a semi colon occurs before a colon */ 
+        /* Grab everything after the colon and store it in par value string */ 
+	//printf("%s\n",buff);
+    
+   else if (semiFirst(tempString)==1) /* Semi colon occurs before colon, indicating optional parameters */ 
+    {
+   //   printf("String = %s\n",buff);
+
+      propName=strtok(tempString,";"); /* Prop name found for optlionalse parameter case */ 
+      typeString=strtok(NULL,"=");
+      //printf("%s\n",typeString);
+     
+      /* Type one found */ 
+      typeString=strtok(NULL,":");
+ propp->partype=(char *)malloc((strlen(typeString)+1)*sizeof(char));
+      strcpy(propp->partype,typeString);
+      value=strtok(NULL,"\n");
+      propp->value = (char *)malloc((strlen(buff)+1)*sizeof(char));
+      strncpy(propp->value,value,strlen(value)+1);
+      assignPropName(propp,propName);
+
+
+    }
+
+
+    if (Contains(typeString,'='))  /* If there is more than one type or value */ 
+      {
+    //          printf("type = %s\n",typeString);
+
+
+      }
+
+
+    
+
+   // printf("%s\n",partype);
+    printf("\n");
+    printf("String = %s\n",buff);
+    printf("prop name =%d\n",propp->name);
+    printf("value=%s\n",propp->value);
+    printf("par type=%s\n",propp->partype);
+    printf("\n");
+}
+
+
+
+void freeVcFile ( VcFile * const filep)
+{
+}
+
+
+int assignPropName(VcProp * const propp,char * propName, char  * const string)
+{
+    if (strcmp("BEGIN",propName)==0)
+    {
+        propp->name=VCP_BEGIN;
+        return 0; 
+    }
+    if (strcmp("END",propName)==0)
+    {
+        propp->name=VCP_END;
+        return 1; 
+    }
+    if (strcmp("VERSION",propName)==0)
+    {
+        propp->name=VCP_VERSION;
+        return 2; 
+    }
+    if (strcmp("N",propName)==0)
+    {
+        propp->name=VCP_N;
+        return 3; 
+    }
+    if (strcmp("FN",propName)==0)
+    {
+        propp->name=VCP_FN;
+        return 4; 
+    }
+    if (strcmp("NICKNAME",propName)==0)
+    {
+        propp->name=VCP_NICKNAME;
+        return 5; 
+    }
+    if (strcmp("PHOTO",propName)==0)
+    {
+        propp->name=VCP_PHOTO;
+        return 6; 
+    }
+    if (strcmp("BDAY",propName)==0)
+    {
+        propp->name=VCP_BDAY;
+        return 7; 
+    }
+    if (strcmp("ADR",propName)==0)
+    {
+        propp->name=VCP_ADR;
+        return 8; 
+    }
+    if (strcmp("TEL",propName)==0)
+    {
+        propp->name=VCP_TEL;
+        return 9; 
+    }
+
+    if (strcmp("EMAIL",propName)==0)
+    {
+        propp->name=VCP_EMAIL;
+        return 10; 
+    }
+    if (strcmp("GEO",propName)==0)
+    {
+        propp->name=VCP_GEO;
+        return 11; 
+    }
+    if (strcmp("TITLE",propName)==0)
+    {
+        propp->name=VCP_TITLE;
+
+        return 12; 
+    }
+    if (strcmp("ORG",propName)==0)
+    {
+        propp->name=VCP_ORG;
+        return 13; 
+    }
+    if (strcmp("NOTE",propName)==0)
+    {
+        propp->name=VCP_NOTE;
+        return 14; 
+    }
+    if (strcmp("UID",propName)==0)
+    {
+        propp->name=VCP_UID;
+        return 15; 
+    }
+    if (strcmp("URL",propName)==0)
+    {
+        propp->name=VCP_URL;
+        return 16; 
+    }
+    if (strcmp("OTHER",propName)==0)
+    {
+        propp->name=VCP_OTHER;
+        return 17; 
+    }
+
+
+
+}
+int semiFirst(char * tempString)
+{
+    int i = 0; 
+    int semiFlag=0;
+    int colonFlag=0;
     for (i=0;i<strlen(tempString);i++) /* Test string: Kirk:Stinky; */ 
     {
         /* Looking for colon */ 
-        if (tempString[i] == ':')
+      if (tempString[i] == ':')
         {
-            if (semiFlag ==1) /* we found semi first */ 
+          if (semiFlag ==1) /* we found semi first */ 
                 colonFlag=0;
             else 
+            {
                 colonFlag = 1; 
+                return 0;
+            }
             break;
         }
-        if (tempString[i] == ';')
+      if (tempString[i] == ';')
         {
-            if (colonFlag ==1) /* We found colon first */ 
+          if (colonFlag ==1) /* We found colon first */ 
             {
                 semiFlag = 0; 
             }
             else
             {
+                return 1; 
                 semiFlag = 1; 
             }
             break;
         }
     }
 
-    /* We know that there are no types, since parameter types
-                           only exist if a semi colon occurs before a colon */ 
-    if (colonFlag == 1) 
-        /* Grab everything after the colon and store it in par value string */ 
-	//printf("%s\n",buff);
-	propName=strtok(tempString,":");
-    
-    else if (semiFlag==1) /* Semi was found before a colon, indicating the string                      has types that NEED to be parsed */ 
-      propName=strtok(tempString,";");
-    
-	
-
-   if (colonFlag ==1)
-   {
-   	value = strtok(copyString,":");
-	value = strtok(NULL,"\n");
-	propp->value = (char *)malloc((strlen(buff)+1)*sizeof(char));
-	strcpy(propp->value,value);
-        printf("%s\n",propp->value);
-   }
-    
-else if (semiFlag ==1)
-{
-
-	int i = 0; 
-	for (i=0;i<strlen(buff);i++)
-	{
-		switch(buff[i])
-		{
-			case 't':
-			{
-				typeFlag =1; 
-			}
-			case 'y':
-			{
-				if (typeFlag!=1)
-				{
-					typeFlag=0;
-
-				}
-			}
-
-			case 'p':
-				if (typeFlag
-		/* Use Flag based approach here to get everything
-		* after the type */ 
-		}
-
-	}
-
+ 
 }
-
-
-  /* propName = strtok(buff,";")
-    for (i=0;i<19;i++)
-    {
-        if (strstr(buff,propName))
-            enumName = i; 
-        if (strstr(buff,enumName))
-            propName =enumName;
-    } */ 
-}
-
-void freeVcFile ( VcFile * const filep)
-{
-}
-
 /* int Contains(char * string, char pattern);
- * Returns: position where pattern was found 
+ * Returns: position where 0; pattern was found 
  * 0 if nothing found                   */ 
 int Contains(char * string, char  pattern)
 {
@@ -305,7 +424,7 @@ int Contains(char * string, char  pattern)
         return 0;
     for (i=0;i<strlen(string);i++)
     {
-        if (string[i]==pattern)
+      if (string[i]==pattern)
         {
             return i; 
         } 
@@ -359,7 +478,7 @@ int removeNewLine(char * string)
     int i = 0; 
     for (i=0;i<=strlen(string);i++)
     {
-        if (string[i]=='\n')
+      if (string[i]=='\n')
         {
             string[i]='\0';
             return 1; 
