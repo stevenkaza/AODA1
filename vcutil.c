@@ -107,7 +107,8 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
     VcStatus newStatus; 
     char buff1[222];
     char  *buff;
-    *cardp=malloc(sizeof(Vcard)+sizeof(VcProp));
+    int i = 0; 
+    *cardp=malloc(sizeof(Vcard)+sizeof(VcProp)*100);
     VcProp * tempProp = NULL;
    // int state = 0; 
     VcProp * proppp=NULL; 
@@ -129,12 +130,12 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
     strcpy(cardp[1]->prop[14].value,"fuckme");
     strcpy(cardp[1]->prop[13].value,"prop2");
 */
-    (*cardp)->prop[14].value=(char *)malloc((strlen(buff1)+1)*sizeof(char));
+  //  (*cardp)->prop[14].value=(char *)malloc((strlen(buff1)+1)*sizeof(char));
 
-    strcpy((*cardp)->prop[14].value,"fucddkme");
+    //strcpy((*cardp)->prop[14].value,"fucddkme");
 
 
-    printf("INNERtest= %s\n",(*cardp)->prop[14].value);
+   // printf("INNERtest= %s\n",(*cardp)->prop[14].value);
   //  return;
     //printf("INNERtest= %s\n",cardp[1]->prop[13].value);
 
@@ -201,13 +202,18 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             tempProp=malloc(sizeof(VcProp));
             parseVcProp(buff,tempProp);
 
-            (*cardp)->prop[14]=*tempProp;
+            (*cardp)->prop[i]=*tempProp;
+            printf("i=%d\n",i );
+            i++;
+
 
 
         
          //   printf(" buff = %s \n",buff); 
            // if (buff!=NULL)
-            //free(buff);
+        //   printf("buff=%s\n",buff );
+            free(buff);
+          //  buff=NULL;
         }
         else if (newStatus.code == BEGEND)
             printf("Beggining not found \n");
