@@ -20,24 +20,34 @@ freeing the contents of filep  with the help of freeVcFile. If status is not OK,
 VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
 {
 
-        filep->ncards = 0;
-        filep->cardp = NULL;
-        VcStatus newStatus;
+    filep->ncards = 0;
+    filep->cardp = NULL;
+    VcStatus newStatus;
 
-
-      if (vcf==NULL)
-        {
-                printf("file pointer NULL \n");
-                newStatus.code =  IOERR;
-        }
-
+    int i=1;
+    if (vcf==NULL)
+    {
+        printf("file pointer NULL \n");
+        newStatus.code =  IOERR;
+    }
+    while (feof(vcf)==0)
+    {
         newStatus = readVcard(vcf,filep->cardp);
-      if (newStatus.code == OK)
-            printf("File was parsed \n");
-        else
-            printf("Houston, we have a problem \n");
+        printf("NEW CARD %d\n",i);
 
-        return newStatus;
+        i++;
+
+        if (newStatus.code!=OK)
+            break;
+    }
+
+    if (newStatus.code == OK)
+        printf("File was parsed \n");
+    else
+        printf("Houston, we have a problem \n");
+    printf("%d\n",newStatus.code );
+
+    return newStatus;
 
 
         /*Now we have to figure out what we do with each vcard and the flow of the program */
@@ -60,21 +70,64 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
     char * buff;
     int state = 0; 
     VcProp * prop; 
+    int endFlag=0; 
+    int beginFlag=0; 
     prop=   malloc(sizeof(VcProp));
     if (vcf==NULL)
         newStatus.code = IOERR; 
      /*Checks for begin, and version  */ 
-    while (feof(vcf)==0)
+    do
     {
+        printf("%s\n",buff );
+        while (feof(vcf)!=0)
+         {
+            newStatus.code = IOERR; 
+            return newStatus;
+        }
+
+      /*  if (beginFlag==1)
+        {
+            if (strcmp("BEGIN:VCARD",buff)==0) /* If we see another begin before an end, 
+                                        ERROR *
+            {
+                newStatus.code= BEGEND;
+                goto end;
+            }
+        }
+*/     // printf("bflag=%d\n",beginFlag);
         newStatus=getUnfolded(vcf,&buff);
+        printf("%s\n", buff);
+        if (beginFlag==0)
+        {
+
+            if (strcmp("BEGIN:VCARD",buff)==0)
+            {
+                beginFlag=1;
+
+            }
+            else
+            {
+                newStatus.code = BEGEND;
+                goto end;
+            }
+        }
+        if ((beginFlag==1) && (strcmp("END:VCARD",buff)==0 ))
+        {
+            newStatus.code = OK;
+            goto end;
+        }
+       
+
+       // printf("%d\n",newStatus.linefrom );
       if (newStatus.code == OK)
         {
             /*Send the buff for parsing */
-	    
+        
             buff[strlen(buff)]='\0';
             
             parseVcProp(buff,prop);
-	    
+
+        
          //   printf(" buff = %s \n",buff); 
             free(buff);
         }
@@ -84,10 +137,13 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
         {
             state =1; 
             printf("BROKEN\n");
-            break;
+                        break;
+
         }
-    }
+    }while (strcmp("END:VCARD",buff)!=0);
+    
     *buff=NULL;
+    end:
     return newStatus;
 
 }
@@ -108,6 +164,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     char tempString[200];
     int i=0;
     int lineDoneFlag = 0; 
+    static int lineCounter=0;
     VcStatus newStatus; 
     do 
     {
@@ -124,7 +181,10 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
             case '\n':
             {
               if (rFlag==1)
+              {
                     crlfFlag=1; 
+                    lineCounter++;
+              }
                 break;
             }
             /*Stuff */ 
@@ -169,6 +229,8 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     *buff = (char*)calloc(strlen(tempString)+1,sizeof(char));
     strncpy(*buff,tempString,strlen(tempString)+1);
     newStatus.code = OK;
+    newStatus.linefrom = lineCounter;
+    end:
     return newStatus;
 
 }
@@ -243,7 +305,20 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
      
       /* Type one found */ 
       typeString=strtok(NULL,":");
- propp->partype=(char *)malloc((strlen(typeString)+1)*sizeof(char));
+   if (Contains(typeString,'='))  /* If there is more than one type or value */ 
+      {
+    //          printf("type = %s\n",typeString);
+        char * type1;
+        /* Check to see that = signs match ";" and then
+        attempt to tokenize based on that */ 
+     //   printf("type = %s\n",typeString);
+
+
+        
+
+      }
+      if (strlen(typeString)>0)
+      propp->partype=(char *)malloc((strlen(typeString)+1)*sizeof(char));
       strcpy(propp->partype,typeString);
       value=strtok(NULL,"\n");
       propp->value = (char *)malloc((strlen(buff)+1)*sizeof(char));
@@ -253,24 +328,14 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
 
     }
 
-
-    if (Contains(typeString,'='))  /* If there is more than one type or value */ 
-      {
-    //          printf("type = %s\n",typeString);
-
-
-      }
-
-
-    
-
    // printf("%s\n",partype);
-    printf("\n");
-    printf("String = %s\n",buff);
+  //  printf("\n");
+  /*  printf("String = %s\n",buff);
     printf("prop name =%d\n",propp->name);
     printf("value=%s\n",propp->value);
-    printf("par type=%s\n",propp->partype);
-    printf("\n");
+    printf("par type=%s\n",propp->partype);*
+    free(propp->partype);*/ 
+ //   printf("\n");
 }
 
 
