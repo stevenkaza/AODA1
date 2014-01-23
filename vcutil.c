@@ -35,8 +35,8 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
         printf("file pointer NULL \n");
         newStatus.code =  IOERR;
     }
-   //while (feof(vcf)==0)
-  //  {
+   while (feof(vcf)==0)
+    {
 
        // test = malloc(sizeof(Vcard)+sizeof(VcProp));
       //  test1 = malloc(sizeof(Vcard)+sizeof(VcProp));
@@ -57,22 +57,22 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
        //  filep->cardp[0]->nprops = 2; 
 
 
-        newStatus = readVcard(vcf,&filep->cardp[0]);
+        newStatus = readVcard(vcf,&filep->cardp[i]);
       //  filep->cardp[0] =test;
-        newStatus = readVcard(vcf,&filep->cardp[1]);
+       // newStatus = readVcard(vcf,&filep->cardp[1]);
       //  filep->cardp[1] =test1;
 
 
 
         printf("NEW CARD %d\n",i);
 
-    //   i++;
+        i++;
 
-      //  if (newStatus.code!=OK)
-         //  break;
+        if (newStatus.code!=OK)
+           break;
         
 
-   //}/*end of while loop */ 
+   }/*end of while loop */ 
 
     if (newStatus.code == OK)
         printf("File was parsed \n");
@@ -206,7 +206,8 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 
         
          //   printf(" buff = %s \n",buff); 
-            free(buff);
+           // if (buff!=NULL)
+            //free(buff);
         }
         else if (newStatus.code == BEGEND)
             printf("Beggining not found \n");
@@ -333,11 +334,11 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
     char * typeString;
 
     tempString = (char*)calloc(strlen(buff)+1,sizeof(char));
-    copyString = (char*)calloc(strlen(buff)+1,sizeof(char));
+   // copyString = (char*)calloc(strlen(buff)+1,sizeof(char));
     copyString2 = (char*)calloc(strlen(buff)+1,sizeof(char));
 
     strcpy(tempString,buff);
-    strcpy(copyString,buff);
+    //strcpy(copyString,buff);
     strcpy(copyString2,buff);
 
  /*   hasProps(tempString);
