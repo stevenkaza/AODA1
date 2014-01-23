@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "vcutil.h"
+#include <ctype.h>
 #include "helper.h"
 
 /*
@@ -24,8 +25,9 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
     filep->cardp = NULL;
     VcStatus newStatus; 
     Vcard * test;
+    Vcard * test1;
 
-    filep->cardp=malloc(sizeof(Vcard)+sizeof(VcProp));
+    filep->cardp=malloc(sizeof(Vcard*)*100);
 
     int i=0;
     if (vcf==NULL)
@@ -33,13 +35,15 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
         printf("file pointer NULL \n");
         newStatus.code =  IOERR;
     }
-    while (feof(vcf)==0)
-    {
+   //while (feof(vcf)==0)
+  //  {
 
-            test = malloc(sizeof(Vcard)+sizeof(VcProp));
+       // test = malloc(sizeof(Vcard)+sizeof(VcProp));
+      //  test1 = malloc(sizeof(Vcard)+sizeof(VcProp));
 
-        filep->cardp[i] =test;
-        filep->cardp[i]->nprops=14;
+    //    filep->cardp[0]->nprops=14;
+       // filep->cardp[1] = test1; 
+      //  filep->cardp[1]->nprops=14;
     //    printf("test= %d\n",filep->cardp[0]->nprops);
 
  
@@ -53,16 +57,22 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
        //  filep->cardp[0]->nprops = 2; 
 
 
-        newStatus = readVcard(vcf,filep->cardp);
+        newStatus = readVcard(vcf,&filep->cardp[0]);
+      //  filep->cardp[0] =test;
+        newStatus = readVcard(vcf,&filep->cardp[1]);
+      //  filep->cardp[1] =test1;
+
+
+
         printf("NEW CARD %d\n",i);
 
-        i++;
+    //   i++;
 
-        if (newStatus.code!=OK)
-            break;
+      //  if (newStatus.code!=OK)
+         //  break;
         
 
-    }
+   //}/*end of while loop */ 
 
     if (newStatus.code == OK)
         printf("File was parsed \n");
@@ -97,22 +107,36 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
     VcStatus newStatus; 
     char buff1[222];
     char  *buff;
+    *cardp=malloc(sizeof(Vcard)+sizeof(VcProp));
     VcProp * tempProp = NULL;
    // int state = 0; 
     VcProp * proppp=NULL; 
    // int endFlag=0; 
     int beginFlag=0; 
 
-    cardp[0]->nprops=112;
+  /*  cardp[0]->nprops=112;
     cardp[0]->prop[14].name=125;
     cardp[0]->prop[14].value=(char *)malloc((strlen(buff1)+1)*sizeof(char));
-      cardp[0]->prop[13].value=(char *)malloc((strlen(buff1)+1)*sizeof(char));
+    cardp[0]->prop[13].value=(char *)malloc((strlen(buff1)+1)*sizeof(char));
 
-    strcpy(cardp[0]->prop[14].value,"fuckme");
+    cardp[1]->prop[14].value=(char *)malloc((strlen(buff1)+1)*sizeof(char));
+    cardp[1]->prop[13].value=(char *)malloc((strlen(buff1)+1)*sizeof(char));
+
+
     strcpy(cardp[0]->prop[13].value,"fuckdfdfme");
 
-    printf("INNERtest= %s\n",cardp[0]->prop[14].value);
-    printf("INNERtest= %s\n",cardp[0]->prop[13].value);
+
+    strcpy(cardp[1]->prop[14].value,"fuckme");
+    strcpy(cardp[1]->prop[13].value,"prop2");
+*/
+    (*cardp)->prop[14].value=(char *)malloc((strlen(buff1)+1)*sizeof(char));
+
+    strcpy((*cardp)->prop[14].value,"fucddkme");
+
+
+    printf("INNERtest= %s\n",(*cardp)->prop[14].value);
+  //  return;
+    //printf("INNERtest= %s\n",cardp[1]->prop[13].value);
 
 
 
@@ -139,7 +163,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
                                         ERROR */
             {
                 printf("wow\n");
-                newStatus.code= BEGEND;
+              //  newStatus.code= BEGEND;
                 goto end;
             }
         }
@@ -176,7 +200,8 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             buff[strlen(buff)]='\0';
             tempProp=malloc(sizeof(VcProp));
             parseVcProp(buff,tempProp);
-            cardp[0]->prop[0]=*tempProp;
+
+            (*cardp)->prop[14]=*tempProp;
 
 
         
@@ -375,12 +400,12 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
     }
 
  //   printf("\n");
-    
+  /*  
     printf("String = %s\n",buff);
     printf("prop name =%d\n",propp->name);
     printf("value=%s\n",propp->value);
     printf("par type=%s\n",propp->partype);
-    
+    */
    // free(propp->partype);
     
    // printf("\n");
