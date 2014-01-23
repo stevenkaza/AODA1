@@ -22,9 +22,9 @@ int main()
 	 }
 	 */
 	 newStatus = readVcFile(vcf,filep);
-	 		 printf("please = %s\n",filep->cardp[0]->prop[14].value);
+	 		 //printf("please = %s\n",filep->cardp[0]->prop[14].value);
 
-		 printf("please = %s\n",filep->cardp[1]->prop[14].value);
+		 printf("please = %s\n",filep->cardp[5]->prop[2].value);
 
 
 	 if (newStatus.code == OK)
