@@ -22,7 +22,10 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
 
     filep->ncards = 0;
     filep->cardp = NULL;
-    VcStatus newStatus;
+    VcStatus newStatus; 
+    Vcard * test;
+
+    filep->cardp=malloc(sizeof(Vcard)+sizeof(VcProp));
 
     int i=1;
     if (vcf==NULL)
@@ -32,6 +35,24 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
     }
     while (feof(vcf)==0)
     {
+
+            test = malloc(sizeof(Vcard)+sizeof(VcProp));
+
+            filep->cardp[0] =test;
+        filep->cardp[0]->nprops=14;
+        printf("test= %d\n",filep->cardp[0]->nprops);
+
+ 
+        /*for(i = 0; i < 100; i++)
+         {
+            filep->cardp[i] = NULL;
+         }*/
+
+       //  filep->cardp[0]=test; 
+
+       //  filep->cardp[0]->nprops = 2; 
+
+
         newStatus = readVcard(vcf,filep->cardp);
         printf("NEW CARD %d\n",i);
 
@@ -39,6 +60,8 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
 
         if (newStatus.code!=OK)
             break;
+        
+
     }
 
     if (newStatus.code == OK)
@@ -64,39 +87,60 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
     cardp means normal EOF, and VcStatus line numbers are the total lines read from the file.
     If error status, * cardp contents are undefined (but no additional storage remains allocated). */
 
+
+int checkStructs(VcFile      cardp)
+{
+
+}
 VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 {
     VcStatus newStatus; 
-    char * buff;
-    int state = 0; 
-    VcProp * prop; 
-    int endFlag=0; 
+    char  buff[100];
+   // int state = 0; 
+    VcProp * prop=NULL; 
+   // int endFlag=0; 
     int beginFlag=0; 
-    prop=   malloc(sizeof(VcProp));
+
+    cardp[0]->nprops=112;
+    cardp[0]->prop[14].name=125;
+    cardp[0]->prop[14].value=(char *)malloc((strlen(buff)+1)*sizeof(char));
+      cardp[0]->prop[13].value=(char *)malloc((strlen(buff)+1)*sizeof(char));
+
+    strcpy(cardp[0]->prop[14].value,"fuckme");
+        strcpy(cardp[0]->prop[13].value,"fuckdfdfme");
+
+    printf("INNERtest= %s\n",cardp[0]->prop[14].value);
+        printf("INNERtest= %s\n",cardp[0]->prop[13].value);
+
+
+   // cardp->ncards=2;
+
+    /* How do access the individual vcards in here */ 
+
     if (vcf==NULL)
         newStatus.code = IOERR; 
      /*Checks for begin, and version  */ 
     do
     {
-        printf("%s\n",buff );
+       // printf("%s\n",buff );
         while (feof(vcf)!=0)
          {
             newStatus.code = IOERR; 
             return newStatus;
         }
 
-      /*  if (beginFlag==1)
+      if (beginFlag==1)
         {
             if (strcmp("BEGIN:VCARD",buff)==0) /* If we see another begin before an end, 
-                                        ERROR *
+                                        ERROR */
             {
                 newStatus.code= BEGEND;
                 goto end;
             }
         }
-*/     // printf("bflag=%d\n",beginFlag);
+    // printf("bflag=%d\n",beginFlag);
         newStatus=getUnfolded(vcf,&buff);
-        printf("%s\n", buff);
+      //  printf("%s\n", buff);
         if (beginFlag==0)
         {
 
@@ -124,7 +168,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             /*Send the buff for parsing */
         
             buff[strlen(buff)]='\0';
-            
+            prop=malloc(sizeof(VcProp));
             parseVcProp(buff,prop);
 
         
@@ -135,14 +179,14 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             printf("Beggining not found \n");
       if (buff=='\0')
         {
-            state =1; 
+          //  state =1; 
             printf("BROKEN\n");
                         break;
 
         }
     }while (strcmp("END:VCARD",buff)!=0);
     
-    *buff=NULL;
+    //*buff=NULL;
     end:
     return newStatus;
 
@@ -155,12 +199,8 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     /* Should only assign to the buff once it has been unfolded */ 
     int rFlag=0; 
     int crlfFlag=0; 
-    static int storedFlag; 
     static char ch;
-    static char nextLine[75];
     static int staticFlag; 
-    int foldedFlag=0;
-    int foldedState;  /* 0 if line is unfolded ok, 1 if needs to be folded */ 
     char tempString[200];
     int i=0;
     int lineDoneFlag = 0; 
@@ -239,27 +279,25 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
 VcError parseVcProp ( const char * buff, VcProp * const propp)
 {
       /* String Matching */ 
-    VcPname name;       // property name
     // storage for 0-2 parameters (NULL if not present)
-    char partype[50];      // TYPE=string
-    char *parval;       // VALUE=string
-    char * propName; 
+   // char partype[50];      // TYPE=string
+//    char *parval;       // VALUE=string
+      char * propName; 
     char * copyString;
     char * copyString2;
 
-    int colonFlag = 0; 
-    int semiFlag = 0; 
+  //  int colonFlag = 0; 
+    //int semiFlag = 0;       
     char *value;        // property value string
-    void *hook;
-    int typeIndex = 0; 
-    char * string; 
-    char * firstHalf; 
-    int typeFlag=0; 
-    int i = 0; 
+   // void *hook;
+   // int typeIndex = 0; 
+  //  char * string; 
+   // char * firstHalf; 
+   // int typeFlag=0; 
     propp->value=NULL;
     propp->partype=NULL;
     char * tempString;
-    int typeString = 0; 
+    char * typeString;
 
     tempString = (char*)calloc(strlen(buff)+1,sizeof(char));
     copyString = (char*)calloc(strlen(buff)+1,sizeof(char));
@@ -308,7 +346,7 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
    if (Contains(typeString,'='))  /* If there is more than one type or value */ 
       {
     //          printf("type = %s\n",typeString);
-        char * type1;
+      //  char * type1;
         /* Check to see that = signs match ";" and then
         attempt to tokenize based on that */ 
      //   printf("type = %s\n",typeString);
@@ -328,14 +366,14 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
 
     }
 
-   // printf("%s\n",partype);
-  //  printf("\n");
-  /*  printf("String = %s\n",buff);
+ //   printf("\n");
+   /* printf("String = %s\n",buff);
     printf("prop name =%d\n",propp->name);
     printf("value=%s\n",propp->value);
-    printf("par type=%s\n",propp->partype);*
+    printf("par type=%s\n",propp->partype);
     free(propp->partype);*/ 
- //   printf("\n");
+    
+   // printf("\n");
 }
 
 
