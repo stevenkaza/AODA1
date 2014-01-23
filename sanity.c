@@ -11,11 +11,22 @@ int main()
 	    return 1; 
 	
 	
-         VcFile * filep = NULL;
-	 filep = malloc(sizeof(VcFile)); 
-	 
+     VcFile * filep = NULL;
+	 filep = malloc(sizeof(VcFile));	
+
+	 int i;
+
+	/* for(i = 0; i < 100; i++)
+	 {
+	 	filep->cardp[i] = NULL;
+	 }
+	 */
 	 newStatus = readVcFile(vcf,filep);
-	
+	 		 printf("please = %s\n",filep->cardp[0]->prop[14].value);
+
+		 printf("please = %s\n",filep->cardp[1]->prop[14].value);
+
+
 	 if (newStatus.code == OK)
 	 	printf("Success \n");
 	 else
