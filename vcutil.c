@@ -367,11 +367,11 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
     }
 
  //   printf("\n");
-   /* printf("String = %s\n",buff);
+    printf("String = %s\n",buff);
     printf("prop name =%d\n",propp->name);
     printf("value=%s\n",propp->value);
     printf("par type=%s\n",propp->partype);
-    free(propp->partype);*/ 
+    free(propp->partype);
     
    // printf("\n");
 }
