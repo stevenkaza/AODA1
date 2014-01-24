@@ -33,12 +33,13 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
         printf("file pointer NULL \n");
         newStatus.code =  IOERR;
     }
+    newStatus.code = OK;
+
    while (feof(vcf)==0)
     { 
  
         /* Incrementing # of cards */ 
         filep->ncards=filep->ncards+1;
-        newStatus.code = OK;
         filep->cardp=realloc(filep->cardp,(sizeof(Vcard*)*filep->ncards));
 
         if (newStatus.code==OK)
@@ -55,7 +56,7 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
    }/*end of while loop */ 
 
     
-
+    printf("HERE CODE =%d\n",newStatus.code );
     return newStatus;
 
 
@@ -181,6 +182,9 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             error=parseVcProp(buff,tempProp);
             if (error!=OK)
             {
+              printf("wtf\n");
+              printf("cSPENCER CODE = %d\n",newStatus.code);
+              printf("coder = %d\n",error );
               newStatus.code = error;
               return newStatus;
 
@@ -344,7 +348,10 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
     we have an error */
     if (Contains(buff,':')==0)
     {
+      printf("asdfasdfsadfsdfsdf\n");
       error=SYNTAX;
+      printf("syntax = %d\n", SYNTAX);
+      printf("DFSDFADSF\n");
       return error;
     }
     tempString = (char*)calloc(strlen(buff)+1,sizeof(char));
@@ -414,6 +421,7 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
 
 
     }
+    return error;
 
 
     
