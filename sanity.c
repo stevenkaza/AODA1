@@ -14,7 +14,8 @@ int main()
      VcFile * filep = NULL;
 	 filep = malloc(sizeof(VcFile));	
 
-	 int i;
+	 int i=0;
+	int k=0;
 
 	/* for(i = 0; i < 100; i++)
 	 {
@@ -25,7 +26,14 @@ int main()
 	 		 //printf("please = %s\n",filep->cardp[0]->prop[14].value);
 
 		 printf("please = %s\n",filep->cardp[5]->prop[2].value);
+		for (i=0;i <(filep->ncards);i++)
+		{
 
+			for(k=0;  k<filep->cardp[i]->nprops;k++)
+				printf("val=%s\n" , filep->cardp[i]->prop[k].value);
+
+
+		}
 
 	 if (newStatus.code == OK)
 	 	printf("Success \n");

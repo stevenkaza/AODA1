@@ -40,32 +40,15 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
    while (feof(vcf)==0)
     {
 
-       // test = malloc(sizeof(Vcard)+sizeof(VcProp));
-      //  test1 = malloc(sizeof(Vcard)+sizeof(VcProp));
-
-    //    filep->cardp[0]->nprops=14;
-       // filep->cardp[1] = test1; 
-      //  filep->cardp[1]->nprops=14;
-    //    printf("test= %d\n",filep->cardp[0]->nprops);
-
- 
         /*for(i = 0; i < 100; i++)
          {
             filep->cardp[i] = NULL;
          }*/
 
-       //  filep->cardp[0]=test; 
-
-       //  filep->cardp[0]->nprops = 2; 
         filep->ncards=filep->ncards+1;
         filep->cardp=realloc(filep->cardp,(sizeof(Vcard*)*filep->ncards));
 
         newStatus = readVcard(vcf,&filep->cardp[i]);
-      //  filep->cardp[0] =test;
-       // newStatus = readVcard(vcf,&filep->cardp[1]);
-      //  filep->cardp[1] =test1;
-
-
 
         printf("NEW CARD %d\n",i);
 
@@ -172,7 +155,6 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
         }
     // printf("bflag=%d\n",beginFlag);
         newStatus=getUnfolded(vcf,&buff);
-   //     printf("test%s\n",buff);
       //  printf("%s\n", buff);
         if (beginFlag==0)
         {
@@ -196,25 +178,26 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
        
 
        // printf("%d\n",newStatus.linefrom );
-      if (newStatus.code == OK)
+      if ((newStatus.code == OK) || (strcmp("END:VCARD",buff)==0))
         {
             /*Send the buff for parsing */
-        
+parsse:        
             buff[strlen(buff)]='\0';
             tempProp=malloc(sizeof(VcProp));
             parseVcProp(buff,tempProp);
             if (i==0)
-
+{
               (*cardp)=malloc(sizeof(Vcard)+sizeof(VcProp));
-            else
+	      (*cardp)->nprops=1;	
+} 
+           else
               (*cardp)=realloc((*cardp),sizeof(Vcard)+(sizeof(VcProp)*(i+1)));
 
 
 
             (*cardp)->prop[i]=*tempProp;
             printf("i=%d\n",i );
-            i++;
-            (*cardp)->nprops=i;
+            i=i+1;
 
 
 
@@ -234,8 +217,9 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
                         break;
 
         }
-    }while (strcmp("END:VCARD",buff)!=0);
-    
+   
+ (*cardp)->nprops=(*cardp)->nprops+1;
+ }while (strcmp("END:VCARD",buff)!=0);
     //*buff=NULL;
     end:
     return newStatus;
@@ -336,21 +320,13 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
     char * copyString;
     char * copyString2;
 
-  //  int colonFlag = 0; 
-    //int semiFlag = 0;       
     char *value;        // property value string
-   // void *hook;
-   // int typeIndex = 0; 
-  //  char * string; 
-   // char * firstHalf; 
-   // int typeFlag=0; 
     propp->value=NULL;
     propp->partype=NULL;
     char * tempString;
     char * typeString;
 
     tempString = (char*)calloc(strlen(buff)+1,sizeof(char));
-   // copyString = (char*)calloc(strlen(buff)+1,sizeof(char));
     copyString2 = (char*)calloc(strlen(buff)+1,sizeof(char));
 
     strcpy(tempString,buff);
@@ -417,12 +393,12 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
     }
 
  //   printf("\n");
-  /*  
+   
     printf("String = %s\n",buff);
     printf("prop name =%d\n",propp->name);
     printf("value=%s\n",propp->value);
     printf("par type=%s\n",propp->partype);
-    */
+  
    // free(propp->partype);
     
    // printf("\n");
