@@ -6,18 +6,34 @@ ORG:Telus Corporation;
 ADR;TYPE=WORK,POSTAL:;;555 Robson St.;Vancouver;BC;V6B 3K9;Canada
 TEL;TYPE=WORK,VOICE:1-604-697-8044
 TEL;TYPE=FAX:1-604-432-9681
-TITLE:President and CEO
+TITLE:Presid	ent and CEO
 URL;TYPE=WORK:http://telus.com/
 PHOTO;VALUE=uri:http://about.telus.com/investors/en/investor/images/bio_dar
  ren_entwistle.gif
 GEO:49.280696,-123.118501
 END:VCARD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 BEGIN:VCARD
 VERSION:3.0
 N:Cope;George
 FN:George Cope
 ORG:Bell Mobility Inc.;
-ADR;TYPE=WORK,POSTAL:;;509 Creekbank Rd.;Mississauga;Ontario;L4W 5N2;Canada
+ADR;TYPE=WORK;TYPE=WORK2;type=work3:;;509 Creekbank Rd.;Mississauga;Ontario;L4W 5N2;Canada
 ADR;TYPE=HOME,POSTAL:;;2150 Bromsgrove Rd.;Mississauga;Ontario;L5J 4B3
 TEL;TYPE=WORK,VOICE:1-905-282-4202
 TEL;TYPE=FAX:1-905-282-3552
@@ -32,12 +48,12 @@ VERSION:3.0
 N:Blouin;Pierre
 FN:Pierre Blouin
 ORG:Manitoba Telecom Services Inc.;
-ADR;TYPE=WORK,POSTAL:;;333 Main St.;Winnipeg;MB;R3C 3V6;Canada
+ADR;TYPE=WORK;type=POSTAL:;;333 Main St.;Winnipeg;MB;R3C 3V6;Canada
 TEL;TYPE=WORK,VOICE:1-204-941-8244
 TEL;TYPE=FAX:1-204-949-1244
 TITLE:Chief Executive Officer
 URL;TYPE=WORK:http://www.mts.ca/
-PHOTO;VALUE=uri:http://www.mts.ca/file_source/mts.ca/About%20MTS%20Allstrea
+	PHOTO;VALUE=uri:http://www.mts.ca/file_source/mts.ca/About%20MTS%20Allstrea
  m/2.0%20Our%20Company/exec_pierre.jpg
 GEO:49.894897,-97.138013
 END:VCARD
@@ -75,6 +91,16 @@ END:VCARD
 BEGIN:VCARD
 VERSION:3.0
 N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+
 FN:Jim Balsillie
 ORG:Research In Motion;
 ADR;TYPE=WORK,POSTAL:;;295 Phillip Stree;Waterloo;Ontario;N2L 3W8;Canada
@@ -130,6 +156,3344 @@ TEL;TYPE=WORK:(519) 824-4120 x52696
 TEL;TYPE=FAX:(519) 837-0323
 EMAIL:wgardner@socs.uoguelph.ca
 URL:http://www.uoguelph.ca/~gardnerw/
+PHOTO;VALUE=uri:http://www.uoguelph.ca/~gardnerw/head.gif
+GEO:43.530689;-80.229256
+UID:dEUAnoBiyT
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Entwistle;Darren
+FN:Darren Entwistle
+ORG:Telus Corporation;
+ADR;TYPE=WORK,POSTAL:;;555 Robson St.;Vancouver;BC;V6B 3K9;Canada
+TEL;TYPE=WORK,VOICE:1-604-697-8044
+TEL;TYPE=FAX:1-604-432-9681
+TITLE:Presid	ent and CEO
+URL;TYPE=WORK:http://telus.com/
+PHOTO;VALUE=uri:http://about.telus.com/investors/en/investor/images/bio_dar
+ ren_entwistle.gif
+GEO:49.280696,-123.118501
+END:VCARD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BEGIN:VCARD
+VERSION:3.0
+N:Cope;George
+FN:George Cope
+ORG:Bell Mobility Inc.;
+ADR;TYPE=WORK;TYPE=WORK2;type=work3:;;509 Creekbank Rd.;Mississauga;Ontario;L4W 5N2;Canada
+ADR;TYPE=HOME,POSTAL:;;2150 Bromsgrove Rd.;Mississauga;Ontario;L5J 4B3
+TEL;TYPE=WORK,VOICE:1-905-282-4202
+TEL;TYPE=FAX:1-905-282-3552
+URL;TYPE=HOME:http://www.bce.ca/en/aboutbce/executiveteams/bellcanada/cope/
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.bell.ca/home/
+PHOTO;VALUE=uri:http://www.bce.ca/images/cope_01.jpg
+GEO:43.642759,-79.615666
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Blouin;Pierre
+FN:Pierre Blouin
+ORG:Manitoba Telecom Services Inc.;
+ADR;TYPE=WORK;type=POSTAL:;;333 Main St.;Winnipeg;MB;R3C 3V6;Canada
+TEL;TYPE=WORK,VOICE:1-204-941-8244
+TEL;TYPE=FAX:1-204-949-1244
+TITLE:Chief Executive Officer
+URL;TYPE=WORK:http://www.mts.ca/
+	PHOTO;VALUE=uri:http://www.mts.ca/file_source/mts.ca/About%20MTS%20Allstrea
+ m/2.0%20Our%20Company/exec_pierre.jpg
+GEO:49.894897,-97.138013
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Lacavera;Tony
+FN:Tony Lacavera
+ORG:WIND mobile;
+ADR;TYPE=WORK:;207 Queens Quay West\, Suite 710;PO Box 114;Toronto;ON;M5J 1
+ A7;
+TEL;TYPE=WORK:(877) 459-5377
+TEL;TYPE=HOME:(866) 400-7633
+TITLE:Chairman
+URL;TYPE=WORK:http://www.windmobile.ca/
+PHOTO;VALUE=uri:http://media.windmobile.ca/files/about/bio_Tony_Lacavera.jp
+ g
+GEO:43.639287,-79.38088
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Choi;Gee-Sung
+FN:Gee-Sung Choi
+ORG:Samsung Electronics Co.\, Ltd.;
+ADR;TYPE=WORK,POSTAL:;;1320 Seocho-dong\, Seocho-gu;Seoul;;137-857;South Ko
+ rea
+TEL;TYPE=WORK,VOICE:82 2 2255 0114
+TEL;TYPE=FAX:82 2 2255 0117
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.samsung.com/ca/aboutsamsung/management/index.html
+PHOTO;VALUE=uri:http://www.samsung.com/us/aboutsamsung/ir/corporategovernan
+ ce/boardofdirectors/images/photo_gee-sung.gif
+GEO:37.487687,127.017427
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+
+FN:Jim Balsillie
+ORG:Research In Motion;
+ADR;TYPE=WORK,POSTAL:;;295 Phillip Stree;Waterloo;Ontario;N2L 3W8;Canada
+TEL;TYPE=WORK,VOICE:(519) 888-7465
+TEL;TYPE=FAX:(519) 888-7884
+TITLE:Co-Chief Executive Officer
+URL;TYPE=WORK:http://www.rim.com/
+PHOTO;VALUE=uri:http://www.rim.com/newsroom/mediaexecutive/jim_balsillie.jp
+ g
+GEO:43.474987,-80.539881
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Bruce;Robert
+FN:Robert Bruce
+ORG:Rogers Wireless Inc.;
+ADR;TYPE=WORK,POSTAL:;;333 Bloor Street East\, 10th Fl.;Toronto;Ontario;M4W 1G9;Canada
+TEL;TYPE=WORK,VOICE:1-416-935-1100
+TEL;TYPE=HOME,VOICE:1-416-935-8080
+TEL;TYPE=FAX:1-416-935-3597
+TITLE:President
+URL;TYPE=WORK:http://www.rogers.com/web/Rogers.portal?_nfpb=true&_pageLabel
+	=WRLS_HOME
+GEO:43.671496,-79.379889
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Jobs;Steve
+FN:Steve Jobs
+ORG:Apple Inc.;
+ADR;TYPE=WORK,POSTAL:;;1 Infinite Loop;Cupertino;California;95014;United St
+ ates of America
+TEL;TYPE=WORK,VOICE:(408) 996-1010
+TEL;TYPE=FAX:(408) 974-2113
+TITLE:Chairman & CEO
+URL;TYPE=WORK:http://www.apple.com/
+PHOTO;VALUE=uri:http://images.apple.com/pr/photos/execs/steveweb.jpg
+GEO:37.33191,-122.031262
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Gardner;William
+FN:William Gardner
+ORG:University of Guelph;School of Computer Science
+TITLE:Associate Director
+NICKNAME:Bill
+ADR;TYPE=work:;;50 Stone Road East\, Reynolds 105;Guelph;Ontario;N1G2W1
+LABEL;TYPE=work:School of Computer Science\nUniversity of Guelph\n50 Stone 
+ Road East\n105 Reynolds\nGuelph\, ON  N1G 2W1
+TEL;TYPE=WORK:(519) 824-4120 x52696
+TEL;TYPE=FAX:(519) 837-0323
+EMAIL:wgardner@socs.uoguelph.ca
+URL:http://www.uoguelph.ca/~gardnerw/
+PHOTO;VALUE=uri:http://www.uoguelph.ca/~gardnerw/head.gif
+GEO:43.530689;-80.229256
+UID:dEUAnoBiyT
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Entwistle;Darren
+FN:Darren Entwistle
+ORG:Telus Corporation;
+ADR;TYPE=WORK,POSTAL:;;555 Robson St.;Vancouver;BC;V6B 3K9;Canada
+TEL;TYPE=WORK,VOICE:1-604-697-8044
+TEL;TYPE=FAX:1-604-432-9681
+TITLE:Presid	ent and CEO
+URL;TYPE=WORK:http://telus.com/
+PHOTO;VALUE=uri:http://about.telus.com/investors/en/investor/images/bio_dar
+ ren_entwistle.gif
+GEO:49.280696,-123.118501
+END:VCARD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BEGIN:VCARD
+VERSION:3.0
+N:Cope;George
+FN:George Cope
+ORG:Bell Mobility Inc.;
+ADR;TYPE=WORK;TYPE=WORK2;type=work3:;;509 Creekbank Rd.;Mississauga;Ontario;L4W 5N2;Canada
+ADR;TYPE=HOME,POSTAL:;;2150 Bromsgrove Rd.;Mississauga;Ontario;L5J 4B3
+TEL;TYPE=WORK,VOICE:1-905-282-4202
+TEL;TYPE=FAX:1-905-282-3552
+URL;TYPE=HOME:http://www.bce.ca/en/aboutbce/executiveteams/bellcanada/cope/
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.bell.ca/home/
+PHOTO;VALUE=uri:http://www.bce.ca/images/cope_01.jpg
+GEO:43.642759,-79.615666
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Blouin;Pierre
+FN:Pierre Blouin
+ORG:Manitoba Telecom Services Inc.;
+ADR;TYPE=WORK;type=POSTAL:;;333 Main St.;Winnipeg;MB;R3C 3V6;Canada
+TEL;TYPE=WORK,VOICE:1-204-941-8244
+TEL;TYPE=FAX:1-204-949-1244
+TITLE:Chief Executive Officer
+URL;TYPE=WORK:http://www.mts.ca/
+	PHOTO;VALUE=uri:http://www.mts.ca/file_source/mts.ca/About%20MTS%20Allstrea
+ m/2.0%20Our%20Company/exec_pierre.jpg
+GEO:49.894897,-97.138013
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Lacavera;Tony
+FN:Tony Lacavera
+ORG:WIND mobile;
+ADR;TYPE=WORK:;207 Queens Quay West\, Suite 710;PO Box 114;Toronto;ON;M5J 1
+ A7;
+TEL;TYPE=WORK:(877) 459-5377
+TEL;TYPE=HOME:(866) 400-7633
+TITLE:Chairman
+URL;TYPE=WORK:http://www.windmobile.ca/
+PHOTO;VALUE=uri:http://media.windmobile.ca/files/about/bio_Tony_Lacavera.jp
+ g
+GEO:43.639287,-79.38088
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Choi;Gee-Sung
+FN:Gee-Sung Choi
+ORG:Samsung Electronics Co.\, Ltd.;
+ADR;TYPE=WORK,POSTAL:;;1320 Seocho-dong\, Seocho-gu;Seoul;;137-857;South Ko
+ rea
+TEL;TYPE=WORK,VOICE:82 2 2255 0114
+TEL;TYPE=FAX:82 2 2255 0117
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.samsung.com/ca/aboutsamsung/management/index.html
+PHOTO;VALUE=uri:http://www.samsung.com/us/aboutsamsung/ir/corporategovernan
+ ce/boardofdirectors/images/photo_gee-sung.gif
+GEO:37.487687,127.017427
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+
+FN:Jim Balsillie
+ORG:Research In Motion;
+ADR;TYPE=WORK,POSTAL:;;295 Phillip Stree;Waterloo;Ontario;N2L 3W8;Canada
+TEL;TYPE=WORK,VOICE:(519) 888-7465
+TEL;TYPE=FAX:(519) 888-7884
+TITLE:Co-Chief Executive Officer
+URL;TYPE=WORK:http://www.rim.com/
+PHOTO;VALUE=uri:http://www.rim.com/newsroom/mediaexecutive/jim_balsillie.jp
+ g
+GEO:43.474987,-80.539881
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Bruce;Robert
+FN:Robert Bruce
+ORG:Rogers Wireless Inc.;
+ADR;TYPE=WORK,POSTAL:;;333 Bloor Street East\, 10th Fl.;Toronto;Ontario;M4W 1G9;Canada
+TEL;TYPE=WORK,VOICE:1-416-935-1100
+TEL;TYPE=HOME,VOICE:1-416-935-8080
+TEL;TYPE=FAX:1-416-935-3597
+TITLE:President
+URL;TYPE=WORK:http://www.rogers.com/web/Rogers.portal?_nfpb=true&_pageLabel
+	=WRLS_HOME
+GEO:43.671496,-79.379889
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Jobs;Steve
+FN:Steve Jobs
+ORG:Apple Inc.;
+ADR;TYPE=WORK,POSTAL:;;1 Infinite Loop;Cupertino;California;95014;United St
+ ates of America
+TEL;TYPE=WORK,VOICE:(408) 996-1010
+TEL;TYPE=FAX:(408) 974-2113
+TITLE:Chairman & CEO
+URL;TYPE=WORK:http://www.apple.com/
+PHOTO;VALUE=uri:http://images.apple.com/pr/photos/execs/steveweb.jpg
+GEO:37.33191,-122.031262
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Gardner;William
+FN:William Gardner
+ORG:University of Guelph;School of Computer Science
+TITLE:Associate Director
+NICKNAME:Bill
+ADR;TYPE=work:;;50 Stone Road East\, Reynolds 105;Guelph;Ontario;N1G2W1
+LABEL;TYPE=work:School of Computer Science\nUniversity of Guelph\n50 Stone 
+ Road East\n105 Reynolds\nGuelph\, ON  N1G 2W1
+TEL;TYPE=WORK:(519) 824-4120 x52696
+TEL;TYPE=FAX:(519) 837-0323
+EMAIL:wgardner@socs.uoguelph.ca
+URL:http://www.uoguelph.ca/~gardnerw/
+PHOTO;VALUE=uri:http://www.uoguelph.ca/~gardnerw/head.gif
+GEO:43.530689;-80.229256
+UID:dEUAnoBiyT
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Entwistle;Darren
+FN:Darren Entwistle
+ORG:Telus Corporation;
+ADR;TYPE=WORK,POSTAL:;;555 Robson St.;Vancouver;BC;V6B 3K9;Canada
+TEL;TYPE=WORK,VOICE:1-604-697-8044
+TEL;TYPE=FAX:1-604-432-9681
+TITLE:Presid	ent and CEO
+URL;TYPE=WORK:http://telus.com/
+PHOTO;VALUE=uri:http://about.telus.com/investors/en/investor/images/bio_dar
+ ren_entwistle.gif
+GEO:49.280696,-123.118501
+END:VCARD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BEGIN:VCARD
+VERSION:3.0
+N:Cope;George
+FN:George Cope
+ORG:Bell Mobility Inc.;
+ADR;TYPE=WORK;TYPE=WORK2;type=work3:;;509 Creekbank Rd.;Mississauga;Ontario;L4W 5N2;Canada
+ADR;TYPE=HOME,POSTAL:;;2150 Bromsgrove Rd.;Mississauga;Ontario;L5J 4B3
+TEL;TYPE=WORK,VOICE:1-905-282-4202
+TEL;TYPE=FAX:1-905-282-3552
+URL;TYPE=HOME:http://www.bce.ca/en/aboutbce/executiveteams/bellcanada/cope/
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.bell.ca/home/
+PHOTO;VALUE=uri:http://www.bce.ca/images/cope_01.jpg
+GEO:43.642759,-79.615666
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Blouin;Pierre
+FN:Pierre Blouin
+ORG:Manitoba Telecom Services Inc.;
+ADR;TYPE=WORK;type=POSTAL:;;333 Main St.;Winnipeg;MB;R3C 3V6;Canada
+TEL;TYPE=WORK,VOICE:1-204-941-8244
+TEL;TYPE=FAX:1-204-949-1244
+TITLE:Chief Executive Officer
+URL;TYPE=WORK:http://www.mts.ca/
+	PHOTO;VALUE=uri:http://www.mts.ca/file_source/mts.ca/About%20MTS%20Allstrea
+ m/2.0%20Our%20Company/exec_pierre.jpg
+GEO:49.894897,-97.138013
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Lacavera;Tony
+FN:Tony Lacavera
+ORG:WIND mobile;
+ADR;TYPE=WORK:;207 Queens Quay West\, Suite 710;PO Box 114;Toronto;ON;M5J 1
+ A7;
+TEL;TYPE=WORK:(877) 459-5377
+TEL;TYPE=HOME:(866) 400-7633
+TITLE:Chairman
+URL;TYPE=WORK:http://www.windmobile.ca/
+PHOTO;VALUE=uri:http://media.windmobile.ca/files/about/bio_Tony_Lacavera.jp
+ g
+GEO:43.639287,-79.38088
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Choi;Gee-Sung
+FN:Gee-Sung Choi
+ORG:Samsung Electronics Co.\, Ltd.;
+ADR;TYPE=WORK,POSTAL:;;1320 Seocho-dong\, Seocho-gu;Seoul;;137-857;South Ko
+ rea
+TEL;TYPE=WORK,VOICE:82 2 2255 0114
+TEL;TYPE=FAX:82 2 2255 0117
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.samsung.com/ca/aboutsamsung/management/index.html
+PHOTO;VALUE=uri:http://www.samsung.com/us/aboutsamsung/ir/corporategovernan
+ ce/boardofdirectors/images/photo_gee-sung.gif
+GEO:37.487687,127.017427
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+
+FN:Jim Balsillie
+ORG:Research In Motion;
+ADR;TYPE=WORK,POSTAL:;;295 Phillip Stree;Waterloo;Ontario;N2L 3W8;Canada
+TEL;TYPE=WORK,VOICE:(519) 888-7465
+TEL;TYPE=FAX:(519) 888-7884
+TITLE:Co-Chief Executive Officer
+URL;TYPE=WORK:http://www.rim.com/
+PHOTO;VALUE=uri:http://www.rim.com/newsroom/mediaexecutive/jim_balsillie.jp
+ g
+GEO:43.474987,-80.539881
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Bruce;Robert
+FN:Robert Bruce
+ORG:Rogers Wireless Inc.;
+ADR;TYPE=WORK,POSTAL:;;333 Bloor Street East\, 10th Fl.;Toronto;Ontario;M4W 1G9;Canada
+TEL;TYPE=WORK,VOICE:1-416-935-1100
+TEL;TYPE=HOME,VOICE:1-416-935-8080
+TEL;TYPE=FAX:1-416-935-3597
+TITLE:President
+URL;TYPE=WORK:http://www.rogers.com/web/Rogers.portal?_nfpb=true&_pageLabel
+	=WRLS_HOME
+GEO:43.671496,-79.379889
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Jobs;Steve
+FN:Steve Jobs
+ORG:Apple Inc.;
+ADR;TYPE=WORK,POSTAL:;;1 Infinite Loop;Cupertino;California;95014;United St
+ ates of America
+TEL;TYPE=WORK,VOICE:(408) 996-1010
+TEL;TYPE=FAX:(408) 974-2113
+TITLE:Chairman & CEO
+URL;TYPE=WORK:http://www.apple.com/
+PHOTO;VALUE=uri:http://images.apple.com/pr/photos/execs/steveweb.jpg
+GEO:37.33191,-122.031262
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Gardner;William
+FN:William Gardner
+ORG:University of Guelph;School of Computer Science
+TITLE:Associate Director
+NICKNAME:Bill
+ADR;TYPE=work:;;50 Stone Road East\, Reynolds 105;Guelph;Ontario;N1G2W1
+LABEL;TYPE=work:School of Computer Science\nUniversity of Guelph\n50 Stone 
+ Road East\n105 Reynolds\nGuelph\, ON  N1G 2W1
+TEL;TYPE=WORK:(519) 824-4120 x52696
+TEL;TYPE=FAX:(519) 837-0323
+EMAIL:wgardner@socs.uoguelph.ca
+URL:http://www.uoguelph.ca/~gardnerw/
+PHOTO;VALUE=uri:http://www.uoguelph.ca/~gardnerw/head.gif
+GEO:43.530689;-80.229256
+UID:dEUAnoBiyT
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Entwistle;Darren
+FN:Darren Entwistle
+ORG:Telus Corporation;
+ADR;TYPE=WORK,POSTAL:;;555 Robson St.;Vancouver;BC;V6B 3K9;Canada
+TEL;TYPE=WORK,VOICE:1-604-697-8044
+TEL;TYPE=FAX:1-604-432-9681
+TITLE:Presid	ent and CEO
+URL;TYPE=WORK:http://telus.com/
+PHOTO;VALUE=uri:http://about.telus.com/investors/en/investor/images/bio_dar
+ ren_entwistle.gif
+GEO:49.280696,-123.118501
+END:VCARD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BEGIN:VCARD
+VERSION:3.0
+N:Cope;George
+FN:George Cope
+ORG:Bell Mobility Inc.;
+ADR;TYPE=WORK;TYPE=WORK2;type=work3:;;509 Creekbank Rd.;Mississauga;Ontario;L4W 5N2;Canada
+ADR;TYPE=HOME,POSTAL:;;2150 Bromsgrove Rd.;Mississauga;Ontario;L5J 4B3
+TEL;TYPE=WORK,VOICE:1-905-282-4202
+TEL;TYPE=FAX:1-905-282-3552
+URL;TYPE=HOME:http://www.bce.ca/en/aboutbce/executiveteams/bellcanada/cope/
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.bell.ca/home/
+PHOTO;VALUE=uri:http://www.bce.ca/images/cope_01.jpg
+GEO:43.642759,-79.615666
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Blouin;Pierre
+FN:Pierre Blouin
+ORG:Manitoba Telecom Services Inc.;
+ADR;TYPE=WORK;type=POSTAL:;;333 Main St.;Winnipeg;MB;R3C 3V6;Canada
+TEL;TYPE=WORK,VOICE:1-204-941-8244
+TEL;TYPE=FAX:1-204-949-1244
+TITLE:Chief Executive Officer
+URL;TYPE=WORK:http://www.mts.ca/
+	PHOTO;VALUE=uri:http://www.mts.ca/file_source/mts.ca/About%20MTS%20Allstrea
+ m/2.0%20Our%20Company/exec_pierre.jpg
+GEO:49.894897,-97.138013
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Lacavera;Tony
+FN:Tony Lacavera
+ORG:WIND mobile;
+ADR;TYPE=WORK:;207 Queens Quay West\, Suite 710;PO Box 114;Toronto;ON;M5J 1
+ A7;
+TEL;TYPE=WORK:(877) 459-5377
+TEL;TYPE=HOME:(866) 400-7633
+TITLE:Chairman
+URL;TYPE=WORK:http://www.windmobile.ca/
+PHOTO;VALUE=uri:http://media.windmobile.ca/files/about/bio_Tony_Lacavera.jp
+ g
+GEO:43.639287,-79.38088
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Choi;Gee-Sung
+FN:Gee-Sung Choi
+ORG:Samsung Electronics Co.\, Ltd.;
+ADR;TYPE=WORK,POSTAL:;;1320 Seocho-dong\, Seocho-gu;Seoul;;137-857;South Ko
+ rea
+TEL;TYPE=WORK,VOICE:82 2 2255 0114
+TEL;TYPE=FAX:82 2 2255 0117
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.samsung.com/ca/aboutsamsung/management/index.html
+PHOTO;VALUE=uri:http://www.samsung.com/us/aboutsamsung/ir/corporategovernan
+ ce/boardofdirectors/images/photo_gee-sung.gif
+GEO:37.487687,127.017427
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+
+FN:Jim Balsillie
+ORG:Research In Motion;
+ADR;TYPE=WORK,POSTAL:;;295 Phillip Stree;Waterloo;Ontario;N2L 3W8;Canada
+TEL;TYPE=WORK,VOICE:(519) 888-7465
+TEL;TYPE=FAX:(519) 888-7884
+TITLE:Co-Chief Executive Officer
+URL;TYPE=WORK:http://www.rim.com/
+PHOTO;VALUE=uri:http://www.rim.com/newsroom/mediaexecutive/jim_balsillie.jp
+ g
+GEO:43.474987,-80.539881
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Bruce;Robert
+FN:Robert Bruce
+ORG:Rogers Wireless Inc.;
+ADR;TYPE=WORK,POSTAL:;;333 Bloor Street East\, 10th Fl.;Toronto;Ontario;M4W 1G9;Canada
+TEL;TYPE=WORK,VOICE:1-416-935-1100
+TEL;TYPE=HOME,VOICE:1-416-935-8080
+TEL;TYPE=FAX:1-416-935-3597
+TITLE:President
+URL;TYPE=WORK:http://www.rogers.com/web/Rogers.portal?_nfpb=true&_pageLabel
+	=WRLS_HOME
+GEO:43.671496,-79.379889
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Jobs;Steve
+FN:Steve Jobs
+ORG:Apple Inc.;
+ADR;TYPE=WORK,POSTAL:;;1 Infinite Loop;Cupertino;California;95014;United St
+ ates of America
+TEL;TYPE=WORK,VOICE:(408) 996-1010
+TEL;TYPE=FAX:(408) 974-2113
+TITLE:Chairman & CEO
+URL;TYPE=WORK:http://www.apple.com/
+PHOTO;VALUE=uri:http://images.apple.com/pr/photos/execs/steveweb.jpg
+GEO:37.33191,-122.031262
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Gardner;William
+FN:William Gardner
+ORG:University of Guelph;School of Computer Science
+TITLE:Associate Director
+NICKNAME:Bill
+ADR;TYPE=work:;;50 Stone Road East\, Reynolds 105;Guelph;Ontario;N1G2W1
+LABEL;TYPE=work:School of Computer Science\nUniversity of Guelph\n50 Stone 
+ Road East\n105 Reynolds\nGuelph\, ON  N1G 2W1
+TEL;TYPE=WORK:(519) 824-4120 x52696
+TEL;TYPE=FAX:(519) 837-0323
+EMAIL:wgardner@socs.uoguelph.ca
+URL:http://www.uoguelph.ca/~gardnerw/
+PHOTO;VALUE=uri:http://www.uoguelph.ca/~gardnerw/head.gif
+GEO:43.530689;-80.229256
+UID:dEUAnoBiyT
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Entwistle;Darren
+FN:Darren Entwistle
+ORG:Telus Corporation;
+ADR;TYPE=WORK,POSTAL:;;555 Robson St.;Vancouver;BC;V6B 3K9;Canada
+TEL;TYPE=WORK,VOICE:1-604-697-8044
+TEL;TYPE=FAX:1-604-432-9681
+TITLE:Presid	ent and CEO
+URL;TYPE=WORK:http://telus.com/
+PHOTO;VALUE=uri:http://about.telus.com/investors/en/investor/images/bio_dar
+ ren_entwistle.gif
+GEO:49.280696,-123.118501
+END:VCARD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BEGIN:VCARD
+VERSION:3.0
+N:Cope;George
+FN:George Cope
+ORG:Bell Mobility Inc.;
+ADR;TYPE=WORK;TYPE=WORK2;type=work3:;;509 Creekbank Rd.;Mississauga;Ontario;L4W 5N2;Canada
+ADR;TYPE=HOME,POSTAL:;;2150 Bromsgrove Rd.;Mississauga;Ontario;L5J 4B3
+TEL;TYPE=WORK,VOICE:1-905-282-4202
+TEL;TYPE=FAX:1-905-282-3552
+URL;TYPE=HOME:http://www.bce.ca/en/aboutbce/executiveteams/bellcanada/cope/
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.bell.ca/home/
+PHOTO;VALUE=uri:http://www.bce.ca/images/cope_01.jpg
+GEO:43.642759,-79.615666
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Blouin;Pierre
+FN:Pierre Blouin
+ORG:Manitoba Telecom Services Inc.;
+ADR;TYPE=WORK;type=POSTAL:;;333 Main St.;Winnipeg;MB;R3C 3V6;Canada
+TEL;TYPE=WORK,VOICE:1-204-941-8244
+TEL;TYPE=FAX:1-204-949-1244
+TITLE:Chief Executive Officer
+URL;TYPE=WORK:http://www.mts.ca/
+	PHOTO;VALUE=uri:http://www.mts.ca/file_source/mts.ca/About%20MTS%20Allstrea
+ m/2.0%20Our%20Company/exec_pierre.jpg
+GEO:49.894897,-97.138013
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Lacavera;Tony
+FN:Tony Lacavera
+ORG:WIND mobile;
+ADR;TYPE=WORK:;207 Queens Quay West\, Suite 710;PO Box 114;Toronto;ON;M5J 1
+ A7;
+TEL;TYPE=WORK:(877) 459-5377
+TEL;TYPE=HOME:(866) 400-7633
+TITLE:Chairman
+URL;TYPE=WORK:http://www.windmobile.ca/
+PHOTO;VALUE=uri:http://media.windmobile.ca/files/about/bio_Tony_Lacavera.jp
+ g
+GEO:43.639287,-79.38088
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Choi;Gee-Sung
+FN:Gee-Sung Choi
+ORG:Samsung Electronics Co.\, Ltd.;
+ADR;TYPE=WORK,POSTAL:;;1320 Seocho-dong\, Seocho-gu;Seoul;;137-857;South Ko
+ rea
+TEL;TYPE=WORK,VOICE:82 2 2255 0114
+TEL;TYPE=FAX:82 2 2255 0117
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.samsung.com/ca/aboutsamsung/management/index.html
+PHOTO;VALUE=uri:http://www.samsung.com/us/aboutsamsung/ir/corporategovernan
+ ce/boardofdirectors/images/photo_gee-sung.gif
+GEO:37.487687,127.017427
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+
+FN:Jim Balsillie
+ORG:Research In Motion;
+ADR;TYPE=WORK,POSTAL:;;295 Phillip Stree;Waterloo;Ontario;N2L 3W8;Canada
+TEL;TYPE=WORK,VOICE:(519) 888-7465
+TEL;TYPE=FAX:(519) 888-7884
+TITLE:Co-Chief Executive Officer
+URL;TYPE=WORK:http://www.rim.com/
+PHOTO;VALUE=uri:http://www.rim.com/newsroom/mediaexecutive/jim_balsillie.jp
+ g
+GEO:43.474987,-80.539881
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Bruce;Robert
+FN:Robert Bruce
+ORG:Rogers Wireless Inc.;
+ADR;TYPE=WORK,POSTAL:;;333 Bloor Street East\, 10th Fl.;Toronto;Ontario;M4W 1G9;Canada
+TEL;TYPE=WORK,VOICE:1-416-935-1100
+TEL;TYPE=HOME,VOICE:1-416-935-8080
+TEL;TYPE=FAX:1-416-935-3597
+TITLE:President
+URL;TYPE=WORK:http://www.rogers.com/web/Rogers.portal?_nfpb=true&_pageLabel
+	=WRLS_HOME
+GEO:43.671496,-79.379889
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Jobs;Steve
+FN:Steve Jobs
+ORG:Apple Inc.;
+ADR;TYPE=WORK,POSTAL:;;1 Infinite Loop;Cupertino;California;95014;United St
+ ates of America
+TEL;TYPE=WORK,VOICE:(408) 996-1010
+TEL;TYPE=FAX:(408) 974-2113
+TITLE:Chairman & CEO
+URL;TYPE=WORK:http://www.apple.com/
+PHOTO;VALUE=uri:http://images.apple.com/pr/photos/execs/steveweb.jpg
+GEO:37.33191,-122.031262
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Gardner;William
+FN:William Gardner
+ORG:University of Guelph;School of Computer Science
+TITLE:Associate Director
+NICKNAME:Bill
+ADR;TYPE=work:;;50 Stone Road East\, Reynolds 105;Guelph;Ontario;N1G2W1
+LABEL;TYPE=work:School of Computer Science\nUniversity of Guelph\n50 Stone 
+ Road East\n105 Reynolds\nGuelph\, ON  N1G 2W1
+TEL;TYPE=WORK:(519) 824-4120 x52696
+TEL;TYPE=FAX:(519) 837-0323
+EMAIL:wgardner@socs.uoguelph.ca
+URL:http://www.uoguelph.ca/~gardnerw/
+PHOTO;VALUE=uri:http://www.uoguelph.ca/~gardnerw/head.gif
+GEO:43.530689;-80.229256
+UID:dEUAnoBiyT
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Entwistle;Darren
+FN:Darren Entwistle
+ORG:Telus Corporation;
+ADR;TYPE=WORK,POSTAL:;;555 Robson St.;Vancouver;BC;V6B 3K9;Canada
+TEL;TYPE=WORK,VOICE:1-604-697-8044
+TEL;TYPE=FAX:1-604-432-9681
+TITLE:Presid	ent and CEO
+URL;TYPE=WORK:http://telus.com/
+PHOTO;VALUE=uri:http://about.telus.com/investors/en/investor/images/bio_dar
+ ren_entwistle.gif
+GEO:49.280696,-123.118501
+END:VCARD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BEGIN:VCARD
+VERSION:3.0
+N:Cope;George
+FN:George Cope
+ORG:Bell Mobility Inc.;
+ADR;TYPE=WORK;TYPE=WORK2;type=work3:;;509 Creekbank Rd.;Mississauga;Ontario;L4W 5N2;Canada
+ADR;TYPE=HOME,POSTAL:;;2150 Bromsgrove Rd.;Mississauga;Ontario;L5J 4B3
+TEL;TYPE=WORK,VOICE:1-905-282-4202
+TEL;TYPE=FAX:1-905-282-3552
+URL;TYPE=HOME:http://www.bce.ca/en/aboutbce/executiveteams/bellcanada/cope/
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.bell.ca/home/
+PHOTO;VALUE=uri:http://www.bce.ca/images/cope_01.jpg
+GEO:43.642759,-79.615666
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Blouin;Pierre
+FN:Pierre Blouin
+ORG:Manitoba Telecom Services Inc.;
+ADR;TYPE=WORK;type=POSTAL:;;333 Main St.;Winnipeg;MB;R3C 3V6;Canada
+TEL;TYPE=WORK,VOICE:1-204-941-8244
+TEL;TYPE=FAX:1-204-949-1244
+TITLE:Chief Executive Officer
+URL;TYPE=WORK:http://www.mts.ca/
+	PHOTO;VALUE=uri:http://www.mts.ca/file_source/mts.ca/About%20MTS%20Allstrea
+ m/2.0%20Our%20Company/exec_pierre.jpg
+GEO:49.894897,-97.138013
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Lacavera;Tony
+FN:Tony Lacavera
+ORG:WIND mobile;
+ADR;TYPE=WORK:;207 Queens Quay West\, Suite 710;PO Box 114;Toronto;ON;M5J 1
+ A7;
+TEL;TYPE=WORK:(877) 459-5377
+TEL;TYPE=HOME:(866) 400-7633
+TITLE:Chairman
+URL;TYPE=WORK:http://www.windmobile.ca/
+PHOTO;VALUE=uri:http://media.windmobile.ca/files/about/bio_Tony_Lacavera.jp
+ g
+GEO:43.639287,-79.38088
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Choi;Gee-Sung
+FN:Gee-Sung Choi
+ORG:Samsung Electronics Co.\, Ltd.;
+ADR;TYPE=WORK,POSTAL:;;1320 Seocho-dong\, Seocho-gu;Seoul;;137-857;South Ko
+ rea
+TEL;TYPE=WORK,VOICE:82 2 2255 0114
+TEL;TYPE=FAX:82 2 2255 0117
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.samsung.com/ca/aboutsamsung/management/index.html
+PHOTO;VALUE=uri:http://www.samsung.com/us/aboutsamsung/ir/corporategovernan
+ ce/boardofdirectors/images/photo_gee-sung.gif
+GEO:37.487687,127.017427
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+
+FN:Jim Balsillie
+ORG:Research In Motion;
+ADR;TYPE=WORK,POSTAL:;;295 Phillip Stree;Waterloo;Ontario;N2L 3W8;Canada
+TEL;TYPE=WORK,VOICE:(519) 888-7465
+TEL;TYPE=FAX:(519) 888-7884
+TITLE:Co-Chief Executive Officer
+URL;TYPE=WORK:http://www.rim.com/
+PHOTO;VALUE=uri:http://www.rim.com/newsroom/mediaexecutive/jim_balsillie.jp
+ g
+GEO:43.474987,-80.539881
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Bruce;Robert
+FN:Robert Bruce
+ORG:Rogers Wireless Inc.;
+ADR;TYPE=WORK,POSTAL:;;333 Bloor Street East\, 10th Fl.;Toronto;Ontario;M4W 1G9;Canada
+TEL;TYPE=WORK,VOICE:1-416-935-1100
+TEL;TYPE=HOME,VOICE:1-416-935-8080
+TEL;TYPE=FAX:1-416-935-3597
+TITLE:President
+URL;TYPE=WORK:http://www.rogers.com/web/Rogers.portal?_nfpb=true&_pageLabel
+	=WRLS_HOME
+GEO:43.671496,-79.379889
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Jobs;Steve
+FN:Steve Jobs
+ORG:Apple Inc.;
+ADR;TYPE=WORK,POSTAL:;;1 Infinite Loop;Cupertino;California;95014;United St
+ ates of America
+TEL;TYPE=WORK,VOICE:(408) 996-1010
+TEL;TYPE=FAX:(408) 974-2113
+TITLE:Chairman & CEO
+URL;TYPE=WORK:http://www.apple.com/
+PHOTO;VALUE=uri:http://images.apple.com/pr/photos/execs/steveweb.jpg
+GEO:37.33191,-122.031262
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Gardner;William
+FN:William Gardner
+ORG:University of Guelph;School of Computer Science
+TITLE:Associate Director
+NICKNAME:Bill
+ADR;TYPE=work:;;50 Stone Road East\, Reynolds 105;Guelph;Ontario;N1G2W1
+LABEL;TYPE=work:School of Computer Science\nUniversity of Guelph\n50 Stone 
+ Road East\n105 Reynolds\nGuelph\, ON  N1G 2W1
+TEL;TYPE=WORK:(519) 824-4120 x52696
+TEL;TYPE=FAX:(519) 837-0323
+EMAIL:wgardner@socs.uoguelph.ca
+URL:http://www.uoguelph.ca/~gardnerw/
+PHOTO;VALUE=uri:http://www.uoguelph.ca/~gardnerw/head.gif
+GEO:43.530689;-80.229256
+UID:dEUAnoBiyT
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Entwistle;Darren
+FN:Darren Entwistle
+ORG:Telus Corporation;
+ADR;TYPE=WORK,POSTAL:;;555 Robson St.;Vancouver;BC;V6B 3K9;Canada
+TEL;TYPE=WORK,VOICE:1-604-697-8044
+TEL;TYPE=FAX:1-604-432-9681
+TITLE:Presid	ent and CEO
+URL;TYPE=WORK:http://telus.com/
+PHOTO;VALUE=uri:http://about.telus.com/investors/en/investor/images/bio_dar
+ ren_entwistle.gif
+GEO:49.280696,-123.118501
+END:VCARD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BEGIN:VCARD
+VERSION:3.0
+N:Cope;George
+FN:George Cope
+ORG:Bell Mobility Inc.;
+ADR;TYPE=WORK;TYPE=WORK2;type=work3:;;509 Creekbank Rd.;Mississauga;Ontario;L4W 5N2;Canada
+ADR;TYPE=HOME,POSTAL:;;2150 Bromsgrove Rd.;Mississauga;Ontario;L5J 4B3
+TEL;TYPE=WORK,VOICE:1-905-282-4202
+TEL;TYPE=FAX:1-905-282-3552
+URL;TYPE=HOME:http://www.bce.ca/en/aboutbce/executiveteams/bellcanada/cope/
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.bell.ca/home/
+PHOTO;VALUE=uri:http://www.bce.ca/images/cope_01.jpg
+GEO:43.642759,-79.615666
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Blouin;Pierre
+FN:Pierre Blouin
+ORG:Manitoba Telecom Services Inc.;
+ADR;TYPE=WORK;type=POSTAL:;;333 Main St.;Winnipeg;MB;R3C 3V6;Canada
+TEL;TYPE=WORK,VOICE:1-204-941-8244
+TEL;TYPE=FAX:1-204-949-1244
+TITLE:Chief Executive Officer
+URL;TYPE=WORK:http://www.mts.ca/
+	PHOTO;VALUE=uri:http://www.mts.ca/file_source/mts.ca/About%20MTS%20Allstrea
+ m/2.0%20Our%20Company/exec_pierre.jpg
+GEO:49.894897,-97.138013
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Lacavera;Tony
+FN:Tony Lacavera
+ORG:WIND mobile;
+ADR;TYPE=WORK:;207 Queens Quay West\, Suite 710;PO Box 114;Toronto;ON;M5J 1
+ A7;
+TEL;TYPE=WORK:(877) 459-5377
+TEL;TYPE=HOME:(866) 400-7633
+TITLE:Chairman
+URL;TYPE=WORK:http://www.windmobile.ca/
+PHOTO;VALUE=uri:http://media.windmobile.ca/files/about/bio_Tony_Lacavera.jp
+ g
+GEO:43.639287,-79.38088
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Choi;Gee-Sung
+FN:Gee-Sung Choi
+ORG:Samsung Electronics Co.\, Ltd.;
+ADR;TYPE=WORK,POSTAL:;;1320 Seocho-dong\, Seocho-gu;Seoul;;137-857;South Ko
+ rea
+TEL;TYPE=WORK,VOICE:82 2 2255 0114
+TEL;TYPE=FAX:82 2 2255 0117
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.samsung.com/ca/aboutsamsung/management/index.html
+PHOTO;VALUE=uri:http://www.samsung.com/us/aboutsamsung/ir/corporategovernan
+ ce/boardofdirectors/images/photo_gee-sung.gif
+GEO:37.487687,127.017427
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+
+FN:Jim Balsillie
+ORG:Research In Motion;
+ADR;TYPE=WORK,POSTAL:;;295 Phillip Stree;Waterloo;Ontario;N2L 3W8;Canada
+TEL;TYPE=WORK,VOICE:(519) 888-7465
+TEL;TYPE=FAX:(519) 888-7884
+TITLE:Co-Chief Executive Officer
+URL;TYPE=WORK:http://www.rim.com/
+PHOTO;VALUE=uri:http://www.rim.com/newsroom/mediaexecutive/jim_balsillie.jp
+ g
+GEO:43.474987,-80.539881
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Bruce;Robert
+FN:Robert Bruce
+ORG:Rogers Wireless Inc.;
+ADR;TYPE=WORK,POSTAL:;;333 Bloor Street East\, 10th Fl.;Toronto;Ontario;M4W 1G9;Canada
+TEL;TYPE=WORK,VOICE:1-416-935-1100
+TEL;TYPE=HOME,VOICE:1-416-935-8080
+TEL;TYPE=FAX:1-416-935-3597
+TITLE:President
+URL;TYPE=WORK:http://www.rogers.com/web/Rogers.portal?_nfpb=true&_pageLabel
+	=WRLS_HOME
+GEO:43.671496,-79.379889
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Jobs;Steve
+FN:Steve Jobs
+ORG:Apple Inc.;
+ADR;TYPE=WORK,POSTAL:;;1 Infinite Loop;Cupertino;California;95014;United St
+ ates of America
+TEL;TYPE=WORK,VOICE:(408) 996-1010
+TEL;TYPE=FAX:(408) 974-2113
+TITLE:Chairman & CEO
+URL;TYPE=WORK:http://www.apple.com/
+PHOTO;VALUE=uri:http://images.apple.com/pr/photos/execs/steveweb.jpg
+GEO:37.33191,-122.031262
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Gardner;William
+FN:William Gardner
+ORG:University of Guelph;School of Computer Science
+TITLE:Associate Director
+NICKNAME:Bill
+ADR;TYPE=work:;;50 Stone Road East\, Reynolds 105;Guelph;Ontario;N1G2W1
+LABEL;TYPE=work:School of Computer Science\nUniversity of Guelph\n50 Stone 
+ Road East\n105 Reynolds\nGuelph\, ON  N1G 2W1
+TEL;TYPE=WORK:(519) 824-4120 x52696
+TEL;TYPE=FAX:(519) 837-0323
+EMAIL:wgardner@socs.uoguelph.ca
+URL:http://www.uoguelph.ca/~gardnerw/
+PHOTO;VALUE=uri:http://www.uoguelph.ca/~gardnerw/head.gif
+GEO:43.530689;-80.229256
+UID:dEUAnoBiyT
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Entwistle;Darren
+FN:Darren Entwistle
+ORG:Telus Corporation;
+ADR;TYPE=WORK,POSTAL:;;555 Robson St.;Vancouver;BC;V6B 3K9;Canada
+TEL;TYPE=WORK,VOICE:1-604-697-8044
+TEL;TYPE=FAX:1-604-432-9681
+TITLE:Presid	ent and CEO
+URL;TYPE=WORK:http://telus.com/
+PHOTO;VALUE=uri:http://about.telus.com/investors/en/investor/images/bio_dar
+ ren_entwistle.gif
+GEO:49.280696,-123.118501
+END:VCARD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BEGIN:VCARD
+VERSION:3.0
+N:Cope;George
+FN:George Cope
+ORG:Bell Mobility Inc.;
+ADR;TYPE=WORK;TYPE=WORK2;type=work3:;;509 Creekbank Rd.;Mississauga;Ontario;L4W 5N2;Canada
+ADR;TYPE=HOME,POSTAL:;;2150 Bromsgrove Rd.;Mississauga;Ontario;L5J 4B3
+TEL;TYPE=WORK,VOICE:1-905-282-4202
+TEL;TYPE=FAX:1-905-282-3552
+URL;TYPE=HOME:http://www.bce.ca/en/aboutbce/executiveteams/bellcanada/cope/
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.bell.ca/home/
+PHOTO;VALUE=uri:http://www.bce.ca/images/cope_01.jpg
+GEO:43.642759,-79.615666
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Blouin;Pierre
+FN:Pierre Blouin
+ORG:Manitoba Telecom Services Inc.;
+ADR;TYPE=WORK;type=POSTAL:;;333 Main St.;Winnipeg;MB;R3C 3V6;Canada
+TEL;TYPE=WORK,VOICE:1-204-941-8244
+TEL;TYPE=FAX:1-204-949-1244
+TITLE:Chief Executive Officer
+URL;TYPE=WORK:http://www.mts.ca/
+	PHOTO;VALUE=uri:http://www.mts.ca/file_source/mts.ca/About%20MTS%20Allstrea
+ m/2.0%20Our%20Company/exec_pierre.jpg
+GEO:49.894897,-97.138013
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Lacavera;Tony
+FN:Tony Lacavera
+ORG:WIND mobile;
+ADR;TYPE=WORK:;207 Queens Quay West\, Suite 710;PO Box 114;Toronto;ON;M5J 1
+ A7;
+TEL;TYPE=WORK:(877) 459-5377
+TEL;TYPE=HOME:(866) 400-7633
+TITLE:Chairman
+URL;TYPE=WORK:http://www.windmobile.ca/
+PHOTO;VALUE=uri:http://media.windmobile.ca/files/about/bio_Tony_Lacavera.jp
+ g
+GEO:43.639287,-79.38088
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Choi;Gee-Sung
+FN:Gee-Sung Choi
+ORG:Samsung Electronics Co.\, Ltd.;
+ADR;TYPE=WORK,POSTAL:;;1320 Seocho-dong\, Seocho-gu;Seoul;;137-857;South Ko
+ rea
+TEL;TYPE=WORK,VOICE:82 2 2255 0114
+TEL;TYPE=FAX:82 2 2255 0117
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.samsung.com/ca/aboutsamsung/management/index.html
+PHOTO;VALUE=uri:http://www.samsung.com/us/aboutsamsung/ir/corporategovernan
+ ce/boardofdirectors/images/photo_gee-sung.gif
+GEO:37.487687,127.017427
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+
+FN:Jim Balsillie
+ORG:Research In Motion;
+ADR;TYPE=WORK,POSTAL:;;295 Phillip Stree;Waterloo;Ontario;N2L 3W8;Canada
+TEL;TYPE=WORK,VOICE:(519) 888-7465
+TEL;TYPE=FAX:(519) 888-7884
+TITLE:Co-Chief Executive Officer
+URL;TYPE=WORK:http://www.rim.com/
+PHOTO;VALUE=uri:http://www.rim.com/newsroom/mediaexecutive/jim_balsillie.jp
+ g
+GEO:43.474987,-80.539881
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Bruce;Robert
+FN:Robert Bruce
+ORG:Rogers Wireless Inc.;
+ADR;TYPE=WORK,POSTAL:;;333 Bloor Street East\, 10th Fl.;Toronto;Ontario;M4W 1G9;Canada
+TEL;TYPE=WORK,VOICE:1-416-935-1100
+TEL;TYPE=HOME,VOICE:1-416-935-8080
+TEL;TYPE=FAX:1-416-935-3597
+TITLE:President
+URL;TYPE=WORK:http://www.rogers.com/web/Rogers.portal?_nfpb=true&_pageLabel
+	=WRLS_HOME
+GEO:43.671496,-79.379889
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Jobs;Steve
+FN:Steve Jobs
+ORG:Apple Inc.;
+ADR;TYPE=WORK,POSTAL:;;1 Infinite Loop;Cupertino;California;95014;United St
+ ates of America
+TEL;TYPE=WORK,VOICE:(408) 996-1010
+TEL;TYPE=FAX:(408) 974-2113
+TITLE:Chairman & CEO
+URL;TYPE=WORK:http://www.apple.com/
+PHOTO;VALUE=uri:http://images.apple.com/pr/photos/execs/steveweb.jpg
+GEO:37.33191,-122.031262
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Gardner;William
+FN:William Gardner
+ORG:University of Guelph;School of Computer Science
+TITLE:Associate Director
+NICKNAME:Bill
+ADR;TYPE=work:;;50 Stone Road East\, Reynolds 105;Guelph;Ontario;N1G2W1
+LABEL;TYPE=work:School of Computer Science\nUniversity of Guelph\n50 Stone 
+ Road East\n105 Reynolds\nGuelph\, ON  N1G 2W1
+TEL;TYPE=WORK:(519) 824-4120 x52696
+TEL;TYPE=FAX:(519) 837-0323
+EMAIL:wgardner@socs.uoguelph.ca
+URL:http://www.uoguelph.ca/~gardnerw/
+PHOTO;VALUE=uri:http://www.uoguelph.ca/~gardnerw/head.gif
+GEO:43.530689;-80.229256
+UID:dEUAnoBiyT
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Entwistle;Darren
+FN:Darren Entwistle
+ORG:Telus Corporation;
+ADR;TYPE=WORK,POSTAL:;;555 Robson St.;Vancouver;BC;V6B 3K9;Canada
+TEL;TYPE=WORK,VOICE:1-604-697-8044
+TEL;TYPE=FAX:1-604-432-9681
+TITLE:Presid	ent and CEO
+URL;TYPE=WORK:http://telus.com/
+PHOTO;VALUE=uri:http://about.telus.com/investors/en/investor/images/bio_dar
+ ren_entwistle.gif
+GEO:49.280696,-123.118501
+END:VCARD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BEGIN:VCARD
+VERSION:3.0
+N:Cope;George
+FN:George Cope
+ORG:Bell Mobility Inc.;
+ADR;TYPE=WORK;TYPE=WORK2;type=work3:;;509 Creekbank Rd.;Mississauga;Ontario;L4W 5N2;Canada
+ADR;TYPE=HOME,POSTAL:;;2150 Bromsgrove Rd.;Mississauga;Ontario;L5J 4B3
+TEL;TYPE=WORK,VOICE:1-905-282-4202
+TEL;TYPE=FAX:1-905-282-3552
+URL;TYPE=HOME:http://www.bce.ca/en/aboutbce/executiveteams/bellcanada/cope/
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.bell.ca/home/
+PHOTO;VALUE=uri:http://www.bce.ca/images/cope_01.jpg
+GEO:43.642759,-79.615666
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Blouin;Pierre
+FN:Pierre Blouin
+ORG:Manitoba Telecom Services Inc.;
+ADR;TYPE=WORK;type=POSTAL:;;333 Main St.;Winnipeg;MB;R3C 3V6;Canada
+TEL;TYPE=WORK,VOICE:1-204-941-8244
+TEL;TYPE=FAX:1-204-949-1244
+TITLE:Chief Executive Officer
+URL;TYPE=WORK:http://www.mts.ca/
+	PHOTO;VALUE=uri:http://www.mts.ca/file_source/mts.ca/About%20MTS%20Allstrea
+ m/2.0%20Our%20Company/exec_pierre.jpg
+GEO:49.894897,-97.138013
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Lacavera;Tony
+FN:Tony Lacavera
+ORG:WIND mobile;
+ADR;TYPE=WORK:;207 Queens Quay West\, Suite 710;PO Box 114;Toronto;ON;M5J 1
+ A7;
+TEL;TYPE=WORK:(877) 459-5377
+TEL;TYPE=HOME:(866) 400-7633
+TITLE:Chairman
+URL;TYPE=WORK:http://www.windmobile.ca/
+PHOTO;VALUE=uri:http://media.windmobile.ca/files/about/bio_Tony_Lacavera.jp
+ g
+GEO:43.639287,-79.38088
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Choi;Gee-Sung
+FN:Gee-Sung Choi
+ORG:Samsung Electronics Co.\, Ltd.;
+ADR;TYPE=WORK,POSTAL:;;1320 Seocho-dong\, Seocho-gu;Seoul;;137-857;South Ko
+ rea
+TEL;TYPE=WORK,VOICE:82 2 2255 0114
+TEL;TYPE=FAX:82 2 2255 0117
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.samsung.com/ca/aboutsamsung/management/index.html
+PHOTO;VALUE=uri:http://www.samsung.com/us/aboutsamsung/ir/corporategovernan
+ ce/boardofdirectors/images/photo_gee-sung.gif
+GEO:37.487687,127.017427
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+
+FN:Jim Balsillie
+ORG:Research In Motion;
+ADR;TYPE=WORK,POSTAL:;;295 Phillip Stree;Waterloo;Ontario;N2L 3W8;Canada
+TEL;TYPE=WORK,VOICE:(519) 888-7465
+TEL;TYPE=FAX:(519) 888-7884
+TITLE:Co-Chief Executive Officer
+URL;TYPE=WORK:http://www.rim.com/
+PHOTO;VALUE=uri:http://www.rim.com/newsroom/mediaexecutive/jim_balsillie.jp
+ g
+GEO:43.474987,-80.539881
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Bruce;Robert
+FN:Robert Bruce
+ORG:Rogers Wireless Inc.;
+ADR;TYPE=WORK,POSTAL:;;333 Bloor Street East\, 10th Fl.;Toronto;Ontario;M4W 1G9;Canada
+TEL;TYPE=WORK,VOICE:1-416-935-1100
+TEL;TYPE=HOME,VOICE:1-416-935-8080
+TEL;TYPE=FAX:1-416-935-3597
+TITLE:President
+URL;TYPE=WORK:http://www.rogers.com/web/Rogers.portal?_nfpb=true&_pageLabel
+	=WRLS_HOME
+GEO:43.671496,-79.379889
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Jobs;Steve
+FN:Steve Jobs
+ORG:Apple Inc.;
+ADR;TYPE=WORK,POSTAL:;;1 Infinite Loop;Cupertino;California;95014;United St
+ ates of America
+TEL;TYPE=WORK,VOICE:(408) 996-1010
+TEL;TYPE=FAX:(408) 974-2113
+TITLE:Chairman & CEO
+URL;TYPE=WORK:http://www.apple.com/
+PHOTO;VALUE=uri:http://images.apple.com/pr/photos/execs/steveweb.jpg
+GEO:37.33191,-122.031262
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Gardner;William
+FN:William Gardner
+ORG:University of Guelph;School of Computer Science
+TITLE:Associate Director
+NICKNAME:Bill
+ADR;TYPE=work:;;50 Stone Road East\, Reynolds 105;Guelph;Ontario;N1G2W1
+LABEL;TYPE=work:School of Computer Science\nUniversity of Guelph\n50 Stone 
+ Road East\n105 Reynolds\nGuelph\, ON  N1G 2W1
+TEL;TYPE=WORK:(519) 824-4120 x52696
+TEL;TYPE=FAX:(519) 837-0323
+EMAIL:wgardner@socs.uoguelph.ca
+URL:http://www.uoguelph.ca/~gardnerw/
+PHOTO;VALUE=uri:http://www.uoguelph.ca/~gardnerw/head.gif
+GEO:43.530689;-80.229256
+UID:dEUAnoBiyT
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Entwistle;Darren
+FN:Darren Entwistle
+ORG:Telus Corporation;
+ADR;TYPE=WORK,POSTAL:;;555 Robson St.;Vancouver;BC;V6B 3K9;Canada
+TEL;TYPE=WORK,VOICE:1-604-697-8044
+TEL;TYPE=FAX:1-604-432-9681
+TITLE:Presid	ent and CEO
+URL;TYPE=WORK:http://telus.com/
+PHOTO;VALUE=uri:http://about.telus.com/investors/en/investor/images/bio_dar
+ ren_entwistle.gif
+GEO:49.280696,-123.118501
+END:VCARD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BEGIN:VCARD
+VERSION:3.0
+N:Cope;George
+FN:George Cope
+ORG:Bell Mobility Inc.;
+ADR;TYPE=WORK;TYPE=WORK2;type=work3:;;509 Creekbank Rd.;Mississauga;Ontario;L4W 5N2;Canada
+ADR;TYPE=HOME,POSTAL:;;2150 Bromsgrove Rd.;Mississauga;Ontario;L5J 4B3
+TEL;TYPE=WORK,VOICE:1-905-282-4202
+TEL;TYPE=FAX:1-905-282-3552
+URL;TYPE=HOME:http://www.bce.ca/en/aboutbce/executiveteams/bellcanada/cope/
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.bell.ca/home/
+PHOTO;VALUE=uri:http://www.bce.ca/images/cope_01.jpg
+GEO:43.642759,-79.615666
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Blouin;Pierre
+FN:Pierre Blouin
+ORG:Manitoba Telecom Services Inc.;
+ADR;TYPE=WORK;type=POSTAL:;;333 Main St.;Winnipeg;MB;R3C 3V6;Canada
+TEL;TYPE=WORK,VOICE:1-204-941-8244
+TEL;TYPE=FAX:1-204-949-1244
+TITLE:Chief Executive Officer
+URL;TYPE=WORK:http://www.mts.ca/
+	PHOTO;VALUE=uri:http://www.mts.ca/file_source/mts.ca/About%20MTS%20Allstrea
+ m/2.0%20Our%20Company/exec_pierre.jpg
+GEO:49.894897,-97.138013
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Lacavera;Tony
+FN:Tony Lacavera
+ORG:WIND mobile;
+ADR;TYPE=WORK:;207 Queens Quay West\, Suite 710;PO Box 114;Toronto;ON;M5J 1
+ A7;
+TEL;TYPE=WORK:(877) 459-5377
+TEL;TYPE=HOME:(866) 400-7633
+TITLE:Chairman
+URL;TYPE=WORK:http://www.windmobile.ca/
+PHOTO;VALUE=uri:http://media.windmobile.ca/files/about/bio_Tony_Lacavera.jp
+ g
+GEO:43.639287,-79.38088
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Choi;Gee-Sung
+FN:Gee-Sung Choi
+ORG:Samsung Electronics Co.\, Ltd.;
+ADR;TYPE=WORK,POSTAL:;;1320 Seocho-dong\, Seocho-gu;Seoul;;137-857;South Ko
+ rea
+TEL;TYPE=WORK,VOICE:82 2 2255 0114
+TEL;TYPE=FAX:82 2 2255 0117
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.samsung.com/ca/aboutsamsung/management/index.html
+PHOTO;VALUE=uri:http://www.samsung.com/us/aboutsamsung/ir/corporategovernan
+ ce/boardofdirectors/images/photo_gee-sung.gif
+GEO:37.487687,127.017427
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+
+FN:Jim Balsillie
+ORG:Research In Motion;
+ADR;TYPE=WORK,POSTAL:;;295 Phillip Stree;Waterloo;Ontario;N2L 3W8;Canada
+TEL;TYPE=WORK,VOICE:(519) 888-7465
+TEL;TYPE=FAX:(519) 888-7884
+TITLE:Co-Chief Executive Officer
+URL;TYPE=WORK:http://www.rim.com/
+PHOTO;VALUE=uri:http://www.rim.com/newsroom/mediaexecutive/jim_balsillie.jp
+ g
+GEO:43.474987,-80.539881
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Bruce;Robert
+FN:Robert Bruce
+ORG:Rogers Wireless Inc.;
+ADR;TYPE=WORK,POSTAL:;;333 Bloor Street East\, 10th Fl.;Toronto;Ontario;M4W 1G9;Canada
+TEL;TYPE=WORK,VOICE:1-416-935-1100
+TEL;TYPE=HOME,VOICE:1-416-935-8080
+TEL;TYPE=FAX:1-416-935-3597
+TITLE:President
+URL;TYPE=WORK:http://www.rogers.com/web/Rogers.portal?_nfpb=true&_pageLabel
+	=WRLS_HOME
+GEO:43.671496,-79.379889
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Jobs;Steve
+FN:Steve Jobs
+ORG:Apple Inc.;
+ADR;TYPE=WORK,POSTAL:;;1 Infinite Loop;Cupertino;California;95014;United St
+ ates of America
+TEL;TYPE=WORK,VOICE:(408) 996-1010
+TEL;TYPE=FAX:(408) 974-2113
+TITLE:Chairman & CEO
+URL;TYPE=WORK:http://www.apple.com/
+PHOTO;VALUE=uri:http://images.apple.com/pr/photos/execs/steveweb.jpg
+GEO:37.33191,-122.031262
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Gardner;William
+FN:William Gardner
+ORG:University of Guelph;School of Computer Science
+TITLE:Associate Director
+NICKNAME:Bill
+ADR;TYPE=work:;;50 Stone Road East\, Reynolds 105;Guelph;Ontario;N1G2W1
+LABEL;TYPE=work:School of Computer Science\nUniversity of Guelph\n50 Stone 
+ Road East\n105 Reynolds\nGuelph\, ON  N1G 2W1
+TEL;TYPE=WORK:(519) 824-4120 x52696
+TEL;TYPE=FAX:(519) 837-0323
+EMAIL:wgardner@socs.uoguelph.ca
+URL:http://www.uoguelph.ca/~gardnerw/
+PHOTO;VALUE=uri:http://www.uoguelph.ca/~gardnerw/head.gif
+GEO:43.530689;-80.229256
+UID:dEUAnoBiyT
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Entwistle;Darren
+FN:Darren Entwistle
+ORG:Telus Corporation;
+ADR;TYPE=WORK,POSTAL:;;555 Robson St.;Vancouver;BC;V6B 3K9;Canada
+TEL;TYPE=WORK,VOICE:1-604-697-8044
+TEL;TYPE=FAX:1-604-432-9681
+TITLE:Presid	ent and CEO
+URL;TYPE=WORK:http://telus.com/
+PHOTO;VALUE=uri:http://about.telus.com/investors/en/investor/images/bio_dar
+ ren_entwistle.gif
+GEO:49.280696,-123.118501
+END:VCARD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BEGIN:VCARD
+VERSION:3.0
+N:Cope;George
+FN:George Cope
+ORG:Bell Mobility Inc.;
+ADR;TYPE=WORK;TYPE=WORK2;type=work3:;;509 Creekbank Rd.;Mississauga;Ontario;L4W 5N2;Canada
+ADR;TYPE=HOME,POSTAL:;;2150 Bromsgrove Rd.;Mississauga;Ontario;L5J 4B3
+TEL;TYPE=WORK,VOICE:1-905-282-4202
+TEL;TYPE=FAX:1-905-282-3552
+URL;TYPE=HOME:http://www.bce.ca/en/aboutbce/executiveteams/bellcanada/cope/
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.bell.ca/home/
+PHOTO;VALUE=uri:http://www.bce.ca/images/cope_01.jpg
+GEO:43.642759,-79.615666
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Blouin;Pierre
+FN:Pierre Blouin
+ORG:Manitoba Telecom Services Inc.;
+ADR;TYPE=WORK;type=POSTAL:;;333 Main St.;Winnipeg;MB;R3C 3V6;Canada
+TEL;TYPE=WORK,VOICE:1-204-941-8244
+TEL;TYPE=FAX:1-204-949-1244
+TITLE:Chief Executive Officer
+URL;TYPE=WORK:http://www.mts.ca/
+	PHOTO;VALUE=uri:http://www.mts.ca/file_source/mts.ca/About%20MTS%20Allstrea
+ m/2.0%20Our%20Company/exec_pierre.jpg
+GEO:49.894897,-97.138013
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Lacavera;Tony
+FN:Tony Lacavera
+ORG:WIND mobile;
+ADR;TYPE=WORK:;207 Queens Quay West\, Suite 710;PO Box 114;Toronto;ON;M5J 1
+ A7;
+TEL;TYPE=WORK:(877) 459-5377
+TEL;TYPE=HOME:(866) 400-7633
+TITLE:Chairman
+URL;TYPE=WORK:http://www.windmobile.ca/
+PHOTO;VALUE=uri:http://media.windmobile.ca/files/about/bio_Tony_Lacavera.jp
+ g
+GEO:43.639287,-79.38088
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Choi;Gee-Sung
+FN:Gee-Sung Choi
+ORG:Samsung Electronics Co.\, Ltd.;
+ADR;TYPE=WORK,POSTAL:;;1320 Seocho-dong\, Seocho-gu;Seoul;;137-857;South Ko
+ rea
+TEL;TYPE=WORK,VOICE:82 2 2255 0114
+TEL;TYPE=FAX:82 2 2255 0117
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.samsung.com/ca/aboutsamsung/management/index.html
+PHOTO;VALUE=uri:http://www.samsung.com/us/aboutsamsung/ir/corporategovernan
+ ce/boardofdirectors/images/photo_gee-sung.gif
+GEO:37.487687,127.017427
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+
+FN:Jim Balsillie
+ORG:Research In Motion;
+ADR;TYPE=WORK,POSTAL:;;295 Phillip Stree;Waterloo;Ontario;N2L 3W8;Canada
+TEL;TYPE=WORK,VOICE:(519) 888-7465
+TEL;TYPE=FAX:(519) 888-7884
+TITLE:Co-Chief Executive Officer
+URL;TYPE=WORK:http://www.rim.com/
+PHOTO;VALUE=uri:http://www.rim.com/newsroom/mediaexecutive/jim_balsillie.jp
+ g
+GEO:43.474987,-80.539881
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Bruce;Robert
+FN:Robert Bruce
+ORG:Rogers Wireless Inc.;
+ADR;TYPE=WORK,POSTAL:;;333 Bloor Street East\, 10th Fl.;Toronto;Ontario;M4W 1G9;Canada
+TEL;TYPE=WORK,VOICE:1-416-935-1100
+TEL;TYPE=HOME,VOICE:1-416-935-8080
+TEL;TYPE=FAX:1-416-935-3597
+TITLE:President
+URL;TYPE=WORK:http://www.rogers.com/web/Rogers.portal?_nfpb=true&_pageLabel
+	=WRLS_HOME
+GEO:43.671496,-79.379889
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Jobs;Steve
+FN:Steve Jobs
+ORG:Apple Inc.;
+ADR;TYPE=WORK,POSTAL:;;1 Infinite Loop;Cupertino;California;95014;United St
+ ates of America
+TEL;TYPE=WORK,VOICE:(408) 996-1010
+TEL;TYPE=FAX:(408) 974-2113
+TITLE:Chairman & CEO
+URL;TYPE=WORK:http://www.apple.com/
+PHOTO;VALUE=uri:http://images.apple.com/pr/photos/execs/steveweb.jpg
+GEO:37.33191,-122.031262
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Gardner;William
+FN:William Gardner
+ORG:University of Guelph;School of Computer Science
+TITLE:Associate Director
+NICKNAME:Bill
+ADR;TYPE=work:;;50 Stone Road East\, Reynolds 105;Guelph;Ontario;N1G2W1
+LABEL;TYPE=work:School of Computer Science\nUniversity of Guelph\n50 Stone 
+ Road East\n105 Reynolds\nGuelph\, ON  N1G 2W1
+TEL;TYPE=WORK:(519) 824-4120 x52696
+TEL;TYPE=FAX:(519) 837-0323
+EMAIL:wgardner@socs.uoguelph.ca
+URL:http://www.uoguelph.ca/~gardnerw/
+PHOTO;VALUE=uri:http://www.uoguelph.ca/~gardnerw/head.gif
+GEO:43.530689;-80.229256
+UID:dEUAnoBiyT
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Entwistle;Darren
+FN:Darren Entwistle
+ORG:Telus Corporation;
+ADR;TYPE=WORK,POSTAL:;;555 Robson St.;Vancouver;BC;V6B 3K9;Canada
+TEL;TYPE=WORK,VOICE:1-604-697-8044
+TEL;TYPE=FAX:1-604-432-9681
+TITLE:Presid	ent and CEO
+URL;TYPE=WORK:http://telus.com/
+PHOTO;VALUE=uri:http://about.telus.com/investors/en/investor/images/bio_dar
+ ren_entwistle.gif
+GEO:49.280696,-123.118501
+END:VCARD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BEGIN:VCARD
+VERSION:3.0
+N:Cope;George
+FN:George Cope
+ORG:Bell Mobility Inc.;
+ADR;TYPE=WORK;TYPE=WORK2;type=work3:;;509 Creekbank Rd.;Mississauga;Ontario;L4W 5N2;Canada
+ADR;TYPE=HOME,POSTAL:;;2150 Bromsgrove Rd.;Mississauga;Ontario;L5J 4B3
+TEL;TYPE=WORK,VOICE:1-905-282-4202
+TEL;TYPE=FAX:1-905-282-3552
+URL;TYPE=HOME:http://www.bce.ca/en/aboutbce/executiveteams/bellcanada/cope/
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.bell.ca/home/
+PHOTO;VALUE=uri:http://www.bce.ca/images/cope_01.jpg
+GEO:43.642759,-79.615666
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Blouin;Pierre
+FN:Pierre Blouin
+ORG:Manitoba Telecom Services Inc.;
+ADR;TYPE=WORK;type=POSTAL:;;333 Main St.;Winnipeg;MB;R3C 3V6;Canada
+TEL;TYPE=WORK,VOICE:1-204-941-8244
+TEL;TYPE=FAX:1-204-949-1244
+TITLE:Chief Executive Officer
+URL;TYPE=WORK:http://www.mts.ca/
+	PHOTO;VALUE=uri:http://www.mts.ca/file_source/mts.ca/About%20MTS%20Allstrea
+ m/2.0%20Our%20Company/exec_pierre.jpg
+GEO:49.894897,-97.138013
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Lacavera;Tony
+FN:Tony Lacavera
+ORG:WIND mobile;
+ADR;TYPE=WORK:;207 Queens Quay West\, Suite 710;PO Box 114;Toronto;ON;M5J 1
+ A7;
+TEL;TYPE=WORK:(877) 459-5377
+TEL;TYPE=HOME:(866) 400-7633
+TITLE:Chairman
+URL;TYPE=WORK:http://www.windmobile.ca/
+PHOTO;VALUE=uri:http://media.windmobile.ca/files/about/bio_Tony_Lacavera.jp
+ g
+GEO:43.639287,-79.38088
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Choi;Gee-Sung
+FN:Gee-Sung Choi
+ORG:Samsung Electronics Co.\, Ltd.;
+ADR;TYPE=WORK,POSTAL:;;1320 Seocho-dong\, Seocho-gu;Seoul;;137-857;South Ko
+ rea
+TEL;TYPE=WORK,VOICE:82 2 2255 0114
+TEL;TYPE=FAX:82 2 2255 0117
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.samsung.com/ca/aboutsamsung/management/index.html
+PHOTO;VALUE=uri:http://www.samsung.com/us/aboutsamsung/ir/corporategovernan
+ ce/boardofdirectors/images/photo_gee-sung.gif
+GEO:37.487687,127.017427
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+
+FN:Jim Balsillie
+ORG:Research In Motion;
+ADR;TYPE=WORK,POSTAL:;;295 Phillip Stree;Waterloo;Ontario;N2L 3W8;Canada
+TEL;TYPE=WORK,VOICE:(519) 888-7465
+TEL;TYPE=FAX:(519) 888-7884
+TITLE:Co-Chief Executive Officer
+URL;TYPE=WORK:http://www.rim.com/
+PHOTO;VALUE=uri:http://www.rim.com/newsroom/mediaexecutive/jim_balsillie.jp
+ g
+GEO:43.474987,-80.539881
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Bruce;Robert
+FN:Robert Bruce
+ORG:Rogers Wireless Inc.;
+ADR;TYPE=WORK,POSTAL:;;333 Bloor Street East\, 10th Fl.;Toronto;Ontario;M4W 1G9;Canada
+TEL;TYPE=WORK,VOICE:1-416-935-1100
+TEL;TYPE=HOME,VOICE:1-416-935-8080
+TEL;TYPE=FAX:1-416-935-3597
+TITLE:President
+URL;TYPE=WORK:http://www.rogers.com/web/Rogers.portal?_nfpb=true&_pageLabel
+	=WRLS_HOME
+GEO:43.671496,-79.379889
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Jobs;Steve
+FN:Steve Jobs
+ORG:Apple Inc.;
+ADR;TYPE=WORK,POSTAL:;;1 Infinite Loop;Cupertino;California;95014;United St
+ ates of America
+TEL;TYPE=WORK,VOICE:(408) 996-1010
+TEL;TYPE=FAX:(408) 974-2113
+TITLE:Chairman & CEO
+URL;TYPE=WORK:http://www.apple.com/
+PHOTO;VALUE=uri:http://images.apple.com/pr/photos/execs/steveweb.jpg
+GEO:37.33191,-122.031262
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Gardner;William
+FN:William Gardner
+ORG:University of Guelph;School of Computer Science
+TITLE:Associate Director
+NICKNAME:Bill
+ADR;TYPE=work:;;50 Stone Road East\, Reynolds 105;Guelph;Ontario;N1G2W1
+LABEL;TYPE=work:School of Computer Science\nUniversity of Guelph\n50 Stone 
+ Road East\n105 Reynolds\nGuelph\, ON  N1G 2W1
+TEL;TYPE=WORK:(519) 824-4120 x52696
+TEL;TYPE=FAX:(519) 837-0323
+EMAIL:wgardner@socs.uoguelph.ca
+URL:http://www.uoguelph.ca/~gardnerw/
+PHOTO;VALUE=uri:http://www.uoguelph.ca/~gardnerw/head.gif
+GEO:43.530689;-80.229256
+UID:dEUAnoBiyT
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Entwistle;Darren
+FN:Darren Entwistle
+ORG:Telus Corporation;
+ADR;TYPE=WORK,POSTAL:;;555 Robson St.;Vancouver;BC;V6B 3K9;Canada
+TEL;TYPE=WORK,VOICE:1-604-697-8044
+TEL;TYPE=FAX:1-604-432-9681
+TITLE:Presid	ent and CEO
+URL;TYPE=WORK:http://telus.com/
+PHOTO;VALUE=uri:http://about.telus.com/investors/en/investor/images/bio_dar
+ ren_entwistle.gif
+GEO:49.280696,-123.118501
+END:VCARD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BEGIN:VCARD
+VERSION:3.0
+N:Cope;George
+FN:George Cope
+ORG:Bell Mobility Inc.;
+ADR;TYPE=WORK;TYPE=WORK2;type=work3:;;509 Creekbank Rd.;Mississauga;Ontario;L4W 5N2;Canada
+ADR;TYPE=HOME,POSTAL:;;2150 Bromsgrove Rd.;Mississauga;Ontario;L5J 4B3
+TEL;TYPE=WORK,VOICE:1-905-282-4202
+TEL;TYPE=FAX:1-905-282-3552
+URL;TYPE=HOME:http://www.bce.ca/en/aboutbce/executiveteams/bellcanada/cope/
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.bell.ca/home/
+PHOTO;VALUE=uri:http://www.bce.ca/images/cope_01.jpg
+GEO:43.642759,-79.615666
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Blouin;Pierre
+FN:Pierre Blouin
+ORG:Manitoba Telecom Services Inc.;
+ADR;TYPE=WORK;type=POSTAL:;;333 Main St.;Winnipeg;MB;R3C 3V6;Canada
+TEL;TYPE=WORK,VOICE:1-204-941-8244
+TEL;TYPE=FAX:1-204-949-1244
+TITLE:Chief Executive Officer
+URL;TYPE=WORK:http://www.mts.ca/
+	PHOTO;VALUE=uri:http://www.mts.ca/file_source/mts.ca/About%20MTS%20Allstrea
+ m/2.0%20Our%20Company/exec_pierre.jpg
+GEO:49.894897,-97.138013
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Lacavera;Tony
+FN:Tony Lacavera
+ORG:WIND mobile;
+ADR;TYPE=WORK:;207 Queens Quay West\, Suite 710;PO Box 114;Toronto;ON;M5J 1
+ A7;
+TEL;TYPE=WORK:(877) 459-5377
+TEL;TYPE=HOME:(866) 400-7633
+TITLE:Chairman
+URL;TYPE=WORK:http://www.windmobile.ca/
+PHOTO;VALUE=uri:http://media.windmobile.ca/files/about/bio_Tony_Lacavera.jp
+ g
+GEO:43.639287,-79.38088
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Choi;Gee-Sung
+FN:Gee-Sung Choi
+ORG:Samsung Electronics Co.\, Ltd.;
+ADR;TYPE=WORK,POSTAL:;;1320 Seocho-dong\, Seocho-gu;Seoul;;137-857;South Ko
+ rea
+TEL;TYPE=WORK,VOICE:82 2 2255 0114
+TEL;TYPE=FAX:82 2 2255 0117
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.samsung.com/ca/aboutsamsung/management/index.html
+PHOTO;VALUE=uri:http://www.samsung.com/us/aboutsamsung/ir/corporategovernan
+ ce/boardofdirectors/images/photo_gee-sung.gif
+GEO:37.487687,127.017427
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+
+FN:Jim Balsillie
+ORG:Research In Motion;
+ADR;TYPE=WORK,POSTAL:;;295 Phillip Stree;Waterloo;Ontario;N2L 3W8;Canada
+TEL;TYPE=WORK,VOICE:(519) 888-7465
+TEL;TYPE=FAX:(519) 888-7884
+TITLE:Co-Chief Executive Officer
+URL;TYPE=WORK:http://www.rim.com/
+PHOTO;VALUE=uri:http://www.rim.com/newsroom/mediaexecutive/jim_balsillie.jp
+ g
+GEO:43.474987,-80.539881
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Bruce;Robert
+FN:Robert Bruce
+ORG:Rogers Wireless Inc.;
+ADR;TYPE=WORK,POSTAL:;;333 Bloor Street East\, 10th Fl.;Toronto;Ontario;M4W 1G9;Canada
+TEL;TYPE=WORK,VOICE:1-416-935-1100
+TEL;TYPE=HOME,VOICE:1-416-935-8080
+TEL;TYPE=FAX:1-416-935-3597
+TITLE:President
+URL;TYPE=WORK:http://www.rogers.com/web/Rogers.portal?_nfpb=true&_pageLabel
+	=WRLS_HOME
+GEO:43.671496,-79.379889
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Jobs;Steve
+FN:Steve Jobs
+ORG:Apple Inc.;
+ADR;TYPE=WORK,POSTAL:;;1 Infinite Loop;Cupertino;California;95014;United St
+ ates of America
+TEL;TYPE=WORK,VOICE:(408) 996-1010
+TEL;TYPE=FAX:(408) 974-2113
+TITLE:Chairman & CEO
+URL;TYPE=WORK:http://www.apple.com/
+PHOTO;VALUE=uri:http://images.apple.com/pr/photos/execs/steveweb.jpg
+GEO:37.33191,-122.031262
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Gardner;William
+FN:William Gardner
+ORG:University of Guelph;School of Computer Science
+TITLE:Associate Director
+NICKNAME:Bill
+ADR;TYPE=work:;;50 Stone Road East\, Reynolds 105;Guelph;Ontario;N1G2W1
+LABEL;TYPE=work:School of Computer Science\nUniversity of Guelph\n50 Stone 
+ Road East\n105 Reynolds\nGuelph\, ON  N1G 2W1
+TEL;TYPE=WORK:(519) 824-4120 x52696
+TEL;TYPE=FAX:(519) 837-0323
+EMAIL:wgardner@socs.uoguelph.ca
+URL:http://www.uoguelph.ca/~gardnerw/
+PHOTO;VALUE=uri:http://www.uoguelph.ca/~gardnerw/head.gif
+GEO:43.530689;-80.229256
+UID:dEUAnoBiyT
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Entwistle;Darren
+FN:Darren Entwistle
+ORG:Telus Corporation;
+ADR;TYPE=WORK,POSTAL:;;555 Robson St.;Vancouver;BC;V6B 3K9;Canada
+TEL;TYPE=WORK,VOICE:1-604-697-8044
+TEL;TYPE=FAX:1-604-432-9681
+TITLE:Presid	ent and CEO
+URL;TYPE=WORK:http://telus.com/
+PHOTO;VALUE=uri:http://about.telus.com/investors/en/investor/images/bio_dar
+ ren_entwistle.gif
+GEO:49.280696,-123.118501
+END:VCARD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BEGIN:VCARD
+VERSION:3.0
+N:Cope;George
+FN:George Cope
+ORG:Bell Mobility Inc.;
+ADR;TYPE=WORK;TYPE=WORK2;type=work3:;;509 Creekbank Rd.;Mississauga;Ontario;L4W 5N2;Canada
+ADR;TYPE=HOME,POSTAL:;;2150 Bromsgrove Rd.;Mississauga;Ontario;L5J 4B3
+TEL;TYPE=WORK,VOICE:1-905-282-4202
+TEL;TYPE=FAX:1-905-282-3552
+URL;TYPE=HOME:http://www.bce.ca/en/aboutbce/executiveteams/bellcanada/cope/
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.bell.ca/home/
+PHOTO;VALUE=uri:http://www.bce.ca/images/cope_01.jpg
+GEO:43.642759,-79.615666
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Blouin;Pierre
+FN:Pierre Blouin
+ORG:Manitoba Telecom Services Inc.;
+ADR;TYPE=WORK;type=POSTAL:;;333 Main St.;Winnipeg;MB;R3C 3V6;Canada
+TEL;TYPE=WORK,VOICE:1-204-941-8244
+TEL;TYPE=FAX:1-204-949-1244
+TITLE:Chief Executive Officer
+URL;TYPE=WORK:http://www.mts.ca/
+	PHOTO;VALUE=uri:http://www.mts.ca/file_source/mts.ca/About%20MTS%20Allstrea
+ m/2.0%20Our%20Company/exec_pierre.jpg
+GEO:49.894897,-97.138013
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Lacavera;Tony
+FN:Tony Lacavera
+ORG:WIND mobile;
+ADR;TYPE=WORK:;207 Queens Quay West\, Suite 710;PO Box 114;Toronto;ON;M5J 1
+ A7;
+TEL;TYPE=WORK:(877) 459-5377
+TEL;TYPE=HOME:(866) 400-7633
+TITLE:Chairman
+URL;TYPE=WORK:http://www.windmobile.ca/
+PHOTO;VALUE=uri:http://media.windmobile.ca/files/about/bio_Tony_Lacavera.jp
+ g
+GEO:43.639287,-79.38088
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Choi;Gee-Sung
+FN:Gee-Sung Choi
+ORG:Samsung Electronics Co.\, Ltd.;
+ADR;TYPE=WORK,POSTAL:;;1320 Seocho-dong\, Seocho-gu;Seoul;;137-857;South Ko
+ rea
+TEL;TYPE=WORK,VOICE:82 2 2255 0114
+TEL;TYPE=FAX:82 2 2255 0117
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.samsung.com/ca/aboutsamsung/management/index.html
+PHOTO;VALUE=uri:http://www.samsung.com/us/aboutsamsung/ir/corporategovernan
+ ce/boardofdirectors/images/photo_gee-sung.gif
+GEO:37.487687,127.017427
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+
+FN:Jim Balsillie
+ORG:Research In Motion;
+ADR;TYPE=WORK,POSTAL:;;295 Phillip Stree;Waterloo;Ontario;N2L 3W8;Canada
+TEL;TYPE=WORK,VOICE:(519) 888-7465
+TEL;TYPE=FAX:(519) 888-7884
+TITLE:Co-Chief Executive Officer
+URL;TYPE=WORK:http://www.rim.com/
+PHOTO;VALUE=uri:http://www.rim.com/newsroom/mediaexecutive/jim_balsillie.jp
+ g
+GEO:43.474987,-80.539881
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Bruce;Robert
+FN:Robert Bruce
+ORG:Rogers Wireless Inc.;
+ADR;TYPE=WORK,POSTAL:;;333 Bloor Street East\, 10th Fl.;Toronto;Ontario;M4W 1G9;Canada
+TEL;TYPE=WORK,VOICE:1-416-935-1100
+TEL;TYPE=HOME,VOICE:1-416-935-8080
+TEL;TYPE=FAX:1-416-935-3597
+TITLE:President
+URL;TYPE=WORK:http://www.rogers.com/web/Rogers.portal?_nfpb=true&_pageLabel
+	=WRLS_HOME
+GEO:43.671496,-79.379889
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Jobs;Steve
+FN:Steve Jobs
+ORG:Apple Inc.;
+ADR;TYPE=WORK,POSTAL:;;1 Infinite Loop;Cupertino;California;95014;United St
+ ates of America
+TEL;TYPE=WORK,VOICE:(408) 996-1010
+TEL;TYPE=FAX:(408) 974-2113
+TITLE:Chairman & CEO
+URL;TYPE=WORK:http://www.apple.com/
+PHOTO;VALUE=uri:http://images.apple.com/pr/photos/execs/steveweb.jpg
+GEO:37.33191,-122.031262
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Gardner;William
+FN:William Gardner
+ORG:University of Guelph;School of Computer Science
+TITLE:Associate Director
+NICKNAME:Bill
+ADR;TYPE=work:;;50 Stone Road East\, Reynolds 105;Guelph;Ontario;N1G2W1
+LABEL;TYPE=work:School of Computer Science\nUniversity of Guelph\n50 Stone 
+ Road East\n105 Reynolds\nGuelph\, ON  N1G 2W1
+TEL;TYPE=WORK:(519) 824-4120 x52696
+TEL;TYPE=FAX:(519) 837-0323
+EMAIL:wgardner@socs.uoguelph.ca
+URL:http://www.uoguelph.ca/~gardnerw/
+PHOTO;VALUE=uri:http://www.uoguelph.ca/~gardnerw/head.gif
+GEO:43.530689;-80.229256
+UID:dEUAnoBiyT
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Entwistle;Darren
+FN:Darren Entwistle
+ORG:Telus Corporation;
+ADR;TYPE=WORK,POSTAL:;;555 Robson St.;Vancouver;BC;V6B 3K9;Canada
+TEL;TYPE=WORK,VOICE:1-604-697-8044
+TEL;TYPE=FAX:1-604-432-9681
+TITLE:Presid	ent and CEO
+URL;TYPE=WORK:http://telus.com/
+PHOTO;VALUE=uri:http://about.telus.com/investors/en/investor/images/bio_dar
+ ren_entwistle.gif
+GEO:49.280696,-123.118501
+END:VCARD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BEGIN:VCARD
+VERSION:3.0
+N:Cope;George
+FN:George Cope
+ORG:Bell Mobility Inc.;
+ADR;TYPE=WORK;TYPE=WORK2;type=work3:;;509 Creekbank Rd.;Mississauga;Ontario;L4W 5N2;Canada
+ADR;TYPE=HOME,POSTAL:;;2150 Bromsgrove Rd.;Mississauga;Ontario;L5J 4B3
+TEL;TYPE=WORK,VOICE:1-905-282-4202
+TEL;TYPE=FAX:1-905-282-3552
+URL;TYPE=HOME:http://www.bce.ca/en/aboutbce/executiveteams/bellcanada/cope/
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.bell.ca/home/
+PHOTO;VALUE=uri:http://www.bce.ca/images/cope_01.jpg
+GEO:43.642759,-79.615666
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Blouin;Pierre
+FN:Pierre Blouin
+ORG:Manitoba Telecom Services Inc.;
+ADR;TYPE=WORK;type=POSTAL:;;333 Main St.;Winnipeg;MB;R3C 3V6;Canada
+TEL;TYPE=WORK,VOICE:1-204-941-8244
+TEL;TYPE=FAX:1-204-949-1244
+TITLE:Chief Executive Officer
+URL;TYPE=WORK:http://www.mts.ca/
+	PHOTO;VALUE=uri:http://www.mts.ca/file_source/mts.ca/About%20MTS%20Allstrea
+ m/2.0%20Our%20Company/exec_pierre.jpg
+GEO:49.894897,-97.138013
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Lacavera;Tony
+FN:Tony Lacavera
+ORG:WIND mobile;
+ADR;TYPE=WORK:;207 Queens Quay West\, Suite 710;PO Box 114;Toronto;ON;M5J 1
+ A7;
+TEL;TYPE=WORK:(877) 459-5377
+TEL;TYPE=HOME:(866) 400-7633
+TITLE:Chairman
+URL;TYPE=WORK:http://www.windmobile.ca/
+PHOTO;VALUE=uri:http://media.windmobile.ca/files/about/bio_Tony_Lacavera.jp
+ g
+GEO:43.639287,-79.38088
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Choi;Gee-Sung
+FN:Gee-Sung Choi
+ORG:Samsung Electronics Co.\, Ltd.;
+ADR;TYPE=WORK,POSTAL:;;1320 Seocho-dong\, Seocho-gu;Seoul;;137-857;South Ko
+ rea
+TEL;TYPE=WORK,VOICE:82 2 2255 0114
+TEL;TYPE=FAX:82 2 2255 0117
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.samsung.com/ca/aboutsamsung/management/index.html
+PHOTO;VALUE=uri:http://www.samsung.com/us/aboutsamsung/ir/corporategovernan
+ ce/boardofdirectors/images/photo_gee-sung.gif
+GEO:37.487687,127.017427
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+
+FN:Jim Balsillie
+ORG:Research In Motion;
+ADR;TYPE=WORK,POSTAL:;;295 Phillip Stree;Waterloo;Ontario;N2L 3W8;Canada
+TEL;TYPE=WORK,VOICE:(519) 888-7465
+TEL;TYPE=FAX:(519) 888-7884
+TITLE:Co-Chief Executive Officer
+URL;TYPE=WORK:http://www.rim.com/
+PHOTO;VALUE=uri:http://www.rim.com/newsroom/mediaexecutive/jim_balsillie.jp
+ g
+GEO:43.474987,-80.539881
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Bruce;Robert
+FN:Robert Bruce
+ORG:Rogers Wireless Inc.;
+ADR;TYPE=WORK,POSTAL:;;333 Bloor Street East\, 10th Fl.;Toronto;Ontario;M4W 1G9;Canada
+TEL;TYPE=WORK,VOICE:1-416-935-1100
+TEL;TYPE=HOME,VOICE:1-416-935-8080
+TEL;TYPE=FAX:1-416-935-3597
+TITLE:President
+URL;TYPE=WORK:http://www.rogers.com/web/Rogers.portal?_nfpb=true&_pageLabel
+	=WRLS_HOME
+GEO:43.671496,-79.379889
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Jobs;Steve
+FN:Steve Jobs
+ORG:Apple Inc.;
+ADR;TYPE=WORK,POSTAL:;;1 Infinite Loop;Cupertino;California;95014;United St
+ ates of America
+TEL;TYPE=WORK,VOICE:(408) 996-1010
+TEL;TYPE=FAX:(408) 974-2113
+TITLE:Chairman & CEO
+URL;TYPE=WORK:http://www.apple.com/
+PHOTO;VALUE=uri:http://images.apple.com/pr/photos/execs/steveweb.jpg
+GEO:37.33191,-122.031262
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Gardner;William
+FN:William Gardner
+ORG:University of Guelph;School of Computer Science
+TITLE:Associate Director
+NICKNAME:Bill
+ADR;TYPE=work:;;50 Stone Road East\, Reynolds 105;Guelph;Ontario;N1G2W1
+LABEL;TYPE=work:School of Computer Science\nUniversity of Guelph\n50 Stone 
+ Road East\n105 Reynolds\nGuelph\, ON  N1G 2W1
+TEL;TYPE=WORK:(519) 824-4120 x52696
+TEL;TYPE=FAX:(519) 837-0323
+EMAIL:wgardner@socs.uoguelph.ca
+URL:http://www.uoguelph.ca/~gardnerw/
+PHOTO;VALUE=uri:http://www.uoguelph.ca/~gardnerw/head.gif
+GEO:43.530689;-80.229256
+UID:dEUAnoBiyT
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Entwistle;Darren
+FN:Darren Entwistle
+ORG:Telus Corporation;
+ADR;TYPE=WORK,POSTAL:;;555 Robson St.;Vancouver;BC;V6B 3K9;Canada
+TEL;TYPE=WORK,VOICE:1-604-697-8044
+TEL;TYPE=FAX:1-604-432-9681
+TITLE:Presid	ent and CEO
+URL;TYPE=WORK:http://telus.com/
+PHOTO;VALUE=uri:http://about.telus.com/investors/en/investor/images/bio_dar
+ ren_entwistle.gif
+GEO:49.280696,-123.118501
+END:VCARD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BEGIN:VCARD
+VERSION:3.0
+N:Cope;George
+FN:George Cope
+ORG:Bell Mobility Inc.;
+ADR;TYPE=WORK;TYPE=WORK2;type=work3:;;509 Creekbank Rd.;Mississauga;Ontario;L4W 5N2;Canada
+ADR;TYPE=HOME,POSTAL:;;2150 Bromsgrove Rd.;Mississauga;Ontario;L5J 4B3
+TEL;TYPE=WORK,VOICE:1-905-282-4202
+TEL;TYPE=FAX:1-905-282-3552
+URL;TYPE=HOME:http://www.bce.ca/en/aboutbce/executiveteams/bellcanada/cope/
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.bell.ca/home/
+PHOTO;VALUE=uri:http://www.bce.ca/images/cope_01.jpg
+GEO:43.642759,-79.615666
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Blouin;Pierre
+FN:Pierre Blouin
+ORG:Manitoba Telecom Services Inc.;
+ADR;TYPE=WORK;type=POSTAL:;;333 Main St.;Winnipeg;MB;R3C 3V6;Canada
+TEL;TYPE=WORK,VOICE:1-204-941-8244
+TEL;TYPE=FAX:1-204-949-1244
+TITLE:Chief Executive Officer
+URL;TYPE=WORK:http://www.mts.ca/
+	PHOTO;VALUE=uri:http://www.mts.ca/file_source/mts.ca/About%20MTS%20Allstrea
+ m/2.0%20Our%20Company/exec_pierre.jpg
+GEO:49.894897,-97.138013
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Lacavera;Tony
+FN:Tony Lacavera
+ORG:WIND mobile;
+ADR;TYPE=WORK:;207 Queens Quay West\, Suite 710;PO Box 114;Toronto;ON;M5J 1
+ A7;
+TEL;TYPE=WORK:(877) 459-5377
+TEL;TYPE=HOME:(866) 400-7633
+TITLE:Chairman
+URL;TYPE=WORK:http://www.windmobile.ca/
+PHOTO;VALUE=uri:http://media.windmobile.ca/files/about/bio_Tony_Lacavera.jp
+ g
+GEO:43.639287,-79.38088
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Choi;Gee-Sung
+FN:Gee-Sung Choi
+ORG:Samsung Electronics Co.\, Ltd.;
+ADR;TYPE=WORK,POSTAL:;;1320 Seocho-dong\, Seocho-gu;Seoul;;137-857;South Ko
+ rea
+TEL;TYPE=WORK,VOICE:82 2 2255 0114
+TEL;TYPE=FAX:82 2 2255 0117
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.samsung.com/ca/aboutsamsung/management/index.html
+PHOTO;VALUE=uri:http://www.samsung.com/us/aboutsamsung/ir/corporategovernan
+ ce/boardofdirectors/images/photo_gee-sung.gif
+GEO:37.487687,127.017427
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+
+FN:Jim Balsillie
+ORG:Research In Motion;
+ADR;TYPE=WORK,POSTAL:;;295 Phillip Stree;Waterloo;Ontario;N2L 3W8;Canada
+TEL;TYPE=WORK,VOICE:(519) 888-7465
+TEL;TYPE=FAX:(519) 888-7884
+TITLE:Co-Chief Executive Officer
+URL;TYPE=WORK:http://www.rim.com/
+PHOTO;VALUE=uri:http://www.rim.com/newsroom/mediaexecutive/jim_balsillie.jp
+ g
+GEO:43.474987,-80.539881
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Bruce;Robert
+FN:Robert Bruce
+ORG:Rogers Wireless Inc.;
+ADR;TYPE=WORK,POSTAL:;;333 Bloor Street East\, 10th Fl.;Toronto;Ontario;M4W 1G9;Canada
+TEL;TYPE=WORK,VOICE:1-416-935-1100
+TEL;TYPE=HOME,VOICE:1-416-935-8080
+TEL;TYPE=FAX:1-416-935-3597
+TITLE:President
+URL;TYPE=WORK:http://www.rogers.com/web/Rogers.portal?_nfpb=true&_pageLabel
+	=WRLS_HOME
+GEO:43.671496,-79.379889
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Jobs;Steve
+FN:Steve Jobs
+ORG:Apple Inc.;
+ADR;TYPE=WORK,POSTAL:;;1 Infinite Loop;Cupertino;California;95014;United St
+ ates of America
+TEL;TYPE=WORK,VOICE:(408) 996-1010
+TEL;TYPE=FAX:(408) 974-2113
+TITLE:Chairman & CEO
+URL;TYPE=WORK:http://www.apple.com/
+PHOTO;VALUE=uri:http://images.apple.com/pr/photos/execs/steveweb.jpg
+GEO:37.33191,-122.031262
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Gardner;William
+FN:William Gardner
+ORG:University of Guelph;School of Computer Science
+TITLE:Associate Director
+NICKNAME:Bill
+ADR;TYPE=work:;;50 Stone Road East\, Reynolds 105;Guelph;Ontario;N1G2W1
+LABEL;TYPE=work:School of Computer Science\nUniversity of Guelph\n50 Stone 
+ Road East\n105 Reynolds\nGuelph\, ON  N1G 2W1
+TEL;TYPE=WORK:(519) 824-4120 x52696
+TEL;TYPE=FAX:(519) 837-0323
+EMAIL:wgardner@socs.uoguelph.ca
+URL:http://www.uoguelph.ca/~gardnerw/
+PHOTO;VALUE=uri:http://www.uoguelph.ca/~gardnerw/head.gif
+GEO:43.530689;-80.229256
+UID:dEUAnoBiyT
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Entwistle;Darren
+FN:Darren Entwistle
+ORG:Telus Corporation;
+ADR;TYPE=WORK,POSTAL:;;555 Robson St.;Vancouver;BC;V6B 3K9;Canada
+TEL;TYPE=WORK,VOICE:1-604-697-8044
+TEL;TYPE=FAX:1-604-432-9681
+TITLE:Presid	ent and CEO
+URL;TYPE=WORK:http://telus.com/
+PHOTO;VALUE=uri:http://about.telus.com/investors/en/investor/images/bio_dar
+ ren_entwistle.gif
+GEO:49.280696,-123.118501
+END:VCARD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BEGIN:VCARD
+VERSION:3.0
+N:Cope;George
+FN:George Cope
+ORG:Bell Mobility Inc.;
+ADR;TYPE=WORK;TYPE=WORK2;type=work3:;;509 Creekbank Rd.;Mississauga;Ontario;L4W 5N2;Canada
+ADR;TYPE=HOME,POSTAL:;;2150 Bromsgrove Rd.;Mississauga;Ontario;L5J 4B3
+TEL;TYPE=WORK,VOICE:1-905-282-4202
+TEL;TYPE=FAX:1-905-282-3552
+URL;TYPE=HOME:http://www.bce.ca/en/aboutbce/executiveteams/bellcanada/cope/
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.bell.ca/home/
+PHOTO;VALUE=uri:http://www.bce.ca/images/cope_01.jpg
+GEO:43.642759,-79.615666
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Blouin;Pierre
+FN:Pierre Blouin
+ORG:Manitoba Telecom Services Inc.;
+ADR;TYPE=WORK;type=POSTAL:;;333 Main St.;Winnipeg;MB;R3C 3V6;Canada
+TEL;TYPE=WORK,VOICE:1-204-941-8244
+TEL;TYPE=FAX:1-204-949-1244
+TITLE:Chief Executive Officer
+URL;TYPE=WORK:http://www.mts.ca/
+	PHOTO;VALUE=uri:http://www.mts.ca/file_source/mts.ca/About%20MTS%20Allstrea
+ m/2.0%20Our%20Company/exec_pierre.jpg
+GEO:49.894897,-97.138013
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Lacavera;Tony
+FN:Tony Lacavera
+ORG:WIND mobile;
+ADR;TYPE=WORK:;207 Queens Quay West\, Suite 710;PO Box 114;Toronto;ON;M5J 1
+ A7;
+TEL;TYPE=WORK:(877) 459-5377
+TEL;TYPE=HOME:(866) 400-7633
+TITLE:Chairman
+URL;TYPE=WORK:http://www.windmobile.ca/
+PHOTO;VALUE=uri:http://media.windmobile.ca/files/about/bio_Tony_Lacavera.jp
+ g
+GEO:43.639287,-79.38088
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Choi;Gee-Sung
+FN:Gee-Sung Choi
+ORG:Samsung Electronics Co.\, Ltd.;
+ADR;TYPE=WORK,POSTAL:;;1320 Seocho-dong\, Seocho-gu;Seoul;;137-857;South Ko
+ rea
+TEL;TYPE=WORK,VOICE:82 2 2255 0114
+TEL;TYPE=FAX:82 2 2255 0117
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.samsung.com/ca/aboutsamsung/management/index.html
+PHOTO;VALUE=uri:http://www.samsung.com/us/aboutsamsung/ir/corporategovernan
+ ce/boardofdirectors/images/photo_gee-sung.gif
+GEO:37.487687,127.017427
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+
+FN:Jim Balsillie
+ORG:Research In Motion;
+ADR;TYPE=WORK,POSTAL:;;295 Phillip Stree;Waterloo;Ontario;N2L 3W8;Canada
+TEL;TYPE=WORK,VOICE:(519) 888-7465
+TEL;TYPE=FAX:(519) 888-7884
+TITLE:Co-Chief Executive Officer
+URL;TYPE=WORK:http://www.rim.com/
+PHOTO;VALUE=uri:http://www.rim.com/newsroom/mediaexecutive/jim_balsillie.jp
+ g
+GEO:43.474987,-80.539881
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Bruce;Robert
+FN:Robert Bruce
+ORG:Rogers Wireless Inc.;
+ADR;TYPE=WORK,POSTAL:;;333 Bloor Street East\, 10th Fl.;Toronto;Ontario;M4W 1G9;Canada
+TEL;TYPE=WORK,VOICE:1-416-935-1100
+TEL;TYPE=HOME,VOICE:1-416-935-8080
+TEL;TYPE=FAX:1-416-935-3597
+TITLE:President
+URL;TYPE=WORK:http://www.rogers.com/web/Rogers.portal?_nfpb=true&_pageLabel
+	=WRLS_HOME
+GEO:43.671496,-79.379889
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Jobs;Steve
+FN:Steve Jobs
+ORG:Apple Inc.;
+ADR;TYPE=WORK,POSTAL:;;1 Infinite Loop;Cupertino;California;95014;United St
+ ates of America
+TEL;TYPE=WORK,VOICE:(408) 996-1010
+TEL;TYPE=FAX:(408) 974-2113
+TITLE:Chairman & CEO
+URL;TYPE=WORK:http://www.apple.com/
+PHOTO;VALUE=uri:http://images.apple.com/pr/photos/execs/steveweb.jpg
+GEO:37.33191,-122.031262
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Gardner;William
+FN:William Gardner
+ORG:University of Guelph;School of Computer Science
+TITLE:Associate Director
+NICKNAME:Bill
+ADR;TYPE=work:;;50 Stone Road East\, Reynolds 105;Guelph;Ontario;N1G2W1
+LABEL;TYPE=work:School of Computer Science\nUniversity of Guelph\n50 Stone 
+ Road East\n105 Reynolds\nGuelph\, ON  N1G 2W1
+TEL;TYPE=WORK:(519) 824-4120 x52696
+TEL;TYPE=FAX:(519) 837-0323
+EMAIL:wgardner@socs.uoguelph.ca
+URL:http://www.uoguelph.ca/~gardnerw/
+PHOTO;VALUE=uri:http://www.uoguelph.ca/~gardnerw/head.gif
+GEO:43.530689;-80.229256
+UID:dEUAnoBiyT
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Entwistle;Darren
+FN:Darren Entwistle
+ORG:Telus Corporation;
+ADR;TYPE=WORK,POSTAL:;;555 Robson St.;Vancouver;BC;V6B 3K9;Canada
+TEL;TYPE=WORK,VOICE:1-604-697-8044
+TEL;TYPE=FAX:1-604-432-9681
+TITLE:Presid	ent and CEO
+URL;TYPE=WORK:http://telus.com/
+PHOTO;VALUE=uri:http://about.telus.com/investors/en/investor/images/bio_dar
+ ren_entwistle.gif
+GEO:49.280696,-123.118501
+END:VCARD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BEGIN:VCARD
+VERSION:3.0
+N:Cope;George
+FN:George Cope
+ORG:Bell Mobility Inc.;
+ADR;TYPE=WORK;TYPE=WORK2;type=work3:;;509 Creekbank Rd.;Mississauga;Ontario;L4W 5N2;Canada
+ADR;TYPE=HOME,POSTAL:;;2150 Bromsgrove Rd.;Mississauga;Ontario;L5J 4B3
+TEL;TYPE=WORK,VOICE:1-905-282-4202
+TEL;TYPE=FAX:1-905-282-3552
+URL;TYPE=HOME:http://www.bce.ca/en/aboutbce/executiveteams/bellcanada/cope/
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.bell.ca/home/
+PHOTO;VALUE=uri:http://www.bce.ca/images/cope_01.jpg
+GEO:43.642759,-79.615666
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Blouin;Pierre
+FN:Pierre Blouin
+ORG:Manitoba Telecom Services Inc.;
+ADR;TYPE=WORK;type=POSTAL:;;333 Main St.;Winnipeg;MB;R3C 3V6;Canada
+TEL;TYPE=WORK,VOICE:1-204-941-8244
+TEL;TYPE=FAX:1-204-949-1244
+TITLE:Chief Executive Officer
+URL;TYPE=WORK:http://www.mts.ca/
+	PHOTO;VALUE=uri:http://www.mts.ca/file_source/mts.ca/About%20MTS%20Allstrea
+ m/2.0%20Our%20Company/exec_pierre.jpg
+GEO:49.894897,-97.138013
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Lacavera;Tony
+FN:Tony Lacavera
+ORG:WIND mobile;
+ADR;TYPE=WORK:;207 Queens Quay West\, Suite 710;PO Box 114;Toronto;ON;M5J 1
+ A7;
+TEL;TYPE=WORK:(877) 459-5377
+TEL;TYPE=HOME:(866) 400-7633
+TITLE:Chairman
+URL;TYPE=WORK:http://www.windmobile.ca/
+PHOTO;VALUE=uri:http://media.windmobile.ca/files/about/bio_Tony_Lacavera.jp
+ g
+GEO:43.639287,-79.38088
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Choi;Gee-Sung
+FN:Gee-Sung Choi
+ORG:Samsung Electronics Co.\, Ltd.;
+ADR;TYPE=WORK,POSTAL:;;1320 Seocho-dong\, Seocho-gu;Seoul;;137-857;South Ko
+ rea
+TEL;TYPE=WORK,VOICE:82 2 2255 0114
+TEL;TYPE=FAX:82 2 2255 0117
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.samsung.com/ca/aboutsamsung/management/index.html
+PHOTO;VALUE=uri:http://www.samsung.com/us/aboutsamsung/ir/corporategovernan
+ ce/boardofdirectors/images/photo_gee-sung.gif
+GEO:37.487687,127.017427
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+
+FN:Jim Balsillie
+ORG:Research In Motion;
+ADR;TYPE=WORK,POSTAL:;;295 Phillip Stree;Waterloo;Ontario;N2L 3W8;Canada
+TEL;TYPE=WORK,VOICE:(519) 888-7465
+TEL;TYPE=FAX:(519) 888-7884
+TITLE:Co-Chief Executive Officer
+URL;TYPE=WORK:http://www.rim.com/
+PHOTO;VALUE=uri:http://www.rim.com/newsroom/mediaexecutive/jim_balsillie.jp
+ g
+GEO:43.474987,-80.539881
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Bruce;Robert
+FN:Robert Bruce
+ORG:Rogers Wireless Inc.;
+ADR;TYPE=WORK,POSTAL:;;333 Bloor Street East\, 10th Fl.;Toronto;Ontario;M4W 1G9;Canada
+TEL;TYPE=WORK,VOICE:1-416-935-1100
+TEL;TYPE=HOME,VOICE:1-416-935-8080
+TEL;TYPE=FAX:1-416-935-3597
+TITLE:President
+URL;TYPE=WORK:http://www.rogers.com/web/Rogers.portal?_nfpb=true&_pageLabel
+	=WRLS_HOME
+GEO:43.671496,-79.379889
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Jobs;Steve
+FN:Steve Jobs
+ORG:Apple Inc.;
+ADR;TYPE=WORK,POSTAL:;;1 Infinite Loop;Cupertino;California;95014;United St
+ ates of America
+TEL;TYPE=WORK,VOICE:(408) 996-1010
+TEL;TYPE=FAX:(408) 974-2113
+TITLE:Chairman & CEO
+URL;TYPE=WORK:http://www.apple.com/
+PHOTO;VALUE=uri:http://images.apple.com/pr/photos/execs/steveweb.jpg
+GEO:37.33191,-122.031262
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Gardner;William
+FN:William Gardner
+ORG:University of Guelph;School of Computer Science
+TITLE:Associate Director
+NICKNAME:Bill
+ADR;TYPE=work:;;50 Stone Road East\, Reynolds 105;Guelph;Ontario;N1G2W1
+LABEL;TYPE=work:School of Computer Science\nUniversity of Guelph\n50 Stone 
+ Road East\n105 Reynolds\nGuelph\, ON  N1G 2W1
+TEL;TYPE=WORK:(519) 824-4120 x52696
+TEL;TYPE=FAX:(519) 837-0323
+EMAIL:wgardner@socs.uoguelph.ca
+URL:http://www.uoguelph.ca/~gardnerw/
+PHOTO;VALUE=uri:http://www.uoguelph.ca/~gardnerw/head.gif
+GEO:43.530689;-80.229256
+UID:dEUAnoBiyT
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Entwistle;Darren
+FN:Darren Entwistle
+ORG:Telus Corporation;
+ADR;TYPE=WORK,POSTAL:;;555 Robson St.;Vancouver;BC;V6B 3K9;Canada
+TEL;TYPE=WORK,VOICE:1-604-697-8044
+TEL;TYPE=FAX:1-604-432-9681
+TITLE:Presid	ent and CEO
+URL;TYPE=WORK:http://telus.com/
+PHOTO;VALUE=uri:http://about.telus.com/investors/en/investor/images/bio_dar
+ ren_entwistle.gif
+GEO:49.280696,-123.118501
+END:VCARD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BEGIN:VCARD
+VERSION:3.0
+N:Cope;George
+FN:George Cope
+ORG:Bell Mobility Inc.;
+ADR;TYPE=WORK;TYPE=WORK2;type=work3:;;509 Creekbank Rd.;Mississauga;Ontario;L4W 5N2;Canada
+ADR;TYPE=HOME,POSTAL:;;2150 Bromsgrove Rd.;Mississauga;Ontario;L5J 4B3
+TEL;TYPE=WORK,VOICE:1-905-282-4202
+TEL;TYPE=FAX:1-905-282-3552
+URL;TYPE=HOME:http://www.bce.ca/en/aboutbce/executiveteams/bellcanada/cope/
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.bell.ca/home/
+PHOTO;VALUE=uri:http://www.bce.ca/images/cope_01.jpg
+GEO:43.642759,-79.615666
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Blouin;Pierre
+FN:Pierre Blouin
+ORG:Manitoba Telecom Services Inc.;
+ADR;TYPE=WORK;type=POSTAL:;;333 Main St.;Winnipeg;MB;R3C 3V6;Canada
+TEL;TYPE=WORK,VOICE:1-204-941-8244
+TEL;TYPE=FAX:1-204-949-1244
+TITLE:Chief Executive Officer
+URL;TYPE=WORK:http://www.mts.ca/
+	PHOTO;VALUE=uri:http://www.mts.ca/file_source/mts.ca/About%20MTS%20Allstrea
+ m/2.0%20Our%20Company/exec_pierre.jpg
+GEO:49.894897,-97.138013
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Lacavera;Tony
+FN:Tony Lacavera
+ORG:WIND mobile;
+ADR;TYPE=WORK:;207 Queens Quay West\, Suite 710;PO Box 114;Toronto;ON;M5J 1
+ A7;
+TEL;TYPE=WORK:(877) 459-5377
+TEL;TYPE=HOME:(866) 400-7633
+TITLE:Chairman
+URL;TYPE=WORK:http://www.windmobile.ca/
+PHOTO;VALUE=uri:http://media.windmobile.ca/files/about/bio_Tony_Lacavera.jp
+ g
+GEO:43.639287,-79.38088
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Choi;Gee-Sung
+FN:Gee-Sung Choi
+ORG:Samsung Electronics Co.\, Ltd.;
+ADR;TYPE=WORK,POSTAL:;;1320 Seocho-dong\, Seocho-gu;Seoul;;137-857;South Ko
+ rea
+TEL;TYPE=WORK,VOICE:82 2 2255 0114
+TEL;TYPE=FAX:82 2 2255 0117
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.samsung.com/ca/aboutsamsung/management/index.html
+PHOTO;VALUE=uri:http://www.samsung.com/us/aboutsamsung/ir/corporategovernan
+ ce/boardofdirectors/images/photo_gee-sung.gif
+GEO:37.487687,127.017427
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+
+FN:Jim Balsillie
+ORG:Research In Motion;
+ADR;TYPE=WORK,POSTAL:;;295 Phillip Stree;Waterloo;Ontario;N2L 3W8;Canada
+TEL;TYPE=WORK,VOICE:(519) 888-7465
+TEL;TYPE=FAX:(519) 888-7884
+TITLE:Co-Chief Executive Officer
+URL;TYPE=WORK:http://www.rim.com/
+PHOTO;VALUE=uri:http://www.rim.com/newsroom/mediaexecutive/jim_balsillie.jp
+ g
+GEO:43.474987,-80.539881
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Bruce;Robert
+FN:Robert Bruce
+ORG:Rogers Wireless Inc.;
+ADR;TYPE=WORK,POSTAL:;;333 Bloor Street East\, 10th Fl.;Toronto;Ontario;M4W 1G9;Canada
+TEL;TYPE=WORK,VOICE:1-416-935-1100
+TEL;TYPE=HOME,VOICE:1-416-935-8080
+TEL;TYPE=FAX:1-416-935-3597
+TITLE:President
+URL;TYPE=WORK:http://www.rogers.com/web/Rogers.portal?_nfpb=true&_pageLabel
+	=WRLS_HOME
+GEO:43.671496,-79.379889
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Jobs;Steve
+FN:Steve Jobs
+ORG:Apple Inc.;
+ADR;TYPE=WORK,POSTAL:;;1 Infinite Loop;Cupertino;California;95014;United St
+ ates of America
+TEL;TYPE=WORK,VOICE:(408) 996-1010
+TEL;TYPE=FAX:(408) 974-2113
+TITLE:Chairman & CEO
+URL;TYPE=WORK:http://www.apple.com/
+PHOTO;VALUE=uri:http://images.apple.com/pr/photos/execs/steveweb.jpg
+GEO:37.33191,-122.031262
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Gardner;William
+FN:William Gardner
+ORG:University of Guelph;School of Computer Science
+TITLE:Associate Director
+NICKNAME:Bill
+ADR;TYPE=work:;;50 Stone Road East\, Reynolds 105;Guelph;Ontario;N1G2W1
+LABEL;TYPE=work:School of Computer Science\nUniversity of Guelph\n50 Stone 
+ Road East\n105 Reynolds\nGuelph\, ON  N1G 2W1
+TEL;TYPE=WORK:(519) 824-4120 x52696
+TEL;TYPE=FAX:(519) 837-0323
+EMAIL:wgardner@socs.uoguelph.ca
+URL:http://www.uoguelph.ca/~gardnerw/
+PHOTO;VALUE=uri:http://www.uoguelph.ca/~gardnerw/head.gif
+GEO:43.530689;-80.229256
+UID:dEUAnoBiyT
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Entwistle;Darren
+FN:Darren Entwistle
+ORG:Telus Corporation;
+ADR;TYPE=WORK,POSTAL:;;555 Robson St.;Vancouver;BC;V6B 3K9;Canada
+TEL;TYPE=WORK,VOICE:1-604-697-8044
+TEL;TYPE=FAX:1-604-432-9681
+TITLE:Presid	ent and CEO
+URL;TYPE=WORK:http://telus.com/
+PHOTO;VALUE=uri:http://about.telus.com/investors/en/investor/images/bio_dar
+ ren_entwistle.gif
+GEO:49.280696,-123.118501
+END:VCARD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BEGIN:VCARD
+VERSION:3.0
+N:Cope;George
+FN:George Cope
+ORG:Bell Mobility Inc.;
+ADR;TYPE=WORK;TYPE=WORK2;type=work3:;;509 Creekbank Rd.;Mississauga;Ontario;L4W 5N2;Canada
+ADR;TYPE=HOME,POSTAL:;;2150 Bromsgrove Rd.;Mississauga;Ontario;L5J 4B3
+TEL;TYPE=WORK,VOICE:1-905-282-4202
+TEL;TYPE=FAX:1-905-282-3552
+URL;TYPE=HOME:http://www.bce.ca/en/aboutbce/executiveteams/bellcanada/cope/
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.bell.ca/home/
+PHOTO;VALUE=uri:http://www.bce.ca/images/cope_01.jpg
+GEO:43.642759,-79.615666
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Blouin;Pierre
+FN:Pierre Blouin
+ORG:Manitoba Telecom Services Inc.;
+ADR;TYPE=WORK;type=POSTAL:;;333 Main St.;Winnipeg;MB;R3C 3V6;Canada
+TEL;TYPE=WORK,VOICE:1-204-941-8244
+TEL;TYPE=FAX:1-204-949-1244
+TITLE:Chief Executive Officer
+URL;TYPE=WORK:http://www.mts.ca/
+	PHOTO;VALUE=uri:http://www.mts.ca/file_source/mts.ca/About%20MTS%20Allstrea
+ m/2.0%20Our%20Company/exec_pierre.jpg
+GEO:49.894897,-97.138013
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Lacavera;Tony
+FN:Tony Lacavera
+ORG:WIND mobile;
+ADR;TYPE=WORK:;207 Queens Quay West\, Suite 710;PO Box 114;Toronto;ON;M5J 1
+ A7;
+TEL;TYPE=WORK:(877) 459-5377
+TEL;TYPE=HOME:(866) 400-7633
+TITLE:Chairman
+URL;TYPE=WORK:http://www.windmobile.ca/
+PHOTO;VALUE=uri:http://media.windmobile.ca/files/about/bio_Tony_Lacavera.jp
+ g
+GEO:43.639287,-79.38088
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Choi;Gee-Sung
+FN:Gee-Sung Choi
+ORG:Samsung Electronics Co.\, Ltd.;
+ADR;TYPE=WORK,POSTAL:;;1320 Seocho-dong\, Seocho-gu;Seoul;;137-857;South Ko
+ rea
+TEL;TYPE=WORK,VOICE:82 2 2255 0114
+TEL;TYPE=FAX:82 2 2255 0117
+TITLE:President & CEO
+URL;TYPE=WORK:http://www.samsung.com/ca/aboutsamsung/management/index.html
+PHOTO;VALUE=uri:http://www.samsung.com/us/aboutsamsung/ir/corporategovernan
+ ce/boardofdirectors/images/photo_gee-sung.gif
+GEO:37.487687,127.017427
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+N:Balsillie;Jim
+
+FN:Jim Balsillie
+ORG:Research In Motion;
+ADR;TYPE=WORK,POSTAL:;;295 Phillip Stree;Waterloo;Ontario;N2L 3W8;Canada
+TEL;TYPE=WORK,VOICE:(519) 888-7465
+TEL;TYPE=FAX:(519) 888-7884
+TITLE:Co-Chief Executive Officer
+URL;TYPE=WORK:http://www.rim.com/
+PHOTO;VALUE=uri:http://www.rim.com/newsroom/mediaexecutive/jim_balsillie.jp
+ g
+GEO:43.474987,-80.539881
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Bruce;Robert
+FN:Robert Bruce
+ORG:Rogers Wireless Inc.;
+ADR;TYPE=WORK,POSTAL:;;333 Bloor Street East\, 10th Fl.;Toronto;Ontario;M4W 1G9;Canada
+TEL;TYPE=WORK,VOICE:1-416-935-1100
+TEL;TYPE=HOME,VOICE:1-416-935-8080
+TEL;TYPE=FAX:1-416-935-3597
+TITLE:President
+URL;TYPE=WORK:http://www.rogers.com/web/Rogers.portal?_nfpb=true&_pageLabel
+	=WRLS_HOME
+GEO:43.671496,-79.379889
+END:VCARD
+
+BEGIN:VCARD
+VERSION:3.0
+N:Jobs;Steve
+FN:Steve Jobs
+ORG:Apple Inc.;
+ADR;TYPE=WORK,POSTAL:;;1 Infinite Loop;Cupertino;California;95014;United St
+ ates of America
+TEL;TYPE=WORK,VOICE:(408) 996-1010
+TEL;TYPE=FAX:(408) 974-2113
+TITLE:Chairman & CEO
+URL;TYPE=WORK:http://www.apple.com/
+PHOTO;VALUE=uri:http://images.apple.com/pr/photos/execs/steveweb.jpg
+GEO:37.33191,-122.031262
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+N:Gardner;William
+FN:William Gardner
+ORG:University of Guelph;School of Computer Science
+TITLE:Associate Director
+NICKNAME:Bill
+ADR;TYPE=work:;;50 Stone Road East\, Reynolds 105;Guelph;Ontario;N1G2W1
+LABEL;TYPE=work:School of Computer Science\nUniversity of Guelph\n50 Stone 
+ Road East\n105 Reynolds\nGuelph\, ON  N1G 2W1
+TEL;TYPE=WORK:(519) 824-4120 x52696
+TEL;TYPE=FAX:(519) 837-0323
+EMAIL:wgardner@socs.uoguelph.ca
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+URL:http://www.uoguelph.ca/~gardnerw/
+
 PHOTO;VALUE=uri:http://www.uoguelph.ca/~gardnerw/head.gif
 GEO:43.530689;-80.229256
 UID:dEUAnoBiyT
