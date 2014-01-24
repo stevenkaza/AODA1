@@ -26,8 +26,11 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
     VcStatus newStatus; 
     Vcard * test;
     Vcard * test1;
+    
 
-    filep->cardp=malloc(sizeof(Vcard*)*100);
+    
+    filep->cardp=realloc(filep->cardp,sizeof(Vcard*)*filep->ncards);
+   // filep->cardp=malloc(sizeof(Vcard*)*100);
 
     int i=0;
     if (vcf==NULL)
