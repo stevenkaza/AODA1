@@ -3,7 +3,7 @@
 #include "vcutil.h"
 int main()
 {
-
+//
 	FILE * vcf = fopen("samples-10.vcf","r"); 
 	VcStatus newStatus; 
 	int wow; 
