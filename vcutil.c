@@ -38,24 +38,23 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
  
         /* Incrementing # of cards */ 
         filep->ncards=filep->ncards+1;
+        newStatus.code = OK;
         filep->cardp=realloc(filep->cardp,(sizeof(Vcard*)*filep->ncards));
 
-        newStatus = readVcard(vcf,&filep->cardp[i]);
+        if (newStatus.code==OK)
+          newStatus = readVcard(vcf,&filep->cardp[i]);
 
-        printf("NEW CARD %d\n",i);
 
         i++;
 
         if (newStatus.code!=OK)
+         { 
            break;   
+          }
 
    }/*end of while loop */ 
 
-    if (newStatus.code == OK)
-        printf("File was parsed \n");
-    else
-        printf("Houston, we have a problem \n");
-    printf("%d\n",newStatus.code );
+    
 
     return newStatus;
 
@@ -84,6 +83,12 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
     VcStatus newStatus; 
     char buff1[222];
     char  *buff;
+    int nameFlag=0;
+    int fnFlag = 0;
+    int nFlag = 0;  
+    int endFlag;
+    VcError error; 
+
     int i = 0; 
     VcProp * tempProp = NULL;
     VcProp * proppp=NULL; 
@@ -92,91 +97,142 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
     /* How do access the individual vcards in here */ 
 
     if (vcf==NULL)
+    {
+
         newStatus.code = IOERR; 
+        printf("cddfode = %d\n",newStatus.code );
+
+    }
      /*Checks for begin, and version  */ 
     do
     {
        // printf("%s\n",buff );
-
-        while (feof(vcf)!=0)
+        /*do this check outside? */ 
+         while (feof(vcf)!=0)
          {
-            newStatus.code = IOERR; 
-            return newStatus;
-        }
+            goto check;
+         }
 
-      if (beginFlag==1)
+
+
+        newStatus=getUnfolded(vcf,&buff);
+        if (beginFlag==1)
         {
             if (strcmp("BEGIN:VCARD",buff)==0) /* If we see another begin before an end, 
                                         ERROR */
             {
-                printf("wow\n");
+                printf("wasdfasdfasdfow\n");
+                newStatus.code =4; 
               //  newStatus.code= BEGEND;
                 goto end;
             }
         }
-        newStatus=getUnfolded(vcf,&buff);
         if (beginFlag==0)
         {
             if (strcmp("BEGIN:VCARD",buff)==0)
             {
+                printf("BEGIN FOUND\n");
                 beginFlag=1;
             }
             else
             {
+              printf("BEGIN NOT FOUND\n");
                 newStatus.code = BEGEND;
+
+                return newStatus;
                 goto end;
+              //  goto end;
             }
         }
-        if ((beginFlag==1) && (strcmp("END:VCARD",buff)==0 ))
+    /*    if ((beginFlag==1) && (strcmp("END:VCARD",buff)==0 ))
         {
             newStatus.code = OK;
             goto end;
+        }*/
+        /* Checking for FN / N */ 
+
+        if (buff[0]=='F')
+        {
+          if (buff[1]=='N')
+          {
+          //  printf("%s\n", buff);
+            fnFlag=1; 
+          }
         }
-       
-       if ((newStatus.code == OK) || (strcmp("END:VCARD",buff)==0))
+        if (buff[0]=='N')
+        {
+          if (buff[1]==';' || buff[1] == ':')
+             nFlag=1; 
+        }
+        
+       /* if we reach the end of the vcard, go to the checks */ 
+       if ((strcmp("END:VCARD",buff) ==0) && (beginFlag==1))
+       {
+        endFlag=1;
+        goto check;
+       }
+       if ((newStatus.code == OK) && (strcmp("END:VCARD",buff)!=0) &&
+        (strcmp("BEGIN:VCARD",buff)!=0) && (strcmp("VERSION:3.0",buff)!=0))
+        
        {
             /*Send the buff for parsing */
-parsse:        
             buff[strlen(buff)]='\0';
             tempProp=malloc(sizeof(VcProp));
-            parseVcProp(buff,tempProp);
+            error=parseVcProp(buff,tempProp);
+            if (error!=OK)
+            {
+              newStatus.code = error;
+              return newStatus;
+
+            }
+            /* If we are on the first prop, we simply alloc for 1*/ 
             if (i==0)
             {
               (*cardp)=malloc(sizeof(Vcard)+sizeof(VcProp));
-	           (*cardp)->nprops=1;	
+	            (*cardp)->nprops=1;	
             } 
-           else
+            else
               (*cardp)=realloc((*cardp),sizeof(Vcard)+(sizeof(VcProp)*(i+1)));
 
-
-
             (*cardp)->prop[i]=*tempProp;
-            printf("i=%d\n",i );
+
             i=i+1;
-
-
-
-        
-         //   printf(" buff = %s \n",buff); 
-           // if (buff!=NULL)
-        //   printf("buff=%s\n",buff );
             free(buff);
-          //  buff=NULL;
-        }
-        else if (newStatus.code == BEGEND)
+      //  }
+         if (newStatus.code == BEGEND)
+         {
             printf("Beggining not found \n");
+            goto end; 
+         }
       if (buff=='\0')
         {
-          //  state =1; 
             printf("BROKEN\n");
-                        break;
-
+            break;
         }
-   
- (*cardp)->nprops=i;
+       (*cardp)->nprops=i;
+
+   }
  }while (strcmp("END:VCARD",buff)!=0);
+      /* If we went through the entire vcard and couldnt find a FN, error */ 
+    printf("fnFlag=%d\n",fnFlag );
+
+    /* FLAG CHECKING FOR ERRORS */ 
+    check:
+    if (fnFlag ==0 || nFlag==0)
+    {
+      printf("fn not found\n");
+      newStatus.code=7;
+    }
+
+    if (endFlag==0 || beginFlag==0)
+    {
+      printf("end not found\n");
+      newStatus.code=4;
+    }
+      
     //*buff=NULL;
     end:
+    printf("right before, code = %d\n",newStatus.code );
     return newStatus;
 
 }
@@ -194,7 +250,8 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     int i=0;
     int lineDoneFlag = 0; 
     static int lineCounter=0;
-    VcStatus newStatus; 
+    VcStatus newStatus;
+    newStatus.code = OK;  
     do 
     {
       if (staticFlag!=1)
@@ -214,7 +271,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
                     crlfFlag=1; 
                     lineCounter++;
               }
-                break;
+              break;
             }
             /*Stuff */ 
             case ' ':
@@ -271,16 +328,25 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
     // storage for 0-2 parameters (NULL if not present)
    // char partype[50];      // TYPE=string
 //    char *parval;       // VALUE=string
-      char * propName; 
+    char * propName; 
     char * copyString;
     char * copyString2;
+    int extraCheck;
+    VcError error; 
+    int returnVal; 
 
     char *value;        // property value string
     propp->value=NULL;
     propp->partype=NULL;
     char * tempString;
     char * typeString;
-
+    /* If the line does not contain a semi colon,
+    we have an error */
+    if (Contains(buff,':')==0)
+    {
+      error=SYNTAX;
+      return error;
+    }
     tempString = (char*)calloc(strlen(buff)+1,sizeof(char));
     copyString2 = (char*)calloc(strlen(buff)+1,sizeof(char));
 
@@ -304,6 +370,8 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
        strcpy(propp->value,value);
     //   printf("%s\n",buff );
        assignPropName(propp,propName);
+       
+
      }
       // printf("%s\n",buff);
 
@@ -347,16 +415,8 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
 
     }
 
- //   printf("\n");
-   
-    printf("String = %s\n",buff);
-    printf("prop name =%d\n",propp->name);
-    printf("value=%s\n",propp->value);
-    printf("par type=%s\n",propp->partype);
-  
-   // free(propp->partype);
+
     
-   // printf("\n");
 }
 
 
