@@ -143,14 +143,16 @@ parsse:
             if (i==0)
             {
               (*cardp)=malloc(sizeof(Vcard)+sizeof(VcProp));
-	            (*cardp)->nprops=1;	
+	           (*cardp)->nprops=1;	
             } 
            else
-              (*cardp)=realloc((*cardp),sizeof(Vcard)+(sizeof(VcProp)*(++i)));
+              (*cardp)=realloc((*cardp),sizeof(Vcard)+(sizeof(VcProp)*(i+1)));
+
+
 
             (*cardp)->prop[i]=*tempProp;
             printf("i=%d\n",i );
-   //         i=i+1;
+            i=i+1;
 
 
 
