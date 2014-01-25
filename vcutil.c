@@ -440,16 +440,7 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
      
       /* Type one found */ 
       
-      if (strcasestr(typeString,"VALUE")!=NULL)
-      {
-        typeString=strtok(NULL,":");
-
-        propp->parval=(char *)malloc((strlen(typeString)+1)*sizeof(char));
-        strcpy(propp->parval,typeString);
-        valueFlag = 1; 
-
-
-      }
+    
    if (Contains(typeString,'='))  /* If there is more than one type or value */ 
       {
     //          printf("type = %s\n",typeString);
@@ -463,12 +454,13 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
 
       }
       if (strlen(typeString)>0 && (strcasestr(typeString,"type")!=0))
-        propp->partype=(char *)malloc((strlen(typeString)+1)*sizeof(char));
-      if (valueFlag==0)
       {
+        propp->partype=(char *)malloc((strlen(typeString)+1)*sizeof(char));
+      
         typeString=strtok(NULL,":");
         strcpy(propp->partype,typeString);
       }
+      
       value=strtok(NULL,"\n");
       propp->value = (char *)malloc((strlen(buff)+1)*sizeof(char));
       strncpy(propp->value,value,strlen(value)+1);
