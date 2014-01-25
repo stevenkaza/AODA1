@@ -90,7 +90,6 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
     int endFlag;
     char * verNum; 
     VcError error; 
-    int versionFlag =0; /*If version flag stays 0, then we know no version was found */ 
     int tempIndex =0; 
 
     int i = 0; 
@@ -102,8 +101,10 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 
     if (vcf==NULL)
     {
+
         newStatus.code = IOERR; 
         printf("cddfode = %d\n",newStatus.code );
+
     }
      /*Checks for begin, and version  */ 
     do
@@ -120,7 +121,6 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
         newStatus=getUnfolded(vcf,&buff);
         /* If we see another begin before an end, 
                                         ERROR */
-
 
         if (beginFlag==1) 
         {
@@ -177,10 +177,9 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
         goto check;
        }
        /* If the buff contains version, check that its the proper version number */ 
-
        if (strcasestr(buff,"VERSION:")!=NULL)
        {
-         versionFlag=1;
+
          if ((buff[8] != '3') ||  (buff[9] != '.') || (buff[10]!='0'))
          {
            newStatus.code = BADVER; 
@@ -247,10 +246,6 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
     {
       printf("end not found\n");
       newStatus.code=4;
-    }
-    if (versionFlag==0 ) /* No version was found */ 
-    {
-      newStatus.code =6;
     }
       
     //*buff=NULL;
@@ -373,14 +368,10 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
     int extraCheck;
     VcError error; 
     int returnVal; 
-    int valueFlag=0;
-
 
     char *value;        // property value string
     propp->value=NULL;
     propp->partype=NULL;
-    propp->parval=NULL;
-
     char * tempString;
     char * typeString;
     /* If the line does not contain a  colon,
@@ -439,8 +430,7 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
       //printf("%s\n",typeString);
      
       /* Type one found */ 
-      
-    
+      typeString=strtok(NULL,":");
    if (Contains(typeString,'='))  /* If there is more than one type or value */ 
       {
     //          printf("type = %s\n",typeString);
@@ -453,14 +443,9 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
         
 
       }
-      if (strlen(typeString)>0 && (strcasestr(typeString,"type")!=0))
-      {
+      if (strlen(typeString)>0)
         propp->partype=(char *)malloc((strlen(typeString)+1)*sizeof(char));
-      
-        typeString=strtok(NULL,":");
-        strcpy(propp->partype,typeString);
-      }
-      
+      strcpy(propp->partype,typeString);
       value=strtok(NULL,"\n");
       propp->value = (char *)malloc((strlen(buff)+1)*sizeof(char));
       strncpy(propp->value,value,strlen(value)+1);
