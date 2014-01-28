@@ -1,67 +1,82 @@
+/* vcutil.c
+
+vCard  utlity library/ Parser 
+
+Author:Steven Kazavchinski 
+Created: January 24th 2014 
+Contact: skazavch@uoguelph.ca
+*/ 
+
+
+
+
+
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include "vcutil.h"
 #include <ctype.h>
-#include "helper.h"
+
+
+/* Assigns property name into a VcProp struct
+   Also determines which property name to assign based on string 
+  
+  
+RETURNS: The enumrated value of what prop name was found */ 
+
+
+int assignPropName(VcProp * const propp,char * propName);
 
 /*
- vcStatusReadVcFILE( FILE * const, vcf, VcFile * const file) ;
+Returns a 1 if a semi colon was found before a colon */ 
+int semiFirst(char * tempString);
 
-/* Precondition: vcf has been opened for reading,
- and is assumed to be positioned at beginning-of-life.
- filep  points to the VcFile structure to be filled in (its current contents is ignored) */
 
-/* Post condition
-   If status=OK, the file was read to normal EOF and is available in memory for access via the filep pointer. VcStatus line numbers give the total lines read from the file.  The caller is respnsibile for eventually
-freeing the contents of filep  with the help of freeVcFile. If status is not OK, VcStatus contains both the error code and the line numbers in the file where the error was detectedm, and the VcFile contents (*cardp) has already been fired.             */
 
-/*Create a vcard in readVcFile  */
-/*Read vcard will know if the struct has been filled in */
+
+int Contains(char * string, char pattern); 
+int checkPosition(char * string, int position); 
+void removeSpaces(char * string);
+int removeNewLine(char * string);
 VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
 {
-
+    /* Assigning default values for filep */ 
     filep->ncards = 0;
     filep->cardp = NULL;
     VcStatus newStatus; 
-    Vcard * test;
-    Vcard * test1;
+  
   
     int i=0;
+    /* Checking for invalid file */ 
     if (vcf==NULL)
     {
-        printf("file pointer NULL \n");
         newStatus.code =  IOERR;
     }
+    /* By default, assigning code to be OK */ 
     newStatus.code = OK;
-
+   
+    /* Until end of file */ 
    while (feof(vcf)==0)
     { 
  
         /* Incrementing # of cards */ 
         filep->ncards=filep->ncards+1;
+	/* Allocating for a pointer to go inside the array of card pointers */ 
         filep->cardp=realloc(filep->cardp,(sizeof(Vcard*)*filep->ncards));
 
         if (newStatus.code==OK)
           newStatus = readVcard(vcf,&filep->cardp[i]);
-
-
         i++;
 
         if (newStatus.code!=OK)
-         { 
+        { 
            break;   
-          }
+        }
 
    }/*end of while loop */ 
-
     
-    printf("HERE CODE =%d\n",newStatus.code );
     return newStatus;
-
-
-        /*Now we have to figure out what we do with each vcard and the flow of the program */
-
 }
 
 /* Precondition: 
@@ -74,54 +89,38 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
     cardp means normal EOF, and VcStatus line numbers are the total lines read from the file.
     If error status, * cardp contents are undefined (but no additional storage remains allocated). */
 
-
-int checkStructs(VcFile      cardp)
-{
-
-}
 VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 {
     VcStatus newStatus; 
-    char buff1[222];
     char  *buff;
-    int nameFlag=0;
     int fnFlag = 0;
     int nFlag = 0;  
     int endFlag;
-    char * verNum; 
     VcError error; 
-    int tempIndex =0; 
+    int versionFlag =0; /*If version flag stays 0, then we know no version was found */ 
 
     int i = 0; 
     VcProp * tempProp = NULL;
-    VcProp * proppp=NULL; 
     int beginFlag=0; 
 
     /* How do access the individual vcards in here */ 
 
     if (vcf==NULL)
     {
-
         newStatus.code = IOERR; 
-        printf("cddfode = %d\n",newStatus.code );
-
     }
      /*Checks for begin, and version  */ 
     do
     {
-       // printf("%s\n",buff );
-        /*do this check outside? */ 
+         /* In the case the file is null, exit this loop */ 
          while (feof(vcf)!=0)
          {
             goto check;
          }
-
-
-
         newStatus=getUnfolded(vcf,&buff);
+	printf("buff = %s\n",buff);
         /* If we see another begin before an end, 
-                                        ERROR */
-
+                                        return an ERROR */
         if (beginFlag==1) 
         {
             if (strcmp("BEGIN:VCARD",buff)==0) 
@@ -136,31 +135,22 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
         {
             if (strcmp("BEGIN:VCARD",buff)==0)
             {
-                printf("BEGIN FOUND\n");
                 beginFlag=1;
             }
             else
             {
-              printf("BEGIN NOT FOUND\n");
                 newStatus.code = BEGEND;
 
                 return newStatus;
-                goto end;
-              //  goto end;
             }
         }
-    /*    if ((beginFlag==1) && (strcmp("END:VCARD",buff)==0 ))
-        {
-            newStatus.code = OK;
-            goto end;
-        }*/
+    
         /* Checking for FN / N */ 
 
         if (buff[0]=='F')
         {
           if (buff[1]=='N')
           {
-          //  printf("%s\n", buff);
             fnFlag=1; 
           }
         }
@@ -173,22 +163,24 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
        /* if we reach the end of the vcard, go to the  flag checks */ 
        if ((strcmp("END:VCARD",buff) ==0) && (beginFlag==1))
        {
-        endFlag=1;
-        goto check;
+          endFlag=1;
+          goto check;
        }
        /* If the buff contains version, check that its the proper version number */ 
-       if (strcasestr(buff,"VERSION:")!=NULL)
-       {
 
-         if ((buff[8] != '3') ||  (buff[9] != '.') || (buff[10]!='0'))
-         {
-           newStatus.code = BADVER; 
-           return newStatus;
-         }
+       if (strstr(buff,"VERSION:")!=NULL)
+       {
+          versionFlag=1;
+          if ((buff[8] != '3') ||  (buff[9] != '.') || (buff[10]!='0'))
+          {
+            newStatus.code = BADVER; 
+            return newStatus;
+          }
        }
+       /*This check allows begin, end, and version properties to be ignored
+       and not assigned to the data structure */ 
        if ((newStatus.code == OK) && (strcmp("END:VCARD",buff)!=0) &&
-        (strcmp("BEGIN:VCARD",buff)!=0) && (strcmp("VERSION:3.0",buff)!=0))
-        
+          (strcmp("BEGIN:VCARD",buff)!=0) && (strcmp("VERSION:3.0",buff)!=0))
        {
             /*Send the buff for parsing */
             buff[strlen(buff)]='\0';
@@ -196,12 +188,8 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             error=parseVcProp(buff,tempProp);
             if (error!=OK)
             {
-              printf("wtf\n");
-              printf("cSPENCER CODE = %d\n",newStatus.code);
-              printf("coder = %d\n",error );
               newStatus.code = error;
               return newStatus;
-
             }
             /* If we are on the first prop, we simply alloc for 1*/ 
             if (i==0)
@@ -211,63 +199,65 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             } 
             else
               (*cardp)=realloc((*cardp),sizeof(Vcard)+(sizeof(VcProp)*(i+1)));
+              (*cardp)->prop[i]=*tempProp;
+              i=i+1;
+              free(buff);
+        
+	    if (newStatus.code == BEGEND)
+            {
+              goto end; 
+            }
+            
+            if (buff=='\0')
+            {
+              break;
+            }
+            (*cardp)->nprops=i;
 
-            (*cardp)->prop[i]=*tempProp;
-
-            i=i+1;
-            free(buff);
-      //  }
-         if (newStatus.code == BEGEND)
-         {
-            printf("Beggining not found \n");
-            goto end; 
-         }
-      if (buff=='\0')
-        {
-            printf("BROKEN\n");
-            break;
-        }
-       (*cardp)->nprops=i;
-
-   }
- }while (strcmp("END:VCARD",buff)!=0);
-      /* If we went through the entire vcard and couldnt find a FN, error */ 
-    printf("fnFlag=%d\n",fnFlag );
-
+       }
+    } while (strcmp("END:VCARD",buff)!=0);
+     
+    /* If we went through the entire vcard and couldnt find a FN, error */ 
     /* FLAG CHECKING FOR ERRORS */ 
     check:
     if (fnFlag ==0 || nFlag==0)
     {
-      printf("fn not found\n");
-      newStatus.code=7;
+       newStatus.code=NOPNFN;
     }
 
     if (endFlag==0 || beginFlag==0)
     {
-      printf("end not found\n");
-      newStatus.code=4;
+       newStatus.code=BEGEND;
+    }
+    
+    if (versionFlag==0 ) /* No version was found */ 
+    {
+       /*Since this error only found at the end, subtract the line to get
+       back to the beggining where ver would be */ 
+       newStatus.lineto=newStatus.lineto-i;
+       newStatus.linefrom=newStatus.lineto;
+       newStatus.code =NOPVER;
     }
       
     //*buff=NULL;
     end:
-    printf("right before, code = %d\n",newStatus.code );
     return newStatus;
 
 }
 
+
+
 VcStatus getUnfolded ( FILE * const vcf, char **const buff )
 {
-    /* For each line in the vcard, unfold */
-    /*Its only returning the line that begins with the whitespace.... Why? */ 
-    /* Should only assign to the buff once it has been unfolded */ 
+    /*CRLF Flags */ 
     int rFlag=0; 
     int crlfFlag=0; 
-    static char ch;
+    int i =0;
+    static char ch; /* static char to hold the last char read in for getUnfolded next call */ 
     static int staticFlag; 
-    char tempString[200];
-    int i=0;
-    int lineDoneFlag = 0; 
-    static int lineCounter=0;
+    char tempString[850];
+    int lineDoneFlag = 0; /*Flag to indicate the buff is ready to be returned and is unfolded */ 
+    static int lineCounter=0; 
     VcStatus newStatus;
     newStatus.code = OK;  
     newStatus.lineto = lineCounter; 
@@ -280,8 +270,11 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
       newStatus.linefrom=0; 
      return newStatus;  
     }
+    /* Looping through char by char until a crlf is found, then a flag is set and 
+      those chars are not read into the buff */ 
     do 
     {
+      
       if (staticFlag!=1)
          ch = fgetc(vcf);
         switch (ch)
@@ -291,18 +284,16 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
                 rFlag = 1; 
                 break;
             }
-            /*Things */ 
             case '\n':
             {
               if (rFlag==1)
               {
-                    crlfFlag=1; 
-                    newStatus.linefrom=newStatus.linefrom+1; 
-                    newStatus.lineto = newStatus.lineto+1; 
+                   crlfFlag=1; 
+                   newStatus.linefrom=newStatus.linefrom+1; /*Updating the line counters */ 
+                   newStatus.lineto = newStatus.lineto+1; 
               }
               break;
             }
-            /*Stuff */ 
 
             case ' ':
             {
@@ -311,6 +302,11 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
                     crlfFlag=0;    
                     newStatus.lineto = newStatus.lineto +1; 
               }
+	      
+              else
+	      {
+		tempString[i++] = ch;
+	      }
               break;
             }
             case '\t':
@@ -319,19 +315,18 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
                     newStatus.lineto = newStatus.lineto +1; 
                     crlfFlag=0;
                }
-                break;
+               break;
                 /* Flags */ 
             default:
             {
-                //if (foldedFlag==1) /*We gotta keep reading it untill we find a \r\n with no whitespace following */ 
+	      /*If a new char is found while the crlf flag is still on, we are on a new flag so its time to exit */ 
               if (crlfFlag==1)
                 {
                     staticFlag=1;
                     lineDoneFlag=1;
-                    //tempString[i++]=ch;
                 }
                else if (crlfFlag==0)
-               {
+                {
                     tempString[i++] = ch; 
                     staticFlag=0; 
                 }
@@ -344,16 +339,16 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
             break;
 
     }while (ch!=EOF);
+    /* Setting the null terminator for the string */ 
     if (ch==EOF)
         tempString[i]='\0';
     else
         tempString[i]='\0';
+    /* Allocating space and assigning buff */ 
     *buff = (char*)calloc(strlen(tempString)+1,sizeof(char));
     strncpy(*buff,tempString,strlen(tempString)+1);
     newStatus.code = OK;
-    lineCounter = newStatus.lineto;
-   // newStatus.lineto = newStatus.lineto + lineCounter;
-    end:
+    lineCounter = newStatus.lineto; /*Updating the static line counter for getUnfoldes next call */ 
     return newStatus;
 
 }
@@ -363,88 +358,59 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
 {
 
     char * propName; 
-    char * copySttring;
     char * copyString2;
-    int extraCheck;
-    VcError error; 
-    int returnVal; 
-
-    char *value;        // property value string
+    VcError error=OK; 
+    
     propp->value=NULL;
     propp->partype=NULL;
+    propp->parval=NULL;
     char * tempString;
     char * typeString;
-    /* If the line does not contain a  colon,
-    we have an error */
-    if (Contains(buff,':')==0)
-    {
-      error=SYNTAX;
-      return error;
-    }
+    char * value;
+  
+    
+    /*Copying buff for use since its a const */ 
     tempString = (char*)calloc(strlen(buff)+1,sizeof(char));
     copyString2 = (char*)calloc(strlen(buff)+1,sizeof(char));
 
     strcpy(tempString,buff);
     //strcpy(copyString,buff);
     strcpy(copyString2,buff);
-
- /*   hasProps(tempString);
-    trbName(tempString);
-    setName(
-    /* Iterate through tempString */ 
+    /* If the line does not contain a  colon,
+    we have an error */
+    if (strstr(tempString,":")==NULL)
+    {
+	error=SYNTAX;
+	return error;
+    }
 
     /* If we find a colon before a semi colon, then we know there are no types */ 
 
     if (semiFirst(tempString)==0)
     {
-      //  printf("come on\n");
        propName=strtok(tempString,":");
        value = strtok(NULL,"\n");
        propp->value = (char *)malloc((strlen(buff)+1)*sizeof(char));
        strcpy(propp->value,value);
-    //   printf("%s\n",buff );
        assignPropName(propp,propName);
-       
-
+  
      }
-      // printf("%s\n",buff);
 
     
-
     /* We know that there are no types, since parameter types
-                           only exist if a semi colon occurs before a colon */ 
-        /* Grab everything after the colon and store it in par value string */ 
-	//printf("%s\n",buff);
+         only exist if a semi colon occurs before a colon */ 
     
    else if (semiFirst(tempString)==1) /* Semi colon occurs before colon, indicating optional parameters */ 
-    {
-   //   printf("String = %s\n",buff);
-      
-
-
-
-
-
+    {      
       propName=strtok(tempString,";"); /* Prop name found for optlionalse parameter case */ 
       typeString=strtok(NULL,"=");
-      //printf("%s\n",typeString);
      
       /* Type one found */ 
       typeString=strtok(NULL,":");
-   if (Contains(typeString,'='))  /* If there is more than one type or value */ 
-      {
-    //          printf("type = %s\n",typeString);
-      //  char * type1;
-        /* Check to see that = signs match ";" and then
-        attempt to tokenize based on that */ 
-     //   printf("type = %s\n",typeString);
-
-
-        
-
-      }
+      
       if (strlen(typeString)>0)
         propp->partype=(char *)malloc((strlen(typeString)+1)*sizeof(char));
+      
       strcpy(propp->partype,typeString);
       value=strtok(NULL,"\n");
       propp->value = (char *)malloc((strlen(buff)+1)*sizeof(char));
@@ -463,17 +429,11 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
 
 void freeVcFile ( VcFile * const filep)
 {
-  int i=0,k=0;
-  for (i=0;i<(filep->ncards);i++)
-    {                
-       if (filep->cardp[i]!=NULL)    
-       free (filep->cardp[i]);
-
-    }
 }
+/* Assigning a property name. Returning the enumerated type value
+of what was assigned */ 
 
-
-int assignPropName(VcProp * const propp,char * propName, char  * const string)
+int assignPropName(VcProp * const propp,char * propName)
 {
     if (strcmp("BEGIN",propName)==0)
     {
@@ -567,6 +527,9 @@ int assignPropName(VcProp * const propp,char * propName, char  * const string)
         propp->name=VCP_OTHER;
         return 17; 
     }
+    
+    propp->name=VCP_OTHER;
+    return 0;
 
 
 
@@ -604,8 +567,8 @@ int semiFirst(char * tempString)
             break;
         }
     }
-
  
+ return 0;
 }
 /* int Contains(char * string, char pattern);
  * Returns: position where 0; pattern was found 
@@ -628,7 +591,6 @@ int Contains(char * string, char  pattern)
   a certain location */
 int checkPosition(char * string, int position)
 {
-    int i = 0; 
     if ((string[position+1] == '\n'))// && (string[position+2]==' '))
     {
         return 1; 
@@ -644,27 +606,24 @@ void removeSpaces(char * string)  /*Function to remove spaces, found from  http:
   char *p1 = string;
   char *p2 = string;
   p1 = string;
- while(*p1 != 0) 
+  
+  while(*p1 != 0) 
+  {         
+     if(isspace(*p1)) /*if a space is found, rearange the pointers so the spaces are ignored */ 
   {
-         
-  if(isspace(*p1)) /*if a space is found, rearange the pointers so the spaces are ignored */ 
-  {
-    ++p1;
+     ++p1;
   }
-  else
-   *p2++ = *p1++; 
+  
+     else
+     *p2++ = *p1++; 
   }
+    
   *p2 = 0; 
 
 
 }
 
-int isFolded(char * string)
-{
-    if ((string[0]==' ') || (string[0] == '\t'))
-        return 1; 
-    return 0; 
-}
+
 
 int removeNewLine(char * string)
 {
