@@ -138,7 +138,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 	       {
 	           //  if (*(cardp)==NULL)
 	          //{    printf("ERROR\n\n\n");
-	           return newStatus;
+             goto end; 
              // }
 	       }
 
@@ -165,7 +165,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 	  //    	printf("HER, buff =%s\n",buff);
 
                 newStatus.code = BEGEND;
-                return newStatus;
+                goto end; 
             }
         }
     
@@ -199,7 +199,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
           if ((buff[8] != '3') ||  (buff[9] != '.') || (buff[10]!='0'))
           {
             newStatus.code = BADVER; 
-            return newStatus;
+            goto end; 
           }
        }
        /*This check allows begin, end, and version properties to be ignored
@@ -214,7 +214,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             if (error!=OK)
             {
               newStatus.code = error;
-              return newStatus;
+              goto end;
             }
             /* If we are on the first prop, we simply alloc for 1*/ 
             if (i==0)
@@ -224,13 +224,13 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             } 
 
             else
-	    {
-	       printf("buff = %s\n",buff);
-              (*cardp)=realloc((*cardp),sizeof(Vcard)+(sizeof(VcProp)*(i+1)));
+	         {
+	              printf("buff = %s\n",buff);
+               (*cardp)=realloc((*cardp),sizeof(Vcard)+(sizeof(VcProp)*(i+1)));
             }
             (*cardp)->prop[i]=*tempProp;
             i=i+1;
-            free(buff);
+          //  free(buff);
         
 	    if (newStatus.code == BEGEND)
             {
@@ -244,6 +244,8 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             (*cardp)->nprops=i;
 
        }
+       if (buff==NULL)
+        break;
     } while (strcmp("END:VCARD",buff)!=0);
      
     /* If we went through the entire vcard and couldnt find a FN, error */ 
@@ -270,6 +272,9 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
       
    // buff=NULL;
     end:
+    if (buff!=NULL)
+      free(buff);
+    buff = NULL;
     return newStatus;
 
 }
@@ -426,7 +431,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     *buff = (char*)calloc(strlen(tempString)+2,sizeof(char));
     strncpy(*buff,tempString,strlen(tempString)+1); /* Maybe remove this + 1 */ 
 
-    if (strlen(tempString)>0 && tempString!=NULL)
+    i//f (strlen(tempString)>0 && tempString!=NULL)
        // free(tempString);
 
     newStatus.code = OK;
