@@ -65,7 +65,6 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
     /* Until end of file */ 
    while (feof(vcf)==0)
     { 
- 
         /* Incrementing # of cards */ 
         filep->ncards=filep->ncards+1;
 	/* Allocating for a pointer to go inside the array of card pointers */ 
@@ -74,17 +73,17 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
         if (newStatus.code==OK)
           newStatus = readVcard(vcf,&filep->cardp[i]);
 	
-     /* if ( filep->cardp[i]==NULL)
+      if ( filep->cardp[i]==NULL)
         {   
-	   printf("Error %d\n",newStatus.code);
-	   filep->ncards=0;    
-	   free(filep);
+	          printf("Were Done  %d\n",newStatus.code);
+	          filep->ncards=0;    
+	          //free(filep);
            break;
         }
-       */         i++;
+        i++;
 
         if (newStatus.code!=OK)
-	  break;
+	         break;
 
 
    }/*end of while loop */ 
@@ -223,11 +222,14 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
               (*cardp)=malloc(sizeof(Vcard)+sizeof(VcProp));
 	            (*cardp)->nprops=1;	
             } 
+
             else
+
               (*cardp)=realloc((*cardp),sizeof(Vcard)+(sizeof(VcProp)*(i+1)));
-              (*cardp)->prop[i]=*tempProp;
-              i=i+1;
-              free(buff);
+            
+            (*cardp)->prop[i]=*tempProp;
+            i=i+1;
+            free(buff);
         
 	    if (newStatus.code == BEGEND)
             {
@@ -290,7 +292,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     static int foldedFlag = 0; /* this will keep value as well. Hmm*/ 
     newStatus.lineto = lineCounter; 
     if (foldedFlag==0)
-    newStatus.linefrom = lineCounter;
+        newStatus.linefrom = lineCounter;
     
     /* Satisfiying the "special" case where vcf is NULL */ 
     if (vcf==NULL)
@@ -310,7 +312,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
       
       if (staticFlag!=1)
          ch = fgetc(vcf); /* Skips over a char */ 
-        if (ch==EOF&&endOfFile==0)
+        if (ch==EOF&&endOfFile==1)
 	      {
 	   //  printf("YES\n");
 	       *buff = NULL;
@@ -403,7 +405,16 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     }while (ch!=EOF);
     /* Setting the null terminator for the string */ 
     if (ch==EOF)
+    {
 	      tempString[i]='\0';
+        endOfFile=1; 
+        if (strlen(tempString<=1))
+        {
+           *buff=NULL;
+           return newStatus;
+        }
+        staticFlag=1;
+    }
 	
     
     else
@@ -455,8 +466,8 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
     we have an error */
     if (strstr(tempString,":")==NULL)
     {
-	error=SYNTAX;
-	return error;
+	     error=SYNTAX;
+	     return error;
     }
 
     /* If we find a colon before a semi colon, then we know there are no types */ 
@@ -465,7 +476,7 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
     {
        propName=strtok(tempString,":");
        value = strtok(NULL,"\n");
-       propp->value = (char *)malloc((strlen(buff)+1)*sizeof(char));
+       propp->value = (char *)malloc((strlen(value)+1)*sizeof(char));
        strcpy(propp->value,value);
        assignPropName(propp,propName);
   
@@ -484,17 +495,18 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
       typeString=strtok(NULL,":");
       if (typeString!=NULL)
       {
-      if (strlen(typeString)>0)
-        propp->partype=(char *)malloc((strlen(typeString)+1)*sizeof(char));
-            strcpy(propp->partype,typeString);
+       if (strlen(typeString)>0)
+         propp->partype=(char *)malloc((strlen(typeString)+1)*sizeof(char));
+         strcpy(propp->partype,typeString);
 
       }
       value=strtok(NULL,"\n");
       if (value!=NULL)
       {
-      propp->value = (char *)malloc((strlen(buff)+1)*sizeof(char));
-      strncpy(propp->value,value,strlen(value)+1);
+        propp->value = (char *)malloc((strlen(buff)+1)*sizeof(char));
+        strncpy(propp->value,value,strlen(value)+1);
       }
+
       assignPropName(propp,propName);
 
 
