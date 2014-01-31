@@ -130,6 +130,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             goto end;
          }
          newStatus=getUnfolded(vcf,&buff);
+
 	
 	      // printf("buff!! = %s\n",buff);
         /* If we see another begin before an end, 
@@ -138,10 +139,10 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 	       {
 	           //  if (*(cardp)==NULL)
 	          //{    printf("ERROR\n\n\n");
-             goto end; 
+             goto end;  
              // }
 	       }
-
+         printf("buff = %s\n",buff);
         if (beginFlag==1)  /* Ensuring no Two Begins in a row */ 
         {
             if (strcmp("BEGIN:VCARD",buff)==0) 
@@ -225,7 +226,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 
             else
 	         {
-	              printf("buff = %s\n",buff);
+	             // printf("buff = %s\n",buff);
                (*cardp)=realloc((*cardp),sizeof(Vcard)+(sizeof(VcProp)*(i+1)));
             }
             (*cardp)->prop[i]=*tempProp;
@@ -414,7 +415,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     {
 	      tempString[i]='\0';
         endOfFile=1; 
-        if (strlen(tempString)<=1)
+        if (strlen(tempString)<1)
         {
            *buff=NULL;
            return newStatus;
@@ -427,7 +428,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
         tempString[i]='\0';
     /* Allocating space and assigning buff */ 
    // printf("TEMP STRING = %s\n",tempString);
-    printf("linefrom = %d, lineto = %d \n",newStatus.linefrom,newStatus.lineto);
+ //   printf("linefrom = %d, lineto = %d \n",newStatus.linefrom,newStatus.lineto);
     *buff = (char*)calloc(strlen(tempString)+2,sizeof(char));
     strncpy(*buff,tempString,strlen(tempString)+1); /* Maybe remove this + 1 */ 
 
