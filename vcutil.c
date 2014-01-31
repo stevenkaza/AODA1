@@ -1,4 +1,3 @@
-
 /* vcutil.c
 
 vCard  utlity library/ Parser 
@@ -720,7 +719,7 @@ void removeSpaces(char * string)  /*Function to remove spaces, found from  http:
   *p2 = 0; 
 
 
-}
+} 
 
 
 
