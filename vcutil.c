@@ -130,27 +130,29 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
          {
             goto end;
          }
-        newStatus=getUnfolded(vcf,&buff);
+         newStatus=getUnfolded(vcf,&buff);
 	
-	printf("buff!! = %s\n",buff);
+	       printf("buff!! = %s\n",buff);
         /* If we see another begin before an end, 
                                         return an ERROR */
-	if (buff==NULL)
-	{
-	//  if (*(cardp)==NULL)
-	//{    printf("ERROR\n\n\n");
-	  return newStatus;
-// }
-	}
-        if (beginFlag==1) 
+	       if (buff==NULL) /* If bull is null, GET OUT */ 
+	       {
+	           //  if (*(cardp)==NULL)
+	          //{    printf("ERROR\n\n\n");
+	           return newStatus;
+             // }
+	       }
+
+        if (beginFlag==1)  /* Ensuring no Two Begins in a row */ 
         {
             if (strcmp("BEGIN:VCARD",buff)==0) 
             {
-	        printf("here?\n");
+	              printf("here?\n");
                 newStatus.code =BEGEND; 
                 goto end;
             }
         }
+
         /*Ensuring line begins with BEGIN */ 
         /* If not, set an error */ 
         if (beginFlag==0) 
@@ -164,7 +166,6 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 	  //    	printf("HER, buff =%s\n",buff);
 
                 newStatus.code = BEGEND;
-
                 return newStatus;
             }
         }
@@ -178,10 +179,11 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             fnFlag=1; 
           }
         }
+         
         if (buff[0]=='N')
         {
           if (buff[1]==';' || buff[1] == ':')
-             nFlag=1; 
+              nFlag=1; 
         }
         
        /* if we reach the end of the vcard, go to the  flag checks */ 
@@ -205,7 +207,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
        and not assigned to the data structure */ 
        if ((newStatus.code == OK) && (strcmp("END:VCARD",buff)!=0) &&
           (strcmp("BEGIN:VCARD",buff)!=0) && (strcmp("VERSION:3.0",buff)!=0))
-       {
+          {
             /*Send the buff for parsing */
             buff[strlen(buff)]='\0';
             tempProp=malloc(sizeof(VcProp));
@@ -279,13 +281,13 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     int i =0;
     static int endOfFile=0; 
     static char ch; /* static char to hold the last char read in for getUnfolded next call */ 
-    static int staticFlag; 
+    static int staticFlag; /* this would be 1 its second call*/ 
     char * tempString=NULL;
     int lineDoneFlag = 0; /*Flag to indicate the buff is ready to be returned and is unfolded */ 
     static int lineCounter=0; 
     VcStatus newStatus;
     newStatus.code = OK;  
-   static int foldedFlag = 0; 
+    static int foldedFlag = 0; /* this will keep value as well. Hmm*/ 
     newStatus.lineto = lineCounter; 
     if (foldedFlag==0)
     newStatus.linefrom = lineCounter;
@@ -294,9 +296,11 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     if (vcf==NULL)
     {
   //    printf("PPLZPLZ\n");
-     lineCounter=0; 
+      lineCounter=0; 
       newStatus.lineto=0;
       newStatus.linefrom=0; 
+      if (tempString!=NULL)
+        free(tempString);
       return newStatus;  
     }
     /* Looping through char by char until a crlf is found, then a flag is set and 
@@ -304,15 +308,15 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     do 
     {
       
-      //if (staticFlag!=)
-         ch = fgetc(vcf);
+      if (staticFlag!=1)
+         ch = fgetc(vcf); /* Skips over a char */ 
         if (ch==EOF&&endOfFile==0)
-	{
-	//  printf("YES\n");
-	//  *buff = NULL;
-	  return newStatus; 
-	}
-	endOfFile=1; /*We know that we dont have an empty file */ 
+	      {
+	   //  printf("YES\n");
+	       *buff = NULL;
+	       return newStatus; 
+	      }
+	      endOfFile=1; /*We know that we dont have an empty file */ 
         switch (ch)
         {
 	  
@@ -326,30 +330,40 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
               if (rFlag==1)
               {
                    crlfFlag=1; 
-		   if (foldedFlag==0)
-                   newStatus.linefrom=newStatus.linefrom+1; /*Updating the line counters */ 
+
+		                if (foldedFlag==0)
+                        newStatus.linefrom=newStatus.linefrom+1; /*Updating the line counters */
+
                    newStatus.lineto = newStatus.lineto+1; 
               }
               break;
             }
 
-            case ' ':
+            case ' ': /* Its a space */ 
             {
+
               if (crlfFlag==1) /* If its a folded line, reset the crlf flag and increment lineto */ 
               {
                     crlfFlag=0;    
-		    foldedFlag =1; 
+		                foldedFlag =1; 
               }
 	      
-              else
-	      {
-		
-		tempString=realloc(tempString,sizeof(char)*(i+1));
-		tempString[i++] = ch;
-	      }
+              else 
+	            {
+                  /* If its the first character, allocate space for one*/ 
+                  /* I counts the number of chars */ 
+                  if (i==0)
+                    tempString=(char *)malloc(sizeof(char));
+                  else
+	     	            tempString=realloc(tempString,sizeof(char)*(i+1));
+		              tempString[i++] = ch; /* Duplicate code. Place outside while loop */ 
+                  staticFlag = 0; 
+	            }
               break;
             }
+            /* ADD PROPER PROCEDURE HERE AS ABOVE */ 
             case '\t':
+
                if (crlfFlag==1)
                {
                     newStatus.lineto = newStatus.lineto +1; 
@@ -362,23 +376,24 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
 	      /*If a new char is found while the crlf flag is still on, we are on a new flag so its time to exit */ 
               if (crlfFlag==1)
                 {
-                    staticFlag=1;
+                    staticFlag=1; /* Says DONT READ CHAR */ 
                     lineDoneFlag=1;
                 }
-               else if (crlfFlag==0)
+               else if (crlfFlag==0) 
                 {
-		  if (i==0)
-		   tempString=(char *)malloc(sizeof(char));
-	           else
-			tempString=realloc(tempString,sizeof(char)*(i+1));
-		    if (ch!=EOF && ch!= '\0')
-                    tempString[i++] = ch; 
-                    staticFlag=0; 
+		               if (i==0)
+		                   tempString=(char *)malloc(sizeof(char));
+	                 else
+			                 tempString=realloc(tempString,sizeof(char)*(i+1));
+		               if (ch!=EOF && ch!= '\0')
+                         tempString[i++] = ch; 
+                    staticFlag=0; /* Ready to grab the next line*/ 
                 }
 
-                break;
+              break;
             }
-            if (lineDoneFlag==1)
+
+        if (lineDoneFlag==1)
            break;
         }/*Switch Ends */ 
 
@@ -388,19 +403,20 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     }while (ch!=EOF);
     /* Setting the null terminator for the string */ 
     if (ch==EOF)
-    {
-	  tempString[i]='\0';
+	      tempString[i]='\0';
 	
-    }
+    
     else
         tempString[i]='\0';
     /* Allocating space and assigning buff */ 
    // printf("TEMP STRING = %s\n",tempString);
     printf("linefrom = %d, lineto = %d \n",newStatus.linefrom,newStatus.lineto);
     *buff = (char*)calloc(strlen(tempString)+1,sizeof(char));
-    strncpy(*buff,tempString,strlen(tempString)+1);
+    strncpy(*buff,tempString,strlen(tempString)+1); /* Maybe remove this + 1 */ 
+
     if (strlen(tempString)>0 && tempString!=NULL)
-    free(tempString);
+        free(tempString);
+
     newStatus.code = OK;
     
     lineCounter = newStatus.lineto; /*Updating the static line counter for getUnfoldes next call */ 
