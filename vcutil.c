@@ -1,3 +1,4 @@
+
 /* vcutil.c
 
 vCard  utlity library/ Parser 
@@ -8,9 +9,14 @@ Contact: skazavch@uoguelph.ca
 */ 
 
 
+/* Added space input for getUnfolded*/ 
 
+/* 
+ Check hook for being NULL */ 
 
+/* Add vcp org to assignPropName */ 
 
+/* Store entire buff as a value if propname = other */ 
 
 #include <stdlib.h>
 #include <string.h>
@@ -67,12 +73,19 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
 
         if (newStatus.code==OK)
           newStatus = readVcard(vcf,&filep->cardp[i]);
-        i++;
+	
+     /* if ( filep->cardp[i]==NULL)
+        {   
+	   printf("Error %d\n",newStatus.code);
+	   filep->ncards=0;    
+	   free(filep);
+           break;
+        }
+       */         i++;
 
         if (newStatus.code!=OK)
-        { 
-           break;   
-        }
+	  break;
+
 
    }/*end of while loop */ 
     
@@ -115,16 +128,25 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
          /* In the case the file is null, exit this loop */ 
          while (feof(vcf)!=0)
          {
-            goto check;
+            goto end;
          }
         newStatus=getUnfolded(vcf,&buff);
-	printf("buff = %s\n",buff);
+	
+	printf("buff!! = %s\n",buff);
         /* If we see another begin before an end, 
                                         return an ERROR */
+	if (buff==NULL)
+	{
+	//  if (*(cardp)==NULL)
+	//{    printf("ERROR\n\n\n");
+	  return newStatus;
+// }
+	}
         if (beginFlag==1) 
         {
             if (strcmp("BEGIN:VCARD",buff)==0) 
             {
+	        printf("here?\n");
                 newStatus.code =BEGEND; 
                 goto end;
             }
@@ -139,6 +161,8 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             }
             else
             {
+	  //    	printf("HER, buff =%s\n",buff);
+
                 newStatus.code = BEGEND;
 
                 return newStatus;
@@ -239,7 +263,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
        newStatus.code =NOPVER;
     }
       
-    //*buff=NULL;
+   // buff=NULL;
     end:
     return newStatus;
 
@@ -253,32 +277,45 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     int rFlag=0; 
     int crlfFlag=0; 
     int i =0;
+    static int endOfFile=0; 
     static char ch; /* static char to hold the last char read in for getUnfolded next call */ 
     static int staticFlag; 
-    char tempString[850];
+    char * tempString=NULL;
     int lineDoneFlag = 0; /*Flag to indicate the buff is ready to be returned and is unfolded */ 
     static int lineCounter=0; 
     VcStatus newStatus;
     newStatus.code = OK;  
+   static int foldedFlag = 0; 
     newStatus.lineto = lineCounter; 
+    if (foldedFlag==0)
     newStatus.linefrom = lineCounter;
+    
     /* Satisfiying the "special" case where vcf is NULL */ 
     if (vcf==NULL)
     {
-      lineCounter=0; 
+  //    printf("PPLZPLZ\n");
+     lineCounter=0; 
       newStatus.lineto=0;
       newStatus.linefrom=0; 
-     return newStatus;  
+      return newStatus;  
     }
     /* Looping through char by char until a crlf is found, then a flag is set and 
       those chars are not read into the buff */ 
     do 
     {
       
-      if (staticFlag!=1)
+      //if (staticFlag!=)
          ch = fgetc(vcf);
+        if (ch==EOF&&endOfFile==0)
+	{
+	//  printf("YES\n");
+	//  *buff = NULL;
+	  return newStatus; 
+	}
+	endOfFile=1; /*We know that we dont have an empty file */ 
         switch (ch)
         {
+	  
             case '\r':
             {
                 rFlag = 1; 
@@ -289,6 +326,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
               if (rFlag==1)
               {
                    crlfFlag=1; 
+		   if (foldedFlag==0)
                    newStatus.linefrom=newStatus.linefrom+1; /*Updating the line counters */ 
                    newStatus.lineto = newStatus.lineto+1; 
               }
@@ -300,11 +338,13 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
               if (crlfFlag==1) /* If its a folded line, reset the crlf flag and increment lineto */ 
               {
                     crlfFlag=0;    
-                    newStatus.lineto = newStatus.lineto +1; 
+		    foldedFlag =1; 
               }
 	      
               else
 	      {
+		
+		tempString=realloc(tempString,sizeof(char)*(i+1));
 		tempString[i++] = ch;
 	      }
               break;
@@ -327,28 +367,46 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
                 }
                else if (crlfFlag==0)
                 {
+		  if (i==0)
+		   tempString=(char *)malloc(sizeof(char));
+	           else
+			tempString=realloc(tempString,sizeof(char)*(i+1));
+		    if (ch!=EOF && ch!= '\0')
                     tempString[i++] = ch; 
                     staticFlag=0; 
                 }
 
                 break;
             }
+            if (lineDoneFlag==1)
+           break;
         }/*Switch Ends */ 
 
-      if (lineDoneFlag==1)
+     if (lineDoneFlag==1)
             break;
 
     }while (ch!=EOF);
     /* Setting the null terminator for the string */ 
     if (ch==EOF)
-        tempString[i]='\0';
+    {
+	  tempString[i]='\0';
+	
+    }
     else
         tempString[i]='\0';
     /* Allocating space and assigning buff */ 
+   // printf("TEMP STRING = %s\n",tempString);
+    printf("linefrom = %d, lineto = %d \n",newStatus.linefrom,newStatus.lineto);
     *buff = (char*)calloc(strlen(tempString)+1,sizeof(char));
     strncpy(*buff,tempString,strlen(tempString)+1);
+    if (strlen(tempString)>0 && tempString!=NULL)
+    free(tempString);
     newStatus.code = OK;
+    
     lineCounter = newStatus.lineto; /*Updating the static line counter for getUnfoldes next call */ 
+      // if (ch==EOF && endOfFile==1&& strlen(*buff)==0)
+	// *buff=NULL;
+	  
     return newStatus;
 
 }
@@ -364,6 +422,7 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
     propp->value=NULL;
     propp->partype=NULL;
     propp->parval=NULL;
+    propp->hook=NULL;
     char * tempString;
     char * typeString;
     char * value;
@@ -407,14 +466,19 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
      
       /* Type one found */ 
       typeString=strtok(NULL,":");
-      
+      if (typeString!=NULL)
+      {
       if (strlen(typeString)>0)
         propp->partype=(char *)malloc((strlen(typeString)+1)*sizeof(char));
-      
-      strcpy(propp->partype,typeString);
+            strcpy(propp->partype,typeString);
+
+      }
       value=strtok(NULL,"\n");
+      if (value!=NULL)
+      {
       propp->value = (char *)malloc((strlen(buff)+1)*sizeof(char));
       strncpy(propp->value,value,strlen(value)+1);
+      }
       assignPropName(propp,propName);
 
 
@@ -502,7 +566,7 @@ int assignPropName(VcProp * const propp,char * propName)
 
         return 12; 
     }
-    if (strcmp("ORG",propName)==0)
+    if (strcmp("ORG",propName)==0 || (strcmp("Org",propName) == 0))
     {
         propp->name=VCP_ORG;
         return 13; 
