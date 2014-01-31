@@ -104,7 +104,7 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
 VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 {
     VcStatus newStatus; 
-    char  *buff;
+    char  *buff=NULL;
     int fnFlag = 0;
     int nFlag = 0;  
     int endFlag;
@@ -131,7 +131,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
          }
          newStatus=getUnfolded(vcf,&buff);
 	
-	       printf("buff!! = %s\n",buff);
+	      // printf("buff!! = %s\n",buff);
         /* If we see another begin before an end, 
                                         return an ERROR */
 	       if (buff==NULL) /* If bull is null, GET OUT */ 
@@ -224,9 +224,10 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             } 
 
             else
-
+	    {
+	       printf("buff = %s\n",buff);
               (*cardp)=realloc((*cardp),sizeof(Vcard)+(sizeof(VcProp)*(i+1)));
-            
+            }
             (*cardp)->prop[i]=*tempProp;
             i=i+1;
             free(buff);
@@ -408,7 +409,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     {
 	      tempString[i]='\0';
         endOfFile=1; 
-        if (strlen(tempString<=1))
+        if (strlen(tempString)<=1)
         {
            *buff=NULL;
            return newStatus;
@@ -422,11 +423,11 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     /* Allocating space and assigning buff */ 
    // printf("TEMP STRING = %s\n",tempString);
     printf("linefrom = %d, lineto = %d \n",newStatus.linefrom,newStatus.lineto);
-    *buff = (char*)calloc(strlen(tempString)+1,sizeof(char));
+    *buff = (char*)calloc(strlen(tempString)+2,sizeof(char));
     strncpy(*buff,tempString,strlen(tempString)+1); /* Maybe remove this + 1 */ 
 
     if (strlen(tempString)>0 && tempString!=NULL)
-        free(tempString);
+       // free(tempString);
 
     newStatus.code = OK;
     
