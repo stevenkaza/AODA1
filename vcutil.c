@@ -526,13 +526,13 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
             {
                 if (valueState==1)
 		{
-		     printf("vc = %c\n",buff[i]);
+//		     printf("vc = %c\n",buff[i]);
                      parvalueString[vIndex++]=buff[i];
 		}
                 if (typeState==1)
 		{
-		    printf("tindex = %d\n",tIndex);
-		    printf("tc = %c\n",buff[i]);
+		   // printf("tindex = %d\n",tIndex);
+//		    printf("tc = %c\n",buff[i]);
                     partypeString[tIndex++]=buff[i];
 		}
            }
