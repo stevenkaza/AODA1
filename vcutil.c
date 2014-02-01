@@ -425,7 +425,10 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
 	
     
     else
+    {
+        tempString=realloc(tempString,sizeof(char)*(i+1));
         tempString[i]='\0';
+    }
     /* Allocating space and assigning buff */ 
    // printf("TEMP STRING = %s\n",tempString);
  //   printf("linefrom = %d, lineto = %d \n",newStatus.linefrom,newStatus.lineto);
@@ -592,7 +595,7 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
         strncpy(propp->value,valueValueString,strlen(valueValueString)+1);	
       }
       if (vvIndex==0)
-	error=SYNTAX;
+	       error=SYNTAX;
       return error; 
       
 }
