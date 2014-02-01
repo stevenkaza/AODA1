@@ -1,3 +1,4 @@
+
 /* vcutil.c
 
 vCard  utlity library/ Parser 
@@ -72,10 +73,10 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
         if (newStatus.code==OK)
           newStatus = readVcard(vcf,&filep->cardp[i]);
 	
-      if ( filep->cardp[i]==NULL)
+       if ( filep->cardp[i]==NULL)
         {   
-	          printf("Were Done  %d\n",newStatus.code);
-	          filep->ncards=0;    
+	    printf("Were Done  %d\n",newStatus.code);
+	    filep->ncards=0;    
 	          //free(filep);
            break;
         }
@@ -130,17 +131,15 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             goto end;
          }
          newStatus=getUnfolded(vcf,&buff);
-
-	
-	      // printf("buff!! = %s\n",buff);
+	// printf("buff!! = %s\n",buff);
         /* If we see another begin before an end, 
                                         return an ERROR */
 	       if (buff==NULL) /* If bull is null, GET OUT */ 
 	       {
 	           //  if (*(cardp)==NULL)
 	          //{    printf("ERROR\n\n\n");
-             goto end;  
-             // }
+		  goto end;  
+                 // }
 	       }
          printf("buff = %s\n",buff);
         if (beginFlag==1)  /* Ensuring no Two Begins in a row */ 
@@ -413,7 +412,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     /* Setting the null terminator for the string */ 
     if (ch==EOF)
     {
-	      tempString[i]='\0';
+	tempString[i]='\0';
         endOfFile=1; 
         if (strlen(tempString)<1)
         {
@@ -424,8 +423,8 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     }
 	
     
-    else
-        tempString[i]='\0';
+   // else
+    //    tempString[i]='\0';
     /* Allocating space and assigning buff */ 
    // printf("TEMP STRING = %s\n",tempString);
  //   printf("linefrom = %d, lineto = %d \n",newStatus.linefrom,newStatus.lineto);
@@ -592,11 +591,91 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
         strncpy(propp->value,valueValueString,strlen(valueValueString)+1);	
       }
       if (vvIndex==0)
-	error=SYNTAX;
+	error=SYNTAX; 
       return error; 
       
 }
 
+/*
+
+VcError parseVcProp ( const char * buff, VcProp * const propp)
+{
+
+    char * propName; 
+    char * copyString2;
+    VcError error=OK; 
+    
+    propp->value=NULL;
+    propp->partype=NULL;
+    propp->parval=NULL;
+    propp->hook=NULL;
+    char * tempString;
+    char * typeString;
+    char * value;
+  
+    
+    /*Copying buff for use since its a const *
+    tempString = (char*)calloc(strlen(buff)+1,sizeof(char));
+    copyString2 = (char*)calloc(strlen(buff)+1,sizeof(char));
+
+    strcpy(tempString,buff);
+    //strcpy(copyString,buff);
+    strcpy(copyString2,buff);
+    /* If the line does not contain a  colon,
+    we have an error 
+    if (strstr(tempString,":")==NULL)
+    {
+	     error=SYNTAX;
+	     return error;
+    }
+
+    /* If we find a colon before a semi colon, then we know there are no types 
+
+    if (semiFirst(tempString)==0)
+    {
+       propName=strtok(tempString,":");
+       value = strtok(NULL,"\n");
+       propp->value = (char *)malloc((strlen(value)+1)*sizeof(char));
+       strcpy(propp->value,value);
+       assignPropName(propp,propName);
+  
+     }
+
+    
+    /* We know that there are no types, since parameter types
+         only exist if a semi colon occurs before a colon 
+    
+   else if (semiFirst(tempString)==1) /* Semi colon occurs before colon, indicating optional parameters 
+    {      
+      propName=strtok(tempString,";"); /* Prop name found for optlionalse parameter case 
+      typeString=strtok(NULL,"=");
+     
+      /* Type one found 
+      typeString=strtok(NULL,":");
+      if (typeString!=NULL)
+      {
+       if (strlen(typeString)>0)
+         propp->partype=(char *)malloc((strlen(typeString)+1)*sizeof(char));
+         strcpy(propp->partype,typeString);
+
+      }
+      value=strtok(NULL,"\n");
+      if (value!=NULL)
+      {
+        propp->value = (char *)malloc((strlen(buff)+1)*sizeof(char));
+        strncpy(propp->value,value,strlen(value)+1);
+      }
+
+      assignPropName(propp,propName);
+
+
+    }
+    return error;
+
+
+    
+}
+*/
 
 
 void freeVcFile ( VcFile * const filep)
