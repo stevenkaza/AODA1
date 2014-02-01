@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "vcutil.h"
+int main()
+{
+//
+	FILE * vcf = fopen("3_line_number_space.vcf","r"); 
+	VcStatus newStatus; 
+	int wow; 
+	if (vcf==NULL)
+	    return 1; 
+	
+	
+     VcFile * filep = NULL;
+	 filep = malloc(sizeof(VcFile));	
+
+
+	/* for(i = 0; i < 100; i++)
+	 {
+	 	filep->cardp[i] = NULL;
+	 }
+	 */
+	 newStatus = readVcFile(vcf,filep);
+	 		 //printf("please = %s\n",filep->cardp[0]->prop[14].value);
+ 
+               if (newStatus.code == OK)
+     {
+		
+                       
+			
+					printf("type=%s\n" , filep->cardp[1]->prop[3].partype);
+
+			
+
+
+		
+
+
+}
+
+		printf("line from = %d - line to = %d\n", newStatus.linefrom,newStatus.lineto);
+
+      //freeVcFile(filep);
+	 if (newStatus.code == OK)
+	 	printf("Success \n");
+	 else
+	 	printf("No way. Problem code = %d \n",newStatus.code);
+
+	return 0; 
+
+}

@@ -1,0 +1,36 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:Ni Ukyashochahe
+N:U;B;Reomemucho;;
+NICKNAME:Runachonu
+PHOTO:photodata
+ thatwraps
+ manylines
+BDAY:1961-03-30
+PHOTO:photodataanother one
+ thatwraps pretty cool
+ manylines I like it
+GEO:lon-71.24;lat24.204
+NICKNAME:ChocolateCharlie
+EMAIL:eyokuke@nyofuhi.org
+TEL;TYPE=CELL:1 (787) 126-0550
+BDAY:1961-03-29
+TEL;TYPE=WORK:1 (787) 126-0551
+ADR;TYPE=HOME:;;234 Sasa St.\nRya, Sekyo\nPacifica\nZ3L 5T8;;;;
+EMAIL;TYPE=HOME:shimu@re.org
+ADR;TYPE=WORK:;;239 Sasa St.\nRya, Sekyo\nPacifica\nZ3L 5T8;;;;
+TITLE:There and Back Again
+URL:http://www.muffinfilms.com
+ORG:Nintendo Co.
+LABEL:Best Deep Fried
+GEO:-71.24,24.204;fakegeodata
+TITLE:Kerikyu
+ORG:Fuse Inc.
+NOTE:Ku ushane riryutete nyutayu tsukeshuyone chihaonke ta
+	 na sokuomu myarute nyumyawe nitsusa
+UID:rachcom@jabber.org
+LABEL:Ryashutsunu
+UID:captain.crunch@jabber.org
+EMPLOYER:University of Guelph
+URL;TYPE=HOME:http://www.tayomako.us
+END:VCARD
