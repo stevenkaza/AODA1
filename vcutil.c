@@ -1,4 +1,3 @@
-
 /* vcutil.c
 
 vCard  utlity library/ Parser 
@@ -447,7 +446,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
 }
 
 
-VcError parseVcProp ( const char * buff, VcProp * const propp)
+VcError parseVcProp(const char * buff,VcProp * const propp)
 {
 
     char * propName; 
@@ -458,71 +457,144 @@ VcError parseVcProp ( const char * buff, VcProp * const propp)
     propp->partype=NULL;
     propp->parval=NULL;
     propp->hook=NULL;
-    char * tempString;
-    char * typeString;
-    char * value;
-  
-    
-    /*Copying buff for use since its a const */ 
-    tempString = (char*)calloc(strlen(buff)+1,sizeof(char));
-    copyString2 = (char*)calloc(strlen(buff)+1,sizeof(char));
+    int i = 0; 
 
-    strcpy(tempString,buff);
-    //strcpy(copyString,buff);
-    strcpy(copyString2,buff);
-    /* If the line does not contain a  colon,
-    we have an error */
-    if (strstr(tempString,":")==NULL)
+    int stateFlag = 0;  /* Parameter state flag */
+    
+    /* If these states are ever 1, it means time to read ch in */   
+    int typeState = 0; 
+    int valueState = 0;
+    /* String indexes for value and type */   
+    int vIndex = 0; 
+    int tIndex = 0; 
+    int m;
+    char valueValueString[100];
+    int vvIndex = 0; 
+    /* if 1, immediatly stop reading for types and values */ 
+    int optionalFlagDone = 0; 
+    /* 1 if theres a type/values by comma */ 
+    int regularValueState=0; 
+    char valueString[100];
+    char partypeString[25];
+    char parvalueString[25];
+    /* If this is set to 1, weve hit a colon and its time to parse values */ 
+    int valueValue = 0; 
+    for (i=0;i<strlen(buff);i++)
     {
-	     error=SYNTAX;
-	     return error;
+        if (valueValue==1)
+        {
+            valueValueString[vvIndex++]=buff[i];
+        }
+        if (buff[i]==':')
+        {
+            /* Reseting all other flags
+                to ensure rest of string 
+                only stored in proper variable */ 
+           // if (typeState==1 && valueValue==0)
+
+                partypeString[strlen(partypeString)]='\0';
+       //     if (valueState==1&&valueValue==0)
+		parvalueString[strlen(parvalueString)]='\0';
+            valueValue=1; 
+            stateFlag =0; 
+            valueState=0;
+            typeState=0; 
+        }
+
+        /*This ignores semi colons that might be value values */ 
+        if (buff[i]==';'  && valueValue!=1)
+        {
+      /* Reset all States if a semi colon is spotted */ 
+         // vIndex=0;
+        //  tIndex=0;
+          valueState=0;
+          typeState=0; 
+            if (stateFlag!=1)
+                stateFlag = 1; 
+
+        }
+
+        /* Storing the optional parameters as types or values, state based */ 
+        if (valueState==1 || typeState ==1)
+        {
+            if (buff[i]==',')
+            {
+                regularValueState = 1; 
+            }
+      /* Store it in as a char to a type/value as long as its not a colon or semi colon */ 
+            if (buff[i]!=';' && buff[i]!=':')
+            {
+                if (valueState==1)
+		{
+		     printf("vc = %c\n",buff[i]);
+                     parvalueString[vIndex++]=buff[i];
+		}
+                if (typeState==1)
+		{
+		    printf("tindex = %d\n",tIndex);
+		    printf("tc = %c\n",buff[i]);
+                    partypeString[tIndex++]=buff[i];
+		}
+           }
+          else 
+            {
+		/* Upon Colon, Optional mode is done if it existed, and we move to valuevalue mode */ 
+
+                if (buff[i]==':')
+                {
+		  optionalFlagDone = 1;
+		  valueValue = 1; 
+		  valueState = 0; 
+		  typeState = 0; 
+                
+                }
+            }
+        }
+        if (stateFlag ==1 && buff[i]=='=')
+        {
+	    /* IS IT A TYPE? */  
+            if (buff[i-2] == 'P' || buff[i-2] == 'p')
+            {
+	      
+                /* Turn the read in typeFlag on */ 
+                typeState = 1; 
+		/* if type already has something stored inside of it, we need to insert a comma */ 
+		if (tIndex>0)
+		  partypeString[tIndex++]=',';
+            }
+            /* IS IT A VALUE? */ 
+            else if (buff[i-2] == 'u' || buff[i-2] == 'U')
+            /* Check if its fursure value */ 
+            {
+	        /* read in value flag on  */ 
+                valueState = 1; 
+		if (vIndex>0)
+		  parvalueString[vIndex++]=',';
+            }
+        }
+	
     }
-
-    /* If we find a colon before a semi colon, then we know there are no types */ 
-
-    if (semiFirst(tempString)==0)
-    {
-       propName=strtok(tempString,":");
-       value = strtok(NULL,"\n");
-       propp->value = (char *)malloc((strlen(value)+1)*sizeof(char));
-       strcpy(propp->value,value);
-       assignPropName(propp,propName);
-  
-     }
-
     
-    /* We know that there are no types, since parameter types
-         only exist if a semi colon occurs before a colon */ 
-    
-   else if (semiFirst(tempString)==1) /* Semi colon occurs before colon, indicating optional parameters */ 
-    {      
-      propName=strtok(tempString,";"); /* Prop name found for optlionalse parameter case */ 
-      typeString=strtok(NULL,"=");
-     
-      /* Type one found */ 
-      typeString=strtok(NULL,":");
-      if (typeString!=NULL)
+      if (tIndex>0)
       {
-       if (strlen(typeString)>0)
-         propp->partype=(char *)malloc((strlen(typeString)+1)*sizeof(char));
-         strcpy(propp->partype,typeString);
-
+	  propp->partype=(char *)malloc((strlen(partypeString)+1)*sizeof(char));
+	  strcpy(propp->partype,partypeString);
       }
-      value=strtok(NULL,"\n");
-      if (value!=NULL)
+      if (vIndex>0)
       {
-        propp->value = (char *)malloc((strlen(buff)+1)*sizeof(char));
-        strncpy(propp->value,value,strlen(value)+1);
+        propp->parval = (char *)malloc((strlen(parvalueString)+1)*sizeof(char));
+        strncpy(propp->parval,parvalueString,strlen(parvalueString)+1);
       }
-
-      assignPropName(propp,propName);
-
-
-    }
-    return error;
-
-
-    
+      
+      if (vvIndex>0)
+      {
+        propp->value = (char *)malloc((strlen(valueValueString)+1)*sizeof(char));
+        strncpy(propp->value,valueValueString,strlen(valueValueString)+1);	
+      }
+      if (vvIndex==0)
+	error=SYNTAX;
+      return error; 
+      
 }
 
 
