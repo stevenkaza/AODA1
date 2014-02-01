@@ -290,7 +290,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     int i =0;
     static int endOfFile=0; 
     static char ch; /* static char to hold the last char read in for getUnfolded next call */ 
-    static int staticFlag; /* this would be 1 its second call*/ 
+    static int staticFlag=0; /* this would be 1 its second call*/ 
     char * tempString=NULL;
     int lineDoneFlag = 0; /*Flag to indicate the buff is ready to be returned and is unfolded */ 
     static int lineCounter=0; 
@@ -308,8 +308,10 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
       lineCounter=0; 
       newStatus.lineto=0;
       newStatus.linefrom=0; 
+      staticFlag = 0; 
       if (tempString!=NULL)
         free(tempString);
+      *buff =NULL;
       return newStatus;  
     }
     /* Looping through char by char until a crlf is found, then a flag is set and 
@@ -494,10 +496,14 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
                 to ensure rest of string 
                 only stored in proper variable */ 
            // if (typeState==1 && valueValue==0)
-
+                if (regularValueState==0)
+                partypeString[strlen(partypeString)-3]='\0';
+              else
                 partypeString[strlen(partypeString)]='\0';
+
+
        //     if (valueState==1&&valueValue==0)
-		parvalueString[strlen(parvalueString)]='\0';
+		          parvalueString[strlen(parvalueString)]='\0';
             valueValue=1; 
             stateFlag =0; 
             valueState=0;
@@ -562,8 +568,8 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
                 /* Turn the read in typeFlag on */ 
                 typeState = 1; 
 		/* if type already has something stored inside of it, we need to insert a comma */ 
-		if (tIndex>0)
-		  partypeString[tIndex++]=',';
+          		if (tIndex>0)
+          		  partypeString[tIndex++]=',';
             }
             /* IS IT A VALUE? */ 
             else if (buff[i-2] == 'u' || buff[i-2] == 'U')
@@ -571,8 +577,8 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
             {
 	        /* read in value flag on  */ 
                 valueState = 1; 
-		if (vIndex>0)
-		  parvalueString[vIndex++]=',';
+		            if (vIndex>0)
+		              parvalueString[vIndex++]=',';
             }
         }
 	
