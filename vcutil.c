@@ -107,7 +107,8 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
     char  *buff=NULL;
     int fnFlag = 0;
     int nFlag = 0;  
-    int endFlag;
+    int endFlag;]
+    (*cardp)=NULL;
     VcError error; 
     int versionFlag =0; /*If version flag stays 0, then we know no version was found */ 
 
@@ -432,7 +433,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     *buff = (char*)calloc(strlen(tempString)+2,sizeof(char));
     strncpy(*buff,tempString,strlen(tempString)+1); /* Maybe remove this + 1 */ 
 
-    i//f (strlen(tempString)>0 && tempString!=NULL)
+    //f (strlen(tempString)>0 && tempString!=NULL)
        // free(tempString);
 
     newStatus.code = OK;
