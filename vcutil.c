@@ -505,7 +505,7 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
     {
        propName=strtok(tempString,":");
        assignPropName(propp,propName);
-       printf("testing string \n",buff);
+       printf("testing string %s \n",buff);
        if (propName==VCP_OTHER)
        {
           propp->value = (char *)malloc((strlen(buff)+1)*sizeof(char));
