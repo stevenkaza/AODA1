@@ -404,8 +404,17 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
 	      /*If a new char is found while the crlf flag is still on, we are on a new flag so its time to exit */ 
               if (crlfFlag==1)
                 {
+                    /* We have not even seen a colon or a semi colon yet , blankline*/ 
+                    
                     staticFlag=1; /* Says DONT READ CHAR */ 
                     lineDoneFlag=1;
+                    if (strstr(tempString,":")==NULL && strstr(tempString,";")==NULL)
+                    {
+                      free(tempString);
+                      i=0; 
+                      staticFlag=0; 
+                      lineDoneFlag=0; 
+                    }
                 }
                else if (crlfFlag==0) 
                 {
