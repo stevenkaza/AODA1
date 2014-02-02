@@ -508,16 +508,21 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
        printf("testing string %s \n",buff);
        if (propp->name==VCP_OTHER)
        {
-          if (periodFirst(tempString)!=2) /*ensuring not optional group */ 
+          if (periodFirst(tempString)!=2) /*ensuring not optional group */
           {
             propp->value = (char *)malloc((strlen(buff)+1)*sizeof(char));
             printf("BUFF=%s\n",buff );
             strcpy(propp->value,buff);
           }
+          else
+          {
+                     value = strtok(NULL,"\n");
+                     propp->value = (char *)malloc((strlen(value)+1)*sizeof(char));
+                     strcpy(propp->value,value);
+          }
        }
-       /* getting full value after colon if optional group is found */
-       /* Getting full value otas long as its not vcp other */ 
-       else if (propp->name!=VCP_OTHER || (propp->name==VCP_OTHER && periodFirst(tempString)==2))
+
+       else 
        {
          value = strtok(NULL,"\n");
          propp->value = (char *)malloc((strlen(value)+1)*sizeof(char));
