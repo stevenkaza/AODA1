@@ -508,6 +508,7 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
        if (propName==VCP_OTHER)
        {
           propp->value = (char *)malloc((strlen(buff)+1)*sizeof(char));
+          printf("BUFF=%s\n",buff );
           strcpy(propp->value,buff);
        }
        else
