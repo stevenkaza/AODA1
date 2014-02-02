@@ -132,7 +132,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
          newStatus=getUnfolded(vcf,&buff);
 
 	
-	      // printf("buff!! = %s\n",buff);
+	      printf("buff!! = %s\n",buff);
         /* If we see another begin before an end, 
                                         return an ERROR */
 	       if (buff==NULL) /* If bull is null, GET OUT */ 
@@ -609,10 +609,10 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
 
                 if (buff[i]==':')
                 {
-		  optionalFlagDone = 1;
-		  valueValue = 1; 
-		  valueState = 0; 
-		  typeState = 0; 
+              		  optionalFlagDone = 1;
+              		  valueValue = 1; 
+              		  valueState = 0; 
+              		  typeState = 0; 
                 
                 }
             }
@@ -637,6 +637,12 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
                 valueState = 1; 
 		            if (vIndex>0)
 		              parvalueString[vIndex++]=',';
+            }
+            /* If an equal sign was found but no charset or encoding, parover */ 
+            else if (strstr(buff,"CHARSET")==NULL&&strstr(buff,"ENCODING")==NULL)
+            {
+              error = PAROVER; 
+              return error; 
             }
         }
 	
