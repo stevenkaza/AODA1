@@ -72,10 +72,10 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
         if (newStatus.code==OK)
           newStatus = readVcard(vcf,&filep->cardp[i]);
 	
-      if ( filep->cardp[i]==NULL)
+       if ( filep->cardp[i]==NULL)
         {   
 	          printf("Were Done  %d\n",newStatus.code);
-	          filep->ncards=0;    
+	        filep->ncards=0;    
 	          //free(filep);
            break;
         }
@@ -132,13 +132,14 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
          newStatus=getUnfolded(vcf,&buff);
 
 	
-	      printf("buff!! = %s\n",buff);
+	     // printf("buff!! = %s\n",buff);
         /* If we see another begin before an end, 
                                         return an ERROR */
 	       if (buff==NULL) /* If bull is null, GET OUT */ 
 	       {
 	           //  if (*(cardp)==NULL)
 	          //{    printf("ERROR\n\n\n");
+             if (beginFlag!=1)
              goto end;  
              // }
 	       }
@@ -225,7 +226,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             } 
 
             else
-	         {
+	           {
 	             // printf("buff = %s\n",buff);
                (*cardp)=realloc((*cardp),sizeof(Vcard)+(sizeof(VcProp)*(i+1)));
             }
@@ -510,12 +511,12 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
     {
        propName=strtok(tempString,":");
        assignPropName(propp,propName);
-       printf("testing string %s \n",buff);
+     //  printf("testing string %s \n",buff);
 
        if (propp->name==VCP_OTHER)
        {
             propp->value = (char *)malloc((strlen(buff)+1)*sizeof(char));
-            printf("BUFF=%s\n",buff );
+           // printf("BUFF=%s\n",buff );
             strcpy(propp->value,buff);
        }
 
