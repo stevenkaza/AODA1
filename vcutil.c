@@ -648,6 +648,7 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
 
 void freeVcFile ( VcFile * const filep)
 {
+  free(filep->cardp[0]);
 }
 /* Assigning a property name. Returning the enumerated type value
 of what was assigned */ 
