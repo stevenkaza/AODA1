@@ -212,6 +212,8 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             /*Send the buff for parsing */
             buff[strlen(buff)]='\0';
             tempProp=malloc(sizeof(VcProp));
+            if (strstr(buff,":")!=NULL) /* Only pass it to parseVcProp if it has a colon in it.
+                                          * Avoiding empty lines */ 
             error=parseVcProp(buff,tempProp);
             if (error!=OK)
             {
@@ -447,6 +449,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     /* Allocating space and assigning buff */ 
    // printf("TEMP STRING = %s\n",tempString);
  //   printf("linefrom = %d, lineto = %d \n",newStatus.linefrom,newStatus.lineto);
+
     *buff = (char*)calloc(strlen(tempString)+1,sizeof(char));
     strncpy(*buff,tempString,strlen(tempString)+1); /* Maybe remove this + 1 */ 
 
