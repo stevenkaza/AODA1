@@ -517,7 +517,7 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
        }
        /* getting full value after colon if optional group is found */
        /* Getting full value otas long as its not vcp other */ 
-       else if (prop->name!=VCP_OTHER || (prop->name==VCP_OTHER && periodFirst(tempString)==2))
+       else if (propp->name!=VCP_OTHER || (propp->name==VCP_OTHER && periodFirst(tempString)==2))
        {
          value = strtok(NULL,"\n");
          propp->value = (char *)malloc((strlen(value)+1)*sizeof(char));
