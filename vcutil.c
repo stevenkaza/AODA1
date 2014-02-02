@@ -652,10 +652,14 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
         propp->parval = (char *)malloc((strlen(parvalueString)+1)*sizeof(char));
         strncpy(propp->parval,parvalueString,strlen(parvalueString)+1);
       }
-      if (vvIndex>0)
+      if (vvIndex>0) /* The only way a value value would get assil pgned here
+      would be if it had optional parameters */ 
+      /* assigning property name for a buff that has optional parameters */ 
       {
+         propName=strtok(tempString,";");
+         assignPropName(propp,propName);
          propp->value = (char *)malloc((strlen(valueValueString)+1)*sizeof(char));
-         strcpy(propp->value,valueString);
+         strcpy(propp->value,valueValueString);
       }
     }
       /*if (vvIndex>0)
