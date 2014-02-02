@@ -500,14 +500,22 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
     int valueValue = 0; 
     tempString = (char*)calloc(strlen(buff)+1,sizeof(char));
     strcpy(tempString,buff);
-
+    /* Grabbing the value */ 
     if (semiFirst(tempString)==0)
     {
        propName=strtok(tempString,":");
-       value = strtok(NULL,"\n");
-       propp->value = (char *)malloc((strlen(value)+1)*sizeof(char));
-       strcpy(propp->value,value);
        assignPropName(propp,propName);
+       if (propName==VCP_OTHER)
+       {
+          propp->value = (char *)malloc((strlen(buff)+1)*sizeof(char));
+          strcpy(propp->value,buff);
+       }
+       else
+       {
+         value = strtok(NULL,"\n");
+         propp->value = (char *)malloc((strlen(value)+1)*sizeof(char));
+         strcpy(propp->value,value);
+       }
   
      }
     else
