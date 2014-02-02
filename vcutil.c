@@ -475,6 +475,7 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
     propp->parval=NULL;
     propp->hook=NULL;
     int i = 0; 
+    char * tempString; 
 
     int stateFlag = 0;  /* Parameter state flag */
     
@@ -485,6 +486,7 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
     int vIndex = 0; 
     int tIndex = 0; 
     int m;
+    char * value; 
     char valueValueString[100];
     int vvIndex = 0; 
     /* if 1, immediatly stop reading for types and values */ 
@@ -496,6 +498,20 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
     char parvalueString[25];
     /* If this is set to 1, weve hit a colon and its time to parse values */ 
     int valueValue = 0; 
+    tempString = (char*)calloc(strlen(buff)+1,sizeof(char));
+    strcpy(tempString,buff);
+
+    if (semiFirst(tempString)==0)
+    {
+       propName=strtok(tempString,":");
+       value = strtok(NULL,"\n");
+       propp->value = (char *)malloc((strlen(value)+1)*sizeof(char));
+       strcpy(propp->value,value);
+       assignPropName(propp,propName);
+  
+     }
+    else
+    {
     for (i=0;i<strlen(buff);i++)
     {
         if (valueValue==1)
@@ -598,22 +614,22 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
     
       if (tIndex>0)
       {
-	  propp->partype=(char *)malloc((strlen(partypeString)+1)*sizeof(char));
-	  strcpy(propp->partype,partypeString);
+    	  propp->partype=(char *)malloc((strlen(partypeString)+1)*sizeof(char));
+    	  strcpy(propp->partype,partypeString);  
       }
       if (vIndex>0)
       {
         propp->parval = (char *)malloc((strlen(parvalueString)+1)*sizeof(char));
         strncpy(propp->parval,parvalueString,strlen(parvalueString)+1);
       }
-      
-      if (vvIndex>0)
+    }
+      /*if (vvIndex>0)
       {
         propp->value = (char *)malloc((strlen(valueValueString)+1)*sizeof(char));
         strncpy(propp->value,valueValueString,strlen(valueValueString)+1);	
-      }
-      if (vvIndex==0)
-	       error=SYNTAX;
+      }*/
+      //if (vvIndex==0)
+	     //  error=SYNTAX;
       return error; 
       
 }
