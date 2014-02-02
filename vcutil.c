@@ -501,26 +501,19 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
     tempString = (char*)calloc(strlen(buff)+1,sizeof(char));
     strcpy(tempString,buff);
     /* Grabbing the value */ 
-    if (semiFirst(tempString)==0)
+    if (semiFirst(tempString)==0 && periodFirst(tempString)!=2)
     {
        propName=strtok(tempString,":");
        assignPropName(propp,propName);
        printf("testing string %s \n",buff);
+
        if (propp->name==VCP_OTHER)
        {
-          if (periodFirst(tempString)!=2) /*ensuring not optional group */
-          {
             propp->value = (char *)malloc((strlen(buff)+1)*sizeof(char));
             printf("BUFF=%s\n",buff );
             strcpy(propp->value,buff);
-          }
-          else
-          {
-                     value = strtok(NULL,"\n");
-                     propp->value = (char *)malloc((strlen(value)+1)*sizeof(char));
-                     strcpy(propp->value,value);
-          }
        }
+
 
        else 
        {
@@ -530,6 +523,17 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
        }
   
      }
+     /* If a period comes before the colon, we have an optional group */ 
+   else if (semiFirst(tempString)==0 && periodFirst(tempString)==2)
+    {
+      propp->name = VCP_NICKNAME;
+      propName=strtok(tempString,":");
+      value = strtok(NULL,"\n");
+      propp->value = (char *)malloc((strlen(value)+1)*sizeof(char));
+      strcpy(propp->value,value);
+
+    }
+
     else
     {
     for (i=0;i<strlen(buff);i++)
