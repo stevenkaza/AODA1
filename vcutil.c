@@ -555,13 +555,13 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
                 only stored in proper variable */ 
            // if (typeState==1 && valueValue==0)
                 if (regularValueState==0)
-                partypeString[strlen(partypeString)-2]='\0';
+                partypeString[tIndex]='\0';
               else
-                partypeString[strlen(partypeString)]='\0';
+                partypeString[tIndex]='\0';
 
 
        //     if (valueState==1&&valueValue==0)
-		          parvalueString[strlen(parvalueString)]='\0';
+		          parvalueString[vIndex]='\0';
             valueValue=1; 
             stateFlag =0; 
             valueState=0;
