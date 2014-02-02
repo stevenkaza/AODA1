@@ -441,9 +441,10 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     /* Setting the null terminator for the string */ 
     if (ch==EOF)
     {
-	      tempString[i]='\0';
+        if (i>0)
+	         tempString[i]='\0';
         endOfFile=1; 
-        if (strlen(tempString)<1)
+        if (tempString!=NULL)
         {
            *buff=NULL;
            return newStatus;
@@ -683,8 +684,7 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
       {
          propName=strtok(tempString,";");
          assignPropName(propp,propName);
-         printf("prop val = %d\n",propp->name);
-	 propp->value = (char *)malloc((strlen(valueValueString)+1)*sizeof(char));
+	       propp->value = (char *)malloc((strlen(valueValueString)+1)*sizeof(char));
          strcpy(propp->value,valueValueString);
       }
     }
