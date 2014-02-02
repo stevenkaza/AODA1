@@ -328,8 +328,8 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
          ch = fgetc(vcf); /* Skips over a char */ 
         if (ch==EOF&&endOfFile==1)
 	      {
-	         *buff = NULL;
-	         return newStatus; 
+//	         *buff = NULL;
+	//         return newStatus; 
 	      }
 	      endOfFile=1; /*We know that we dont have an empty file */ 
         switch (ch)
@@ -445,7 +445,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
 
 	      tempString[i]='\0';
         endOfFile=1; 
-        if (strlen(tempString)<1)
+        if (strlen(tempString)<2)
         {
            *buff=NULL;
            return newStatus;
