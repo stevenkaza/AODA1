@@ -142,7 +142,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
              goto end;  
              // }
 	       }
-         printf("buff = %s\n",buff);
+        // printf("buff = %s\n",buff);
         if (beginFlag==1)  /* Ensuring no Two Begins in a row */ 
         {
             if (strcmp("BEGIN:VCARD",buff)==0) 
@@ -508,11 +508,16 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
        printf("testing string %s \n",buff);
        if (propp->name==VCP_OTHER)
        {
-          propp->value = (char *)malloc((strlen(buff)+1)*sizeof(char));
-          printf("BUFF=%s\n",buff );
-          strcpy(propp->value,buff);
+          if (periodFirst(tempString)!=2) /*ensuring not optional group */ 
+          {
+            propp->value = (char *)malloc((strlen(buff)+1)*sizeof(char));
+            printf("BUFF=%s\n",buff );
+            strcpy(propp->value,buff);
+          }
        }
-       else
+       /* getting full value after colon if optional group is found */
+       /* Getting full value otas long as its not vcp other */ 
+       else if (prop->name!=VCP_OTHER || (prop->name==VCP_OTHER && periodFirst(tempString)==2))
        {
          value = strtok(NULL,"\n");
          propp->value = (char *)malloc((strlen(value)+1)*sizeof(char));
@@ -790,6 +795,51 @@ int semiFirst(char * tempString)
  
  return 0;
 }
+
+
+int periodFirst(char * tempString)
+{
+    int i = 0; 
+    int periodFlag=0; 
+    int semiFlag=0;
+    int colonFlag=0;
+    for (i=0;i<strlen(tempString);i++) /* Test string: Kirk:Stinky; */ 
+    {
+        /* Looking for colon */ 
+      if (tempString[i] == ':')
+        {
+          if (semiFlag ==1) /* we found semi first */ 
+                colonFlag=0;
+            else 
+            {
+                colonFlag = 1; 
+                return 0;
+            }
+            break;
+        }
+      if (tempString[i] == ';')
+        {
+          if (colonFlag ==1) /* We found colon first */ 
+            {
+                semiFlag = 0; 
+            }
+            else
+            {
+                return 1; 
+                semiFlag = 1; 
+            }
+            break;
+        }
+
+        if (tempString[i]=='.' && colonFlag==0 && semiFlag==0)
+          return 2; 
+    }
+ 
+ return 0;
+}
+
+
+
 /* int Contains(char * string, char pattern);
  * Returns: position where 0; pattern was found 
  * 0 if nothing found                   */ 
