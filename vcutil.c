@@ -344,12 +344,12 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
             {
               if (rFlag==1)
               {
-                   crlfFlag=1; 
+                crlfFlag=1; 
 
-		                if (foldedFlag==0)
-                        newStatus.linefrom=newStatus.linefrom+1; /*Updating the line counters */
+		            if (foldedFlag==0)
 
-                   newStatus.lineto = newStatus.lineto+1; 
+                  newStatus.linefrom=newStatus.linefrom+1; /*Updating the line counters */
+                newStatus.lineto = newStatus.lineto+1; 
               }
               break;
             }
@@ -359,7 +359,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
 
               if (crlfFlag==1) /* If its a folded line, reset the crlf flag and increment lineto */ 
               {
-                    newStatus.lineto = newStatus.lineto +1; 
+                  //  newStatus.lineto = newStatus.lineto +1; 
                     crlfFlag=0;    
 		                foldedFlag =1; 
               }
