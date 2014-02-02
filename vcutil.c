@@ -652,7 +652,7 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
         propp->parval = (char *)malloc((strlen(parvalueString)+1)*sizeof(char));
         strncpy(propp->parval,parvalueString,strlen(parvalueString)+1);
       }
-      if (vIndex>0)
+      if (vvIndex>0)
       {
          propp->value = (char *)malloc((strlen(valueValueString)+1)*sizeof(char));
          strcpy(propp->value,valueString);
