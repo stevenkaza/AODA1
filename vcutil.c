@@ -1,4 +1,4 @@
-/* vcutil.c
+ /* vcutil.c
 
 vCard  utlity library/ Parser 
 
@@ -326,7 +326,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
       
       if (staticFlag!=1)
          ch = fgetc(vcf); /* Skips over a char */ 
-        if (ch==EOF&&endOfFile!=1)
+        if (ch==EOF&&endOfFile==1)
 	      {
 	         *buff = NULL;
 	         return newStatus; 
