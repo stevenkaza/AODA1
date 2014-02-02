@@ -75,7 +75,7 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
        if ( filep->cardp[i]==NULL)
         {   
 	          printf("Were Done  %d\n",newStatus.code);
-	        filep->ncards=0;    
+	          filep->ncards=0;    
 	          //free(filep);
            break;
         }
@@ -135,11 +135,11 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 	     // printf("buff!! = %s\n",buff);
         /* If we see another begin before an end, 
                                         return an ERROR */
-	       if (buff==NULL) /* If bull is null, GET OUT */ 
+         /* If buff is null right away, we had an empty file */ 
+         if (i==0 && buff ==NULL)
 	       {
 	           //  if (*(cardp)==NULL)
 	          //{    printf("ERROR\n\n\n");
-             if (beginFlag!=1)
              goto end;  
              // }
 	       }
