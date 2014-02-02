@@ -326,10 +326,10 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
       
       if (staticFlag!=1)
          ch = fgetc(vcf); /* Skips over a char */ 
-        if (ch==EOF&&endOfFile==1)
+        if (ch==EOF&&endOfFile!=1)
 	      {
-	      // *buff = NULL;
-	       //return newStatus; 
+	         *buff = NULL;
+	         return newStatus; 
 	      }
 	      endOfFile=1; /*We know that we dont have an empty file */ 
         switch (ch)
@@ -441,10 +441,10 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     /* Setting the null terminator for the string */ 
     if (ch==EOF)
     {
-        if (i>0)
-	         tempString[i]='\0';
+        
+	      tempString[i]='\0';
         endOfFile=1; 
-        if (tempString!=NULL)
+        if (strlen(tempString)<1)
         {
            *buff=NULL;
            return newStatus;
