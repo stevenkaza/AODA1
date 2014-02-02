@@ -314,7 +314,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
       staticFlag = 0; 
       if (tempString!=NULL)
         free(tempString);
-      *buff =NULL;
+      //*buff =NULL;
       return newStatus;  
     }
     /* Looping through char by char until a crlf is found, then a flag is set and 
