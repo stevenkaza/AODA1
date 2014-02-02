@@ -248,8 +248,10 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             (*cardp)->nprops=i;
 
        }
+
        if (buff==NULL)
         break;
+
     } while (strcmp("END:VCARD",buff)!=0);
      
     /* If we went through the entire vcard and couldnt find a FN, error */ 
@@ -262,6 +264,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 
     if (endFlag==0 || beginFlag==0)
     {
+
        newStatus.code=BEGEND;
     }
     
@@ -279,6 +282,8 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
     if (buff!=NULL)
       free(buff);
     buff = NULL;
+    if (endFlag==0)
+      newStatus.code = 4; 
     return newStatus;
 
 }
