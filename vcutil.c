@@ -1,4 +1,4 @@
- /* vcutil.c
+/* vcutil.c
 
 vCard  utlity library/ Parser 
 
@@ -441,16 +441,14 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     /* Setting the null terminator for the string */ 
     if (ch==EOF)
     {
-        if (i>0)
-	       tempString[i]='\0';
+        tempString=realloc(tempString,sizeof(char)*(i+1));
+
+	      tempString[i]='\0';
         endOfFile=1; 
-        if (tempString!=NULL)
-        {
         if (strlen(tempString)<1)
         {
            *buff=NULL;
            return newStatus;
-        }
         }
        // staticFlag=1;
     }   
