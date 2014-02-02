@@ -539,9 +539,14 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
 
     }
 
-    else
+    else /* Optional parameter parsing */ 
     {
-
+    /* If there are optional parameters, but no = sign, return syntax error*/ 
+    if (strstr(buff,"=")==NULL)
+    {
+      error=SYNTAX;
+      return error; 
+    }
     for (i=0;i<strlen(buff);i++)
     {
         if (valueValue==1)
@@ -644,6 +649,7 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
               error = PAROVER; 
               return error; 
             }
+
         }
 	
     }
