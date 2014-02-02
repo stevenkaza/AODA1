@@ -657,9 +657,9 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
       /* assigning property name for a buff that has optional parameters */ 
       {
          propName=strtok(tempString,";");
-         printf("prop name = %s\n",propName );
-         printf("propnameval=%d\n",assignPropName(propp,propName);
-         propp->value = (char *)malloc((strlen(valueValueString)+1)*sizeof(char));
+         assignPropName(propp,propName);
+         printf("prop val = %d\n",propp->name);
+	 propp->value = (char *)malloc((strlen(valueValueString)+1)*sizeof(char));
          strcpy(propp->value,valueValueString);
       }
     }
@@ -776,6 +776,11 @@ int assignPropName(VcProp * const propp,char * propName)
     {
         propp->name=VCP_OTHER;
         return 17; 
+    }
+    if (strcmp("LABEL",propName)==0)
+    {
+	propp->name=VCP_LABEL;
+	return 18; 
     }
     
     propp->name=VCP_OTHER;
