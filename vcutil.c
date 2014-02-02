@@ -306,6 +306,8 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     {
   //    printf("PPLZPLZ\n");
       lineCounter=0; 
+      endOfFile=0; 
+      foldedFlag=0; 
       newStatus.lineto=0;
       newStatus.linefrom=0; 
       staticFlag = 0; 
@@ -323,9 +325,8 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
          ch = fgetc(vcf); /* Skips over a char */ 
         if (ch==EOF&&endOfFile==1)
 	      {
-	   //  printf("YES\n");
-	       *buff = NULL;
-	       return newStatus; 
+	      // *buff = NULL;
+	       //return newStatus; 
 	      }
 	      endOfFile=1; /*We know that we dont have an empty file */ 
         switch (ch)
@@ -355,6 +356,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
 
               if (crlfFlag==1) /* If its a folded line, reset the crlf flag and increment lineto */ 
               {
+                    newStatus.lineto = newStatus.lineto +1; 
                     crlfFlag=0;    
 		                foldedFlag =1; 
               }
@@ -379,6 +381,18 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
                {
                     newStatus.lineto = newStatus.lineto +1; 
                     crlfFlag=0;
+                    foldedFlag=1; 
+               }
+              else 
+              {
+                  /* If its the first character, allocate space for one*/ 
+                  /* I counts the number of chars */ 
+                  if (i==0)
+                    tempString=(char *)malloc(sizeof(char));
+                  else
+                    tempString=realloc(tempString,sizeof(char)*(i+1));
+                  tempString[i++] = ch; /* Duplicate code. Place outside while loop */ 
+                  staticFlag = 0; 
                }
                break;
                 /* Flags */ 
@@ -422,10 +436,8 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
            *buff=NULL;
            return newStatus;
         }
-        staticFlag=1;
-    }
-	
-    
+       // staticFlag=1;
+    }   
     else
     {
         tempString=realloc(tempString,sizeof(char)*(i+1));
@@ -434,7 +446,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     /* Allocating space and assigning buff */ 
    // printf("TEMP STRING = %s\n",tempString);
  //   printf("linefrom = %d, lineto = %d \n",newStatus.linefrom,newStatus.lineto);
-    *buff = (char*)calloc(strlen(tempString)+2,sizeof(char));
+    *buff = (char*)calloc(strlen(tempString)+1,sizeof(char));
     strncpy(*buff,tempString,strlen(tempString)+1); /* Maybe remove this + 1 */ 
 
     //f (strlen(tempString)>0 && tempString!=NULL)
