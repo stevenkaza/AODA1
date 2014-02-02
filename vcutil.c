@@ -441,13 +441,16 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     /* Setting the null terminator for the string */ 
     if (ch==EOF)
     {
-        
-	      tempString[i]='\0';
+        if (i>0)
+	       tempString[i]='\0';
         endOfFile=1; 
+        if (tempString!=NULL)
+        {
         if (strlen(tempString)<1)
         {
            *buff=NULL;
            return newStatus;
+        }
         }
        // staticFlag=1;
     }   
