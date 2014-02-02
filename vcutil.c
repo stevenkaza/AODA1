@@ -131,6 +131,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
          }
          newStatus=getUnfolded(vcf,&buff);
 
+
 	
 	     // printf("buff!! = %s\n",buff);
         /* If we see another begin before an end, 
@@ -143,6 +144,11 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
              goto end;  
              // }
 	       }
+         if (buff[0] == ':' || buff[0] == ';')
+         {
+            newStatus.code = SYNTAX;
+            return newStatus;
+         }
         // printf("buff = %s\n",buff);
         if (beginFlag==1)  /* Ensuring no Two Begins in a row */ 
         {
