@@ -555,7 +555,7 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
                 only stored in proper variable */ 
            // if (typeState==1 && valueValue==0)
                 if (regularValueState==0)
-                partypeString[strlen(partypeString)-3]='\0';
+                partypeString[strlen(partypeString)-2]='\0';
               else
                 partypeString[strlen(partypeString)]='\0';
 
