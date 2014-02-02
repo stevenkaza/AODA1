@@ -408,13 +408,13 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
                     
                     staticFlag=1; /* Says DONT READ CHAR */ 
                     lineDoneFlag=1;
-                    if (strstr(tempString,":")==NULL && strstr(tempString,";")==NULL)
+                  /*  if (strstr(tempString,":")==NULL && strstr(tempString,";")==NULL)
                     {
-                      free(tempString);
+                   //   free(tempString);
                       i=0; 
                       staticFlag=0; 
                       lineDoneFlag=0; 
-                    }
+                    }*/ 
                 }
                else if (crlfFlag==0) 
                 {
