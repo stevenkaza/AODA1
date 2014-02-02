@@ -500,6 +500,11 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
     int valueValue = 0; 
     tempString = (char*)calloc(strlen(buff)+1,sizeof(char));
     strcpy(tempString,buff);
+    if (strstr(tempString,":")==NULL)
+    {
+       error=SYNTAX;
+       return error;
+    }
     /* Grabbing the value */ 
     if (semiFirst(tempString)==0 && periodFirst(tempString)!=2)
     {
