@@ -73,9 +73,8 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
           newStatus = readVcard(vcf,&filep->cardp[i]);
 	
        if ( filep->cardp[i]==NULL)
-        {   
-	          printf("Were Done  %d\n",newStatus.code);
-	          filep->ncards=0;    
+        {
+	          filep->ncards=0;
 	          //free(filep);
            break;
         }
@@ -86,7 +85,7 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
 
 
    }/*end of while loop */ 
-    
+    printf("i=%d\n",i );
     return newStatus;
 }
 
@@ -104,6 +103,8 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 {
     VcStatus newStatus; 
     char  *buff=NULL;
+  //  char testString[2121212];
+
     int fnFlag = 0;
     int nFlag = 0;  
     int endFlag;
@@ -114,7 +115,8 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
     int i = 0; 
     VcProp * tempProp = NULL;
     int beginFlag=0; 
-
+   // for (i=0;i<12112;i++)
+     //  testString[i]='t';
     /* How do access the individual vcards in here */ 
 
     if (vcf==NULL)
@@ -170,8 +172,6 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             }
             else
             {
-	  //    	printf("HER, buff =%s\n",buff);
-
                 newStatus.code = BEGEND;
                 goto end; 
             }
@@ -217,10 +217,12 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
           {
             /*Send the buff for parsing */
             buff[strlen(buff)]='\0';
+            /* Allocating for a VcProp struct  for property */ 
             tempProp=malloc(sizeof(VcProp));
             if (strstr(buff,":")!=NULL) /* Only pass it to parseVcProp if it has a colon in it.
                                           * Avoiding empty lines */ 
-            error=parseVcProp(buff,tempProp);
+              error=parseVcProp(buff,tempProp);
+           // free(buff);
             if (error!=OK)
             {
               newStatus.code = error;
@@ -254,6 +256,8 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             (*cardp)->nprops=i;
 
        }
+       else
+        free(buff); /* buff is not needed. free it */ 
 
        if (buff==NULL)
         break;
@@ -285,7 +289,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
       
    // buff=NULL;
     end:
-    if (buff!=NULL)
+   // if (buff!=NULL)
       free(buff);
     buff = NULL;
     if (endFlag==0&&(*cardp)!=NULL)
@@ -301,7 +305,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     /*CRLF Flags */ 
     int rFlag=0; 
     int crlfFlag=0; 
-    int i =0;
+    int i =0; /* String indexing */ 
     static int endOfFile=0; 
     static char ch; /* static char to hold the last char read in for getUnfolded next call */ 
     static int staticFlag=0; /* this would be 1 its second call*/ 
@@ -335,8 +339,8 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     do 
     {
       
-      if (staticFlag!=1)
-         ch = fgetc(vcf); /* Skips over a char */ 
+      if (staticFlag!=1)/* Skips over a char if its static to avoid missing one */ 
+         ch = fgetc(vcf); /* Reading a char in */ 
         if (ch==EOF&&endOfFile==1)
 	      {
 //	         *buff = NULL;
@@ -351,14 +355,13 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
                 rFlag = 1; 
                 break;
             }
-            case '\n':
+            case '\n': /* if its a new line, set crlf flag on */ 
             {
               if (rFlag==1)
               {
                 crlfFlag=1; 
 
 		            if (foldedFlag==0)
-
                   newStatus.linefrom=newStatus.linefrom+1; /*Updating the line counters */
                 newStatus.lineto = newStatus.lineto+1; 
               }
@@ -370,7 +373,6 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
 
               if (crlfFlag==1) /* If its a folded line, reset the crlf flag and increment lineto */ 
               {
-                  //  newStatus.lineto = newStatus.lineto +1; 
                     crlfFlag=0;    
 		                foldedFlag =1; 
               }
@@ -429,11 +431,15 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
                 }
                else if (crlfFlag==0) 
                 {
+                   /* Allocating for first char, otherwise reallocating
+                    *    for subsequent chars */ 
 		               if (i==0)
 		                   tempString=(char *)malloc(sizeof(char));
 	                 else
 			                 tempString=realloc(tempString,sizeof(char)*(i+1));
-		               if (ch!=EOF && ch!= '\0')
+                    /* Store it in a temp buff as long as 
+                      its not a terminating char or EOF */ 
+		               if (ch!=EOF && ch!= '\0') 
                          tempString[i++] = ch; 
                     staticFlag=0; /* Ready to grab the next line*/ 
                 }
@@ -458,6 +464,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
         endOfFile=1; 
         if (strlen(tempString)<2)
         {
+            free(tempString);
            *buff=NULL;
            return newStatus;
         }
@@ -471,9 +478,9 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     /* Allocating space and assigning buff */ 
    // printf("TEMP STRING = %s\n",tempString);
  //   printf("linefrom = %d, lineto = %d \n",newStatus.linefrom,newStatus.lineto);
-
     *buff = (char*)calloc(strlen(tempString)+1,sizeof(char));
     strncpy(*buff,tempString,strlen(tempString)+1); /* Maybe remove this + 1 */ 
+    free(tempString);
 
     //f (strlen(tempString)>0 && tempString!=NULL)
        // free(tempString);
@@ -500,7 +507,7 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
     propp->partype=NULL;
     propp->parval=NULL;
     propp->hook=NULL;
-    int i = 0; 
+    int i = 0;  /* String indexing */ 
     char * tempString; 
 
     int stateFlag = 0;  /* Parameter state flag */
@@ -528,6 +535,7 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
     strcpy(tempString,buff);
     if (strstr(tempString,":")==NULL)
     {
+       free(tempString);
        error=SYNTAX;
        return error;
     }
@@ -696,7 +704,7 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
       {
          propName=strtok(tempString,";");
          assignPropName(propp,propName);
-	       propp->value = (char *)malloc((strlen(valueValueString)+1)*sizeof(char));
+	 propp->value = (char *)malloc((strlen(valueValueString)+1)*sizeof(char));
          strcpy(propp->value,valueValueString);
       }
     }
@@ -715,7 +723,12 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
 
 void freeVcFile ( VcFile * const filep)
 {
+  free(filep->cardp[0]->prop[0].value);
+  free(filep->cardp[0]->prop[1].value);
+  
+  //free(filep->cardp[0]->prop);
   free(filep->cardp[0]);
+  free(filep);
 }
 /* Assigning a property name. Returning the enumerated type value
 of what was assigned */ 
