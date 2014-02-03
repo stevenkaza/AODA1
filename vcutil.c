@@ -68,7 +68,6 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
         filep->ncards=filep->ncards+1;
 	/* Allocating for a pointer to go inside the array of card pointers */ 
         filep->cardp=realloc(filep->cardp,(sizeof(Vcard*)*filep->ncards));
-
         if (newStatus.code==OK)
           newStatus = readVcard(vcf,&filep->cardp[i]);
 	
@@ -149,6 +148,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
          if (buff[0] == ':' || buff[0] == ';')
          {
             newStatus.code = SYNTAX;
+	    free(buff);
             return newStatus;
          }
         // printf("buff = %s\n",buff);
@@ -197,6 +197,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
        if ((strcmp("END:VCARD",buff) ==0) && (beginFlag==1))
        {
           endFlag=1;
+	  free(buff);
           goto check;
        }
        /* If the buff contains version, check that its the proper version number */ 
@@ -207,6 +208,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
           if ((buff[8] != '3') ||  (buff[9] != '.') || (buff[10]!='0'))
           {
             newStatus.code = BADVER; 
+	    free(buff);
             goto end; 
           }
        }
@@ -214,14 +216,14 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
        and not assigned to the data structure */ 
        if ((newStatus.code == OK) && (strcmp("END:VCARD",buff)!=0) &&
           (strcmp("BEGIN:VCARD",buff)!=0) && (strcmp("VERSION:3.0",buff)!=0))
-          {
+       {
             /*Send the buff for parsing */
             buff[strlen(buff)]='\0';
             /* Allocating for a VcProp struct  for property */ 
             tempProp=malloc(sizeof(VcProp));
             if (strstr(buff,":")!=NULL) /* Only pass it to parseVcProp if it has a colon in it.
                                           * Avoiding empty lines */ 
-              error=parseVcProp(buff,tempProp);
+           error=parseVcProp(buff,tempProp);
            free(buff);
             if (error!=OK)
             {
@@ -236,8 +238,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             } 
 
             else
-	           {
-	             // printf("buff = %s\n",buff);
+	    {
                (*cardp)=realloc((*cardp),sizeof(Vcard)+(sizeof(VcProp)*(i+1)));
             }
             (*cardp)->prop[i]=*tempProp;
@@ -249,12 +250,8 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
               goto end; 
             }
             
-            if (buff=='\0')
-            {
-              break;
-            }
             (*cardp)->nprops=i;
-
+	free(tempProp);
        }
        else
         free(buff); /* buff is not needed. free it */ 
@@ -290,7 +287,6 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
    // buff=NULL;
     end:
    // if (buff!=NULL)
-      free(buff);
     buff = NULL;
     if (endFlag==0&&(*cardp)!=NULL)
       newStatus.code = 4; 
@@ -715,6 +711,7 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
       }*/
       //if (vvIndex==0)
 	     //  error=SYNTAX;
+      free(tempString);
       return error; 
       
 }
@@ -723,15 +720,30 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
 
 void freeVcFile ( VcFile * const filep)
 {
-  free(filep->cardp[0]->prop[0].value);
-  free(filep->cardp[0]->prop[1].value);
-  
-  //free(filep->cardp[0]->prop);
-  free(filep->cardp[0]);
-  free(filep);
+        int i, j;
+        Vcard * tmp;
+        VcProp * tmp2;
+ 
+        for(i = 0; i < filep->ncards; i++)
+        {
+                tmp = filep->cardp[i];
+ 
+                for(j = 0; j < tmp->nprops; j++)
+                {
+                        tmp2 = &(tmp->prop[j]);
+			if (tmp2->partype!=NULL)
+  	                      free(tmp2->partype);
+  			if (tmp2->parval!=NULL)
+                       	      free(tmp2->parval);
+			if (tmp2->value!=NULL)
+                       	    free(tmp2->value);
+			if (tmp2->hook!=NULL)
+                       		 free(tmp2->hook);
+                }
+                free(tmp);
+        }
+        free(filep->cardp);
 }
-/* Assigning a property name. Returning the enumerated type value
-of what was assigned */ 
 
 int assignPropName(VcProp * const propp,char * propName)
 {
