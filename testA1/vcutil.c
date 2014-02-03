@@ -417,14 +417,17 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
                     staticFlag=1; /* Says DONT READ CHAR */ 
                     lineDoneFlag=1;
                     /* We have not even seen a colon or a semi colon yet , blankline*/ 
-                    if (strspn(tempString," \r\n")==strlen(tempString))
+			
+                    if (tempString !=NULL)
+		    {
+                    if (strspn(tempString," \r\n")==strlen(tempString) && strlen(tempString) >1)
                     {
                       free(tempString);
                       i=0;
                       lineDoneFlag=0;
                       crlfFlag=0;
                     }
-                
+                    }
                   /*  if (strstr(tempString,":")==NULL && strstr(tempString,";")==NULL)
                     {
                    //   free(tempString);
