@@ -222,7 +222,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             if (strstr(buff,":")!=NULL) /* Only pass it to parseVcProp if it has a colon in it.
                                           * Avoiding empty lines */ 
               error=parseVcProp(buff,tempProp);
-           // free(buff);
+           free(buff);
             if (error!=OK)
             {
               newStatus.code = error;
