@@ -106,7 +106,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 
     int fnFlag = 0;
     int nFlag = 0;  
-    int endFlag;
+    int endFlag=0;
     (*cardp)=NULL;
     VcError error; 
     int versionFlag =0; /*If version flag stays 0, then we know no version was found */ 
@@ -148,7 +148,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
          if (buff[0] == ':' || buff[0] == ';')
          {
             newStatus.code = SYNTAX;
-	          free(buff);
+	    free(buff);
             return newStatus;
          }
         // printf("buff = %s\n",buff);
@@ -156,7 +156,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
         {
             if (strcmp("BEGIN:VCARD",buff)==0) 
             {
-	              printf("here?\n");
+	        printf("here?\n");
                 newStatus.code =BEGEND; 
                 goto end;
             }
@@ -204,7 +204,10 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 
        if (strstr(buff,"VERSION:")!=NULL)
        {
+	  printf("i = %d, buff = %s\n",i,buff);
           versionFlag=1;
+	  if (i!=0)
+		versionFlag=0;
           if ((buff[8] != '3') ||  (buff[9] != '.') || (buff[10]!='0'))
           {
             newStatus.code = BADVER; 
@@ -286,10 +289,11 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
       
    // buff=NULL;
     end:
-   // if (buff!=NULL)
+    if (buff!=NULL)
     buff = NULL;
-    if (endFlag==0&&(*cardp)!=NULL)
+   if (endFlag==0&&(*cardp)!=NULL)
       newStatus.code = 4; 
+   printf("end flag = %d \n",endFlag);
     return newStatus;
 
 }
