@@ -289,7 +289,6 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
       
    // buff=NULL;
     end:
-    if (buff!=NULL)
     buff = NULL;
    if (endFlag==0&&(*cardp)!=NULL)
       newStatus.code = 4; 
