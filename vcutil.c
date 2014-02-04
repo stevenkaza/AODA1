@@ -1,5 +1,5 @@
 /* vcutil.c
-
+/*
 vCard  utlity library/ Parser 
 
 Author:Steven Kazavchinski 
@@ -531,15 +531,20 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
     int tIndex = 0; 
     int m;
     char * value; 
-    char valueValueString[100];
+    char *  valueValueString=NULL; /*to hold the value on the right side of the colon */ 
     int vvIndex = 0; 
     /* if 1, immediatly stop reading for types and values */ 
     int optionalFlagDone = 0; 
     /* 1 if theres a type/values by comma */ 
     int regularValueState=0; 
-    char valueString[100];
-    char partypeString[25];
-    char parvalueString[25];
+    
+    char *  valueString=NULL;
+    char * partypeString=NULL;
+    char * parvalueString=NULL;
+    valueString = (char*)calloc(200,sizeof(char));
+    partypeString = (char*)calloc(200,sizeof(char));
+    valueValueString=(char*)calloc(200,sizeof(char));
+    parvalueString=(char*)calloc(200,sizeof(char));
     /* If this is set to 1, weve hit a colon and its time to parse values */ 
     int valueValue = 0; 
     tempString = (char*)calloc(strlen(buff)+1,sizeof(char));
@@ -570,6 +575,7 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
          value = strtok(NULL,"\n");
          propp->value = (char *)malloc((strlen(value)+1)*sizeof(char));
          strcpy(propp->value,value);
+	// free(value);
        }
   
      }
@@ -611,8 +617,10 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
 
 
        //     if (valueState==1&&valueValue==0)
-		          parvalueString[vIndex]='\0';
-            valueValue=1; 
+		         {
+		 parvalueString[vIndex]='\0';
+ }  
+          valueValue=1; 
             stateFlag =0; 
             valueState=0;
             typeState=0; 
@@ -703,12 +711,16 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
       {
     	  propp->partype=(char *)malloc((strlen(partypeString)+1)*sizeof(char));
     	  strcpy(propp->partype,partypeString);  
+	  free(partypeString);
+	  partypeString=NULL;
       }
       if (vIndex>0)
       {
         propp->parval = (char *)malloc((strlen(parvalueString)+1)*sizeof(char));
         strncpy(propp->parval,parvalueString,strlen(parvalueString)+1);
-      }
+        free(parvalueString);
+	parvalueString=NULL;     
+ }
       if (vvIndex>0) /* The only way a value value would get assil pgned here
       would be if it had optional parameters */ 
       /* assigning property name for a buff that has optional parameters */ 
@@ -717,6 +729,8 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
          assignPropName(propp,propName);
 	 propp->value = (char *)malloc((strlen(valueValueString)+1)*sizeof(char));
          strcpy(propp->value,valueValueString);
+	 free(valueValueString);
+	 valueValueString=NULL;
       }
     }
       /*if (vvIndex>0)
@@ -727,7 +741,15 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
       //if (vvIndex==0)
 	     //  error=SYNTAX;
       free(tempString);
-      return error; 
+      if (parvalueString!=NULL)
+	free(parvalueString);
+     if (partypeString!=NULL)
+	free(partypeString);
+    if (valueValueString!=NULL)
+	free(valueValueString);
+	if (valueString!=NULL)
+	free(valueString);     
+ return error; 
       
 }
 
