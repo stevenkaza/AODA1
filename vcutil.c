@@ -16,7 +16,7 @@ Contact: skazavch@uoguelph.ca
 /* Add vcp org to assignPropName */ 
 
 /* Store entire buff as a value if propname = other */ 
-
+#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -49,11 +49,11 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
     /* Assigning default values for filep */ 
     filep->ncards = 0;
     filep->cardp = NULL;
-    VcStatus newStatus; 
-  
-  
+    VcStatus newStatus;
+
+
     int i=0;
-    /* Checking for invalid file */ 
+    /* Checking for invalid file */
     if (vcf==NULL)
     {
         newStatus.code =  IOERR;
@@ -61,7 +61,7 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
     /* By default, assigning code to be OK */ 
     newStatus.code = OK;
    
-    /* Until end of file */ 
+    /* Until end of file */
    while (feof(vcf)==0)
     { 
         /* Incrementing # of cards */ 
@@ -70,7 +70,7 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
         filep->cardp=realloc(filep->cardp,(sizeof(Vcard*)*filep->ncards));
         if (newStatus.code==OK)
           newStatus = readVcard(vcf,&filep->cardp[i]);
-	
+
        if ( filep->cardp[i]==NULL)
         {
 	          filep->ncards=0;
@@ -111,7 +111,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
     VcError error; 
     int versionFlag =0; /*If version flag stays 0, then we know no version was found */ 
 
-    int i = 0; 
+    int i = 0;
     VcProp * tempProp = NULL;
     int beginFlag=0; 
    // for (i=0;i<12112;i++)
@@ -144,10 +144,12 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 	          //{    printf("ERROR\n\n\n");
              goto end;  
              // }
-	       }
+	  }
+	assert(buff);
          if (buff[0] == ':' || buff[0] == ';')
          {
             newStatus.code = SYNTAX;
+            assert(buff);
 	    free(buff);
             return newStatus;
          }
@@ -165,6 +167,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
         /*Ensuring line begins with BEGIN */ 
         /* If not, set an error */ 
         if (beginFlag==0) 
+
         {
             if (strcmp("BEGIN:VCARD",buff)==0)
             {
@@ -197,7 +200,9 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
        if ((strcmp("END:VCARD",buff) ==0) && (beginFlag==1))
        {
           endFlag=1;
+	  assert(buff);
 	  free(buff);
+	  assert(buff);
           goto check;
        }
        /* If the buff contains version, check that its the proper version number */ 
@@ -224,10 +229,11 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             buff[strlen(buff)]='\0';
             /* Allocating for a VcProp struct  for property */ 
             tempProp=malloc(sizeof(VcProp));
+	    assert(tempProp);
             if (strstr(buff,":")!=NULL) /* Only pass it to parseVcProp if it has a colon in it.
                                           * Avoiding empty lines */ 
            error=parseVcProp(buff,tempProp);
-           free(buff);
+	   free(buff);
             if (error!=OK)
             {
               newStatus.code = error;
@@ -257,12 +263,12 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 	free(tempProp);
        }
        else
-        free(buff); /* buff is not needed. free it */ 
-
-       if (buff==NULL)
-        break;
-
-    } while (strcmp("END:VCARD",buff)!=0);
+   {     free(buff); /* buff is not needed. free it */ 
+}
+      // if (buff==NULL)
+       //:q	: break;
+				
+    } while (buff!=NULL);
      
     /* If we went through the entire vcard and couldnt find a FN, error */ 
     /* FLAG CHECKING FOR ERRORS */ 
@@ -274,6 +280,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 
     if (endFlag==0 || beginFlag==0)
     {
+
 
        newStatus.code=BEGEND;
     }
@@ -420,10 +427,10 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
                     staticFlag=1; /* Says DONT READ CHAR */ 
                     lineDoneFlag=1;
                     /* We have not even seen a colon or a semi colon yet , blankline*/ 
-			
+			assert(tempString);
                     if (tempString !=NULL)
-		                {
-                    if (strspn(tempString," \r\n")==strlen(tempString) && strlen(tempString) >1)
+		     {
+                    if (strspn(tempString," \r\n") && strlen(tempString) >0)
                     {
                       free(tempString);
                       i=0;
@@ -442,7 +449,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
                 if (crlfFlag==0) 
                 {
                    /* Allocating for first char, otherwise reallocating
-                    *    for subsequent chars */ 
+      f               *    for subsequent chars */ 
                    if (i==0)
                        tempString=(char *)malloc(sizeof(char));
                    else
@@ -1038,4 +1045,5 @@ int removeNewLine(char * string)
     }
     return 0; 
 }
+
 
