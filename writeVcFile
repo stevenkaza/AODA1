@@ -1,0 +1,230 @@
+writePropName(VcFile * const filep,VcPname name)
+
+{
+
+
+      if (name == VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+      if (name == VCP_FN)
+      {
+        fprintf(stdout,"FN");
+      }
+      if (name == VCP_NICKNAME)
+      {
+        fprintf(stdout,"NICKNAME");
+      }
+      if (name == VCP_PHOTO)
+      {
+
+        fprintf(stdout,"N");
+      }
+      if (name == VCP_BDAY)
+      {
+        fprintf(stdout,"N");
+      }
+      if (name == VCP_ADR)
+      {
+        fprintf(stdout,"N");
+      }
+      if (name == VCP_LABEL)
+      {
+        fprintf(stdout,"N");
+      }
+      if (name == VCP_TEL)
+      {
+        fprintf(stdout,"N");
+      }     
+      if (name == VCP_EMAIL)
+      {
+        fprintf(stdout,"N");
+      }
+      if (name == VCP_GEO)
+      {
+        fprintf(stdout,"N");
+      }
+      if (name == VCP_TITLE)
+      {
+        fprintf(stdout,"N");
+      }     
+      if (name == VCP_ORG)
+      {
+        fprintf(stdout,"N");
+      }
+      if (name == VCP_NOTE)
+      {
+        fprintf(stdout,"N");
+      }
+      if (name == VCP_UID)
+      {
+        fprintf(stdout,"N");
+      }     
+      if (name == VCP_URL)
+      {
+        fprintf(stdout,"N");
+      }
+      if (name == VCP_OTHER)
+      {
+        fprintf(stdout,"N");
+      }
+      if (name == N)
+      {
+        fprintf(stdout,"N");
+      }     
+      if (name == N)
+      {
+        fprintf(stdout,"N");
+      }
+      if (name == N)
+      {
+        fprintf(stdout,"N");
+      }
+     if (VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }  
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      if (filep->cardp[i]->prop[k].name=VCP_N)
+         if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+
+      {
+        fprintf(stdout,"N");
+      } }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+       if (filep->cardp[i]->prop[k].name=VCP_N)
+      {
+        fprintf(stdout,"N");
+      }
+}
+writeVcFile(VcFile * const filep)
+{
+  int i = 0;
+  int k = 0;
+  char * propNames[20];
+  for (i=0;i<20;i++)
+  {
+    propName[i] = malloc(sizeof(char)*10);
+  }
+
+  fprintf("BEGIN:VCARD\r\n");
+  fprintf("VERSION:3.0\r\n");
+
+  for (i=0;i<filep->cardp[i];i++)
+  {
+    for (k=0;k<filep->cardp[i]->nprops;k++) 
+    {
+      
+
+
+    }
+
+
+
+
+}
