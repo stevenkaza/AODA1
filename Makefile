@@ -2,10 +2,10 @@ CC = gcc
 CFLAGS = -Wall -std=c99 -pedantic -g 
 LIB  = -L. -lmylib 
 
-all:	sanityTests  
+all:	vcftool  
 #Done in Thornboro
-sanityTests:	sanity.c vcutil.c sanity.o vcutil.o 
-	$(CC)	sanity.o vcutil.o -o runTests	$(LIBS) 
+vcftool:	vcftool.c vcutil.c vcftool.o vcutil.o 
+	$(CC)	vcftool.o vcutil.o -o vcftool	$(LIBS) 
 
 
 

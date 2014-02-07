@@ -1,5 +1,4 @@
 /* vcutil.c
-/*
 vCard  utlity library/ Parser 
 
 Author:Steven Kazavchinski 
@@ -24,6 +23,12 @@ Contact: skazavch@uoguelph.ca
 #include <ctype.h>
 
 
+
+/* Determines if a period occurs before a semi/regular colon 
+
+RETURNS: 1 if found */ 
+int periodFirst(char * string);
+
 /* Assigns property name into a VcProp struct
    Also determines which property name to assign based on string 
   
@@ -42,7 +47,7 @@ int semiFirst(char * tempString);
   VcProp struct, and then writes it to stdout */ 
 
 
-int writePropName(VcFile *const filep);
+int writePropName(VcPname name);
 int Contains(char * string, char pattern); 
 int checkPosition(char * string, int position); 
 void removeSpaces(char * string);
@@ -87,7 +92,6 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
 
 
    }/*end of while loop */ 
-    printf("i=%d\n",i );
     return newStatus;
 }
 
@@ -137,14 +141,12 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 
 
 	
-	     // printf("buff!! = %s\n",buff);
         /* If we see another begin before an end, 
                                         return an ERROR */
          /* If buff is null right away, we had an empty file */ 
          if (i==0 && buff ==NULL)
 	       {
 	           //  if (*(cardp)==NULL)
-	          //{    printf("ERROR\n\n\n");
              goto end;  
              // }
 	  }
@@ -156,12 +158,10 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 	    free(buff);
             return newStatus;
          }
-        // printf("buff = %s\n",buff);
         if (beginFlag==1)  /* Ensuring no Two Begins in a row */ 
         {
             if (strcmp("BEGIN:VCARD",buff)==0) 
             {
-	        printf("here?\n");
                 newStatus.code =BEGEND; 
                 goto end;
             }
@@ -212,7 +212,6 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 
        if (strstr(buff,"VERSION:")!=NULL)
        {
-	  printf("i = %d, buff = %s\n",i,buff);
           versionFlag=1;
 	  if (i!=0)
 		versionFlag=0;
@@ -302,7 +301,6 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
     buff = NULL;
    if (endFlag==0&&(*cardp)!=NULL)
       newStatus.code = 4; 
-   printf("end flag = %d \n",endFlag);
     return newStatus;
 
 }
@@ -515,7 +513,6 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
 {
 
     char * propName; 
-    char * copyString2;
     VcError error=OK; 
     
     propp->value=NULL;
@@ -533,12 +530,9 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
     /* String indexes for value and type */   
     int vIndex = 0; 
     int tIndex = 0; 
-    int m;
     char * value; 
     char *  valueValueString=NULL; /*to hold the value on the right side of the colon */ 
     int vvIndex = 0; 
-    /* if 1, immediatly stop reading for types and values */ 
-    int optionalFlagDone = 0; 
     /* 1 if theres a type/values by comma */ 
     int regularValueState=0; 
     
@@ -612,13 +606,14 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
         {
             /* Reseting all other flags
                 to ensure rest of string 
-                only stored in proper variable */ writeiƒf (regularValueState==0)
+                only stored in proper variable */ 
+             if (regularValueState==0)
                 partypeString[tIndex]='\0';
               else
                 partypeString[tIndex]='\0';
 
 
-       //     if (valueState==1&&valueValue==0)
+       //     f (valueState==1&&valueValue==0)
 		         {
 		         parvalueString[vIndex]='\0';
              }  
@@ -666,7 +661,6 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
 
                 if (buff[i]==':')
                 {
-              		  optionalFlagDone = 1;
               		  valueValue = 1; 
               		  valueState = 0; 
               		  typeState = 0; 
@@ -757,8 +751,9 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
 
 
 
-writeVcFile(VcFile * const filep)
+VcStatus writeVcFile(FILE  *const  vcf, VcFile const *filep)
 {
+  int name; 
   int result = 0; 
   int i = 0;
   int k = 0;
@@ -766,7 +761,7 @@ writeVcFile(VcFile * const filep)
   char * propNames[20];
   for (i=0;i<20;i++)
   {
-    propName[i] = malloc(sizeof(char)*10);
+    //propName[i] = malloc(sizeof(char)*10);
   }
 
   
@@ -774,14 +769,13 @@ writeVcFile(VcFile * const filep)
   for (i=0;i<filep->ncards;i++)/*Indexing through each card */
   {
 
-    fprintf("BEGIN:VCARD\r\n");
-    fprintf("VERSION:3.0\r\n");
+    fprintf(stdout,"BEGIN:VCARD\r\n");
+    fprintf(stdout,"VERSION:3.0\r\n");
     for (k=0;k<filep->cardp[i]->nprops;k++) /* Indexing through the properities of each card */ 
     {
         charCounter = 0; 
-
-        result = writePropName(filep,name); /* result returns the length of what it wrote 
-        to the string */ 
+	 result=writePropName(filep->cardp[i]->prop[k].name);
+       // to the string */ 
         if (result!=-1)
         {
           charCounter=charCounter+result; 
@@ -792,13 +786,13 @@ writeVcFile(VcFile * const filep)
         }
         if (filep->cardp[i]->prop[k].parval!=NULL)
         {
-              charCounter=charCounter+strlen(filep->cardp[i].prop[k].parval)
+             charCounter=charCounter+strlen(filep->cardp[i]->prop[k].parval);
              fprintf(stdout,";VALUE=%s",filep->cardp[i]->prop[k].parval);
         }
 
         if (filep->cardp[i]->prop[k].value!=NULL)
         {
-          fprintf(stdout,":%s\r\n",filep->cardp[i]->prop[k].value)
+          fprintf(stdout,":%s\r\n",filep->cardp[i]->prop[k].value);
         }
       
 
@@ -810,7 +804,7 @@ writeVcFile(VcFile * const filep)
 }
 }
 
-int writePropName(VcFile * const filep,VcPname name)
+int writePropName(VcPname name)
 
 {
 
@@ -961,6 +955,7 @@ int assignPropName(VcProp * const propp,char * propName)
     }
     if (strcmp("PHOTO",propName)==0)
     {
+	printf("Does it even detect a photo coming in? \n");
         propp->name=VCP_PHOTO;
         return 6; 
     }
@@ -987,6 +982,7 @@ int assignPropName(VcProp * const propp,char * propName)
     }
     if (strcmp("GEO",propName)==0)
     {
+	printf("Geo coordinates \n");
         propp->name=VCP_GEO;
         return 11; 
     }
@@ -1013,6 +1009,7 @@ int assignPropName(VcProp * const propp,char * propName)
     }
     if (strcmp("URL",propName)==0)
     {
+	printf("url found \n");
         propp->name=VCP_URL;
         return 16; 
     }

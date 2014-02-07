@@ -1,29 +1,24 @@
+#include <stdlib.h>
 #include "vcutil.h"
 #include "vcftool.h"
 #include <stdio.h>
+#include <string.h>
 
-int main(int argc[], char * argv[])
+int main(int argc, char * argv[])
 {
 
+	VcStatus newStatus; 
 	VcFile * filep=NULL;
 	filep = malloc(sizeof(VcFile));
-	readvcfile(stdin,filep);
+	newStatus = readVcFile(stdin,filep);
+	if (newStatus.code!=OK)
+		printf("%d error code detected. exiting \n", newStatus.code);
+
 	if (strcmp(argv[1],"-info")==0)
 	{
 		vcfInfo(stdout,filep);
 
 	}
-		
-
-	
-
-
-
-
-
-
-
-
 
 }
 
@@ -58,24 +53,25 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
 	fprintf(outfile,"%d cards (not sorted)\n",filep->ncards);
 
  	for(i = 0; i < filep->ncards; i++)
-    {
+        {
     	/* Reseting the flags for each card */ 
     	geoFound = 0; 
     	photoFound = 0; 
     	urlFound = 0; 
         for(k = 0; k < filep->cardp[i]->nprops; k++)
         {
-        	if (filep->cardp[i]->prop[k].name=="VCP_PHOTO" && photoFound == 0)
+        	if (filep->cardp[i]->prop[k].name==VCP_PHOTO && photoFound == 0)
         	{
+			printf("what going on \n");
         		photoCounter++;
         		photoFound = 1; 
         	}
-            else if (filep->cardp[i]->prop[k].name=="VCP_GEO" && geoFound ==0)
-            {
+                else if (filep->cardp[i]->prop[k].name==VCP_GEO && geoFound ==0)
+                {
         		geoCounter++;
         		geoFound = 1; 
         	}
-        	else if (filep->cardp[i]->prop[k].name=="VCP_URL" && urlFound ==0)
+        	else if (filep->cardp[i]->prop[k].name==VCP_URL && urlFound ==0)
         	{
         		urlCounter++;
         		urlFound=1; 
@@ -87,6 +83,8 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
 
      fprintf(outfile,"%d with photos\n",photoCounter);
      fprintf(outfile, "%d with URLs\n",urlCounter);
-     fprintf(outfile,"%d with geographic coordinates\n",geoCounter)
+     fprintf(outfile,"%d with geographic coordinates\n",geoCounter);
+
+
 
 }
