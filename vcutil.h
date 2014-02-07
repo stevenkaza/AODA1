@@ -1,11 +1,12 @@
 /********
-vcutil.h -- Public interface for vCard utility functions in vcutil.c
-Last updated:  January 08, 2014 08:32:00 PM 
+vcutil.h -- header file for vcutil.c
+Last updated:  January 28, 2014 09:59:16 PM  
+- writeVcFile added for Asmt 2
 
-Customize this file header with your name and student number.
+Customize this header with your name and student number.
 ********/
-#ifndef VCUTIL_H
-#define VCUTIL_H A1
+#ifndef VCUTIL_H_
+#define VCUTIL_H_ A2
 
 #include <stdio.h>
 
@@ -76,7 +77,7 @@ typedef enum { OK=0,
 typedef struct {
     VcError code;               // error code
     int linefrom,lineto;        // line numbers where error occurred
-} VcStatus;    
+} VcStatus;   
 
 
 /* File I/O functions */
@@ -85,6 +86,7 @@ VcStatus readVcFile( FILE *const vcf, VcFile *const filep );
 VcStatus readVcard( FILE *const vcf, Vcard **const cardp );
 VcStatus getUnfolded( FILE *const vcf, char **const buff );
 VcError parseVcProp( const char *buff, VcProp *const propp );
+VcStatus writeVcFile( FILE* const vcf, const VcFile *filep );
 void freeVcFile( VcFile *const filep );
 
 #endif

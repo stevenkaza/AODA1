@@ -1,5 +1,5 @@
 /* vcutil.c
-
+/*
 vCard  utlity library/ Parser 
 
 Author:Steven Kazavchinski 
@@ -16,7 +16,7 @@ Contact: skazavch@uoguelph.ca
 /* Add vcp org to assignPropName */ 
 
 /* Store entire buff as a value if propname = other */ 
-
+#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -38,8 +38,11 @@ Returns a 1 if a semi colon was found before a colon */
 int semiFirst(char * tempString);
 
 
+/* Determines which name is assigned to the name property of the
+  VcProp struct, and then writes it to stdout */ 
 
 
+int writePropName(VcFile *const filep);
 int Contains(char * string, char pattern); 
 int checkPosition(char * string, int position); 
 void removeSpaces(char * string);
@@ -49,11 +52,11 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
     /* Assigning default values for filep */ 
     filep->ncards = 0;
     filep->cardp = NULL;
-    VcStatus newStatus; 
-  
-  
+    VcStatus newStatus;
+
+
     int i=0;
-    /* Checking for invalid file */ 
+    /* Checking for invalid file */
     if (vcf==NULL)
     {
         newStatus.code =  IOERR;
@@ -61,7 +64,7 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
     /* By default, assigning code to be OK */ 
     newStatus.code = OK;
    
-    /* Until end of file */ 
+    /* Until end of file */
    while (feof(vcf)==0)
     { 
         /* Incrementing # of cards */ 
@@ -70,7 +73,7 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
         filep->cardp=realloc(filep->cardp,(sizeof(Vcard*)*filep->ncards));
         if (newStatus.code==OK)
           newStatus = readVcard(vcf,&filep->cardp[i]);
-	
+
        if ( filep->cardp[i]==NULL)
         {
 	          filep->ncards=0;
@@ -106,12 +109,12 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 
     int fnFlag = 0;
     int nFlag = 0;  
-    int endFlag;
+    int endFlag=0;
     (*cardp)=NULL;
     VcError error; 
     int versionFlag =0; /*If version flag stays 0, then we know no version was found */ 
 
-    int i = 0; 
+    int i = 0;
     VcProp * tempProp = NULL;
     int beginFlag=0; 
    // for (i=0;i<12112;i++)
@@ -144,10 +147,12 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 	          //{    printf("ERROR\n\n\n");
              goto end;  
              // }
-	       }
+	  }
+	assert(buff);
          if (buff[0] == ':' || buff[0] == ';')
          {
             newStatus.code = SYNTAX;
+            assert(buff);
 	    free(buff);
             return newStatus;
          }
@@ -156,7 +161,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
         {
             if (strcmp("BEGIN:VCARD",buff)==0) 
             {
-	              printf("here?\n");
+	        printf("here?\n");
                 newStatus.code =BEGEND; 
                 goto end;
             }
@@ -165,6 +170,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
         /*Ensuring line begins with BEGIN */ 
         /* If not, set an error */ 
         if (beginFlag==0) 
+
         {
             if (strcmp("BEGIN:VCARD",buff)==0)
             {
@@ -197,14 +203,19 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
        if ((strcmp("END:VCARD",buff) ==0) && (beginFlag==1))
        {
           endFlag=1;
+	  assert(buff);
 	  free(buff);
+	  assert(buff);
           goto check;
        }
        /* If the buff contains version, check that its the proper version number */ 
 
        if (strstr(buff,"VERSION:")!=NULL)
        {
+	  printf("i = %d, buff = %s\n",i,buff);
           versionFlag=1;
+	  if (i!=0)
+		versionFlag=0;
           if ((buff[8] != '3') ||  (buff[9] != '.') || (buff[10]!='0'))
           {
             newStatus.code = BADVER; 
@@ -221,10 +232,11 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             buff[strlen(buff)]='\0';
             /* Allocating for a VcProp struct  for property */ 
             tempProp=malloc(sizeof(VcProp));
+	         assert(tempProp);
             if (strstr(buff,":")!=NULL) /* Only pass it to parseVcProp if it has a colon in it.
                                           * Avoiding empty lines */ 
-           error=parseVcProp(buff,tempProp);
-           free(buff);
+              error=parseVcProp(buff,tempProp);
+	           free(buff);
             if (error!=OK)
             {
               newStatus.code = error;
@@ -238,7 +250,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             } 
 
             else
-	    {
+	          {
                (*cardp)=realloc((*cardp),sizeof(Vcard)+(sizeof(VcProp)*(i+1)));
             }
             (*cardp)->prop[i]=*tempProp;
@@ -254,12 +266,12 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 	free(tempProp);
        }
        else
-        free(buff); /* buff is not needed. free it */ 
-
-       if (buff==NULL)
-        break;
-
-    } while (strcmp("END:VCARD",buff)!=0);
+   {     free(buff); /* buff is not needed. free it */ 
+}
+      // if (buff==NULL)
+       //:q	: break;
+				
+    } while (buff!=NULL);
      
     /* If we went through the entire vcard and couldnt find a FN, error */ 
     /* FLAG CHECKING FOR ERRORS */ 
@@ -271,6 +283,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 
     if (endFlag==0 || beginFlag==0)
     {
+
 
        newStatus.code=BEGEND;
     }
@@ -286,10 +299,10 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
       
    // buff=NULL;
     end:
-   // if (buff!=NULL)
     buff = NULL;
-    if (endFlag==0&&(*cardp)!=NULL)
+   if (endFlag==0&&(*cardp)!=NULL)
       newStatus.code = 4; 
+   printf("end flag = %d \n",endFlag);
     return newStatus;
 
 }
@@ -298,7 +311,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 
 VcStatus getUnfolded ( FILE * const vcf, char **const buff )
 {
-    /*CRLF Flags */ 
+   /*CRLF Flags */ 
     int rFlag=0; 
     int crlfFlag=0; 
     int i =0; /* String indexing */ 
@@ -338,14 +351,14 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
       if (staticFlag!=1)/* Skips over a char if its static to avoid missing one */ 
          ch = fgetc(vcf); /* Reading a char in */ 
         if (ch==EOF&&endOfFile==1)
-	      {
-//	         *buff = NULL;
-	//         return newStatus; 
-	      }
-	      endOfFile=1; /*We know that we dont have an empty file */ 
+        {
+//           *buff = NULL;
+  //         return newStatus; 
+        }
+        endOfFile=1; /*We know that we dont have an empty file */ 
         switch (ch)
         {
-	  
+
             case '\r':
             {
                 rFlag = 1; 
@@ -357,7 +370,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
               {
                 crlfFlag=1; 
 
-		            if (foldedFlag==0)
+                if (foldedFlag==0)
                   newStatus.linefrom=newStatus.linefrom+1; /*Updating the line counters */
                 newStatus.lineto = newStatus.lineto+1; 
               }
@@ -370,20 +383,20 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
               if (crlfFlag==1) /* If its a folded line, reset the crlf flag and increment lineto */ 
               {
                     crlfFlag=0;    
-		                foldedFlag =1; 
+                    foldedFlag =1; 
               }
-	      
+
               else 
-	            {
+              {
                   /* If its the first character, allocate space for one*/ 
                   /* I counts the number of chars */ 
                   if (i==0)
                     tempString=(char *)malloc(sizeof(char));
                   else
-	     	            tempString=realloc(tempString,sizeof(char)*(i+1));
-		              tempString[i++] = ch; /* Duplicate code. Place outside while loop */ 
+                    tempString=realloc(tempString,sizeof(char)*(i+1));
+                  tempString[i++] = ch; /* Duplicate code. Place outside while loop */ 
                   staticFlag = 0; 
-	            }
+              }
               break;
             }
             /* ADD PROPER PROCEDURE HERE AS ABOVE */ 
@@ -410,32 +423,37 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
                 /* Flags */ 
             default:
             {
-	      /*If a new char is found while the crlf flag is still on, we are on a new flag so its time to exit */ 
+        /*If a new char is found while the crlf flag is still on, we are on a new flag so its time to exit */ 
               if (crlfFlag==1)
                 {
-                    /* We have not even seen a colon or a semi colon yet , blankline*/ 
-                    
+
                     staticFlag=1; /* Says DONT READ CHAR */ 
                     lineDoneFlag=1;
-                  /*  if (strstr(tempString,":")==NULL && strstr(tempString,";")==NULL)
-                    {
-                   //   free(tempString);
-                      i=0; 
-                      staticFlag=0; 
-                      lineDoneFlag=0; 
-                    }*/ 
+                    /* We have not even seen a colon or a semi colon yet , blankline*/ 
+			               assert(tempString);
+                    if (tempString !=NULL)
+		                {
+                      if (strspn(tempString," \r\n") && strlen(tempString) >0) /* If line is blank, 
+                        reset state to skip reading in line */ 
+                      {
+                        free(tempString);
+                        i=0;
+                        lineDoneFlag=0;
+                        crlfFlag=0;
+                      }
+                    }
                 }
-               else if (crlfFlag==0) 
+                if (crlfFlag==0) 
                 {
                    /* Allocating for first char, otherwise reallocating
-                    *    for subsequent chars */ 
-		               if (i==0)
-		                   tempString=(char *)malloc(sizeof(char));
-	                 else
-			                 tempString=realloc(tempString,sizeof(char)*(i+1));
+      f               *    for subsequent chars */ 
+                   if (i==0)
+                       tempString=(char *)malloc(sizeof(char));
+                   else
+                       tempString=realloc(tempString,sizeof(char)*(i+1));
                     /* Store it in a temp buff as long as 
                       its not a terminating char or EOF */ 
-		               if (ch!=EOF && ch!= '\0') 
+                   if (ch!=EOF && ch!= '\0') 
                          tempString[i++] = ch; 
                     staticFlag=0; /* Ready to grab the next line*/ 
                 }
@@ -456,7 +474,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     {
         tempString=realloc(tempString,sizeof(char)*(i+1));
 
-	      tempString[i]='\0';
+        tempString[i]='\0';
         endOfFile=1; 
         if (strlen(tempString)<2)
         {
@@ -485,9 +503,10 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
     
     lineCounter = newStatus.lineto; /*Updating the static line counter for getUnfoldes next call */ 
       // if (ch==EOF && endOfFile==1&& strlen(*buff)==0)
-	// *buff=NULL;
-	  
+  // *buff=NULL;
+
     return newStatus;
+
 
 }
 
@@ -516,15 +535,20 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
     int tIndex = 0; 
     int m;
     char * value; 
-    char valueValueString[100];
+    char *  valueValueString=NULL; /*to hold the value on the right side of the colon */ 
     int vvIndex = 0; 
     /* if 1, immediatly stop reading for types and values */ 
     int optionalFlagDone = 0; 
     /* 1 if theres a type/values by comma */ 
     int regularValueState=0; 
-    char valueString[100];
-    char partypeString[25];
-    char parvalueString[25];
+    
+    char *  valueString=NULL;
+    char * partypeString=NULL;
+    char * parvalueString=NULL;
+    valueString = (char*)calloc(200,sizeof(char));
+    partypeString = (char*)calloc(200,sizeof(char));
+    valueValueString=(char*)calloc(200,sizeof(char));
+    parvalueString=(char*)calloc(200,sizeof(char));
     /* If this is set to 1, weve hit a colon and its time to parse values */ 
     int valueValue = 0; 
     tempString = (char*)calloc(strlen(buff)+1,sizeof(char));
@@ -555,6 +579,7 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
          value = strtok(NULL,"\n");
          propp->value = (char *)malloc((strlen(value)+1)*sizeof(char));
          strcpy(propp->value,value);
+	// free(value);
        }
   
      }
@@ -587,16 +612,16 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
         {
             /* Reseting all other flags
                 to ensure rest of string 
-                only stored in proper variable */ 
-           // if (typeState==1 && valueValue==0)
-                if (regularValueState==0)
+                only stored in proper variable */ writeiƒf (regularValueState==0)
                 partypeString[tIndex]='\0';
               else
                 partypeString[tIndex]='\0';
 
 
        //     if (valueState==1&&valueValue==0)
-		          parvalueString[vIndex]='\0';
+		         {
+		         parvalueString[vIndex]='\0';
+             }  
             valueValue=1; 
             stateFlag =0; 
             valueState=0;
@@ -607,8 +632,7 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
         if (buff[i]==';'  && valueValue!=1)
         {
       /* Reset all States if a semi colon is spotted */ 
-         // vIndex=0;
-        //  tIndex=0;
+
           valueState=0;
           typeState=0; 
             if (stateFlag!=1)
@@ -627,16 +651,14 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
             if (buff[i]!=';' && buff[i]!=':')
             {
                 if (valueState==1)
-		{
-//		     printf("vc = %c\n",buff[i]);
+		            {
                      parvalueString[vIndex++]=buff[i];
-		}
+	             	}
                 if (typeState==1)
-		{
-		   // printf("tindex = %d\n",tIndex);
-//		    printf("tc = %c\n",buff[i]);
+		            {
+
                     partypeString[tIndex++]=buff[i];
-		}
+	             	}
            }
           else 
             {
@@ -688,12 +710,16 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
       {
     	  propp->partype=(char *)malloc((strlen(partypeString)+1)*sizeof(char));
     	  strcpy(propp->partype,partypeString);  
+	  free(partypeString);
+	  partypeString=NULL;
       }
       if (vIndex>0)
       {
         propp->parval = (char *)malloc((strlen(parvalueString)+1)*sizeof(char));
         strncpy(propp->parval,parvalueString,strlen(parvalueString)+1);
-      }
+        free(parvalueString);
+	parvalueString=NULL;     
+ }
       if (vvIndex>0) /* The only way a value value would get assil pgned here
       would be if it had optional parameters */ 
       /* assigning property name for a buff that has optional parameters */ 
@@ -702,6 +728,8 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
          assignPropName(propp,propName);
 	 propp->value = (char *)malloc((strlen(valueValueString)+1)*sizeof(char));
          strcpy(propp->value,valueValueString);
+	 free(valueValueString);
+	 valueValueString=NULL;
       }
     }
       /*if (vvIndex>0)
@@ -712,11 +740,165 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
       //if (vvIndex==0)
 	     //  error=SYNTAX;
       free(tempString);
-      return error; 
+      if (parvalueString!=NULL)
+	free(parvalueString);
+     if (partypeString!=NULL)
+	free(partypeString);
+    if (valueValueString!=NULL)
+	free(valueValueString);
+	if (valueString!=NULL)
+	free(valueString);     
+ return error; 
       
 }
 
 
+
+
+
+
+writeVcFile(VcFile * const filep)
+{
+  int result = 0; 
+  int i = 0;
+  int k = 0;
+  int charCounter = 0; /* A counter for each line */ 
+  char * propNames[20];
+  for (i=0;i<20;i++)
+  {
+    propName[i] = malloc(sizeof(char)*10);
+  }
+
+  
+
+  for (i=0;i<filep->ncards;i++)/*Indexing through each card */
+  {
+
+    fprintf("BEGIN:VCARD\r\n");
+    fprintf("VERSION:3.0\r\n");
+    for (k=0;k<filep->cardp[i]->nprops;k++) /* Indexing through the properities of each card */ 
+    {
+        charCounter = 0; 
+
+        result = writePropName(filep,name); /* result returns the length of what it wrote 
+        to the string */ 
+        if (result!=-1)
+        {
+          charCounter=charCounter+result; 
+        }
+        if (filep->cardp[i]->prop[k].partype!=NULL)
+        {
+              fprintf(stdout,";TYPE=%s",filep->cardp[i]->prop[k].partype);
+        }
+        if (filep->cardp[i]->prop[k].parval!=NULL)
+        {
+              charCounter=charCounter+strlen(filep->cardp[i].prop[k].parval)
+             fprintf(stdout,";VALUE=%s",filep->cardp[i]->prop[k].parval);
+        }
+
+        if (filep->cardp[i]->prop[k].value!=NULL)
+        {
+          fprintf(stdout,":%s\r\n",filep->cardp[i]->prop[k].value)
+        }
+      
+
+
+    }
+
+
+
+}
+}
+
+int writePropName(VcFile * const filep,VcPname name)
+
+{
+
+
+      if (name == VCP_N)
+      {
+        fprintf(stdout,"N");
+        return 1; 
+      }
+      if (name == VCP_FN)
+      {
+        fprintf(stdout,"FN");
+        return 2; 
+      }
+      if (name == VCP_NICKNAME)
+      {
+        fprintf(stdout,"NICKNAME");
+        return strlen("NICKNAME");
+      }
+      if (name == VCP_PHOTO)
+      {
+
+        fprintf(stdout,"PHOTO");
+        return strlen("PHOTO");
+      }
+      if (name == VCP_BDAY)
+      {
+        fprintf(stdout,"BDAY");
+        return strlen("BDAY");
+      }
+      if (name == VCP_ADR)
+      {
+        fprintf(stdout,"ADR");
+        return strlen("ADR");
+      }
+      if (name == VCP_LABEL)
+      {
+        fprintf(stdout,"LABEL");
+        return strlen("LABEL");
+
+      }
+      if (name == VCP_TEL)
+      {
+        fprintf(stdout,"TEL");
+        return strlen("TEL");
+      }     
+
+      if (name == VCP_EMAIL)
+      {
+        fprintf(stdout,"EMAIL");
+        return strlen("EMAIL");
+      }
+      if (name == VCP_GEO)
+      {
+        fprintf(stdout,"GEO");
+        return strlen("GEO");
+      }
+      if (name == VCP_TITLE)
+      {
+        fprintf(stdout,"TITLE");
+        return strlen("TITLE");
+      }     
+      if (name == VCP_ORG)
+      {
+        fprintf(stdout,"ORG");
+        return strlen("ORG");
+      }
+      if (name == VCP_NOTE)
+      {
+        fprintf(stdout,"NOTE");
+        return strlen("NOTE");
+      }
+      if (name == VCP_UID)
+      {
+        fprintf(stdout,"UID");
+        return strlen("UID");
+      }     
+      if (name == VCP_URL)
+      {
+        fprintf(stdout,"URL");
+        return strlen("URL");
+      }
+      if (name == VCP_OTHER)
+      { 
+        return -1; 
+      }
+    
+}
 
 void freeVcFile ( VcFile * const filep)
 {
@@ -730,15 +912,15 @@ void freeVcFile ( VcFile * const filep)
  
                 for(j = 0; j < tmp->nprops; j++)
                 {
-                        tmp2 = &(tmp->prop[j]);
-			if (tmp2->partype!=NULL)
-  	                      free(tmp2->partype);
-  			if (tmp2->parval!=NULL)
-                       	      free(tmp2->parval);
-			if (tmp2->value!=NULL)
-                       	    free(tmp2->value);
-			if (tmp2->hook!=NULL)
-                       		 free(tmp2->hook);
+                      tmp2 = &(tmp->prop[j]);
+                			if (tmp2->partype!=NULL)
+                  	   free(tmp2->partype);
+                  			if (tmp2->parval!=NULL)
+                      free(tmp2->parval);
+                			if (tmp2->value!=NULL)
+                      free(tmp2->value);
+                			if (tmp2->hook!=NULL)
+                      free(tmp2->hook);
                 }
                 free(tmp);
         }
@@ -1001,3 +1183,5 @@ int removeNewLine(char * string)
     }
     return 0; 
 }
+
+
