@@ -125,7 +125,7 @@ int isSorted(VcFile * const filep)
 	{
 		/* Comparing two cards at a time. First we find the name prop of card1, 
 			and then of card 2 (the one ahead) */
-		for(k=0;k<filep->cardp[i]->nprops);k++)
+		for(k=0;k<filep->cardp[i]->nprops;k++)
 		{
 			if (filep->cardp[i]->prop[k].name == VCP_N)
 			{
@@ -152,10 +152,10 @@ int isSorted(VcFile * const filep)
 	        
 		/* copying the first value so its able to be strtoked without destryoing filep */ 
 		nameValue1 = malloc(sizeof(strlen(filep->cardp[i]->prop[nCard1].value))); 
-		strcpy(nameValue1,filep->cardp[i]->prop[nCard1].value))); 
+		strcpy(nameValue1,filep->cardp[i]->prop[nCard1].value); 
 		
 		nameValue2 = malloc(sizeof(strlen(filep->cardp[i+1]->prop[nCard2].value))); 
-		strcpy(nameValue2,filep->cardp[i]->prop[nCard2].value))); 
+		strcpy(nameValue2,filep->cardp[i]->prop[nCard2].value); 
 		lastName1 = strtok(nameValue1,";"); 
 		lastName2 = strtok(nameValue2,";"); 
 		result = strcmp(nameValue1,nameValue2); 
