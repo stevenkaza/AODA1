@@ -11,7 +11,12 @@ int main(int argc, char * argv[])
 	VcFile * filep=NULL;
 	filep = malloc(sizeof(VcFile));
 	newStatus = readVcFile(stdin,filep);
-	writeVcFile(stdout,filep);
+	newStatus=writeVcFile(stdout,filep);
+	printf(" line = %d \n",newStatus.lineto);
+//	if (argc < 2) {
+  //          fprintf(stderr, "Usage: %s <string>...\n", argv[0]);
+    //        exit(EXIT_FAILURE);
+      //     }
 
 	if (newStatus.code!=OK)
 	{
@@ -22,6 +27,11 @@ int main(int argc, char * argv[])
 		if (strcmp(argv[1],"-info")==0)
 		{
 			vcfInfo(stdout,filep);
+		}
+		if (strcmp(argv[1],"-sort")==0)
+		{
+			vcfSort(filep);
+			
 		}
     }
 		
@@ -93,3 +103,27 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
 
 
 }
+
+
+int vcfSort(VcFile * const filep)
+{
+	int k = 0; 
+	int i = 0; 
+/*        for (i=0;i<(filep->ncards-1);i++)
+	
+			//qsort(filep->cardp[i],sizeof(Vcard *),int(*cmpare)(filep->cardp[i]->prop[0].value,filep->cardp[i+1]->prop);
+
+	
+*/}
+
+int cmpare(char * string1, char * string2)
+{
+
+	
+
+	return (strcmp(string1,string2));	
+
+}
+
+int vcfSelect( VcFile *const filep, const char *which);
+
