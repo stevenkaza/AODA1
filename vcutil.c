@@ -757,6 +757,8 @@ VcStatus writeVcFile(FILE  *const  vcf, VcFile const *filep)
   int result = 0; 
   int i = 0;
   int k = 0;
+  int j = 0; 
+  int foldedFlag = 0; 
   int charCounter = 0; /* A counter for each line */ 
   char * propNames[20];
   for (i=0;i<20;i++)
@@ -783,17 +785,52 @@ VcStatus writeVcFile(FILE  *const  vcf, VcFile const *filep)
         {
               charCounter=charCounter+strlen(filep->cardp[i]->prop[k].partype);
               fprintf(stdout,";TYPE=%s",filep->cardp[i]->prop[k].partype);
+	      charCounter=charCounter + strlen(";TYPE=");
         }
         if (filep->cardp[i]->prop[k].parval!=NULL)
         {
              charCounter=charCounter+strlen(filep->cardp[i]->prop[k].parval);
              fprintf(stdout,";VALUE=%s",filep->cardp[i]->prop[k].parval);
+	     charCounter = charCounter + strlen(";VALUE=");
         }
         if (filep->cardp[i]->prop[k].value!=NULL)
         {
           charCounter=charCounter+strlen(filep->cardp[i]->prop[k].value);
-         // if (charCounter > 75)
-          fprintf(stdout,":%s\r\n",filep->cardp[i]->prop[k].value);
+          if (charCounter < 75)
+         	 fprintf(stdout,":%s\r\n",filep->cardp[i]->prop[k].value);
+	  else
+	  {
+		charCounter=charCounter-strlen(filep->cardp[i]->prop[k].value);
+		for (j=0;j<strlen(filep->cardp[i]->prop[k].value);j++)
+		{
+	//		if (foldedFlag==0)
+	//			charCounter = charCounter + j; 
+	//		else
+				charCounter = charCounter + 1; 
+			if (j==0)
+			{
+				charCounter++;
+				fprintf(stdout,":");
+			}
+			if (charCounter ==75)
+			{
+			   fprintf(stdout,"%c\r\n",filep->cardp[i]->prop[k].value[j]);
+			   fprintf(stdout," ");
+			   charCounter=0; 
+			   foldedFlag=1; 
+		           continue; 
+			}	
+			fprintf(stdout,"%c",filep->cardp[i]->prop[k].value[j]);			
+ 	
+		}
+		foldedFlag=0; 
+		fprintf(stdout,"\r\n");
+		
+
+
+
+
+	  }
         }
       
     }
