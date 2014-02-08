@@ -31,11 +31,8 @@ int main(int argc, char * argv[])
 		if (strcmp(argv[1],"-sort")==0)
 		{
 			vcfSort(filep);
-			
 		}
     }
-		
-
 }
 
 int vcfInfo( FILE *const outfile, const VcFile *filep )
@@ -66,6 +63,8 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
 	}
 
 	/* Adjust this to accurately display sorted cards later */ 
+	isSorted(filep);
+
 	fprintf(outfile,"%d cards (not sorted)\n",filep->ncards);
 
  	for(i = 0; i < filep->ncards; i++)
@@ -104,22 +103,93 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
 
 }
 
+/* Returns a 1 if the cards are not sorted*/ 
+int isSorted(VcFile * const filep)
+{
+	int i = 0; 
+	int k = 0;
+
+	/* Strings to store the value copies of name */ 
+	char * nameValue1=NULL; 
+	char * nameValue2=NULL; 
+	/* Tokens for getting the last name between the ; */ 
+	char * lastName1; 
+	char * lastName2;  
+	Vcard * card1; 
+	Vcard * card2;
+	/* Holds value of K , index where name was found in array of props */ 
+	int nCard1 = 0; 
+	int nCard2 = 0; 
+	for (i=0; i<filep->ncards;i++)
+	{
+		/* Comparing two cards at a time. First we find the name prop of card1, 
+			and then of card 2 (the one ahead) */
+		for(k=0;k<filep->cardp[i]->nprops);k++)
+		{
+			if (filep->cardp[i]->prop[k].name == VCP_N)
+			{
+				/* we have found the prop with the name element for this card */ 
+				nCard1= k; 
+				break; 
+			}
+
+		} 
+	
+		/* Grabbing prop for card2*/ 
+		if (i<(filep->ncards-1))
+		{
+			for (k=0;k<filep->cardp[i+1]->nprops;k++)
+			{
+				if (filep->cardp[i]->prop[k].name==VCP_N)
+				{
+					nCard2=k; /* Found card2s name property */  
+					break; 
+
+				}
+
+			}
+	        
+		/* copying the first value so its able to be strtoked without destryoing filep */ 
+		nameValue1 = malloc(sizeof(strlen(filep->cardp[i]->prop[nCard1].value))); 
+		strcpy(nameValue1,filep->cardp[i]->prop[nCard1].value))); 
+		
+		nameValue2 = malloc(sizeof(strlen(filep->cardp[i+1]->prop[nCard2].value))); 
+		strcpy(nameValue2,filep->cardp[i]->prop[nCard2].value))); 
+		result = strcmp(nameValue1,nameValue2); 
+		/* If result == -1, the first string was greater than the second card string,
+		 * indicating that it is sorted. Time to check the next card and increment i*/ 
+		if (result==-1)
+		{
+			continue;
+		}
+		/* if result == 1, the cards are not sorted */ 
+		else if (result==1)
+		{
+
+
+		}
+
+		/* Time to compare them */ 
+		//strcmp goes here. if strcmp(card1,card2) == -1, then we know sorted. 
+	     }
+	}
+	
+
+
+}
 
 int vcfSort(VcFile * const filep)
 {
 	int k = 0; 
 	int i = 0; 
 /*        for (i=0;i<(filep->ncards-1);i++)
-	
 			//qsort(filep->cardp[i],sizeof(Vcard *),int(*cmpare)(filep->cardp[i]->prop[0].value,filep->cardp[i+1]->prop);
 
-	
 */}
 
 int cmpare(char * string1, char * string2)
 {
 
-	
 
 	return (strcmp(string1,string2));	
 
