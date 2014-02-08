@@ -109,12 +109,11 @@ int vcfSort(VcFile * const filep)
 {
 	int k = 0; 
 	int i = 0; 
-/*        for (i=0;i<(filep->ncards-1);i++)
 	
-			//qsort(filep->cardp[i],sizeof(Vcard *),int(*cmpare)(filep->cardp[i]->prop[0].value,filep->cardp[i+1]->prop);
+		qsort(filep->cardp,filep->ncards,sizeof(Vcard *),int(*cmpare)(filep->cardp[i]->prop[0].value,filep->cardp[i+1]->prop);
 
 	
-*/}
+}
 
 int cmpare(char * string1, char * string2)
 {
