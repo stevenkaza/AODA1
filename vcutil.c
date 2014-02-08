@@ -704,16 +704,16 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
       {
     	  propp->partype=(char *)malloc((strlen(partypeString)+1)*sizeof(char));
     	  strcpy(propp->partype,partypeString);  
-	  free(partypeString);
-	  partypeString=NULL;
+    	  free(partypeString);
+    	  partypeString=NULL;
       }
       if (vIndex>0)
       {
         propp->parval = (char *)malloc((strlen(parvalueString)+1)*sizeof(char));
         strncpy(propp->parval,parvalueString,strlen(parvalueString)+1);
         free(parvalueString);
-	parvalueString=NULL;     
- }
+        parvalueString=NULL;     
+      }
       if (vvIndex>0) /* The only way a value value would get assil pgned here
       would be if it had optional parameters */ 
       /* assigning property name for a buff that has optional parameters */ 
@@ -773,15 +773,15 @@ VcStatus writeVcFile(FILE  *const  vcf, VcFile const *filep)
     fprintf(stdout,"VERSION:3.0\r\n");
     for (k=0;k<filep->cardp[i]->nprops;k++) /* Indexing through the properities of each card */ 
     {
-        charCounter = 0; 
-	 result=writePropName(filep->cardp[i]->prop[k].name);
-       // to the string */ 
+        charCounter = 0; /* reset the charCounter for each line */ 
+	      result=writePropName(filep->cardp[i]->prop[k].name);
         if (result!=-1)
         {
           charCounter=charCounter+result; 
         }
         if (filep->cardp[i]->prop[k].partype!=NULL)
         {
+              charCounter=charCounter+strlen(filep->cardp[i]->prop[k].partype);
               fprintf(stdout,";TYPE=%s",filep->cardp[i]->prop[k].partype);
         }
         if (filep->cardp[i]->prop[k].parval!=NULL)
@@ -789,16 +789,15 @@ VcStatus writeVcFile(FILE  *const  vcf, VcFile const *filep)
              charCounter=charCounter+strlen(filep->cardp[i]->prop[k].parval);
              fprintf(stdout,";VALUE=%s",filep->cardp[i]->prop[k].parval);
         }
-
         if (filep->cardp[i]->prop[k].value!=NULL)
         {
+          charCounter=charCounter+strlen(filep->cardp[i]->prop[k].value);
+         // if (charCounter > 75)
           fprintf(stdout,":%s\r\n",filep->cardp[i]->prop[k].value);
         }
       
-
-
     }
-
+    fprintf(stdout,"END:VCARD\r\n");
 
 
 }
@@ -807,7 +806,6 @@ VcStatus writeVcFile(FILE  *const  vcf, VcFile const *filep)
 int writePropName(VcPname name)
 
 {
-
 
       if (name == VCP_N)
       {
@@ -826,7 +824,6 @@ int writePropName(VcPname name)
       }
       if (name == VCP_PHOTO)
       {
-
         fprintf(stdout,"PHOTO");
         return strlen("PHOTO");
       }
@@ -955,7 +952,6 @@ int assignPropName(VcProp * const propp,char * propName)
     }
     if (strcmp("PHOTO",propName)==0)
     {
-	printf("Does it even detect a photo coming in? \n");
         propp->name=VCP_PHOTO;
         return 6; 
     }
@@ -982,14 +978,12 @@ int assignPropName(VcProp * const propp,char * propName)
     }
     if (strcmp("GEO",propName)==0)
     {
-	printf("Geo coordinates \n");
         propp->name=VCP_GEO;
         return 11; 
     }
     if (strcmp("TITLE",propName)==0)
     {
         propp->name=VCP_TITLE;
-
         return 12; 
     }
     if (strcmp("ORG",propName)==0 || (strcmp("Org",propName) == 0))
@@ -1009,7 +1003,6 @@ int assignPropName(VcProp * const propp,char * propName)
     }
     if (strcmp("URL",propName)==0)
     {
-	printf("url found \n");
         propp->name=VCP_URL;
         return 16; 
     }

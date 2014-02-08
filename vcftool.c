@@ -11,14 +11,20 @@ int main(int argc, char * argv[])
 	VcFile * filep=NULL;
 	filep = malloc(sizeof(VcFile));
 	newStatus = readVcFile(stdin,filep);
+	writeVcFile(stdout,filep);
+
 	if (newStatus.code!=OK)
-		printf("%d error code detected. exiting \n", newStatus.code);
-
-	if (strcmp(argv[1],"-info")==0)
 	{
-		vcfInfo(stdout,filep);
-
+		printf("%d error code detected. read lines %d to %d exiting \n", newStatus.code,newStatus.linefrom,newStatus.lineto);
 	}
+	if (argv[1]!=NULL)
+	{
+		if (strcmp(argv[1],"-info")==0)
+		{
+			vcfInfo(stdout,filep);
+		}
+    }
+		
 
 }
 
@@ -62,12 +68,11 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
         {
         	if (filep->cardp[i]->prop[k].name==VCP_PHOTO && photoFound == 0)
         	{
-			printf("what going on \n");
         		photoCounter++;
         		photoFound = 1; 
         	}
-                else if (filep->cardp[i]->prop[k].name==VCP_GEO && geoFound ==0)
-                {
+             else if (filep->cardp[i]->prop[k].name==VCP_GEO && geoFound ==0)
+            {
         		geoCounter++;
         		geoFound = 1; 
         	}
