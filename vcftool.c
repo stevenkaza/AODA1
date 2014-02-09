@@ -126,7 +126,7 @@ int isSorted(VcFile * const filep)
 	int nCard2 = 0; 
 	for (i=0; i<filep->ncards;i++)
 	{
-	        nameValue1=NULL;
+	    nameValue1=NULL;
 		/* Comparing two cards at a time. First we find the name prop of card1, 
 			and then of card 2 (the one ahead) */
 		for(k=0;k<filep->cardp[i]->nprops;k++)
@@ -265,10 +265,148 @@ int vcfSort(VcFile * const filep)
 	
 }
 
-int cmpare(char * string1, char * string2)
+int cmpare(void  * card1, void * card2)
 {
 
+	int result; 
+	int i = 0; 
+	int k = 0;
+	char * firstName1; 
+	char * firstName2; 
+	/* Strings to store the value copies of name */ 
+	char * nameValue1=NULL; 
+	char * nameValue2=NULL; 
+	char * nameValue1Copy=NULL; 
+	char * nameValue2Copy=NULL;
+	/* Tokens for getting the last name between the ; */ 
+	char * lastName1; 
+	char * lastName2;  
+	Vcard * card1; 
+	Vcard * card2;
+	/* Holds value of K , index where name was found in array of props */ 
+	int nCard1 = 0; 
+	int nCard2 = 0; 
+	
+	    nameValue1=NULL;
+		/* Comparing two cards at a time. First we find the name prop of card1, 
+		and then of card 2 (the one ahead) */
+	for(k=0;k<card1->nprops;k++)
+	{
+		if (card1->prop[k].name == VCP_N)
+		{
+			/* we have found the prop with the name element for this card */ 
+			nCard1= k; 
+			break; 
+		}
 
+	} 
+
+	/* Grabbing prop for card2*/ 
+	
+		for (k=0;k<card2->nprops;k++)
+		{
+			if (card2->prop[k].name==VCP_N)
+			{
+				nCard2=k; /* Found card2s name property */  
+				break; 
+			}
+		}
+        
+	/* copying the first value so its able to be strtoked without destryoing filep */
+
+	nameValue1 = (char*)calloc(strlen(card1->prop[nCard1].value)+1,sizeof(char));
+	strcpy(nameValue1,card1->prop[nCard1].value); 
+//		printf("length = %d %d\n",strlen(card2->prop[nCard2].value),strlen(card1->prop[nCard1].value));		
+	nameValue2 = (char*)calloc(strlen(card2->prop[nCard2].value)+1,sizeof(char));
+//	nameValue2 = malloc(sizeof(strlen(card2->prop[nCard2].value))); 
+	strcpy(nameValue2,card2->prop[nCard2].value); 
+	lastName1 = strtok(nameValue1,";"); 
+	lastName2 = strtok(nameValue2,";"); 
+	result = strcmp(nameValue1,nameValue2); 
+	printf("result = %d\n",result); 
+	/* If result == -1, the first string was greater than the second card string,
+	 * indicating that it is sorted. Time to check the next card and increment i*/ 
+	if (result==-1)
+	{
+			if (nameValue1!=NULL)
+				free(nameValue1); 
+			if (nameValue2!=NULL)
+				free(nameValue2);
+			return -1; 
+
+	}
+	/* if result == 1, the cards are not sorted */ 
+	else if (result==1)
+	{
+		printf("Does this really never happen?\n")
+			if (nameValue1!=NULL)
+				free(nameValue1); 
+			if (nameValue2!=NULL)
+				free(nameValue2);
+		return 1; /* Return 0 indicating they are not sorted*/ 
+
+	}
+	/* The last names happened to be the same between the cards. Time to check first name */ 
+	else if (result==0)
+	{
+		return 0; 
+		/* Copying the strings before strtoking as strtok causes headaches */ 
+		nameValue1Copy=malloc(sizeof(strlen(nameValue1)));
+		nameValue2Copy=malloc(sizeof(strlen(nameValue2)));
+		strcpy(nameValue1Copy,nameValue1); 
+		strcpy(nameValue2Copy,nameValue2);
+		firstName1 = strtok(nameValue1Copy,"\n"); 
+		firstName2 = strtok(nameValue2Copy,"\n"); 
+		result = strcmp(firstName1,firstName2); 
+		if (result==-1)
+		{
+			if (nameValue1!=NULL)
+				free(nameValue1); 
+			if (nameValue2!=NULL)
+				free(nameValue2);
+			continue; 
+		}
+		else if (result==1)
+		{
+				if (nameValue1!=NULL)
+					free(nameValue1); 
+				if (nameValue2!=NULL)
+					free(nameValue2);
+			return 0; /* Indicates not sorted */ 
+
+		}
+
+		else if (result==0) 
+		{
+		     // printf("STRING = %s %s\n",firstName1,firstName2);
+		     // printf("nameValue1 = %s nv2 = %s \n",nameValue1,nameValue2); 
+		      if (nameValue1!=NULL)
+		      {
+			free(nameValue1); 
+			nameValue1=NULL;
+		      }
+		      if (nameValue2!=NULL)
+		      {
+			free(nameValue2);
+		        nameValue2=NULL;
+		      }
+		      continue; /*They are equal, continue to the next pair of cards to compare */
+		} 
+	}
+
+		/* Time to compare them */ 
+		//strcmp goes here. if strcmp(card1,card2) == -1, then we know sorted. 
+	     
+
+	    
+	
+	
+
+	if (nameValue1!=NULL)
+		free(nameValue1); 
+	if (nameValue2!=NULL)
+		free(nameValue2);
+	return 1; 
 	return (strcmp(string1,string2));	
 
 }
