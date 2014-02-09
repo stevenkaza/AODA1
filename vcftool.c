@@ -157,14 +157,16 @@ int isSorted(VcFile * const filep)
 		printf("==1 %s\n",filep->cardp[i]->prop[nCard1].value); 
 		printf("==2 %s\n",filep->cardp[i+1]->prop[nCard2].value); 
 
-		nameValue1 = malloc(sizeof(strlen(filep->cardp[i]->prop[nCard1].value))); 
+		nameValue1 = malloc(sizeof(strlen(filep->cardp[i]->prop[nCard1].value)+1)); 
 		strcpy(nameValue1,filep->cardp[i]->prop[nCard1].value); 
 		printf("length = %d %d\n",strlen(filep->cardp[i+1]->prop[nCard2].value),strlen(filep->cardp[i]->prop[nCard1].value));		
-		nameValue2 = malloc(sizeof(strlen(filep->cardp[i+1]->prop[nCard2].value))); 
-		strcpy(nameValue2,filep->cardp[i]->prop[nCard2].value); 
+		nameValue2 = (char*)calloc(strlen(filep->cardp[i+1]->prop[nCard2].value),sizeof(char));
+	//	nameValue2 = malloc(sizeof(strlen(filep->cardp[i+1]->prop[nCard2].value))); 
+		strcpy(nameValue2,filep->cardp[i+1]->prop[nCard2].value); 
 		lastName1 = strtok(nameValue1,";"); 
 		lastName2 = strtok(nameValue2,";"); 
 		result = strcmp(nameValue1,nameValue2); 
+		printf("result = %d\n",result); 
 		/* If result == -1, the first string was greater than the second card string,
 		 * indicating that it is sorted. Time to check the next card and increment i*/ 
 		if (result==-1)
@@ -187,7 +189,7 @@ int isSorted(VcFile * const filep)
 
 		}
 		/* The last names happened to be the same between the cards. Time to check first name */ 
-		else
+		else if (result==0)
 		{
 			/* Copying the strings before strtoking as strtok causes headaches */ 
 			nameValue1Copy=malloc(sizeof(strlen(nameValue1)));
@@ -215,7 +217,7 @@ int isSorted(VcFile * const filep)
 
 			}
 
-			else 
+			else if (result==0) 
 			{
 			      printf("STRING = %s %s\n",firstName1,firstName2);
 			      printf("nameValue1 = %s nv2 = %s \n",nameValue1,nameValue2); 
