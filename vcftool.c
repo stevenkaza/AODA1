@@ -250,15 +250,6 @@ int isSorted(VcFile * const filep)
 	return 1; 
 }
 
-int vcfSort(VcFile * const filep)
-{
-	int k = 0; 
-	int i = 0; 
-		qsort(filep->cardp,filep->ncards,sizeof(Vcard *),cmpare);
-
-	
-}
-
 int cmpare(void  * card1, void * card2)
 {
 
@@ -400,6 +391,16 @@ int cmpare(void  * card1, void * card2)
 	return 1; 
 
 }
+int vcfSort(VcFile * const filep)
+{
+	int k = 0; 
+	int i = 0; 
+		qsort(filep->cardp,filep->ncards,sizeof(Vcard *),cmpare);
+
+	
+}
+
+
 
 int vcfSelect( VcFile *const filep, const char *which);
 
