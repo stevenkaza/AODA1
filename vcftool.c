@@ -164,12 +164,20 @@ int isSorted(VcFile * const filep)
 		 * indicating that it is sorted. Time to check the next card and increment i*/ 
 		if (result==-1)
 		{
+				if (nameValue1!=NULL)
+		free(nameValue1); 
+	if (nameValue2!=NULL)
+		free(nameValue2);
 			continue;
 	
 		}
 		/* if result == 1, the cards are not sorted */ 
 		else if (result==1)
 		{
+				if (nameValue1!=NULL)
+		free(nameValue1); 
+	if (nameValue2!=NULL)
+		free(nameValue2);
 			return 0; /* Return 0 indicating they are not sorted*/ 
 
 		}
@@ -181,16 +189,30 @@ int isSorted(VcFile * const filep)
 			result = strcmp(firstName1,firstName2); 
 			if (result==-1)
 			{
+					if (nameValue1!=NULL)
+		free(nameValue1); 
+	if (nameValue2!=NULL)
+		free(nameValue2);
 				continue; 
 			}
 			else if (result==1)
 			{
+					if (nameValue1!=NULL)
+		free(nameValue1); 
+	if (nameValue2!=NULL)
+		free(nameValue2);
 				return 0; /* Indicates not sorted */ 
 
 			}
 
 			else 
-			      continue; /*They are equal, continue to the next pair of cards to compare */ 
+			{
+					if (nameValue1!=NULL)
+		free(nameValue1); 
+	if (nameValue2!=NULL)
+		free(nameValue2);
+			      continue; /*They are equal, continue to the next pair of cards to compare */
+			  } 
 		}
 
 		/* Time to compare them */ 
