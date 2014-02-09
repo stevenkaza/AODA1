@@ -62,9 +62,9 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
 	}
 
 	/* Adjust this to accurately display sorted cards later */ 
-	if (isSorted(filep)==1)
+	if (isSorted(filep)==0)
 		fprintf(outfile,"%d cards (not sorted)\n",filep->ncards);
-	else if (isSorted(filep)==0)
+	else if (isSorted(filep)==1)
 		fprintf(outfile,"%d cards (sorted)\n",filep->ncards);
  	for(i = 0; i < filep->ncards; i++)
         {
@@ -103,7 +103,7 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
 
 }
 
-/* Returns a 1 if the cards are not sorted*/ 
+/* Returns a 1 if the cards are  sorted*/ 
 int isSorted(VcFile * const filep)
 {
 	int result;
@@ -182,6 +182,7 @@ int isSorted(VcFile * const filep)
 		/* if result == 1, the cards are not sorted */ 
 		else if (result==1)
 		{
+			printf("Does this really never happen?\n")
 				if (nameValue1!=NULL)
 					free(nameValue1); 
 				if (nameValue2!=NULL)
@@ -239,6 +240,8 @@ int isSorted(VcFile * const filep)
 		/* Time to compare them */ 
 		//strcmp goes here. if strcmp(card1,card2) == -1, then we know sorted. 
 	     }
+
+	    
 	}
 	
 
@@ -246,6 +249,7 @@ int isSorted(VcFile * const filep)
 		free(nameValue1); 
 	if (nameValue2!=NULL)
 		free(nameValue2);
+	return 1; 
 }
 
 int vcfSort(VcFile * const filep)
