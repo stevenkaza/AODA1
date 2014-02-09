@@ -250,7 +250,7 @@ int isSorted(VcFile * const filep)
 	return 1; 
 }
 
-int cmpare(void  * card1, void * card2)
+int cmpare(const void  * card1,const void * card2)
 {
 
 	int result; 
