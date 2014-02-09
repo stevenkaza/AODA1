@@ -3,7 +3,7 @@
 #include "vcftool.h"
 #include <stdio.h>
 #include <string.h>
-int cmpare(char * s1, char * s2); 
+int cmpare(void * s1, void * s2); 
 int main(int argc, char * argv[])
 {
 
@@ -281,8 +281,6 @@ int cmpare(void  * card1, void * card2)
 	/* Tokens for getting the last name between the ; */ 
 	char * lastName1; 
 	char * lastName2;  
-	Vcard * card1; 
-	Vcard * card2;
 	/* Holds value of K , index where name was found in array of props */ 
 	int nCard1 = 0; 
 	int nCard2 = 0; 
@@ -290,7 +288,7 @@ int cmpare(void  * card1, void * card2)
 	    nameValue1=NULL;
 		/* Comparing two cards at a time. First we find the name prop of card1, 
 		and then of card 2 (the one ahead) */
-	for(k=0;k<card1->nprops;k++)
+	for(k=0;k<((Vcard *)card1->nprops);k++)
 	{
 		if (card1->prop[k].name == VCP_N)
 		{
