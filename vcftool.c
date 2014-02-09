@@ -3,7 +3,7 @@
 #include "vcftool.h"
 #include <stdio.h>
 #include <string.h>
-
+int cmpare(char * s1, char * s2); 
 int main(int argc, char * argv[])
 {
 
@@ -12,7 +12,6 @@ int main(int argc, char * argv[])
 	filep = malloc(sizeof(VcFile));
 	newStatus = readVcFile(stdin,filep);
 	newStatus=writeVcFile(stdout,filep);
-	printf(" line = %d \n",newStatus.lineto);
 //	if (argc < 2) {
   //          fprintf(stderr, "Usage: %s <string>...\n", argv[0]);
     //        exit(EXIT_FAILURE);
@@ -20,7 +19,7 @@ int main(int argc, char * argv[])
 
 	if (newStatus.code!=OK)
 	{
-		printf("%d error code detected. read lines %d to %d exiting \n", newStatus.code,newStatus.linefrom,newStatus.lineto);
+		printf("%d e code detected. read lines %d to %d exiting \n", newStatus.code,newStatus.linefrom,newStatus.lineto);
 	}
 	if (argv[1]!=NULL)
 	{
@@ -106,6 +105,7 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
 /* Returns a 1 if the cards are not sorted*/ 
 int isSorted(VcFile * const filep)
 {
+	int result;
 	int i = 0; 
 	int k = 0;
 	char * firstName1; 
@@ -150,10 +150,11 @@ int isSorted(VcFile * const filep)
 
 			}
 	        
-		/* copying the first value so its able to be strtoked without destryoing filep */ 
+		/* copying the first value so its able to be strtoked without destryoing filep */
+		printf("== %s\n",filep->cardp[i]->prop[nCard1].value); 
 		nameValue1 = malloc(sizeof(strlen(filep->cardp[i]->prop[nCard1].value))); 
 		strcpy(nameValue1,filep->cardp[i]->prop[nCard1].value); 
-		
+		printf("length = %d %d\n",strlen(filep->cardp[i+1]->prop[nCard2].value),strlen(filep->cardp[i]->prop[nCard1].value));		
 		nameValue2 = malloc(sizeof(strlen(filep->cardp[i+1]->prop[nCard2].value))); 
 		strcpy(nameValue2,filep->cardp[i]->prop[nCard2].value); 
 		lastName1 = strtok(nameValue1,";"); 
@@ -175,8 +176,8 @@ int isSorted(VcFile * const filep)
 		/* The last names happened to be the same between the cards. Time to check first name */ 
 		else
 		{
-			firstName1 = strtok(nameValue1,NULL); 
-			firstName2 = strtok(nameValue2,NULL); 
+			firstName1 = strtok(nameValue1,"\n"); 
+			firstName2 = strtok(nameValue2,"\n"); 
 			result = strcmp(firstName1,firstName2); 
 			if (result==-1)
 			{
@@ -198,25 +199,24 @@ int isSorted(VcFile * const filep)
 	}
 	
 
-
+	if (nameValue1!=NULL)
+		free(nameValue1); 
+	if (nameValue2!=NULL)
+		free(nameValue2);
 }
 
 int vcfSort(VcFile * const filep)
 {
 	int k = 0; 
 	int i = 0; 
-<<<<<<< HEAD
 /*        for (i=0;i<(filep->ncards-1);i++)
 			//qsort(filep->cardp[i],sizeof(Vcard *),int(*cmpare)(filep->cardp[i]->prop[0].value,filep->cardp[i+1]->prop);
 
-*/}
-=======
-	
-		qsort(filep->cardp,filep->ncards,sizeof(Vcard *),int(*cmpare)(filep->cardp[i]->prop[0].value,filep->cardp[i+1]->prop);
+*/	
+		qsort(filep->cardp,filep->ncards,sizeof(Vcard *),cmpare);
 
 	
 }
->>>>>>> 37594c8ea0a7c86fe69cd8fcc9126e9cc5f34e36
 
 int cmpare(char * string1, char * string2)
 {
