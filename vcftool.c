@@ -288,9 +288,9 @@ int cmpare(void  * card1, void * card2)
 	    nameValue1=NULL;
 		/* Comparing two cards at a time. First we find the name prop of card1, 
 		and then of card 2 (the one ahead) */
-	for(k=0;k<((Vcard *)card1->nprops);k++)
+	for(k=0;k<(*(Vcard **)card1)->nprops;k++)
 	{
-		if (card1->prop[k].name == VCP_N)
+		if (card1.prop[k].name == VCP_N)
 		{
 			/* we have found the prop with the name element for this card */ 
 			nCard1= k; 
