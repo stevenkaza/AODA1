@@ -157,7 +157,7 @@ int isSorted(VcFile * const filep)
 		printf("==1 %s\n",filep->cardp[i]->prop[nCard1].value); 
 		printf("==2 %s\n",filep->cardp[i+1]->prop[nCard2].value); 
 
-		nameValue1 = malloc(sizeof(strlen(filep->cardp[i]->prop[nCard1].value)+1)); 
+		nameValue1 = (char*)calloc(strlen(filep->cardp[i]->prop[nCard1].value),sizeof(char));
 		strcpy(nameValue1,filep->cardp[i]->prop[nCard1].value); 
 		printf("length = %d %d\n",strlen(filep->cardp[i+1]->prop[nCard2].value),strlen(filep->cardp[i]->prop[nCard1].value));		
 		nameValue2 = (char*)calloc(strlen(filep->cardp[i+1]->prop[nCard2].value),sizeof(char));
