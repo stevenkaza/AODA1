@@ -3,7 +3,6 @@
 #include "vcftool.h"
 #include <stdio.h>
 #include <string.h>
-int cmpare(void * s1, void * s2); 
 int main(int argc, char * argv[])
 {
 
@@ -182,7 +181,6 @@ int isSorted(VcFile * const filep)
 		/* if result == 1, the cards are not sorted */ 
 		else if (result==1)
 		{
-			printf("Does this really never happen?\n")
 				if (nameValue1!=NULL)
 					free(nameValue1); 
 				if (nameValue2!=NULL)
@@ -256,10 +254,6 @@ int vcfSort(VcFile * const filep)
 {
 	int k = 0; 
 	int i = 0; 
-/*        for (i=0;i<(filep->ncards-1);i++)
-			//qsort(filep->cardp[i],sizeof(Vcard *),int(*cmpare)(filep->cardp[i]->prop[0].value,filep->cardp[i+1]->prop);
-
-*/	
 		qsort(filep->cardp,filep->ncards,sizeof(Vcard *),cmpare);
 
 	
@@ -290,7 +284,7 @@ int cmpare(void  * card1, void * card2)
 		and then of card 2 (the one ahead) */
 	for(k=0;k<(*(Vcard **)card1)->nprops;k++)
 	{
-		if (*(Vcard **)card1.prop[k].name == VCP_N)
+		if ((*(Vcard **)card1)->prop[k].name == VCP_N)
 		{
 			/* we have found the prop with the name element for this card */ 
 			nCard1= k; 
@@ -301,9 +295,9 @@ int cmpare(void  * card1, void * card2)
 
 	/* Grabbing prop for card2*/ 
 	
-		for (k=0;k<*(Vcard **)card2->nprops;k++)
+		for (k=0;k<(*(Vcard **)card2)->nprops;k++)
 		{
-			if (*(Vcard **)card2->prop[k].name==VCP_N)
+			if ((*(Vcard **)card2)->prop[k].name==VCP_N)
 			{
 				nCard2=k; /* Found card2s name property */  
 				break; 
@@ -312,12 +306,12 @@ int cmpare(void  * card1, void * card2)
         
 	/* copying the first value so its able to be strtoked without destryoing filep */
 
-	nameValue1 = (char*)calloc(strlen(*(Vcard **)card1->prop[nCard1].value)+1,sizeof(char));
-	strcpy(nameValue1,*(Vcard **)card1->prop[nCard1].value); 
+	nameValue1 = (char*)calloc(strlen((*(Vcard **)card1)->prop[nCard1].value)+1,sizeof(char));
+	strcpy(nameValue1,(*(Vcard **)card1)->prop[nCard1].value); 
 //		printf("length = %d %d\n",strlen(card2->prop[nCard2].value),strlen(card1->prop[nCard1].value));		
-	nameValue2 = (char*)calloc(strlen(*(Vcard **)card2->prop[nCard2].value)+1,sizeof(char));
+	nameValue2 = (char*)calloc(strlen((*(Vcard **)card2)->prop[nCard2].value)+1,sizeof(char));
 //	nameValue2 = malloc(sizeof(strlen(card2->prop[nCard2].value))); 
-	strcpy(nameValue2,*(Vcard **)card2->prop[nCard2].value); 
+	strcpy(nameValue2,(*(Vcard **)card2)->prop[nCard2].value); 
 	lastName1 = strtok(nameValue1,";"); 
 	lastName2 = strtok(nameValue2,";"); 
 	result = strcmp(nameValue1,nameValue2); 
@@ -336,7 +330,6 @@ int cmpare(void  * card1, void * card2)
 	/* if result == 1, the cards are not sorted */ 
 	else if (result==1)
 	{
-		printf("Does this really never happen?\n")
 			if (nameValue1!=NULL)
 				free(nameValue1); 
 			if (nameValue2!=NULL)
@@ -362,7 +355,7 @@ int cmpare(void  * card1, void * card2)
 				free(nameValue1); 
 			if (nameValue2!=NULL)
 				free(nameValue2);
-			continue; 
+			return -1; 
 		}
 		else if (result==1)
 		{
@@ -388,8 +381,8 @@ int cmpare(void  * card1, void * card2)
 			free(nameValue2);
 		        nameValue2=NULL;
 		      }
-		      continue; /*They are equal, continue to the next pair of cards to compare */
-		} 
+		return 0; 	
+	} 
 	}
 
 		/* Time to compare them */ 
@@ -405,7 +398,6 @@ int cmpare(void  * card1, void * card2)
 	if (nameValue2!=NULL)
 		free(nameValue2);
 	return 1; 
-	return (strcmp(string1,string2));	
 
 }
 
