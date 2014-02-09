@@ -290,7 +290,7 @@ int cmpare(void  * card1, void * card2)
 		and then of card 2 (the one ahead) */
 	for(k=0;k<(*(Vcard **)card1)->nprops;k++)
 	{
-		if (card1.prop[k].name == VCP_N)
+		if (*(Vcard **)card1.prop[k].name == VCP_N)
 		{
 			/* we have found the prop with the name element for this card */ 
 			nCard1= k; 
@@ -301,9 +301,9 @@ int cmpare(void  * card1, void * card2)
 
 	/* Grabbing prop for card2*/ 
 	
-		for (k=0;k<card2->nprops;k++)
+		for (k=0;k<*(Vcard **)card2->nprops;k++)
 		{
-			if (card2->prop[k].name==VCP_N)
+			if (*(Vcard **)card2->prop[k].name==VCP_N)
 			{
 				nCard2=k; /* Found card2s name property */  
 				break; 
@@ -312,12 +312,12 @@ int cmpare(void  * card1, void * card2)
         
 	/* copying the first value so its able to be strtoked without destryoing filep */
 
-	nameValue1 = (char*)calloc(strlen(card1->prop[nCard1].value)+1,sizeof(char));
-	strcpy(nameValue1,card1->prop[nCard1].value); 
+	nameValue1 = (char*)calloc(strlen(*(Vcard **)card1->prop[nCard1].value)+1,sizeof(char));
+	strcpy(nameValue1,*(Vcard **)card1->prop[nCard1].value); 
 //		printf("length = %d %d\n",strlen(card2->prop[nCard2].value),strlen(card1->prop[nCard1].value));		
-	nameValue2 = (char*)calloc(strlen(card2->prop[nCard2].value)+1,sizeof(char));
+	nameValue2 = (char*)calloc(strlen(*(Vcard **)card2->prop[nCard2].value)+1,sizeof(char));
 //	nameValue2 = malloc(sizeof(strlen(card2->prop[nCard2].value))); 
-	strcpy(nameValue2,card2->prop[nCard2].value); 
+	strcpy(nameValue2,*(Vcard **)card2->prop[nCard2].value); 
 	lastName1 = strtok(nameValue1,";"); 
 	lastName2 = strtok(nameValue2,";"); 
 	result = strcmp(nameValue1,nameValue2); 
