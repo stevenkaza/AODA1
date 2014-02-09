@@ -11,7 +11,7 @@ int main(int argc, char * argv[])
 	VcFile * filep=NULL;
 	filep = malloc(sizeof(VcFile));
 	newStatus = readVcFile(stdin,filep);
-	newStatus=writeVcFile(stdout,filep);
+//	newStatus=writeVcFile(stdout,filep);
 //	if (argc < 2) {
   //          fprintf(stderr, "Usage: %s <string>...\n", argv[0]);
     //        exit(EXIT_FAILURE);
@@ -79,12 +79,12 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
         		photoCounter++;
         		photoFound = 1; 
         	}
-             else if (filep->cardp[i]->prop[k].name==VCP_GEO && geoFound ==0)
+             if (filep->cardp[i]->prop[k].name==VCP_GEO && geoFound ==0)
             {
         		geoCounter++;
         		geoFound = 1; 
         	}
-        	else if (filep->cardp[i]->prop[k].name==VCP_URL && urlFound ==0)
+         if (filep->cardp[i]->prop[k].name==VCP_URL && urlFound ==0)
         	{
         		urlCounter++;
         		urlFound=1; 
@@ -154,13 +154,13 @@ int isSorted(VcFile * const filep)
 			}
 	        
 		/* copying the first value so its able to be strtoked without destryoing filep */
-		printf("==1 %s\n",filep->cardp[i]->prop[nCard1].value); 
-		printf("==2 %s\n",filep->cardp[i+1]->prop[nCard2].value); 
+//		printf("==1 %s\n",filep->cardp[i]->prop[nCard1].value); 
+//		printf("==2 %s\n",filep->cardp[i+1]->prop[nCard2].value); 
 
-		nameValue1 = (char*)calloc(strlen(filep->cardp[i]->prop[nCard1].value),sizeof(char));
+		nameValue1 = (char*)calloc(strlen(filep->cardp[i]->prop[nCard1].value)+1,sizeof(char));
 		strcpy(nameValue1,filep->cardp[i]->prop[nCard1].value); 
-		printf("length = %d %d\n",strlen(filep->cardp[i+1]->prop[nCard2].value),strlen(filep->cardp[i]->prop[nCard1].value));		
-		nameValue2 = (char*)calloc(strlen(filep->cardp[i+1]->prop[nCard2].value),sizeof(char));
+//		printf("length = %d %d\n",strlen(filep->cardp[i+1]->prop[nCard2].value),strlen(filep->cardp[i]->prop[nCard1].value));		
+		nameValue2 = (char*)calloc(strlen(filep->cardp[i+1]->prop[nCard2].value)+1,sizeof(char));
 	//	nameValue2 = malloc(sizeof(strlen(filep->cardp[i+1]->prop[nCard2].value))); 
 		strcpy(nameValue2,filep->cardp[i+1]->prop[nCard2].value); 
 		lastName1 = strtok(nameValue1,";"); 
@@ -219,8 +219,8 @@ int isSorted(VcFile * const filep)
 
 			else if (result==0) 
 			{
-			      printf("STRING = %s %s\n",firstName1,firstName2);
-			      printf("nameValue1 = %s nv2 = %s \n",nameValue1,nameValue2); 
+			     // printf("STRING = %s %s\n",firstName1,firstName2);
+			     // printf("nameValue1 = %s nv2 = %s \n",nameValue1,nameValue2); 
 			      if (nameValue1!=NULL)
 			      {
 				free(nameValue1); 
