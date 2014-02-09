@@ -182,7 +182,7 @@ int isSorted(VcFile * const filep)
 		/* if result == 1, the cards are not sorted */ 
 		else if (result==1)
 		{
-			printf("Does this really never happen?\n")
+			printf("Does this really never happen?\n");
 				if (nameValue1!=NULL)
 					free(nameValue1); 
 				if (nameValue2!=NULL)
