@@ -113,6 +113,8 @@ int isSorted(VcFile * const filep)
 	/* Strings to store the value copies of name */ 
 	char * nameValue1=NULL; 
 	char * nameValue2=NULL; 
+	char * nameValue1Copy=NULL; 
+	char * nameValue2Copy=NULL;
 	/* Tokens for getting the last name between the ; */ 
 	char * lastName1; 
 	char * lastName2;  
@@ -123,6 +125,7 @@ int isSorted(VcFile * const filep)
 	int nCard2 = 0; 
 	for (i=0; i<filep->ncards;i++)
 	{
+	        nameValue1=NULL;
 		/* Comparing two cards at a time. First we find the name prop of card1, 
 			and then of card 2 (the one ahead) */
 		for(k=0;k<filep->cardp[i]->nprops;k++)
@@ -165,54 +168,67 @@ int isSorted(VcFile * const filep)
 		if (result==-1)
 		{
 				if (nameValue1!=NULL)
-		free(nameValue1); 
-	if (nameValue2!=NULL)
-		free(nameValue2);
-			continue;
+					free(nameValue1); 
+				if (nameValue2!=NULL)
+					free(nameValue2);
+				continue;
 	
 		}
 		/* if result == 1, the cards are not sorted */ 
 		else if (result==1)
 		{
 				if (nameValue1!=NULL)
-		free(nameValue1); 
-	if (nameValue2!=NULL)
-		free(nameValue2);
+					free(nameValue1); 
+				if (nameValue2!=NULL)
+					free(nameValue2);
 			return 0; /* Return 0 indicating they are not sorted*/ 
 
 		}
 		/* The last names happened to be the same between the cards. Time to check first name */ 
 		else
 		{
-			firstName1 = strtok(nameValue1,"\n"); 
-			firstName2 = strtok(nameValue2,"\n"); 
+			/* Copying the strings before strtoking as strtok causes headaches */ 
+			nameValue1Copy=malloc(sizeof(strlen(nameValue1)));
+			nameValue2Copy=malloc(sizeof(strlen(nameValue2)));
+			strcpy(nameValue1Copy,nameValue1); 
+			strcpy(nameValue2Copy,nameValue2);
+			firstName1 = strtok(nameValue1Copy,"\n"); 
+			firstName2 = strtok(nameValue2Copy,"\n"); 
 			result = strcmp(firstName1,firstName2); 
 			if (result==-1)
 			{
-					if (nameValue1!=NULL)
-		free(nameValue1); 
-	if (nameValue2!=NULL)
-		free(nameValue2);
+				if (nameValue1!=NULL)
+					free(nameValue1); 
+				if (nameValue2!=NULL)
+					free(nameValue2);
 				continue; 
 			}
 			else if (result==1)
 			{
 					if (nameValue1!=NULL)
-		free(nameValue1); 
-	if (nameValue2!=NULL)
-		free(nameValue2);
+						free(nameValue1); 
+					if (nameValue2!=NULL)
+						free(nameValue2);
 				return 0; /* Indicates not sorted */ 
 
 			}
 
 			else 
 			{
-					if (nameValue1!=NULL)
-		free(nameValue1); 
-	if (nameValue2!=NULL)
-		free(nameValue2);
+			      printf("STRING = %s %s\n",firstName1,firstName2);
+			      printf("nameValue1 = %s nv2 = %s \n",nameValue1,nameValue2); 
+			      if (nameValue1!=NULL)
+			      {
+				free(nameValue1); 
+				nameValue1=NULL;
+			      }
+			      if (nameValue2!=NULL)
+			      {
+				free(nameValue2);
+			        nameValue2=NULL;
+			      }
 			      continue; /*They are equal, continue to the next pair of cards to compare */
-			  } 
+			} 
 		}
 
 		/* Time to compare them */ 
