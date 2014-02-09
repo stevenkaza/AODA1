@@ -62,10 +62,10 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
 	}
 
 	/* Adjust this to accurately display sorted cards later */ 
-	isSorted(filep);
-
-	fprintf(outfile,"%d cards (not sorted)\n",filep->ncards);
-
+	if (isSorted(filep)==1)
+		fprintf(outfile,"%d cards (not sorted)\n",filep->ncards);
+	else if (isSorted(filep)==0)
+		fprintf(outfile,"%d cards (sorted)\n",filep->ncards);
  	for(i = 0; i < filep->ncards; i++)
         {
     	/* Reseting the flags for each card */ 
@@ -86,6 +86,7 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
         	}
          if (filep->cardp[i]->prop[k].name==VCP_URL && urlFound ==0)
         	{
+			printf("url = %s\n",filep->cardp[i]->prop[k].value);
         		urlCounter++;
         		urlFound=1; 
         	}
