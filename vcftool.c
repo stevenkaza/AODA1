@@ -144,7 +144,7 @@ int isSorted(VcFile * const filep)
 		{
 			for (k=0;k<filep->cardp[i+1]->nprops;k++)
 			{
-				if (filep->cardp[i]->prop[k].name==VCP_N)
+				if (filep->cardp[i+1]->prop[k].name==VCP_N)
 				{
 					nCard2=k; /* Found card2s name property */  
 					break; 
