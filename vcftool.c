@@ -10,20 +10,32 @@ int main(int argc, char * argv[])
 	VcStatus newStatus; 
 	VcFile * filep=NULL;
 	FILE * fp; 
+	if (stdin==NULL)
+	{
+		fprintf(stderr, "%s\n", "No file specified");
+		return 1; 
+	}
+
 	filep = malloc(sizeof(VcFile));
 	newStatus = readVcFile(stdin,filep);
 //	newStatus=writeVcFile(stdout,filep);
 
 	if (argv[1]!=NULL)
 	{
-		if (strcasecmp(argv[1],"-select")==0 && argv[2]!=NULL)
+		if (strcasecmp(argv[1],"-select"))
 		{
-			if (strlen(argv)>3)
+			if (strlen(argv[2])>3 || strlen(argv[2])<1)
+			{
 				fprintf(stderr,"Invalid arguement size for -select\n");
+				return 1; 
+			}
 			
 
-			if ((strspn(argv[2],"pug")==0)
+			if (strspn(argv[2],"pug")==0)
+			{
 				fprintf(stderr,"Invalid arguement for -select. Must contain at least a p, u, g\n");
+				return 1; 
+			}
 			vcfSelect(filep,which);
 		}
 		if (strcmp(argv[1],"-info")==0)
