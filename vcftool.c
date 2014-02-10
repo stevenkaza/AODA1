@@ -22,7 +22,7 @@ int main(int argc, char * argv[])
 
 	if (argv[1]!=NULL)
 	{
-		if (strcasecmp(argv[1],"-select"))
+		if (strcasecmp(argv[1],"-select")==0)
 		{
 			if (strlen(argv[2])>3 || strlen(argv[2])<1)
 			{
@@ -36,7 +36,7 @@ int main(int argc, char * argv[])
 				fprintf(stderr,"Invalid arguement for -select. Must contain at least a p, u, g\n");
 				return 1; 
 			}
-			vcfSelect(filep,which);
+			vcfSelect(filep,stdin);
 		}
 		if (strcmp(argv[1],"-info")==0)
 		{
@@ -100,7 +100,7 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
         		geoCounter++;
         		geoFound = 1; 
         	}
-         if (filep->cardp[i]->prop[k].name==VCP_URL && urlFound ==0)
+           if (filep->cardp[i]->prop[k].name==VCP_URL && urlFound ==0)
         	{
         		urlCounter++;
         		urlFound=1; 
@@ -424,11 +424,129 @@ int vcfSort(VcFile * const filep)
 	
 }
 
+/* returns card # where proprety was found, -1 if not found */ 
+/* returns an array containing the card #'s that contain the prpoerty */
+int findCard(VcFile * const filep,char property,int array[])
+{
+	int geoCounter=0;
+	int photoCounter=0; 
+	int urlCounter=0;  
+	if (property=='g')
+	{
+		for(k = 0; k < filep->cardp[i]->nprops; k++)
+        {        
+             if (filep->cardp[i]->prop[k].name==VCP_GEO )
+            {
+            	array[geoCounter++]=k;
+        	}
+        	
+        }
 
 
+    }
+
+    else if (property=='u')
+    {
+	    for(k = 0; k < filep->cardp[i]->nprops; k++)
+	        {        
+	             if (filep->cardp[i]->prop[k].name==VCP_URL )
+	            {
+	            	array[urlCounter++]=k;
+	        	}
+	        	
+	        }
+    }
+
+    else if (property=='p')
+    {
+    	for(k = 0; k < filep->cardp[i]->nprops; k++)
+	        {        
+	          if (filep->cardp[i]->prop[k].name==VCP_PHOTO)
+        	 {
+        		array[photoCounter++]=k; 
+        	 }	        	
+	        }
+		
+    }
+
+
+
+
+	}
+}
 int vcfSelect( VcFile *const filep, const char *which)
 {
 	fprintf(stdout,"welcome to select\n");
+	int k = 0; 
+	/* Property flag */ 
+	int findGeo=0; 
+	int findPhoto = 0; 
+	int findURL = 0; 
+	int * geoArray=NULL; 
+	int * photoArray=NULL; 
+	int * urlArray=NULL; 
+	/* Determining which properties to look for */ 
+	/* creating an array if needed to hold location
+	of cards where speicifc letter was found */ 
+	for (k=0;k<strlen(which);k++)
+	{
+		if (which[k]=='g')
+		{
+			findGeo = 1; 
+			geoArray=malloc(sizeof(filep->ncards)*int);
+		}
+		if (which[k]=='u')
+		{
+			findURL = 1; 
+			urlArray=malloc(sizeof(filep->ncards)*int);
+
+		}
+		if (which[k]=='p')
+		{
+			findPhoto = 1; 
+		   	photoArray=malloc(sizeof(filep->ncards),int);
+
+		}
+
+	}
+
+	if (findPhoto==1 && findURL==1 && findGeo==1)
+	{
+
+		 findCard(filep,'g',geoArray); 
+		 findCard(filep,'u',urlArray); 
+		 findCard(filep,'p',photoArray); 
+
+		 printf("Size of parray = %d, size of url array = %d, size of geo array = %d \n",sizeof(photoArray),sizeof(urlArray),sizeof(geoArray));
+
+
+	}
+
+
+/*
+
+	for(k = 0; k < filep->cardp[i]->nprops; k++)
+        {
+
+        	if (filep->cardp[i]->prop[k].name==VCP_PHOTO &&  == 0)
+        	{
+        		photoCounter++;
+        		photoFound = 1; 
+        	}
+             if (filep->cardp[i]->prop[k].name==VCP_GEO && geoFound ==0)
+            {
+        		geoCounter++;
+        		geoFound = 1; 
+        	}
+           if (filep->cardp[i]->prop[k].name==VCP_URL && urlFound ==0)
+        	{
+        		urlCounter++;
+        		urlFound=1; 
+        	}
+        	
+        }
+
+*/
 
 }
 
