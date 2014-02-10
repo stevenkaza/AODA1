@@ -354,7 +354,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
       
       if (staticFlag!=1)/* Skips over a char if its static to avoid missing one */ 
          ch = fgetc(vcf); /* Reading a char in */ 
-         printf("c = %c\n",ch);
+        // printf("c = %c\n",ch);
         if (ch==EOF&&endOfFile==1)
         {
 //           *buff = NULL;
@@ -366,22 +366,22 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
 
             case '\r':
             {
-                printf("R FLAG???\n");
+               // printf("R FLAG???\n");
                 rFlag = 1; 
                 break;
             }
             case '\n': /* if its a new line, set crlf flag on */ 
             {
-                printf("N FLAG???\n");
+               // printf("N FLAG???\n");
 
-              if (rFlag==1)
-              {
+            //  if (rFlag==1)
+             // {
                 crlfFlag=1; 
 
                 if (foldedFlag==0)
                   newStatus.linefrom=newStatus.linefrom+1; /*Updating the line counters */
                 newStatus.lineto = newStatus.lineto+1; 
-              }
+             // }
               break;
             }
 

@@ -214,7 +214,7 @@ int isSorted(VcFile * const filep)
 
 			else if (result==0) 
 			{
-				  printf("firstname 1 = %s, firstname 2 = %s\n",firstname1,firstName2 );
+				  printf("firstname 1 = %s, firstname 2 = %s\n",firstName1,firstName2 );
 			     // printf("STRING = %s %s\n",firstName1,firstName2);
 			     // printf("nameValue1 = %s nv2 = %s \n",nameValue1,nameValue2); 
 			      if (nameValue1!=NULL)
