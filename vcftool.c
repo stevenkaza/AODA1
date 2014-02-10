@@ -118,7 +118,6 @@ int isSorted(VcFile * const filep)
 	/* Holds value of K , index where name was found in array of props */ 
 	int nCard1 = 0; 
 	int nCard2 = 0; 
-	printf("testing\n");
 	for (i=0; i<filep->ncards;i++)
 	{
 	    nameValue1=NULL;
@@ -164,7 +163,6 @@ int isSorted(VcFile * const filep)
 		/* If result == -1, the first string was greater than the second card string,
 		 * indicating that it is sorted. Time to check the next card and increment i*/ 
 	    result = strcasecmp(nameValue1,nameValue2); 
-	    printf("result =%d\n",result );
 	    if (result<0)
 	    {
 			if (nameValue1!=NULL)
@@ -306,6 +304,7 @@ int cmpare( void  * card1, void * card2)
 			free(nameValue1); 
 		if (nameValue2!=NULL)
 			free(nameValue2);
+		printf("nv1 = %s, nv2 = %s, num = %d",nameValue1,nameValue2,result);
 		return (strcasecmp(nameValue1,nameValue2)); 
 	}
 	/* If result == -1, the first string was greater than the second card string,
