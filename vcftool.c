@@ -299,14 +299,15 @@ int cmpare( void  * card1, void * card2)
 	printf("lastName1 %s, l2 = %s\n",lastName1,lastName2);
     printf("n1 %s, n2 = %s\n",nameValue1,nameValue2);
 
-
 	result = strcasecmp(lastName1,lastName2); 
-	if (result!=0)
+	printf("result = %d\n",result );	if (result!=0)
 	{
 		if (nameValue1!=NULL)
 			free(nameValue1); 
 		if (nameValue2!=NULL)
 			free(nameValue2);
+		printf("lastName1 %s, l2 = %s\n",lastName1,lastName2);
+    printf("n1 %s, n2 = %s\n",nameValue1,nameValue2);
 		return (strcasecmp(lastName1,lastName2)); 
 	}
 	/* If result == -1, the first string was greater than the second card string,
