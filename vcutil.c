@@ -138,6 +138,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             goto end;
          }
          newStatus=getUnfolded(vcf,&buff);
+         printf("buff = %s\n",buff);
 
 
 	
@@ -149,7 +150,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 	           //  if (*(cardp)==NULL)
              goto end;  
              // }
-	  }
+	      }
 	assert(buff);
          if (buff[0] == ':' || buff[0] == ';')
          {
