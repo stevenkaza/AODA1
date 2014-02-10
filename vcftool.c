@@ -18,15 +18,12 @@ int main(int argc, char * argv[])
 	{
 		if (strcasecmp(argv[1],"-select")==0 && argv[2]!=NULL)
 		{
-			if (strlen(argv>3))
-			{
+			if (strlen(argv)>3)
 				fprintf(stderr,"Invalid arguement size for -select\n");
-			}
+			
 
 			if ((strspn(argv[2],"pug")==0)
-			{
 				fprintf(stderr,"Invalid arguement for -select. Must contain at least a p, u, g\n");
-			}
 			vcfSelect(filep,which);
 		}
 		if (strcmp(argv[1],"-info")==0)
