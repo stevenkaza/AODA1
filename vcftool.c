@@ -12,6 +12,7 @@ int main(int argc, char * argv[])
 	FILE * fp; 
 	filep = malloc(sizeof(VcFile));
 	newStatus = readVcFile(stdin,filep);
+	printf("First Name: %s\n",filep->cardp[0]->prop[0].value);
 //	newStatus=writeVcFile(stdout,filep);
 
 	if (argv[1]!=NULL)
