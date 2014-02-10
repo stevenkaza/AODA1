@@ -437,14 +437,12 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
 
                     staticFlag=1; /* Says DONT READ CHAR */ 
                     lineDoneFlag=1;
-                    printf("DID IT TURN ON?\n");
                     /* We have not even seen a colon or a semi colon yet , blankline*/ 
 		              	assert(tempString);
                     if (tempString !=NULL)
 		               {
                     if (strspn(tempString," \r\n") && strlen(tempString) >0)
                     {
-                      printf("GOING HERE EVERY TIME?\n");
                       free(tempString);
                       i=0;
                       lineDoneFlag=0;
@@ -665,13 +663,10 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
             {
                 if (valueState==1)
 		{
-//		     printf("vc = %c\n",buff[i]);
                      parvalueString[vIndex++]=buff[i];
 		}
                 if (typeState==1)
 		{
-		   // printf("tindex = %d\n",tIndex);
-//		    printf("tc = %c\n",buff[i]);
                     partypeString[tIndex++]=buff[i];
 		}
            }
