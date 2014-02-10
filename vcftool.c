@@ -303,6 +303,7 @@ int cmpare( void  * card1, void * card2)
 			free(nameValue1); 
 		if (nameValue2!=NULL)
 			free(nameValue2);
+		printf("lastName1 %s, l2 = %s\n",lastName1,lastName2);
 		return (strcasecmp(lastName1,lastName2)); 
 	}
 	/* If result == -1, the first string was greater than the second card string,
