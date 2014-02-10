@@ -270,7 +270,6 @@ int cmpare( void  * card1, void * card2)
 		if ((*(Vcard **)card1)->prop[k].name == VCP_N)
 		{
 			/* we have found the prop with the name element for this card */ 
-			printf("VALUE=%s\n",(*(Vcard **)card1)->prop[k].value );
 
 			nCard1= k; 
 			break; 
@@ -284,7 +283,6 @@ int cmpare( void  * card1, void * card2)
 		{
 			if ((*(Vcard **)card2)->prop[k].name==VCP_N)
 			{
-				printf("VALUE2=%s\n",(*(Vcard **)card2)->prop[k].value );
 
 				nCard2=k; /* Found card2s name property */  
 				break; 
@@ -300,19 +298,14 @@ int cmpare( void  * card1, void * card2)
 	strcpy(nameValue2,(*(Vcard **)card2)->prop[nCard2].value); 
 	lastName1 = strtok(nameValue1,";"); 
 	lastName2 = strtok(nameValue2,";"); 
-	printf("lastName1 %s, l2 = %s\n",lastName1,lastName2);
-    printf("n1 %s, n2 = %s\n",nameValue1,nameValue2);
 
 	result = strcasecmp(lastName1,lastName2); 
-	printf("result = %d\n",result );	
 	if (result!=0)
 	{
 		//if (nameValue1!=NULL)
 		//	free(nameValue1); 
 	//	if (nameValue2!=NULL)
 	//		free(nameValue2);
-		printf("lastName1 %s, l2 = %s\n",lastName1,lastName2);
-    printf("n1 %s, n2 = %s\n",nameValue1,nameValue2);
 		return (strcasecmp(lastName1,lastName2)); 
 	}
 	/* If result == -1, the first string was greater than the second card string,
