@@ -1,4 +1,5 @@
 /* vcutil.c
+/*
 vCard  utlity library/ Parser 
 
 Author:Steven Kazavchinski 
@@ -23,12 +24,6 @@ Contact: skazavch@uoguelph.ca
 #include <ctype.h>
 
 
-
-/* Determines if a period occurs before a semi/regular colon 
-
-RETURNS: 1 if found */ 
-int periodFirst(char * string);
-
 /* Assigns property name into a VcProp struct
    Also determines which property name to assign based on string 
   
@@ -42,12 +37,14 @@ int assignPropName(VcProp * const propp,char * propName);
 Returns a 1 if a semi colon was found before a colon */ 
 int semiFirst(char * tempString);
 
-
-/* Determines which name is assigned to the name property of the
-  VcProp struct, and then writes it to stdout */ 
-
+/* writePropName 
+  Writes a property name to stdout. 
+  RETURNS: string length in int of whatever property name was written to the file
+  -1 if vcp_other */ 
 
 int writePropName(VcPname name);
+
+
 int Contains(char * string, char pattern); 
 int checkPosition(char * string, int position); 
 void removeSpaces(char * string);
@@ -92,6 +89,7 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
 
 
    }/*end of while loop */ 
+    printf("i=%d\n",i );
     return newStatus;
 }
 
@@ -138,19 +136,20 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             goto end;
          }
          newStatus=getUnfolded(vcf,&buff);
-         printf("buff = %s\n",buff);
 
 
 	
+	     // printf("buff!! = %s\n",buff);
         /* If we see another begin before an end, 
                                         return an ERROR */
          /* If buff is null right away, we had an empty file */ 
          if (i==0 && buff ==NULL)
 	       {
 	           //  if (*(cardp)==NULL)
+	          //{    printf("ERROR\n\n\n");
              goto end;  
              // }
-	      }
+	  }
 	assert(buff);
          if (buff[0] == ':' || buff[0] == ';')
          {
@@ -159,10 +158,12 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 	    free(buff);
             return newStatus;
          }
+        // printf("buff = %s\n",buff);
         if (beginFlag==1)  /* Ensuring no Two Begins in a row */ 
         {
             if (strcmp("BEGIN:VCARD",buff)==0) 
             {
+	        printf("here?\n");
                 newStatus.code =BEGEND; 
                 goto end;
             }
@@ -213,6 +214,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 
        if (strstr(buff,"VERSION:")!=NULL)
        {
+	  printf("i = %d, buff = %s\n",i,buff);
           versionFlag=1;
 	  if (i!=0)
 		versionFlag=0;
@@ -232,11 +234,11 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             buff[strlen(buff)]='\0';
             /* Allocating for a VcProp struct  for property */ 
             tempProp=malloc(sizeof(VcProp));
-	         assert(tempProp);
+	    assert(tempProp);
             if (strstr(buff,":")!=NULL) /* Only pass it to parseVcProp if it has a colon in it.
                                           * Avoiding empty lines */ 
-              error=parseVcProp(buff,tempProp);
-	           free(buff);
+           error=parseVcProp(buff,tempProp);
+	   free(buff);
             if (error!=OK)
             {
               newStatus.code = error;
@@ -250,7 +252,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             } 
 
             else
-	          {
+	    {
                (*cardp)=realloc((*cardp),sizeof(Vcard)+(sizeof(VcProp)*(i+1)));
             }
             (*cardp)->prop[i]=*tempProp;
@@ -302,6 +304,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
     buff = NULL;
    if (endFlag==0&&(*cardp)!=NULL)
       newStatus.code = 4; 
+   printf("end flag = %d \n",endFlag);
     return newStatus;
 
 }
@@ -429,18 +432,24 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
                     staticFlag=1; /* Says DONT READ CHAR */ 
                     lineDoneFlag=1;
                     /* We have not even seen a colon or a semi colon yet , blankline*/ 
-			               assert(tempString);
+			assert(tempString);
                     if (tempString !=NULL)
-		                {
-                      if (strspn(tempString," \r\n") && strlen(tempString) >0) /* If line is blank, 
-                        reset state to skip reading in line */ 
-                      {
-                        free(tempString);
-                        i=0;
-                        lineDoneFlag=0;
-                        crlfFlag=0;
-                      }
+		     {
+                    if (strspn(tempString," \r\n") && strlen(tempString) >0)
+                    {
+                      free(tempString);
+                      i=0;
+                      lineDoneFlag=0;
+                      crlfFlag=0;
                     }
+                    }
+                  /*  if (strstr(tempString,":")==NULL && strstr(tempString,";")==NULL)
+                    {
+                   //   free(tempString);
+                      i=0; 
+                      staticFlag=0; 
+                      lineDoneFlag=0; 
+                    }*/ 
                 }
                 if (crlfFlag==0) 
                 {
@@ -514,6 +523,7 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
 {
 
     char * propName; 
+    char * copyString2;
     VcError error=OK; 
     
     propp->value=NULL;
@@ -531,9 +541,12 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
     /* String indexes for value and type */   
     int vIndex = 0; 
     int tIndex = 0; 
+    int m;
     char * value; 
     char *  valueValueString=NULL; /*to hold the value on the right side of the colon */ 
     int vvIndex = 0; 
+    /* if 1, immediatly stop reading for types and values */ 
+    int optionalFlagDone = 0; 
     /* 1 if theres a type/values by comma */ 
     int regularValueState=0; 
     
@@ -608,17 +621,18 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
             /* Reseting all other flags
                 to ensure rest of string 
                 only stored in proper variable */ 
-             if (regularValueState==0)
+           // if (typeState==1 && valueValue==0)
+                if (regularValueState==0)
                 partypeString[tIndex]='\0';
               else
                 partypeString[tIndex]='\0';
 
 
-       //     f (valueState==1&&valueValue==0)
+       //     if (valueState==1&&valueValue==0)
 		         {
-		         parvalueString[vIndex]='\0';
-             }  
-            valueValue=1; 
+		 parvalueString[vIndex]='\0';
+ }  
+          valueValue=1; 
             stateFlag =0; 
             valueState=0;
             typeState=0; 
@@ -628,7 +642,8 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
         if (buff[i]==';'  && valueValue!=1)
         {
       /* Reset all States if a semi colon is spotted */ 
-
+         // vIndex=0;
+        //  tIndex=0;
           valueState=0;
           typeState=0; 
             if (stateFlag!=1)
@@ -647,14 +662,16 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
             if (buff[i]!=';' && buff[i]!=':')
             {
                 if (valueState==1)
-		            {
+		{
+//		     printf("vc = %c\n",buff[i]);
                      parvalueString[vIndex++]=buff[i];
-	             	}
+		}
                 if (typeState==1)
-		            {
-
+		{
+		   // printf("tindex = %d\n",tIndex);
+//		    printf("tc = %c\n",buff[i]);
                     partypeString[tIndex++]=buff[i];
-	             	}
+		}
            }
           else 
             {
@@ -662,6 +679,7 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
 
                 if (buff[i]==':')
                 {
+              		  optionalFlagDone = 1;
               		  valueValue = 1; 
               		  valueState = 0; 
               		  typeState = 0; 
@@ -705,16 +723,16 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
       {
     	  propp->partype=(char *)malloc((strlen(partypeString)+1)*sizeof(char));
     	  strcpy(propp->partype,partypeString);  
-    	  free(partypeString);
-    	  partypeString=NULL;
+	  free(partypeString);
+	  partypeString=NULL;
       }
       if (vIndex>0)
       {
         propp->parval = (char *)malloc((strlen(parvalueString)+1)*sizeof(char));
         strncpy(propp->parval,parvalueString,strlen(parvalueString)+1);
         free(parvalueString);
-        parvalueString=NULL;     
-      }
+	parvalueString=NULL;     
+ }
       if (vvIndex>0) /* The only way a value value would get assil pgned here
       would be if it had optional parameters */ 
       /* assigning property name for a buff that has optional parameters */ 
@@ -748,10 +766,6 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
 }
 
 
-
-
-
-
 VcStatus writeVcFile(FILE  *const  vcf, VcFile const *filep)
 {
   int name; 
@@ -777,7 +791,7 @@ VcStatus writeVcFile(FILE  *const  vcf, VcFile const *filep)
     for (k=0;k<filep->cardp[i]->nprops;k++) /* Indexing through the properities of each card */ 
     {
         charCounter = 0; /* reset the charCounter for each line */ 
-	      result=writePropName(filep->cardp[i]->prop[k].name);
+        result=writePropName(filep->cardp[i]->prop[k].name);
         if (result!=-1)
         {
           charCounter=charCounter+result; 
@@ -786,52 +800,52 @@ VcStatus writeVcFile(FILE  *const  vcf, VcFile const *filep)
         {
               charCounter=charCounter+strlen(filep->cardp[i]->prop[k].partype);
               fprintf(stdout,";TYPE=%s",filep->cardp[i]->prop[k].partype);
-	      charCounter=charCounter + strlen(";TYPE=");
+        charCounter=charCounter + strlen(";TYPE=");
         }
         if (filep->cardp[i]->prop[k].parval!=NULL)
         {
              charCounter=charCounter+strlen(filep->cardp[i]->prop[k].parval);
              fprintf(stdout,";VALUE=%s",filep->cardp[i]->prop[k].parval);
-	     charCounter = charCounter + strlen(";VALUE=");
+       charCounter = charCounter + strlen(";VALUE=");
         }
         if (filep->cardp[i]->prop[k].value!=NULL)
         {
           charCounter=charCounter+strlen(filep->cardp[i]->prop[k].value);
           if (charCounter < 75)
-         	 fprintf(stdout,":%s\r\n",filep->cardp[i]->prop[k].value);
-	  else
-	  {
-		charCounter=charCounter-strlen(filep->cardp[i]->prop[k].value);
-		for (j=0;j<strlen(filep->cardp[i]->prop[k].value);j++)
-		{
-	//		if (foldedFlag==0)
-	//			charCounter = charCounter + j; 
-	//		else
-				charCounter = charCounter + 1; 
-			if (j==0)
-			{
-				charCounter++;
-				fprintf(stdout,":");
-			}
-			if (charCounter ==75)
-			{
-			   fprintf(stdout,"%c\r\n",filep->cardp[i]->prop[k].value[j]);
-			   fprintf(stdout," ");
-			   charCounter=0; 
-			   foldedFlag=1; 
-		           continue; 
-			}	
-			fprintf(stdout,"%c",filep->cardp[i]->prop[k].value[j]);			
- 	
-		}
-		foldedFlag=0; 
-		fprintf(stdout,"\r\n");
-		
+           fprintf(stdout,":%s\r\n",filep->cardp[i]->prop[k].value);
+    else
+    {
+    charCounter=charCounter-strlen(filep->cardp[i]->prop[k].value);
+    for (j=0;j<strlen(filep->cardp[i]->prop[k].value);j++)
+    {
+  //    if (foldedFlag==0)
+  //      charCounter = charCounter + j; 
+  //    else
+        charCounter = charCounter + 1; 
+      if (j==0)
+      {
+        charCounter++;
+        fprintf(stdout,":");
+      }
+      if (charCounter ==75)
+      {
+         fprintf(stdout,"%c\r\n",filep->cardp[i]->prop[k].value[j]);
+         fprintf(stdout," ");
+         charCounter=0; 
+         foldedFlag=1; 
+               continue; 
+      } 
+      fprintf(stdout,"%c",filep->cardp[i]->prop[k].value[j]);     
+  
+    }
+    foldedFlag=0; 
+    fprintf(stdout,"\r\n");
+    
 
 
 
 
-	  }
+    }
         }
       
     }
@@ -941,15 +955,15 @@ void freeVcFile ( VcFile * const filep)
  
                 for(j = 0; j < tmp->nprops; j++)
                 {
-                      tmp2 = &(tmp->prop[j]);
-                			if (tmp2->partype!=NULL)
-                  	   free(tmp2->partype);
-                  			if (tmp2->parval!=NULL)
-                      free(tmp2->parval);
-                			if (tmp2->value!=NULL)
-                      free(tmp2->value);
-                			if (tmp2->hook!=NULL)
-                      free(tmp2->hook);
+                        tmp2 = &(tmp->prop[j]);
+			if (tmp2->partype!=NULL)
+  	                      free(tmp2->partype);
+  			if (tmp2->parval!=NULL)
+                       	      free(tmp2->parval);
+			if (tmp2->value!=NULL)
+                       	    free(tmp2->value);
+			if (tmp2->hook!=NULL)
+                       		 free(tmp2->hook);
                 }
                 free(tmp);
         }
@@ -1022,6 +1036,7 @@ int assignPropName(VcProp * const propp,char * propName)
     if (strcmp("TITLE",propName)==0)
     {
         propp->name=VCP_TITLE;
+
         return 12; 
     }
     if (strcmp("ORG",propName)==0 || (strcmp("Org",propName) == 0))
