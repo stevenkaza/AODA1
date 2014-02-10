@@ -149,13 +149,13 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 	          //{    printf("ERROR\n\n\n");
              goto end;  
              // }
-	  }
-	assert(buff);
+	        }
+          	assert(buff);
          if (buff[0] == ':' || buff[0] == ';')
          {
             newStatus.code = SYNTAX;
             assert(buff);
-	    free(buff);
+	          free(buff);
             return newStatus;
          }
         // printf("buff = %s\n",buff);
@@ -163,7 +163,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
         {
             if (strcmp("BEGIN:VCARD",buff)==0) 
             {
-	        printf("here?\n");
+	              printf("here?\n");
                 newStatus.code =BEGEND; 
                 goto end;
             }
@@ -180,6 +180,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             }
             else
             {
+                printf("here?\n");
                 newStatus.code = BEGEND;
                 goto end; 
             }
@@ -205,23 +206,23 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
        if ((strcmp("END:VCARD",buff) ==0) && (beginFlag==1))
        {
           endFlag=1;
-	  assert(buff);
-	  free(buff);
-	  assert(buff);
+      	  assert(buff);
+      	  free(buff);
+      	  assert(buff);
           goto check;
        }
        /* If the buff contains version, check that its the proper version number */ 
 
        if (strstr(buff,"VERSION:")!=NULL)
        {
-	  printf("i = %d, buff = %s\n",i,buff);
+	    //    printf("i = %d, buff = %s\n",i,buff);
           versionFlag=1;
-	  if (i!=0)
-		versionFlag=0;
+      	  if (i!=0)
+      	     	versionFlag=0;
           if ((buff[8] != '3') ||  (buff[9] != '.') || (buff[10]!='0'))
           {
             newStatus.code = BADVER; 
-	    free(buff);
+	          free(buff);
             goto end; 
           }
        }
@@ -234,11 +235,11 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             buff[strlen(buff)]='\0';
             /* Allocating for a VcProp struct  for property */ 
             tempProp=malloc(sizeof(VcProp));
-	    assert(tempProp);
+	          assert(tempProp);
             if (strstr(buff,":")!=NULL) /* Only pass it to parseVcProp if it has a colon in it.
                                           * Avoiding empty lines */ 
            error=parseVcProp(buff,tempProp);
-	   free(buff);
+	         free(buff);
             if (error!=OK)
             {
               newStatus.code = error;
@@ -252,7 +253,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             } 
 
             else
-	    {
+	          {
                (*cardp)=realloc((*cardp),sizeof(Vcard)+(sizeof(VcProp)*(i+1)));
             }
             (*cardp)->prop[i]=*tempProp;
@@ -264,12 +265,13 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
               goto end; 
             }
             
-            (*cardp)->nprops=i;
-	free(tempProp);
+             (*cardp)->nprops=i;
+	         free(tempProp);
        }
        else
-   {     free(buff); /* buff is not needed. free it */ 
-}
+    {    
+      free(buff); /* buff is not needed. free it */ 
+    }
       // if (buff==NULL)
        //:q	: break;
 				
@@ -434,7 +436,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
                     /* We have not even seen a colon or a semi colon yet , blankline*/ 
 			assert(tempString);
                     if (tempString !=NULL)
-		     {
+		               {
                     if (strspn(tempString," \r\n") && strlen(tempString) >0)
                     {
                       free(tempString);
