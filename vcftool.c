@@ -51,7 +51,7 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
 
 	if (filep==NULL)
 	{
-		fprintf(stderr"filep is null \n");
+		fprintf(stderr,"filep is null \n");
 		return 1; 
 	}
 
