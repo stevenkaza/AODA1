@@ -162,7 +162,7 @@ int isSorted(VcFile * const filep)
 		lastName2 = strtok(nameValue2,";"); 
 		/* If result == -1, the first string was greater than the second card string,
 		 * indicating that it is sorted. Time to check the next card and increment i*/ 
-	    result = strcasecmp(nameValue1,nameValue2); 
+	    result = strcasecmp(lastName1,lastName2); 
 	    if (result<0)
 	    {
 			if (nameValue1!=NULL)
@@ -288,7 +288,6 @@ int cmpare( void  * card1, void * card2)
 		}
         
 	/* copying the first value so its able to be strtoked without destryoing filep */
-		printf("nv1 = %s, nv2 = %s, num = %d",(*(Vcard **)card1)->prop[nCard1].value,(*(Vcard **)card2)->prop[nCard2].value);
 	nameValue1 = (char*)calloc(strlen((*(Vcard **)card1)->prop[nCard1].value)+1,sizeof(char));
 	strcpy(nameValue1,(*(Vcard **)card1)->prop[nCard1].value); 
 //		printf("length = %d %d\n",strlen(card2->prop[nCard2].value),strlen(card1->prop[nCard1].value));		
@@ -297,14 +296,14 @@ int cmpare( void  * card1, void * card2)
 	strcpy(nameValue2,(*(Vcard **)card2)->prop[nCard2].value); 
 	lastName1 = strtok(nameValue1,";"); 
 	lastName2 = strtok(nameValue2,";"); 
-	result = strcasecmp(nameValue1,nameValue2); 
+	result = strcasecmp(lastName1,lastName2); 
 	if (result!=0)
 	{
 		if (nameValue1!=NULL)
 			free(nameValue1); 
 		if (nameValue2!=NULL)
 			free(nameValue2);
-		return (strcasecmp(nameValue1,nameValue2)); 
+		return (strcasecmp(lastName1,lastName2)); 
 	}
 	/* If result == -1, the first string was greater than the second card string,
 	 * indicating that it is sorted. Time to check the next card and increment i*/ 
