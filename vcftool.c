@@ -393,7 +393,7 @@ int cmpare(const void  * card1,const void * card2)
 		free(nameValue1); 
 	if (nameValue2!=NULL)
 		free(nameValue2);
-	return 1; 
+	//return 1; 
 
 }
 int vcfSort(VcFile * const filep)
