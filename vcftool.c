@@ -80,7 +80,6 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
         	}
          if (filep->cardp[i]->prop[k].name==VCP_URL && urlFound ==0)
         	{
-			printf("url = %s\n",filep->cardp[i]->prop[k].value);
         		urlCounter++;
         		urlFound=1; 
         	}
@@ -118,6 +117,7 @@ int isSorted(VcFile * const filep)
 	/* Holds value of K , index where name was found in array of props */ 
 	int nCard1 = 0; 
 	int nCard2 = 0; 
+	printf("testing\n");
 	for (i=0; i<filep->ncards;i++)
 	{
 	    nameValue1=NULL;
@@ -160,10 +160,18 @@ int isSorted(VcFile * const filep)
 		strcpy(nameValue2,filep->cardp[i+1]->prop[nCard2].value); 
 		lastName1 = strtok(nameValue1,";"); 
 		lastName2 = strtok(nameValue2,";"); 
-		result = strcmp(nameValue1,nameValue2); 
-		printf("result = %d\n",result); 
 		/* If result == -1, the first string was greater than the second card string,
 		 * indicating that it is sorted. Time to check the next card and increment i*/ 
+	    result = strcasecmp(nameValue1,nameValue2); 
+	    if (result!=0)
+	    {
+			if (nameValue1!=NULL)
+				free(nameValue1); 
+			if (nameValue2!=NULL)
+				free(nameValue2);
+			return (strcasecmp(nameValue1,nameValue2)); 
+	    }
+
 		if (result==-1)
 		{
 				if (nameValue1!=NULL)
