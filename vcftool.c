@@ -296,6 +296,10 @@ int cmpare( void  * card1, void * card2)
 	strcpy(nameValue2,(*(Vcard **)card2)->prop[nCard2].value); 
 	lastName1 = strtok(nameValue1,";"); 
 	lastName2 = strtok(nameValue2,";"); 
+	printf("lastName1 %s, l2 = %s\n",lastName1,lastName2);
+    printf("n1 %s, n2 = %s\n",nameValue1,nameValue2);
+
+
 	result = strcasecmp(lastName1,lastName2); 
 	if (result!=0)
 	{
@@ -303,7 +307,6 @@ int cmpare( void  * card1, void * card2)
 			free(nameValue1); 
 		if (nameValue2!=NULL)
 			free(nameValue2);
-		printf("lastName1 %s, l2 = %s\n",lastName1,lastName2);
 		return (strcasecmp(lastName1,lastName2)); 
 	}
 	/* If result == -1, the first string was greater than the second card string,
