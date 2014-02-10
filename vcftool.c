@@ -238,11 +238,11 @@ int isSorted(VcFile * const filep)
 	    
 	}
 	
-
+	printf("nv1 = %s, nv2 = %s\n",nameValue1,nameValue2);
 	if (nameValue1!=NULL)
 		free(nameValue1); 
 	if (nameValue2!=NULL)
-		free(nameValue2);
+	//	free(nameValue2);
 	return 1; 
 }
 
