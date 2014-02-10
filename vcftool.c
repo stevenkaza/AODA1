@@ -3,6 +3,7 @@
 #include "vcftool.h"
 #include <stdio.h>
 #include <string.h>
+#include <strings.h>
 int main(int argc, char * argv[])
 {
 
@@ -10,11 +11,7 @@ int main(int argc, char * argv[])
 	VcFile * filep=NULL;
 	filep = malloc(sizeof(VcFile));
 	newStatus = readVcFile(stdin,filep);
-//	newStatus=writeVcFile(stdout,filep);
-//	if (argc < 2) {
-  //          fprintf(stderr, "Usage: %s <string>...\n", argv[0]);
-    //        exit(EXIT_FAILURE);
-      //     }
+	newStatus=writeVcFile(stdout,filep);
 
 	if (newStatus.code!=OK)
 	{
@@ -61,10 +58,10 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
 	}
 
 	/* Adjust this to accurately display sorted cards later */ 
-	if (isSorted(filep)==0)
-		fprintf(outfile,"%d cards (not sorted)\n",filep->ncards);
-	else if (isSorted(filep)==1)
-		fprintf(outfile,"%d cards (sorted)\n",filep->ncards);
+//	if (isSorted(filep)==0)
+//		fprintf(outfile,"%d cards (not sorted)\n",filep->ncards);
+//	else if (isSorted(filep)==1)
+//		fprintf(outfile,"%d cards (sorted)\n",filep->ncards);
  	for(i = 0; i < filep->ncards; i++)
         {
     	/* Reseting the flags for each card */ 
@@ -252,7 +249,7 @@ int isSorted(VcFile * const filep)
 
 int cmpare(const void  * card1,const void * card2)
 {
-
+	printf("welcome to compare \n"); 
 	int result; 
 	int i = 0; 
 	int k = 0;
@@ -305,8 +302,17 @@ int cmpare(const void  * card1,const void * card2)
 	strcpy(nameValue2,(*(Vcard **)card2)->prop[nCard2].value); 
 	lastName1 = strtok(nameValue1,";"); 
 	lastName2 = strtok(nameValue2,";"); 
-	result = strcmp(nameValue1,nameValue2); 
+	printf("nv1 %s nv2 %s\n",nameValue1,nameValue2); 
+	result = strcasecmp(nameValue1,nameValue2); 
 	printf("result = %d\n",result); 
+	if (result!=0)
+	{
+		if (nameValue1!=NULL)
+			free(nameValue1); 
+		if (nameValue2!=NULL)
+			free(nameValue2);
+		return (strcasecmp(nameValue1,nameValue2)); 
+	}
 	/* If result == -1, the first string was greater than the second card string,
 	 * indicating that it is sorted. Time to check the next card and increment i*/ 
 	if (result==-1)
@@ -354,7 +360,7 @@ int cmpare(const void  * card1,const void * card2)
 					free(nameValue1); 
 				if (nameValue2!=NULL)
 					free(nameValue2);
-			return 0; /* Indicates not sorted */ 
+			return 1; /* Indicates not sorted */ 
 
 		}
 
@@ -397,6 +403,7 @@ int vcfSort(VcFile * const filep)
 	int i = 0; 
 		qsort(filep->cardp,filep->ncards,sizeof(Vcard *),cmpare);
 
+		writeVcFile(stdout,filep); 
 	
 }
 
