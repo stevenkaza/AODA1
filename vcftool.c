@@ -23,6 +23,7 @@ int main(int argc, char * argv[])
 		if (strcmp(argv[1],"-sort")==0)
 		{
 			vcfSort(filep);
+		    writeVcFile(stdout,filep); 
 		}
     }
 }
@@ -44,13 +45,13 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
 
 	if (outfile==NULL)
 	{
-		printf("outfile is null \n");
+		fprintf(stderr,"outfile is null \n");
 		return 1; 
 	}
 
 	if (filep==NULL)
 	{
-		printf("filep is null \n");
+		fprintf(stderr"filep is null \n");
 		return 1; 
 	}
 
@@ -389,11 +390,8 @@ int cmpare( void  * card1, void * card2)
 		free(nameValue1); 
 	if (nameValue2!=NULL)
 		free(nameValue2);
-<<<<<<< HEAD
 	//return 1; 
-=======
 //	return 1; 
->>>>>>> 1046de0b733289f2c172f5493688bed1080d69db
 
 }
 int vcfSort(VcFile * const filep)
@@ -402,7 +400,6 @@ int vcfSort(VcFile * const filep)
 	int i = 0; 
 		qsort(filep->cardp,filep->ncards,sizeof(Vcard *),cmpare);
 
-		writeVcFile(stdout,filep); 
 	
 }
 
