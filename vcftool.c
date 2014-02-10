@@ -270,6 +270,8 @@ int cmpare( void  * card1, void * card2)
 		if ((*(Vcard **)card1)->prop[k].name == VCP_N)
 		{
 			/* we have found the prop with the name element for this card */ 
+			printf("VALUE=%s\n",(*(Vcard **)card1)->prop[k].value );
+
 			nCard1= k; 
 			break; 
 		}
@@ -282,6 +284,8 @@ int cmpare( void  * card1, void * card2)
 		{
 			if ((*(Vcard **)card2)->prop[k].name==VCP_N)
 			{
+				printf("VALUE2=%s\n",(*(Vcard **)card2)->prop[k].value );
+
 				nCard2=k; /* Found card2s name property */  
 				break; 
 			}
