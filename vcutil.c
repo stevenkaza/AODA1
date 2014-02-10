@@ -365,11 +365,14 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
 
             case '\r':
             {
+                printf("R FLAG???\n");
                 rFlag = 1; 
                 break;
             }
             case '\n': /* if its a new line, set crlf flag on */ 
             {
+                              printf("N FLAG???\n");
+
               if (rFlag==1)
               {
                 crlfFlag=1; 
