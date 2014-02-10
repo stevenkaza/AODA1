@@ -433,25 +433,21 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
 
                     staticFlag=1; /* Says DONT READ CHAR */ 
                     lineDoneFlag=1;
+                    printf("DID IT TURN ON?\n");
                     /* We have not even seen a colon or a semi colon yet , blankline*/ 
-			assert(tempString);
+		              	assert(tempString);
                     if (tempString !=NULL)
 		               {
                     if (strspn(tempString," \r\n") && strlen(tempString) >0)
                     {
+                      printf("GOING HERE EVERY TIME?\n");
                       free(tempString);
                       i=0;
                       lineDoneFlag=0;
                       crlfFlag=0;
                     }
-                    }
-                  /*  if (strstr(tempString,":")==NULL && strstr(tempString,";")==NULL)
-                    {
-                   //   free(tempString);
-                      i=0; 
-                      staticFlag=0; 
-                      lineDoneFlag=0; 
-                    }*/ 
+                  }
+
                 }
                 if (crlfFlag==0) 
                 {
