@@ -56,9 +56,9 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
 	}
 
 	/* Adjust this to accurately display sorted cards later */ 
-	if (isSorted(filep)==0)
+	if (isSorted(filep)==1)
 		fprintf(outfile,"%d cards (not sorted)\n",filep->ncards);
-	else if (isSorted(filep)==1)
+	else if (isSorted(filep)==0)
 		fprintf(outfile,"%d cards (sorted)\n",filep->ncards);
  	for(i = 0; i < filep->ncards; i++)
         {
@@ -96,7 +96,8 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
 
 }
 
-/* Returns a 1 if the cards are  sorted*/ 
+/* Returns a 1 if the cards are not sorted
+	indexes through all cards*/ 
 int isSorted(VcFile * const filep)
 {
 	int result;
@@ -163,34 +164,26 @@ int isSorted(VcFile * const filep)
 		/* If result == -1, the first string was greater than the second card string,
 		 * indicating that it is sorted. Time to check the next card and increment i*/ 
 	    result = strcasecmp(nameValue1,nameValue2); 
-	    if (result!=0)
+	    printf("result =%d\n",result );
+	    if (result<0)
 	    {
 			if (nameValue1!=NULL)
 				free(nameValue1); 
 			if (nameValue2!=NULL)
 				free(nameValue2);
-			return (strcasecmp(nameValue1,nameValue2)); 
+			continue;
 	    }
 
-		if (result==-1)
+		if (result>0)
 		{
 				if (nameValue1!=NULL)
 					free(nameValue1); 
 				if (nameValue2!=NULL)
 					free(nameValue2);
-				continue;
+				return 1; 
 	
 		}
 		/* if result == 1, the cards are not sorted */ 
-		else if (result==1)
-		{
-				if (nameValue1!=NULL)
-					free(nameValue1); 
-				if (nameValue2!=NULL)
-					free(nameValue2);
-			return 0; /* Return 0 indicating they are not sorted*/ 
-
-		}
 		/* The last names happened to be the same between the cards. Time to check first name */ 
 		else if (result==0)
 		{
@@ -216,13 +209,12 @@ int isSorted(VcFile * const filep)
 						free(nameValue1); 
 					if (nameValue2!=NULL)
 						free(nameValue2);
-				return 0; /* Indicates not sorted */ 
+				return ; /* Indicates not sorted */ 
 
 			}
 
 			else if (result==0) 
 			{
-				  printf("firstname 1 = %s, firstname 2 = %s\n",firstName1,firstName2 );
 			     // printf("STRING = %s %s\n",firstName1,firstName2);
 			     // printf("nameValue1 = %s nv2 = %s \n",nameValue1,nameValue2); 
 			      if (nameValue1!=NULL)
@@ -246,12 +238,11 @@ int isSorted(VcFile * const filep)
 	    
 	}
 	
-	printf("nv1 = %s, nv2 = %s\n",nameValue1,nameValue2);
 	if (nameValue1!=NULL)
 		free(nameValue1); 
-	if (nameValue2!=NULL)
+	//if (nameValue2!=NULL)
 	//	free(nameValue2);
-	return 1; 
+	return 0; 
 }
 
 int cmpare( void  * card1, void * card2)
