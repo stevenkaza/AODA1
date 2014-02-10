@@ -354,6 +354,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
       
       if (staticFlag!=1)/* Skips over a char if its static to avoid missing one */ 
          ch = fgetc(vcf); /* Reading a char in */ 
+         printf("c = %c\n",ch);
         if (ch==EOF&&endOfFile==1)
         {
 //           *buff = NULL;
@@ -371,7 +372,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
             }
             case '\n': /* if its a new line, set crlf flag on */ 
             {
-                              printf("N FLAG???\n");
+                printf("N FLAG???\n");
 
               if (rFlag==1)
               {
