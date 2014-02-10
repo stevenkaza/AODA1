@@ -6,13 +6,12 @@
 #include <strings.h>
 int main(int argc, char * argv[])
 {
-
+	int ww; 
 	VcStatus newStatus; 
 	VcFile * filep=NULL;
 	FILE * fp; 
 	filep = malloc(sizeof(VcFile));
 	newStatus = readVcFile(stdin,filep);
-	printf("First Name: %s\n",filep->cardp[0]->prop[0].value);
 //	newStatus=writeVcFile(stdout,filep);
 
 	if (argv[1]!=NULL)
@@ -246,9 +245,8 @@ int isSorted(VcFile * const filep)
 	return 1; 
 }
 
-int cmpare(const void  * card1,const void * card2)
+int cmpare( void  * card1, void * card2)
 {
-	printf("welcome to compare \n"); 
 	int result; 
 	int i = 0; 
 	int k = 0;
@@ -301,9 +299,7 @@ int cmpare(const void  * card1,const void * card2)
 	strcpy(nameValue2,(*(Vcard **)card2)->prop[nCard2].value); 
 	lastName1 = strtok(nameValue1,";"); 
 	lastName2 = strtok(nameValue2,";"); 
-	printf("nv1 %s nv2 %s\n",nameValue1,nameValue2); 
 	result = strcasecmp(nameValue1,nameValue2); 
-	printf("result = %d\n",result); 
 	if (result!=0)
 	{
 		if (nameValue1!=NULL)
@@ -393,7 +389,11 @@ int cmpare(const void  * card1,const void * card2)
 		free(nameValue1); 
 	if (nameValue2!=NULL)
 		free(nameValue2);
+<<<<<<< HEAD
 	//return 1; 
+=======
+//	return 1; 
+>>>>>>> 1046de0b733289f2c172f5493688bed1080d69db
 
 }
 int vcfSort(VcFile * const filep)

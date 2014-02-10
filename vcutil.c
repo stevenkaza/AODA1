@@ -136,7 +136,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             goto end;
          }
          newStatus=getUnfolded(vcf,&buff);
-         printf("Buff = %s\n\n",buff);
+         //printf("Buff = %s\n\n",buff);
 
 
 	
