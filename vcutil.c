@@ -306,7 +306,6 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
     buff = NULL;
    if (endFlag==0&&(*cardp)!=NULL)
       newStatus.code = 4; 
-   printf("end flag = %d \n",endFlag);
     return newStatus;
 
 }

@@ -9,14 +9,11 @@ int main(int argc, char * argv[])
 
 	VcStatus newStatus; 
 	VcFile * filep=NULL;
+	FILE * fp; 
 	filep = malloc(sizeof(VcFile));
 	newStatus = readVcFile(stdin,filep);
-	newStatus=writeVcFile(stdout,filep);
+//	newStatus=writeVcFile(stdout,filep);
 
-	if (newStatus.code!=OK)
-	{
-		printf("%d e code detected. read lines %d to %d exiting \n", newStatus.code,newStatus.linefrom,newStatus.lineto);
-	}
 	if (argv[1]!=NULL)
 	{
 		if (strcmp(argv[1],"-info")==0)
@@ -58,10 +55,10 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
 	}
 
 	/* Adjust this to accurately display sorted cards later */ 
-//	if (isSorted(filep)==0)
-//		fprintf(outfile,"%d cards (not sorted)\n",filep->ncards);
-//	else if (isSorted(filep)==1)
-//		fprintf(outfile,"%d cards (sorted)\n",filep->ncards);
+	if (isSorted(filep)==0)
+		fprintf(outfile,"%d cards (not sorted)\n",filep->ncards);
+	else if (isSorted(filep)==1)
+		fprintf(outfile,"%d cards (sorted)\n",filep->ncards);
  	for(i = 0; i < filep->ncards; i++)
         {
     	/* Reseting the flags for each card */ 
