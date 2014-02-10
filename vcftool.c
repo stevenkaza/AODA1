@@ -16,11 +16,24 @@ int main(int argc, char * argv[])
 
 	if (argv[1]!=NULL)
 	{
+		if (strcasecmp(argv[1],"-select")==0 && argv[2]!=NULL)
+		{
+			if (strlen(argv>3))
+			{
+				fprintf(stderr,"Invalid arguement size for -select\n");
+			}
+
+			if ((strspn(argv[2],"pug")==0)
+			{
+				fprintf(stderr,"Invalid arguement for -select. Must contain at least a p, u, g\n");
+			}
+			vcfSelect(filep,which);
+		}
 		if (strcmp(argv[1],"-info")==0)
 		{
 			vcfInfo(stdout,filep);
 		}
-		if (strcmp(argv[1],"-sort")==0)
+		if (strcasecmp(argv[1],"-sort")==0)
 		{
 			vcfSort(filep);
 		    writeVcFile(stdout,filep); 
@@ -404,5 +417,9 @@ int vcfSort(VcFile * const filep)
 
 
 
-int vcfSelect( VcFile *const filep, const char *which);
+int vcfSelect( VcFile *const filep, const char *which)
+{
+	fprintf(stdout,"welcome to select\n");
+
+}
 
