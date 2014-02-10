@@ -1,6 +1,6 @@
 BEGIN:VCARD
 VERSION:3.0
-N:ZEntwistle;Darren
+N:Entwistle;Darren
 FN:Darren Entwistle
 ORG:Telus Corporation;
 ADR;TYPE=WORK,POSTAL:;;555 Robson St.;Vancouver;BC;V6B 3K9;Canada
@@ -12,10 +12,9 @@ PHOTO;VALUE=uri:http://about.telus.com/investors/en/investor/images/bio_dar
  ren_entwistle.gif
 GEO:49.280696,-123.118501
 END:VCARD
-
 BEGIN:VCARD
 VERSION:3.0
-N:XCope;George
+N:Cope;George
 FN:George Cope
 ORG:Bell Mobility Inc.;
 ADR;TYPE=WORK,POSTAL:;;509 Creekbank Rd.;Mississauga;Ontario;L4W 5N2;Canada
@@ -28,10 +27,9 @@ URL;TYPE=WORK:http://www.bell.ca/home/
 PHOTO;VALUE=uri:http://www.bce.ca/images/cope_01.jpg
 GEO:43.642759,-79.615666
 END:VCARD
-
 BEGIN:VCARD
 VERSION:3.0
-N:YBlouin;Pierre
+N:Blouin;Pierre
 FN:Pierre Blouin
 ORG:Manitoba Telecom Services Inc.;
 ADR;TYPE=WORK,POSTAL:;;333 Main St.;Winnipeg;MB;R3C 3V6;Canada
@@ -61,7 +59,7 @@ GEO:43.639287,-79.38088
 END:VCARD
 BEGIN:VCARD
 VERSION:3.0
-N:RChoi;Gee-Sung
+N:Choi;Gee-Sung
 FN:Gee-Sung Choi
 ORG:Samsung Electronics Co.\, Ltd.;
 ADR;TYPE=WORK,POSTAL:;;1320 Seocho-dong\, Seocho-gu;Seoul;;137-857;South Ko
@@ -76,7 +74,7 @@ GEO:37.487687,127.017427
 END:VCARD
 BEGIN:VCARD
 VERSION:3.0
-N:MBalsillie;Jim
+N:Balsillie;Jim
 FN:Jim Balsillie
 ORG:Research In Motion;
 ADR;TYPE=WORK,POSTAL:;;295 Phillip Stree;Waterloo;Ontario;N2L 3W8;Canada
@@ -91,7 +89,7 @@ END:VCARD
 
 BEGIN:VCARD
 VERSION:3.0
-N:LBruce;Robert
+N:Bruce;Robert
 FN:Robert Bruce
 ORG:Rogers Wireless Inc.;
 ADR;TYPE=WORK,POSTAL:;;333 Bloor Street East\, 10th Fl.;Toronto;Ontario;M4W 1G9;Canada
@@ -106,7 +104,7 @@ END:VCARD
 
 BEGIN:VCARD
 VERSION:3.0
-N:GJobs;Steve
+N:Jobs;Steve
 FN:Steve Jobs
 ORG:Apple Inc.;
 ADR;TYPE=WORK,POSTAL:;;1 Infinite Loop;Cupertino;California;95014;United St
@@ -118,7 +116,6 @@ URL;TYPE=WORK:http://www.apple.com/
 PHOTO;VALUE=uri:http://images.apple.com/pr/photos/execs/steveweb.jpg
 GEO:37.33191,-122.031262
 END:VCARD
-
 BEGIN:VCARD
 VERSION:3.0
 N:Gardner;William
