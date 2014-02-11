@@ -1,9 +1,10 @@
 /* vcutil.c
-/*
+
 vCard  utlity library/ Parser 
 
-Author:Steven Kazavchinski 
+Author:Steven Kazavchinski 0761977
 Created: January 24th 2014 
+Updated : feb 3rd 2014 
 Contact: skazavch@uoguelph.ca
 */ 
 
@@ -43,8 +44,8 @@ int semiFirst(char * tempString);
   -1 if vcp_other */ 
 
 int writePropName(VcPname name);
-
-
+/* Returns a 2 if a period was found first */ 
+int periodFirst(char * string);
 int Contains(char * string, char pattern); 
 int checkPosition(char * string, int position); 
 void removeSpaces(char * string);
@@ -843,7 +844,6 @@ VcStatus writeVcFile(FILE  *const  vcf, VcFile const *filep)
 }
 
 int writePropName(VcPname name)
-
 {
 
       if (name == VCP_N)
@@ -927,6 +927,7 @@ int writePropName(VcPname name)
       { 
         return -1; 
       }
+      return -1; 
     
 }
 

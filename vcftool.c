@@ -16,9 +16,14 @@ Contact: skazavch@uoguelph.ca
 #include <string.h>
 #include <strings.h>
 
-/*  frees an individual vcard from a vcard array.
+/*  freeVcard  
+frees an individual vcard from a vcard array.
 	i is the position in the array of which vcard to free */ 
 int freeVcard(const VcFile  * filep,int i);
+/* 
+	Returns a 1 if the cards are sorted */ 
+int isSorted(const VcFile *  filep)
+
 int main(int argc, char * argv[])
 {
 	VcStatus newStatus; 
@@ -251,7 +256,7 @@ int isSorted(const VcFile *  filep)
 						free(nameValue1); 
 					if (nameValue2!=NULL)
 						free(nameValue2);
-				return ; /* Indicates not sorted */ 
+				return 1; /* Indicates not sorted */ 
 
 			}
 
@@ -290,7 +295,6 @@ int isSorted(const VcFile *  filep)
 int cmpare( const void  * card1, const void * card2)
 {
 	int result; 
-	int i = 0; 
 	int k = 0;
 	char * firstName1; 
 	char * firstName2; 
@@ -429,7 +433,7 @@ int cmpare( const void  * card1, const void * card2)
 	if (nameValue2!=NULL)
 		free(nameValue2);
 	//return 1; 
-//	return 1; 
+   return 1; 
 
 }
 int vcfSort(VcFile * const filep)
