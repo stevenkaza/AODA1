@@ -667,15 +667,16 @@ int vcfSelect( VcFile *const filep, const char *which)
 		if (filep->cardp[i]!=NULL)
 		{
 			printf("i=%d\n",i );
+			oneCard=1; 
 		}
 
 		if (filep->cardp[i]==NULL)
 		{
 			cardsRemoved++; 
 		}
-		oneCard==0;
 	}
 	/* if all NULL */ 
+	filep->ncards= filep->ncards - cardsRemoved;
 	printf("filep->ncards = %d\n",filep->ncards );
 	if (oneCard == 0)
     {
