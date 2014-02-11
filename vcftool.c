@@ -617,19 +617,15 @@ int vcfSelect( VcFile *const filep, const char *which)
 		}
 
 		if (filep->cardp[i]==NULL)
-			cardsRemoved++; /* Keep track of how many are null in order to update the ammount of cards
-		}
-	}
-	/* if all NULL */ 
+			cardsRemoved++; /* Keep track of how many are null in order to update the ammount of cards */	
+   } 
+
 	filep->ncards= filep->ncards - cardsRemoved;
 	if (oneCard == 0)
     {
     	fprintf(stderr,"No cards selected");
 		 return 1; 
     }
-
-
-} 
 
 
 
