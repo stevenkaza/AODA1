@@ -641,7 +641,7 @@ int vcfSelect( VcFile *const filep, const char *which)
 
 	   }
     }
-    if (foundGeo==0 && foundURL==0 && foundPhoto==0)
+    if (geoFound==0 && urlFound==0 && photoFound==0)
     {
     	fprintf(stderr,"No cards selected");
 		 	return 1; 
