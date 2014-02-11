@@ -428,25 +428,30 @@ int vcfSort(VcFile * const filep)
 /* returns an array containing the card #'s that contain the prpoerty */
 int findCard(VcFile * const filep,char property,int array[])
 {
+	int i = 0; 
+	int k = 0; 
 	int geoCounter=0;
 	int photoCounter=0; 
 	int urlCounter=0;  
-	if (property=='g')
+   if (property=='g')
+	{
+	for(i = 0; i < filep->ncards; i++)
 	{
 		for(k = 0; k < filep->cardp[i]->nprops; k++)
         {        
              if (filep->cardp[i]->prop[k].name==VCP_GEO )
             {
             	array[geoCounter++]=k;
-        	}
-        	
+        	}        
         }
-
-
-    }
+      }
+  }
 
     else if (property=='u')
     {
+	   
+	for(i = 0; i < filep->ncards; i++)
+	{
 	    for(k = 0; k < filep->cardp[i]->nprops; k++)
 	        {        
 	             if (filep->cardp[i]->prop[k].name==VCP_URL )
@@ -455,10 +460,13 @@ int findCard(VcFile * const filep,char property,int array[])
 	        	}
 	        	
 	        }
-    }
+     }
+   }
 
     else if (property=='p')
     {
+    	for(i = 0; i < filep->ncards; i++)
+	{
     	for(k = 0; k < filep->cardp[i]->nprops; k++)
 	        {        
 	          if (filep->cardp[i]->prop[k].name==VCP_PHOTO)
@@ -466,7 +474,7 @@ int findCard(VcFile * const filep,char property,int array[])
         		array[photoCounter++]=k; 
         	 }	        	
 	        }
-		
+		}
     }
 
 
@@ -479,6 +487,7 @@ int vcfSelect( VcFile *const filep, const char *which)
 	fprintf(stdout,"welcome to select\n");
 	int k = 0; 
 	/* Property flag */ 
+	int i = 0; 
 	int findGeo=0; 
 	int findPhoto = 0; 
 	int findURL = 0; 
@@ -493,18 +502,18 @@ int vcfSelect( VcFile *const filep, const char *which)
 		if (which[k]=='g')
 		{
 			findGeo = 1; 
-			geoArray=malloc(sizeof(filep->ncards)*int);
+			geoArray=malloc(sizeof(int)*filep->ncards);
 		}
 		if (which[k]=='u')
 		{
 			findURL = 1; 
-			urlArray=malloc(sizeof(filep->ncards)*int);
+			urlArray=malloc(sizeof(int)*filep->ncards);
 
 		}
 		if (which[k]=='p')
 		{
 			findPhoto = 1; 
-		   	photoArray=malloc(sizeof(filep->ncards),int);
+		   	photoArray=malloc(sizeof(int)*filep->ncards);
 
 		}
 
