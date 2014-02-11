@@ -488,6 +488,7 @@ int vcfSelect( VcFile *const filep, const char *which)
 	int k = 0; 
 	/* Property flag */ 
 	int i = 0; 
+	int oneCard = 0; /*if one, means at least one card selected */ 
 	int j = 0; 
 	Vcard * tmp = NULL;
 	int * matchedArray=NULL; 
@@ -516,6 +517,7 @@ int vcfSelect( VcFile *const filep, const char *which)
 		}
 		if (which[k]=='u')
 		{
+			printf("found url\n");
 			findURL = 1; 
 
 		}
@@ -631,7 +633,7 @@ int vcfSelect( VcFile *const filep, const char *which)
 	   {
 	   	if (urlFound==1)
 	   	{
-
+	   		printf("WE FOUND URL @ card %d \n",i );
 	   	}
 	   	else
 	   	{
@@ -642,8 +644,7 @@ int vcfSelect( VcFile *const filep, const char *which)
     }
     if (geoFound==0 && urlFound==0 && photoFound==0)
     {
-    	fprintf(stderr,"No cards selected");
-		 	return 1; 
+    	
 	}
 
 	for (i=0;i<filep->ncards;i++)
@@ -651,8 +652,16 @@ int vcfSelect( VcFile *const filep, const char *which)
 		if (filep->cardp[i]!=NULL)
 		{
 			printf("i=%d\n",i );
+			oneCard = 1; 
 		}
 	}
+	/* if all NULL */ 
+
+	if (oneCard == 0)
+    {
+    	fprintf(stderr,"No cards selected");
+		 return 1; 
+    }
 
 
 } 
