@@ -6,23 +6,20 @@
 #include <strings.h>
 int main(int argc, char * argv[])
 {
-	int ww; 
 	VcStatus newStatus; 
 	VcFile * filep=NULL;
-	FILE * fp; 
 	if (stdin==NULL)
 	{
 		fprintf(stderr, "%s\n", "No file specified");
 		return 1; 
 	}
-
 	filep = malloc(sizeof(VcFile));
 	newStatus = readVcFile(stdin,filep);
 	if (newStatus.code!=OK)
 	{
-		fprintf("%d code detected from vcutil \n");
+		fprintf("%d code detected from vcutil \n",newStatus.code);
+		return EXIT_FAILURE;
 	}
-//	newStatus=writeVcFile(stdout,filep);
 
 	if (argv[1]!=NULL)
 	{
@@ -143,8 +140,6 @@ int isSorted(const VcFile *  filep)
 	/* Tokens for getting the last name between the ; */ 
 	char * lastName1; 
 	char * lastName2;  
-	Vcard * card1; 
-	Vcard * card2;
 	/* Holds value of K , index where name was found in array of props */ 
 	int nCard1 = 0; 
 	int nCard2 = 0; 
