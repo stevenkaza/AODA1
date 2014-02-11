@@ -333,7 +333,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
         newStatus.linefrom = lineCounter;
     
     /* Satisfiying the "special" case where vcf is NULL */ 
-    if (vcf==NULL)
+    if (vcf==NULL)free 
     {
   //    printf("PPLZPLZ\n");
       lineCounter=0; 
@@ -942,7 +942,21 @@ void freeVcFile ( VcFile * const filep)
  
         for(i = 0; i < filep->ncards; i++)
         {
-                freevc
+                tmp = filep->cardp[i];
+ 
+                for(j = 0; j < tmp->nprops; j++)
+                {
+                      tmp2 = &(tmp->prop[j]);
+                      if (tmp2->partype!=NULL)
+                       free(tmp2->partype);
+                        if (tmp2->parval!=NULL)
+                      free(tmp2->parval);
+                      if (tmp2->value!=NULL)
+                      free(tmp2->value);
+                      if (tmp2->hook!=NULL)
+                      free(tmp2->hook);
+                }
+                free(tmp);
         }
         free(filep->cardp);
 }
