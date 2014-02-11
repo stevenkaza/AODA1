@@ -459,14 +459,12 @@ int vcfSelect( VcFile *const filep, const char *which)
 	of cards where speicifc letter was found */ 
 	for (k=0;k<strlen(which);k++)
 	{
-		printf("fp = %d\n",filep->ncards);
 		if (which[k]=='g')
 		{
 			findGeo = 1;  	
 		}
 		if (which[k]=='u')
 		{
-			printf("found url\n");
 			findURL = 1; 
 
 		}
@@ -627,7 +625,7 @@ int vcfSelect( VcFile *const filep, const char *which)
 		 return 1; 
     }
 
-
+}
 
 /*
 
