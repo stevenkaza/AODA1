@@ -637,6 +637,7 @@ int vcfSelect( VcFile *const filep, const char *which)
 	   	}
 	   	else
 	   	{
+	   		printf("DOES IT GO HERE?, i = %d\n",i);
 	   		freeVcard(filep,i);
 	   	}
 
