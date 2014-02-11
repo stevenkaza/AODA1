@@ -519,11 +519,11 @@ int vcfSelect( VcFile *const filep, const char *which)
 
 	}
 		if (findGeo==1)
-			geoArray=malloc(sizeof(int)*(filep->ncards+1));
+			geoArray=malloc(sizeof(int)*(filep->ncards+1)+1);
 		if (findURL==1)
-			urlArray=malloc(sizeof(int)*(filep->ncards+1));
+			urlArray=malloc(sizeof(int)*(filep->ncards+1)+1);
 		if (findPhoto==1)
-			photoArray=malloc(sizeof(int)*(filep->ncards+1));
+			photoArray=malloc(sizeof(int)*(filep->ncards+1)+1);
 
 		matchedArray=malloc(sizeof(int)*(filep->ncards+1));
 		
