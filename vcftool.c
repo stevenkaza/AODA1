@@ -660,13 +660,6 @@ int vcfSelect( VcFile *const filep, const char *which)
 				filep->cardp[k]=NULL;
 			}
 		}
-		if (filep->cardp[i]!=NULL)
-		{
-			printf("val @ %d = %s\n",i,filep->cardp[i]->prop[0].value );
-			oneCard = 1; 
-		}
-
-
 
 	}
 	for (i=0;i<filep->ncards;i++)
@@ -675,9 +668,15 @@ int vcfSelect( VcFile *const filep, const char *which)
 		{
 			printf("i=%d\n",i );
 		}
+
+		if (filep->cardp[i]==NULL)
+		{
+			cardsRemoved++; 
+		}
+		oneCard==0;
 	}
 	/* if all NULL */ 
-
+	printf("filep->ncards = %d\n",filep->ncards );
 	if (oneCard == 0)
     {
     	fprintf(stderr,"No cards selected");
