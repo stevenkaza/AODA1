@@ -675,7 +675,17 @@ int vcfSelect( VcFile *const filep, const char *which)
         }
 	}
 
-
+	for(i = 0; i < filep->ncards; i++)
+	{
+        for(j = 0; j < filep->ncards; j++)
+        {
+                if(filep->cardp[i] == NULL && filep->cardp[j] != NULL)
+                {
+                        filep->cardp[i] = filep->cardp[j];
+                        filep->cardp[j] = NULL;
+                }      
+        }
+	}
 	for (i=0;i<filep->ncards;i++)
 	{
 		if (filep->cardp[i]!=NULL)
@@ -687,6 +697,7 @@ int vcfSelect( VcFile *const filep, const char *which)
 		if (filep->cardp[i]==NULL)
 		{
 			cardsRemoved++; 
+			filep->cardp[i]=[i+1];
 		}
 	}
 	/* if all NULL */ 
