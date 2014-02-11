@@ -1,3 +1,14 @@
+/* vcftool.c
+vCard  tool library 
+
+Author:Steven Kazavchinski 
+Student ID: 0761977 
+Created: Feb 5th 2014 
+Contact: skazavch@uoguelph.ca
+*/ 
+
+
+
 #include <stdlib.h>
 #include "vcutil.h"
 #include "vcftool.h"
@@ -61,6 +72,7 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
 	int photoCounter = 0; 
 	int geoCounter = 0; 
 	int urlCounter = 0; 
+	int canonCounter=0; 
 	
 	/* if 1, photo has been found in card */ 
 	int photoFound = 0; 
@@ -108,9 +120,14 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
         		urlCounter++;
         		urlFound=1; 
         	}
+        	if (filep->cardp[i]->prop[k].name==VCP_UID) /* checking for canon */ 
+        	{
+        		if (strstr(filep->cardp[i]->prop[k].value,"@")!=NULL)
+        		{
+        			canonCounter++; 
+        		}
 
-
-        	
+        	}     	
         }
 
      }
@@ -118,6 +135,7 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
      fprintf(outfile,"%d with photos\n",photoCounter);
      fprintf(outfile, "%d with URLs\n",urlCounter);
      fprintf(outfile,"%d with geographic coordinates\n",geoCounter);
+     fprintf(outfile,"%d in canonical form\n",canonCounter);
 
 
 
@@ -174,14 +192,11 @@ int isSorted(const VcFile *  filep)
 			}
 	        
 		/* copying the first value so its able to be strtoked without destryoing filep */
-//		printf("==1 %s\n",filep->cardp[i]->prop[nCard1].value); 
-//		printf("==2 %s\n",filep->cardp[i+1]->prop[nCard2].value); 
+
 
 		nameValue1 = (char*)calloc(strlen(filep->cardp[i]->prop[nCard1].value)+1,sizeof(char));
 		strcpy(nameValue1,filep->cardp[i]->prop[nCard1].value); 
-//		printf("length = %d %d\n",strlen(filep->cardp[i+1]->prop[nCard2].value),strlen(filep->cardp[i]->prop[nCard1].value));		
 		nameValue2 = (char*)calloc(strlen(filep->cardp[i+1]->prop[nCard2].value)+1,sizeof(char));
-	//	nameValue2 = malloc(sizeof(strlen(filep->cardp[i+1]->prop[nCard2].value))); 
 		strcpy(nameValue2,filep->cardp[i+1]->prop[nCard2].value); 
 		lastName1 = strtok(nameValue1,";"); 
 		lastName2 = strtok(nameValue2,";"); 
@@ -427,7 +442,6 @@ int vcfSort(VcFile * const filep)
 
 int vcfSelect( VcFile *const filep, const char *which)
 {
-	fprintf(stdout,"welcome to select\n");
 	int k = 0; 
 	/* Property flag */ 
 	int i = 0; 
@@ -617,7 +631,7 @@ int vcfSelect( VcFile *const filep, const char *which)
 	if (oneCard == 0)
     {
     	fprintf(stderr,"No cards selected");
-		 return 1; 
+		 return EXIT_FAILURE; 
     }
 
 }
