@@ -652,7 +652,7 @@ int vcfSelect( VcFile *const filep, const char *which)
 	{
 		if (filep->cardp[i]!=NULL)
 		{
-			printf("i=%d\n",i );
+			printf("val @ %d = %s\n",filep->cardp[i].prop[0].value );
 			oneCard = 1; 
 		}
 	}
