@@ -643,10 +643,7 @@ int vcfSelect( VcFile *const filep, const char *which)
 
 	   }
     }
-    if (geoFound==0 && urlFound==0 && photoFound==0)
-    {
-    	
-	}
+
 
 	/* Re shuffling the array */ 
 	int cardsRemoved; 
@@ -668,7 +665,7 @@ int vcfSelect( VcFile *const filep, const char *which)
 	/* way two */ 
 	for(i = 0; i < filep->ncards; i++)
 	{
-        for(j = 0; j < filep->ncards-1; j++)
+        for(j = 0; j < filep->ncards; j++)
         {
                 if(filep->cardp[i] == NULL && filep->cardp[j] != NULL)
                 {
