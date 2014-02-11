@@ -34,9 +34,10 @@ int main(int argc, char * argv[])
 			if (strspn(argv[2],"pug")==0)
 			{
 				fprintf(stderr,"Invalid arguement for -select. Must contain at least a p, u, g\n");
-				return 1; 
+				return EXIT_FAILURE;
 			}
 			vcfSelect(filep,argv[2]);
+		    writeVcFile(stdout,filep); 
 		}
 		if (strcmp(argv[1],"-info")==0)
 		{
@@ -47,6 +48,7 @@ int main(int argc, char * argv[])
 			vcfSort(filep);
 		    writeVcFile(stdout,filep); 
 		}
+		return EXIT_SUCCESS; 
     }
 }
 
@@ -105,6 +107,8 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
         		urlCounter++;
         		urlFound=1; 
         	}
+
+
         	
         }
 
@@ -402,11 +406,6 @@ int cmpare( void  * card1, void * card2)
 		/* Time to compare them */ 
 		//strcmp goes here. if strcmp(card1,card2) == -1, then we know sorted. 
 	     
-
-	    
-	
-	
-
 	if (nameValue1!=NULL)
 		free(nameValue1); 
 	if (nameValue2!=NULL)
@@ -426,61 +425,6 @@ int vcfSort(VcFile * const filep)
 
 /* returns card # where proprety was found, -1 if not found */ 
 /* returns an array containing the card #'s that contain the prpoerty */
-int findCard(VcFile * const filep,char property,int array[])
-{
-	int i = 0; 
-	int k = 0; 
-	int geoCounter=0;
-	int photoCounter=0; 
-	int urlCounter=0;  
-   if (property=='g')
-	{
-	for(i = 0; i < filep->ncards; i++)
-	{
-		for(k = 0; k < filep->cardp[i]->nprops; k++)
-        {        
-             if (filep->cardp[i]->prop[k].name==VCP_GEO )
-            {
-            	array[geoCounter++]=i;
-        	}        
-        }
-      }
-  }
-
-    else if (property=='u')
-    {
-	   
-	for(i = 0; i < filep->ncards; i++)
-	{
-	    for(k = 0; k < filep->cardp[i]->nprops; k++)
-	        {        
-	             if (filep->cardp[i]->prop[k].name==VCP_URL )
-	            {
-	            	array[urlCounter++]=i;
-	        	}
-	        	
-	        }
-     }
-   }
-
-    else if (property=='p')
-    {
-    	for(i = 0; i < filep->ncards; i++)
-	{
-    	for(k = 0; k < filep->cardp[i]->nprops; k++)
-	        {        
-	          if (filep->cardp[i]->prop[k].name==VCP_PHOTO)
-        	 {
-        		array[photoCounter++]=i; 
-        	 }	        	
-	        }
-		}
-    }
-
-
-
-
-	}
 
 int vcfSelect( VcFile *const filep, const char *which)
 {
@@ -496,6 +440,7 @@ int vcfSelect( VcFile *const filep, const char *which)
 	int findGeo=0; 
 	int findPhoto = 0; 
 	int findURL = 0; 
+	int cardsRemoved=0; 
 
 	/* if one, means they were found */ 
 	int photoFound=0; 
@@ -537,7 +482,6 @@ int vcfSelect( VcFile *const filep, const char *which)
     	urlFound=0; 
     	for(k = 0; k < filep->cardp[i]->nprops; k++)
     	{
-    			printf("TYPE = %d\n",filep->cardp[i]->prop[k].name );
       		  	if (filep->cardp[i]->prop[k].name==VCP_PHOTO)
       		  		photoFound=1;
       		  	
@@ -646,34 +590,21 @@ int vcfSelect( VcFile *const filep, const char *which)
 
 
 	/* Re shuffling the array */ 
-	int cardsRemoved; 
-	/* Way ONE 
-	for (i=1;i<filep->ncards;i++)
+	/* Removing the null cards */ 
+	for(i = (filep->ncards-1); i >= 0; i--)
 	{
-		for (k=1; k< (filep->ncards-1);k++)
-		{
-			if (filep->cardp[k-1]==NULL) /* if the previous card is NULL 
-			{
-				filep->cardp[k-1]=filep->cardp[k];
-				filep->cardp[k]=NULL;
-			}
-		}
-
-	}
-	*/
-
-	/* way two */ 
-for(i = (filep->ncards-1); i >= 0; i--)
-{
-        for(j = (filep->ncards-1); j >= 0; j--)
-        {
-                if(filep->cardp[i] == NULL && filep->cardp[j] != NULL)
-                {
-                        filep->cardp[i] = filep->cardp[j];
-                        filep->cardp[j] = NULL;
-                }      
-        }
-}
+		/* Bubble Sort Style */ 
+	    for(j = (filep->ncards-1); j >= 0; j--)
+	    {
+	    	/* if a card is found to be null, re arrange the array of cards 
+	     														* moving everything down */  
+	        if(filep->cardp[i] == NULL && filep->cardp[j] != NULL) 
+	        {
+	            filep->cardp[i] = filep->cardp[j];
+	            filep->cardp[j] = NULL;
+	        }      
+	    }
+   }
 
 
 	for (i=0;i<filep->ncards;i++)
@@ -686,11 +617,7 @@ for(i = (filep->ncards-1); i >= 0; i--)
 
 		if (filep->cardp[i]==NULL)
 		{
-			//for (j=i;j<filep->cardp;j++)
-		//	{
-
-		//	}
-			cardsRemoved++; 
+			cardsRemoved++; /* Keep track of how many are null in order to update the ammount of cards
 		}
 	}
 	/* if all NULL */ 
