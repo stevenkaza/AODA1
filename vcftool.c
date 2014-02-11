@@ -669,6 +669,13 @@ int vcfSelect( VcFile *const filep, const char *which)
 
 
 	}
+	for (i=0;i<filep->ncards;i++)
+	{
+		if (filep->cardp[i]!=NULL)
+		{
+			printf("i=%d\n",i );
+		}
+	}
 	/* if all NULL */ 
 
 	if (oneCard == 0)
