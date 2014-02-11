@@ -441,7 +441,7 @@ int findCard(VcFile * const filep,char property,int array[])
         {        
              if (filep->cardp[i]->prop[k].name==VCP_GEO )
             {
-            	array[geoCounter++]=k;
+            	array[geoCounter++]=i;
         	}        
         }
       }
@@ -456,7 +456,7 @@ int findCard(VcFile * const filep,char property,int array[])
 	        {        
 	             if (filep->cardp[i]->prop[k].name==VCP_URL )
 	            {
-	            	array[urlCounter++]=k;
+	            	array[urlCounter++]=i;
 	        	}
 	        	
 	        }
@@ -471,7 +471,7 @@ int findCard(VcFile * const filep,char property,int array[])
 	        {        
 	          if (filep->cardp[i]->prop[k].name==VCP_PHOTO)
         	 {
-        		array[photoCounter++]=k; 
+        		array[photoCounter++]=i; 
         	 }	        	
 	        }
 		}
@@ -542,8 +542,8 @@ int vcfSelect( VcFile *const filep, const char *which)
 		 	printf(" %d\n", photoArray[i]);
 
 		 printf("url array\n");
-		 for (i=0;i<sizeof(url)i++)
-		 	printf(" %d\n", url[i]);
+		 for (i=0;i<sizeof(urlArray);i++)
+		 	printf(" %d\n", urlArray[i]);
 
 	}
 
