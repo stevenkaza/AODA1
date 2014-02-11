@@ -27,7 +27,7 @@ int main(int argc, char * argv[])
 			if (strlen(argv[2])>3 || strlen(argv[2])<1)
 			{
 				fprintf(stderr,"Invalid arguement size for -select\n");
-				return 1; 
+				return EXIT_FAILURE;  
 			}
 			
 
@@ -648,13 +648,26 @@ int vcfSelect( VcFile *const filep, const char *which)
     	
 	}
 
-	for (i=0;i<filep->ncards;i++)
+	/* Re shuffling the array */ 
+	int cardsRemoved; 
+	for (i=1;i<filep->ncards;i++)
 	{
+		for (k=1; k< (filep->ncards-1);k++)
+		{
+			if (filep->cardp[k-1]==NULL) /* if the previous card is NULL */ 
+			{
+				filep->cardp[k-1]=filep->cardp[k];
+				filep->cardp[k]=NULL;
+			}
+		}
 		if (filep->cardp[i]!=NULL)
 		{
 			printf("val @ %d = %s\n",i,filep->cardp[i]->prop[0].value );
 			oneCard = 1; 
 		}
+
+
+
 	}
 	/* if all NULL */ 
 
