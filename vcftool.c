@@ -535,8 +535,7 @@ int vcfSelect( VcFile *const filep, const char *which)
     	urlFound=0; 
     	for(k = 0; k < filep->cardp[i]->nprops; k++)
     	{
-
-
+    			printf("TYPE = %d\n",filep->cardp[i]->prop[k].name );
       		  	if (filep->cardp[i]->prop[k].name==VCP_PHOTO)
       		  		photoFound=1;
       		  	
