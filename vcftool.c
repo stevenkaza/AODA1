@@ -650,11 +650,12 @@ int vcfSelect( VcFile *const filep, const char *which)
 
 	/* Re shuffling the array */ 
 	int cardsRemoved; 
+	/* Way ONE 
 	for (i=1;i<filep->ncards;i++)
 	{
 		for (k=1; k< (filep->ncards-1);k++)
 		{
-			if (filep->cardp[k-1]==NULL) /* if the previous card is NULL */ 
+			if (filep->cardp[k-1]==NULL) /* if the previous card is NULL 
 			{
 				filep->cardp[k-1]=filep->cardp[k];
 				filep->cardp[k]=NULL;
@@ -662,6 +663,22 @@ int vcfSelect( VcFile *const filep, const char *which)
 		}
 
 	}
+	*/
+
+	/* way two */ 
+	for(i = 0; i < filep->ncards; i++)
+	{
+        for(j = 0; j < filep->ncards-1; j++)
+        {
+                if(filep->cardp[i] == NULL && filep->cardp[j] != NULL)
+                {
+                        filep->cardp[i] = filep->cardp[j];
+                        filep->cardp[j] = NULL;
+                }      
+        }
+	}
+
+
 	for (i=0;i<filep->ncards;i++)
 	{
 		if (filep->cardp[i]!=NULL)
