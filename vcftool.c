@@ -488,9 +488,11 @@ int vcfSelect( VcFile *const filep, const char *which)
 	int k = 0; 
 	/* Property flag */ 
 	int i = 0; 
+	int * matchedArray=NULL; 
 	int findGeo=0; 
 	int findPhoto = 0; 
 	int findURL = 0; 
+	int matchedCounter = 0; 
 	int * geoArray=NULL; 
 	int * photoArray=NULL; 
 	int * urlArray=NULL; 
@@ -499,32 +501,38 @@ int vcfSelect( VcFile *const filep, const char *which)
 	of cards where speicifc letter was found */ 
 	for (k=0;k<strlen(which);k++)
 	{
-
+		printf("fp = %d\n",filep->ncards);
 		if (which[k]=='g')
 		{
 			findGeo = 1;  	
-			geoArray=malloc(sizeof(int)*filep->ncards);
 		}
 		if (which[k]=='u')
 		{
 			findURL = 1; 
-			urlArray=malloc(sizeof(int)*filep->ncards);
 
 		}
 		if (which[k]=='p')
 		{
 			findPhoto = 1; 
-		   	photoArray=malloc(sizeof(int)*filep->ncards);
 
 		}
 
 	}
+		if (findGeo==1)
+			geoArray=malloc(sizeof(int)*(filep->ncards+1));
+		if (findURL==1)
+			urlArray=malloc(sizeof(int)*(filep->ncards+1));
+		if (findPhoto==1)
+			photoArray=malloc(sizeof(int)*(filep->ncards+1));
+
+		matchedArray=malloc(sizeof(int)*(filep->ncards+1));
+		
+
 		printf("BEFORE ANYTHING \n");
 		 printf("Size of parray = %d, size of url array = %d, size of geo array = %d \n",sizeof(photoArray),sizeof(urlArray),sizeof(geoArray));
 
-	if (findPhoto==1 && findURL==1 && findGeo==1)
+	if (findPhoto==1 && findURL==1 && findGeo==1) /* CASE 1. ALL 3 */ 
 	{
-
 		 findCard(filep,'g',geoArray); 
 		 findCard(filep,'u',urlArray); 
 		 findCard(filep,'p',photoArray); 
@@ -545,7 +553,66 @@ int vcfSelect( VcFile *const filep, const char *which)
 		 for (i=0;i<sizeof(urlArray);i++)
 		 	printf(" %d\n", urlArray[i]);
 
-	}
+
+		 if (sizeof(photoArray)==sizeof(geoArray) && sizeof(photoArray)==sizeof(urlArray)) /*potential for matching */
+		 {
+		 	for (i=0;i<sizeof(photoArray);i++)
+		 	{
+		 		if (photoArray[i]==geoArray[i] && photoArray[i]==urlArray[i])
+		 		{
+		 			matchedArray[matchedCounter++]=photoArray[i];
+		 		}
+		 		
+		 	}
+		 }	
+
+		 else
+		 {
+		 		 	fprintf(stderr,"No cards selected");
+		 		 	return 1; 
+		 }
+
+		 for (i=0;i<sizeof(matchedArray);i++)
+		 {
+		 	printf(" FOUND @ %d\n",matchedArray[i] );
+		 }
+
+	} /* case 1 ends */ 
+
+
+		/* case 2 
+
+		/* case 3
+
+		/* case 4
+
+		/* case 5 
+
+		/* case 6 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*
