@@ -87,13 +87,13 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
 	if (outfile==NULL)
 	{
 		fprintf(stderr,"outfile is null \n");
-		return 1; 
+		return EXIT_FAILURE; 
 	}
 
 	if (filep==NULL)
 	{
 		fprintf(stderr,"filep is null \n");
-		return 1; 
+		return EXIT_FAILURE;
 	}
 
 	/* Adjust this to accurately display sorted cards later */ 
@@ -141,7 +141,7 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
      fprintf(outfile,"%d with geographic coordinates\n",geoCounter);
      fprintf(outfile,"%d in canonical form\n",canonCounter);
 
-
+     return EXIT_SUCCESS;
 
 }
 
@@ -287,7 +287,7 @@ int isSorted(const VcFile *  filep)
 	return 0; 
 }
 
-int cmpare( void  * card1, void * card2)
+int cmpare( const void  * card1, const void * card2)
 {
 	int result; 
 	int i = 0; 
@@ -434,10 +434,8 @@ int cmpare( void  * card1, void * card2)
 }
 int vcfSort(VcFile * const filep)
 {
-	int k = 0; 
-	int i = 0; 
-		qsort(filep->cardp,filep->ncards,sizeof(Vcard *),cmpare);
-
+	qsort(filep->cardp,filep->ncards,sizeof(Vcard *),cmpare);
+	return EXIT_SUCCESS; 
 	
 }
 
@@ -632,9 +630,8 @@ int vcfSelect( VcFile *const filep, const char *which)
     	fprintf(stderr,"No cards selected");
 		 return EXIT_FAILURE; 
     }
-
+	return EXIT_SUCCESS; 
 }
-
 /*
 
 	for(k = 0; k < filep->cardp[i]->nprops; k++)

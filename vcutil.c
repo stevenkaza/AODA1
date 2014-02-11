@@ -329,7 +329,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
         newStatus.linefrom = lineCounter;
     
     /* Satisfiying the "special" case where vcf is NULL */ 
-    if (vcf==NULL)free 
+    if (vcf==NULL) 
     {
   //    printf("PPLZPLZ\n");
       lineCounter=0; 
