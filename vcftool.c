@@ -15,6 +15,7 @@ Contact: skazavch@uoguelph.ca
 #include <stdio.h>
 #include <string.h>
 #include <strings.h>
+#include <assert.h>
 
 /*  freeVcard  
 frees an individual vcard from a vcard array.
@@ -34,6 +35,7 @@ int main(int argc, char * argv[])
 		return 1; 
 	}
 	filep = malloc(sizeof(VcFile));
+	assert(filep);
 	newStatus = readVcFile(stdin,filep);
 	if (newStatus.code!=OK)
 	{
@@ -69,8 +71,23 @@ int main(int argc, char * argv[])
 			vcfSort(filep);
 		    writeVcFile(stdout,filep); 
 		}
+
+		if (strcmp(argv[1],"-canon")==0)
+		{
+			vcfCanon(filep);
+			writeVcFile(stdout,filep);
+		}
 		return EXIT_SUCCESS; 
     }
+}
+int vcfCanProp(VcProp * const propp)
+{
+	return 0; 
+}
+
+int vcfCanon( VcFile *const filep )
+{
+	return EXIT_SUCCESS;
 }
 
 int vcfInfo( FILE *const outfile, const VcFile *filep )
@@ -204,8 +221,10 @@ int isSorted(const VcFile *  filep)
 
 
 		nameValue1 = (char*)calloc(strlen(filep->cardp[i]->prop[nCard1].value)+1,sizeof(char));
+		assert(nameValue1);
 		strcpy(nameValue1,filep->cardp[i]->prop[nCard1].value); 
 		nameValue2 = (char*)calloc(strlen(filep->cardp[i+1]->prop[nCard2].value)+1,sizeof(char));
+		assert(nameValue2);
 		strcpy(nameValue2,filep->cardp[i+1]->prop[nCard2].value); 
 		lastName1 = strtok(nameValue1,";"); 
 		lastName2 = strtok(nameValue2,";"); 
@@ -237,6 +256,8 @@ int isSorted(const VcFile *  filep)
 			/* Copying the strings before strtoking as strtok causes headaches */ 
 			nameValue1Copy=malloc(sizeof(strlen(nameValue1)));
 			nameValue2Copy=malloc(sizeof(strlen(nameValue2)));
+			assert(nameValue1Copy);
+			assert(nameValue2Copy);
 			strcpy(nameValue1Copy,nameValue1); 
 			strcpy(nameValue2Copy,nameValue2);
 			firstName1 = strtok(nameValue1Copy,"\n"); 
@@ -384,6 +405,8 @@ int cmpare( const void  * card1, const void * card2)
 		/* Copying the strings before strtoking as strtok causes headaches */ 
 		nameValue1Copy=malloc(sizeof(strlen(nameValue1)));
 		nameValue2Copy=malloc(sizeof(strlen(nameValue2)));
+		assert(nameValue1Copy);
+		assert(nameValue2Copy);
 		strcpy(nameValue1Copy,nameValue1); 
 		strcpy(nameValue2Copy,nameValue2);
 		firstName1 = strtok(nameValue1Copy,"\n"); 
