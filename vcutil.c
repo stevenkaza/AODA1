@@ -89,7 +89,6 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
 
 
    }/*end of while loop */ 
-    printf("i=%d\n",i );
     return newStatus;
 }
 
@@ -136,7 +135,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             goto end;
          }
          newStatus=getUnfolded(vcf,&buff);
-         printf("Buff = %s\n\n",buff);
+
 
 
 	
@@ -164,7 +163,6 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
         {
             if (strcmp("BEGIN:VCARD",buff)==0) 
             {
-	              printf("here?\n");
                 newStatus.code =BEGEND; 
                 goto end;
             }
@@ -181,7 +179,6 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             }
             else
             {
-                printf("here?\n");
                 newStatus.code = BEGEND;
                 goto end; 
             }
@@ -216,7 +213,6 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 
        if (strstr(buff,"VERSION:")!=NULL)
        {
-	    //    printf("i = %d, buff = %s\n",i,buff);
           versionFlag=1;
       	  if (i!=0)
       	     	versionFlag=0;
