@@ -18,6 +18,10 @@ int main(int argc, char * argv[])
 
 	filep = malloc(sizeof(VcFile));
 	newStatus = readVcFile(stdin,filep);
+	if (newStatus.code!=OK)
+	{
+		fprintf("%d code detected from vcutil \n");
+	}
 //	newStatus=writeVcFile(stdout,filep);
 
 	if (argv[1]!=NULL)
@@ -577,11 +581,9 @@ int vcfSelect( VcFile *const filep, const char *which)
 	   {
 	   	if (urlFound==1)
 	   	{
-	   		printf("WE FOUND URL @ card %d \n",i );
 	   	}
 	   	else
 	   	{
-	   		printf("DOES IT GO HERE?, i = %d\n",i);
 	   		freeVcard(filep,i);
 	   	}
 
@@ -611,18 +613,15 @@ int vcfSelect( VcFile *const filep, const char *which)
 	{
 		if (filep->cardp[i]!=NULL)
 		{
-			printf("i=%d, valu = %s\n",i,filep->cardp[i]->prop[0].value );
-			oneCard=1; 
+			oneCard=1; /* stating that least one card was found */ 
 		}
 
 		if (filep->cardp[i]==NULL)
-		{
 			cardsRemoved++; /* Keep track of how many are null in order to update the ammount of cards
 		}
 	}
 	/* if all NULL */ 
 	filep->ncards= filep->ncards - cardsRemoved;
-	printf("filep->ncards = %d\n",filep->ncards );
 	if (oneCard == 0)
     {
     	fprintf(stderr,"No cards selected");
