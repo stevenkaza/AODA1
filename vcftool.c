@@ -120,7 +120,7 @@ int vcfInfo( FILE *const outfile, const VcFile *filep )
 
 /* Returns a 1 if the cards are not sorted
 	indexes through all cards*/ 
-int isSorted(VcFile * const filep)
+int isSorted(const VcFile *  filep)
 {
 	int result;
 	int i = 0; 
@@ -488,10 +488,18 @@ int vcfSelect( VcFile *const filep, const char *which)
 	int k = 0; 
 	/* Property flag */ 
 	int i = 0; 
+	int j = 0; 
+	Vcard * tmp = NULL;
 	int * matchedArray=NULL; 
+	/* if one, means to look for them */ 
 	int findGeo=0; 
 	int findPhoto = 0; 
 	int findURL = 0; 
+
+	/* if one, means they were found */ 
+	int foundPhoto=0; 
+	int foundURL = 0; 
+	int foundGeo = 0; 
 	int matchedCounter = 0; 
 	int * geoArray=NULL; 
 	int * photoArray=NULL; 
@@ -518,100 +526,137 @@ int vcfSelect( VcFile *const filep, const char *which)
 		}
 
 	}
-		if (findGeo==1)
-			geoArray=malloc(sizeof(int)*(filep->ncards+1)+1);
-		if (findURL==1)
-			urlArray=malloc(sizeof(int)*(filep->ncards+1)+1);
-		if (findPhoto==1)
-			photoArray=malloc(sizeof(int)*(filep->ncards+1)+1);
 
-		matchedArray=malloc(sizeof(int)*(filep->ncards+1));
-		
 
-		printf("BEFORE ANYTHING \n");
-		 printf("Size of parray = %d, size of url array = %d, size of geo array = %d \n",sizeof(photoArray),sizeof(urlArray),sizeof(geoArray));
+    for (i=0; i<filep->ncards;i++)
+    {
+    	photoFound=0;
+    	geoFound=0;
+    	urlFound=0; 
+    	for(k = 0; k < filep->cardp[i]->nprops; k++)
+    	{
 
-	if (findPhoto==1 && findURL==1 && findGeo==1) /* CASE 1. ALL 3 */ 
+
+      		  	if (filep->cardp[i]->prop[k].name==VCP_PHOTO)
+      		  		photoFound=1;
+      		  	
+ 				if (filep->cardp[i]->prop[k].name==VCP_URL)
+      		  		urlFound=1;
+      		  	
+  				if (filep->cardp[i]->prop[k].name==VCP_GEO)
+      		  		geoFound=1;	     		  	    		  	
+    	}/* end of card */ 
+
+    	if (findGeo==1 && findPhoto==1 && findURL==1) /* CASE ONE SEARCH FOR ALL 3*/ 
+    	{
+    		if (urlFound==1 && photoFound==1 && geoFound==1)/* ALL 3 WERE FOUND */ 
+    		{
+    			/* do nothing */ 
+    			matchedArray[matchedCounter++]=i; /*Storing the position card to be kept as i */
+
+    		}
+    		else /* Must free the useless card */ 
+    		{
+    			freeVcard(filep,i);
+    		}
+    	}
+
+    	else if (findGeo==1 && findPhoto==0 && findURL==1) /* CASE TWO SEARCH FOR JUST 2 geo/url*/ 
+    	{
+			if (urlFound==1 && geoFound==1)/* 2 WERE FOUND */ 
+    		{
+    			/* do nothing */ 
+
+    		}
+    		else /* Must free the useless card */ 
+    		{
+    			freeVcard(filep,i);
+    		}
+
+    	}
+
+    	else if (findGeo==1 && findPhoto==1 && findURL==0) /* CASE THREE SEARCH FOR JUST 2 geo/photo*/ 
+    	{
+    		if (geoFound==1 && photoFound==1)
+    		{
+    			/* Do nothing */ 
+    		}
+    		else
+    		{
+    			freeVcard(filep,i);
+    		}
+    	}
+
+
+    	else if (findGeo==0 && findPhoto==1 && findURL==1) /* CASE 4 SEARCH FOR JUST 2 url/photo*/ 
+    	{
+    		if (photoFound==1 && urlFound==1)
+    		{
+    			/* Do nothing */ 
+    		}
+    		else
+    		{
+    			freeVcard(filep,i);
+    		}
+    	}
+
+    	else if (findGeo==1 && findPhoto==0 && findURL==0) /* CASE FIVE JUST GEO */ 
+    	{
+    		if (geoFound==1)
+    		{
+    			/* Do nothing */ 
+    		}
+    		else
+    		{
+    			/* no geo was found. Free that card */ 
+    			freeVcard(filep,i);
+    		}
+
+
+
+    	}
+
+       else if (findGeo==0 && findPhoto==1 && findURL==0) /* CASE SIX JUST photo */ 
+       {
+			if (photoFound==1)
+			{
+
+			}
+			else
+			{
+				freeVcard(filep,i);
+			}
+	   }
+
+       else if (findGeo==0 && findPhoto==0 && findURL==1) /* CASE SIX JUST URL */ 
+	   {
+	   	if (urlFound==1)
+	   	{
+
+	   	}
+	   	else
+	   	{
+	   		freeVcard(filep,i);
+	   	}
+
+	   }
+    }
+    if (foundGeo==0 && foundURL==0 && foundPhoto==0)
+    {
+    	fprintf(stderr,"No cards selected");
+		 	return 1; 
+	}
+
+	for (i=0;i<filep->ncards;i++)
 	{
-		 findCard(filep,'g',geoArray); 
-		 findCard(filep,'u',urlArray); 
-		 findCard(filep,'p',photoArray); 
-
-		 printf("Size of parray = %d, size of url array = %d, size of geo array = %d \n",sizeof(photoArray),sizeof(urlArray),sizeof(geoArray));
-
-		 int i = 0; 
-		 printf("geo array\n");
-		 for (i=0;i<sizeof(geoArray);i++)
-		 {
-		 	printf(" %d\n", geoArray[i]);
-		 }
-		 printf("photo array\n");
-		 for (i=0;i<sizeof(photoArray);i++)
-		 	printf(" %d\n", photoArray[i]);
-
-		 printf("url array\n");
-		 for (i=0;i<sizeof(urlArray);i++)
-		 	printf(" %d\n", urlArray[i]);
+		if (filep->cardp[i]!=NULL)
+		{
+			printf("i=%d\n",i );
+		}
+	}
 
 
-		 if (sizeof(photoArray)==sizeof(geoArray) && sizeof(photoArray)==sizeof(urlArray)) /*potential for matching */
-		 {
-		 	for (i=0;i<sizeof(photoArray);i++)
-		 	{
-		 		if (photoArray[i]==geoArray[i] && photoArray[i]==urlArray[i])
-		 		{
-		 			matchedArray[matchedCounter++]=photoArray[i];
-		 		}
-		 		
-		 	}
-		 }	
-
-		 else
-		 {
-		 		 	fprintf(stderr,"No cards selected");
-		 		 	return 1; 
-		 }
-
-		 for (i=0;i<sizeof(matchedArray);i++)
-		 {
-		 	printf(" FOUND @ %d\n",matchedArray[i] );
-		 }
-
-	} /* case 1 ends */ 
-
-
-		/* case 2 
-
-		/* case 3
-
-		/* case 4
-
-		/* case 5 
-
-		/* case 6 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+} 
 
 
 
@@ -640,5 +685,25 @@ int vcfSelect( VcFile *const filep, const char *which)
 
 */
 
-}
 
+int freeVcard(const VcFile * filep, int i)
+{
+	int j = 0; 
+    Vcard * tmp;
+    VcProp * tmp2;
+    tmp = filep->cardp[i];
+     for(j = 0; j < tmp->nprops; j++)
+     {
+        tmp2 = &(tmp->prop[j]);
+		if (tmp2->partype!=NULL)
+	    	free(tmp2->partype);
+		if (tmp2->parval!=NULL)
+    		  free(tmp2->parval);
+		if (tmp2->value!=NULL)
+    		  free(tmp2->value);
+		if (tmp2->hook!=NULL)
+      		free(tmp2->hook);
+       }
+         free(tmp);
+        filep->cardp[i]==NULL;
+}
