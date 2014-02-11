@@ -36,7 +36,7 @@ int main(int argc, char * argv[])
 				fprintf(stderr,"Invalid arguement for -select. Must contain at least a p, u, g\n");
 				return 1; 
 			}
-			vcfSelect(filep,stdin);
+			vcfSelect(filep,argv[2]);
 		}
 		if (strcmp(argv[1],"-info")==0)
 		{
@@ -481,7 +481,7 @@ int findCard(VcFile * const filep,char property,int array[])
 
 
 	}
-}
+
 int vcfSelect( VcFile *const filep, const char *which)
 {
 	fprintf(stdout,"welcome to select\n");
@@ -499,9 +499,10 @@ int vcfSelect( VcFile *const filep, const char *which)
 	of cards where speicifc letter was found */ 
 	for (k=0;k<strlen(which);k++)
 	{
+
 		if (which[k]=='g')
 		{
-			findGeo = 1; 
+			findGeo = 1;  	
 			geoArray=malloc(sizeof(int)*filep->ncards);
 		}
 		if (which[k]=='u')
@@ -518,6 +519,8 @@ int vcfSelect( VcFile *const filep, const char *which)
 		}
 
 	}
+		printf("BEFORE ANYTHING \n");
+		 printf("Size of parray = %d, size of url array = %d, size of geo array = %d \n",sizeof(photoArray),sizeof(urlArray),sizeof(geoArray));
 
 	if (findPhoto==1 && findURL==1 && findGeo==1)
 	{
@@ -528,6 +531,19 @@ int vcfSelect( VcFile *const filep, const char *which)
 
 		 printf("Size of parray = %d, size of url array = %d, size of geo array = %d \n",sizeof(photoArray),sizeof(urlArray),sizeof(geoArray));
 
+		 int i = 0; 
+		 printf("geo array\n");
+		 for (i=0;i<sizeof(geoArray);i++)
+		 {
+		 	printf(" %d\n", geoArray[i]);
+		 }
+		 printf("photo array\n");
+		 for (i=0;i<sizeof(photoArray);i++)
+		 	printf(" %d\n", photoArray[i]);
+
+		 printf("url array\n");
+		 for (i=0;i<sizeof(url)i++)
+		 	printf(" %d\n", url[i]);
 
 	}
 
