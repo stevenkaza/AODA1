@@ -136,7 +136,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             goto end;
          }
          newStatus=getUnfolded(vcf,&buff);
-         //printf("Buff = %s\n\n",buff);
+         printf("Buff = %s\n\n",buff);
 
 
 	
@@ -523,7 +523,6 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
 {
 
     char * propName; 
-    char * copyString2;
     VcError error=OK; 
     
     propp->value=NULL;
@@ -541,7 +540,6 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
     /* String indexes for value and type */   
     int vIndex = 0; 
     int tIndex = 0; 
-    int m;
     char * value; 
     char *  valueValueString=NULL; /*to hold the value on the right side of the colon */ 
     int vvIndex = 0; 
@@ -765,18 +763,14 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
 
 VcStatus writeVcFile(FILE  *const  vcf, VcFile const *filep)
 {
-  int name; 
   int result = 0; 
+  /* Index's for cards and card properties */ 
   int i = 0;
   int k = 0;
   int j = 0; 
   int foldedFlag = 0; 
   int charCounter = 0; /* A counter for each line */ 
-  char * propNames[20];
-  for (i=0;i<20;i++)
-  {
-    //propName[i] = malloc(sizeof(char)*10);
-  }
+
 
   
 
@@ -948,21 +942,7 @@ void freeVcFile ( VcFile * const filep)
  
         for(i = 0; i < filep->ncards; i++)
         {
-                tmp = filep->cardp[i];
- 
-                for(j = 0; j < tmp->nprops; j++)
-                {
-                        tmp2 = &(tmp->prop[j]);
-			if (tmp2->partype!=NULL)
-  	                      free(tmp2->partype);
-  			if (tmp2->parval!=NULL)
-                       	      free(tmp2->parval);
-			if (tmp2->value!=NULL)
-                       	    free(tmp2->value);
-			if (tmp2->hook!=NULL)
-                       		 free(tmp2->hook);
-                }
-                free(tmp);
+                freevc
         }
         free(filep->cardp);
 }
@@ -1114,7 +1094,6 @@ int semiFirst(char * tempString)
 int periodFirst(char * tempString)
 {
     int i = 0; 
-    int periodFlag=0; 
     int semiFlag=0;
     int colonFlag=0;
     for (i=0;i<strlen(tempString);i++) /* Test string: Kirk:Stinky; */ 
