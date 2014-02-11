@@ -497,9 +497,9 @@ int vcfSelect( VcFile *const filep, const char *which)
 	int findURL = 0; 
 
 	/* if one, means they were found */ 
-	int foundPhoto=0; 
-	int foundURL = 0; 
-	int foundGeo = 0; 
+	int photoFound=0; 
+	int urlFound = 0; 
+	int geoFound = 0; 
 	int matchedCounter = 0; 
 	int * geoArray=NULL; 
 	int * photoArray=NULL; 
@@ -552,7 +552,7 @@ int vcfSelect( VcFile *const filep, const char *which)
     		if (urlFound==1 && photoFound==1 && geoFound==1)/* ALL 3 WERE FOUND */ 
     		{
     			/* do nothing */ 
-    			matchedArray[matchedCounter++]=i; /*Storing the position card to be kept as i */
+    			//matchedArray[matchedCounter++]=i; /*Storing the position card to be kept as i */
 
     		}
     		else /* Must free the useless card */ 
