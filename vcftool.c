@@ -15,6 +15,10 @@ Contact: skazavch@uoguelph.ca
 #include <stdio.h>
 #include <string.h>
 #include <strings.h>
+
+/*  frees an individual vcard from a vcard array.
+	i is the position in the array of which vcard to free */ 
+int freeVcard(const VcFile  * filep,int i);
 int main(int argc, char * argv[])
 {
 	VcStatus newStatus; 
@@ -28,7 +32,7 @@ int main(int argc, char * argv[])
 	newStatus = readVcFile(stdin,filep);
 	if (newStatus.code!=OK)
 	{
-		fprintf("%d code detected from vcutil \n",newStatus.code);
+		fprintf(stderr,"%d code detected from vcutil \n",newStatus.code);
 		return EXIT_FAILURE;
 	}
 
@@ -447,8 +451,6 @@ int vcfSelect( VcFile *const filep, const char *which)
 	int i = 0; 
 	int oneCard = 0; /*if one, means at least one card selected */ 
 	int j = 0; 
-	Vcard * tmp = NULL;
-	int * matchedArray=NULL; 
 	/* if one, means to look for them */ 
 	int findGeo=0; 
 	int findPhoto = 0; 
@@ -459,10 +461,7 @@ int vcfSelect( VcFile *const filep, const char *which)
 	int photoFound=0; 
 	int urlFound = 0; 
 	int geoFound = 0; 
-	int matchedCounter = 0; 
-	int * geoArray=NULL; 
-	int * photoArray=NULL; 
-	int * urlArray=NULL; 
+
 	/* Determining which properties to look for */ 
 	/* creating an array if needed to hold location
 	of cards where speicifc letter was found */ 
@@ -682,4 +681,5 @@ int freeVcard(const VcFile * filep, int i)
        }
          free(tmp);
         filep->cardp[i]=NULL;
+     return 0; 
 }
