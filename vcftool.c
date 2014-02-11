@@ -652,7 +652,7 @@ int vcfSelect( VcFile *const filep, const char *which)
 	{
 		if (filep->cardp[i]!=NULL)
 		{
-			printf("val @ %d = %s\n",filep->cardp[i].prop[0].value );
+			printf("val @ %d = %s\n",i,filep->cardp[i].prop[0].value );
 			oneCard = 1; 
 		}
 	}
@@ -714,5 +714,5 @@ int freeVcard(const VcFile * filep, int i)
       		free(tmp2->hook);
        }
          free(tmp);
-        filep->cardp[i]==NULL;
+        filep->cardp[i]=NULL;
 }
