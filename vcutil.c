@@ -760,6 +760,8 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
 
 VcStatus writeVcFile(FILE  *const  vcf, VcFile const *filep)
 {
+  VcStatus newStatus; 
+  newStatus.code=OK; 
   int result = 0; 
   /* Index's for cards and card properties */ 
   int i = 0;
@@ -769,8 +771,11 @@ VcStatus writeVcFile(FILE  *const  vcf, VcFile const *filep)
   int charCounter = 0; /* A counter for each line */ 
 
 
-  
-
+  if (vcf==NULL)
+  {
+	newStatus.code=IOERR;
+  	return newStatus; 
+  }
   for (i=0;i<filep->ncards;i++)/*Indexing through each card */
   {
 
@@ -799,7 +804,7 @@ VcStatus writeVcFile(FILE  *const  vcf, VcFile const *filep)
         if (filep->cardp[i]->prop[k].value!=NULL)
         {
           charCounter=charCounter+strlen(filep->cardp[i]->prop[k].value);
-          if (charCounter < 75)
+          if (charCounter < FOLD_LEN)
            fprintf(stdout,":%s\r\n",filep->cardp[i]->prop[k].value);
     else
     {
@@ -841,6 +846,7 @@ VcStatus writeVcFile(FILE  *const  vcf, VcFile const *filep)
 
 
 }
+	return newStatus;
 }
 
 int writePropName(VcPname name)
