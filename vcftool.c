@@ -10,20 +10,21 @@ Contact: skazavch@uoguelph.ca
 
 
 #include <stdlib.h>
-#include "vcutil.h"
 #include "vcftool.h"
 #include <stdio.h>
 #include <string.h>
 #include <strings.h>
 #include <assert.h>
-
+#include "vcutil.h"
 /*  freeVcard  
 frees an individual vcard from a vcard array.
 	i is the position in the array of which vcard to free */ 
 int freeVcard(const VcFile  * filep,int i);
 /* 
 	Returns a 1 if the cards are sorted */ 
-int isSorted(const VcFile *  filep)
+int isSorted(const VcFile *  filep);
+
+
 
 int main(int argc, char * argv[])
 {
@@ -65,6 +66,7 @@ int main(int argc, char * argv[])
 		if (strcmp(argv[1],"-info")==0)
 		{
 			vcfInfo(stdout,filep);
+			writeVcFile(stdout,filep); 
 		}
 		if (strcasecmp(argv[1],"-sort")==0)
 		{
@@ -87,6 +89,14 @@ int vcfCanProp(VcProp * const propp)
 
 int vcfCanon( VcFile *const filep )
 {
+	int i = 0; 
+	int k = 0; 
+	for (int i = 0; i<filep->ncards;i++)
+	{
+		for (k<filep->cardp[i]->nprops;k++
+
+
+	}
 	return EXIT_SUCCESS;
 }
 
@@ -620,17 +630,30 @@ int vcfSelect( VcFile *const filep, const char *which)
 
 	   }
     }
+	for (i=0;i<filep->ncards;i++)
+	{
+		if( filep->cardp[i]==NULL)
+		{
+			for (j=i;j<(filep->ncards-1);j++)
+			{
+				filep->cardp[j]=filep->cardp[j+1];
 
+			}
+
+		}
+		
+
+	}
 
 	/* Re shuffling the array */ 
-	/* Removing the null cards */ 
+	/* Removing the null cards 
 	for(i = (filep->ncards-1); i >= 0; i--)
 	{
-		/* Bubble Sort Style */ 
+		/* Bubble Sort Style  
 	    for(j = (filep->ncards-1); j >= 0; j--)
 	    {
 	    	/* if a card is found to be null, re arrange the array of cards 
-	     														* moving everything down */  
+	     														* moving everything down   
 	        if(filep->cardp[i] == NULL && filep->cardp[j] != NULL) 
 	        {
 	            filep->cardp[i] = filep->cardp[j];
@@ -639,7 +662,7 @@ int vcfSelect( VcFile *const filep, const char *which)
 	    }
    }
 
-
+*/
 	for (i=0;i<filep->ncards;i++)
 	{
 		if (filep->cardp[i]!=NULL)
@@ -648,8 +671,10 @@ int vcfSelect( VcFile *const filep, const char *which)
 		}
 
 		if (filep->cardp[i]==NULL)
-			cardsRemoved++; /* Keep track of how many are null in order to update the ammount of cards */	
-   } 
+		{	cardsRemoved++; /* Keep track of how many are null in order to update the ammount of cards */	
+		printf("i=%d\n",i);  
+}
+ } 
 
 	filep->ncards= filep->ncards - cardsRemoved;
 	if (oneCard == 0)
