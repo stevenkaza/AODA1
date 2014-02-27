@@ -120,6 +120,11 @@ int vcfCanon( VcFile *const filep )
 {
 	int i = 0; 
 	int k = 0; 
+	int result; 
+	int nameFlag=0; 
+	int geoFlag=0; 
+	int adrFlag=0; 
+	int telFlag=0; 
 	for (int i = 0; i<filep->ncards;i++)/* send each name to vcfcanonprpo  */
 	{
 		for (k=0;k<filep->cardp[i]->nprops;k++)
@@ -128,34 +133,42 @@ int vcfCanon( VcFile *const filep )
 			/* Sending them into 	vcfcanon */ 
 			if (filep->cardp[i]->prop[k].name == VCP_N)
 			{
-				vcfCanProp(&filep->cardp[i]->prop[k]);
+				nameFlag = vcfCanProp(&filep->cardp[i]->prop[k]);
 
 			}	
 			else if (filep->cardp[i]->prop[k].name == VCP_GEO)
 			{
-				vcfCanProp(&filep->cardp[i]->prop[k]);
+				geoFlag = vcfCanProp(&filep->cardp[i]->prop[k]);
 
 			}
 
 			else if (filep->cardp[i]->prop[k].name == VCP_TEL)
 			{
-				vcfCanProp(&filep->cardp[i]->prop[k]);
+				telFlag = vcfCanProp(&filep->cardp[i]->prop[k]);
 
 			}
 
 			else if (filep->cardp[i]->prop[k].name == VCP_ADR)
 			{
 
-				vcfCanProp(&filep->cardp[i]->prop[k]);
+				adrFlag = vcfCanProp(&filep->cardp[i]->prop[k]);
 			}
 
-
-
 		}
+
+		if (nameFlag==2)
 
 
 	}
 	return EXIT_SUCCESS;
+}
+
+
+int hasUID(vcard **const cardp) /* Returns a 1 if a UID exists */ 
+{
+
+
+
 }
 
 int vcfInfo( FILE *const outfile, const VcFile *filep )
