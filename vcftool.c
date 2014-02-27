@@ -77,20 +77,45 @@ int main(int argc, char * argv[])
 		if (strcmp(argv[1],"-canon")==0)
 		{
 			vcfCanon(filep);
-			writeVcFile(stdou	t,filep);
+			writeVcFile(stdout,filep);
 		}
 		return EXIT_SUCCESS; 
     }
 }
 int vcfCanProp(VcProp * const propp)
 {
-	if (filep->cardp[i]->prop[k].name != VCP_NAME && 
-	 filep->cardp[i]->prop[k].name !=VCP_GEO && 
-	 filep->cardp[i]->prop[k].name != VCP_ADR && 
-	 filep->cardp[i]->prop[k].name !=VCP_TEL)
+	if (propp->name != VCP_N && 
+	 propp->name !=VCP_GEO && 
+     propp->name != VCP_ADR && 
+	 propp->name !=VCP_TEL)
 	 return 0; 
-}
 
+
+
+	if (propp->name == VCP_N)
+	{
+		return 1; 
+	}
+
+
+	if (propp->name == VCP_GEO)
+	{
+
+		return 1;
+	}
+
+
+	if (propp->name == VCP_ADR)
+	{
+		return 2; 
+	}
+
+
+	if (propp->name == VCP_TEL)
+	{
+		return 1; 
+	}
+}
 int vcfCanon( VcFile *const filep )
 {
 	int i = 0; 
@@ -101,26 +126,27 @@ int vcfCanon( VcFile *const filep )
 		{
 
 			/* Sending them into 	vcfcanon */ 
-			if (filep->cardp[i]->prop[k].name == VCP_NAME)
+			if (filep->cardp[i]->prop[k].name == VCP_N)
 			{
-				vcfCanon(filep->cardp[i]->prop[k]);
+				vcfCanProp(&filep->cardp[i]->prop[k]);
 
 			}	
 			else if (filep->cardp[i]->prop[k].name == VCP_GEO)
 			{
-				vcfCanon(filep->cardp[i]->prop[k]);
+				vcfCanProp(&filep->cardp[i]->prop[k]);
 
 			}
 
 			else if (filep->cardp[i]->prop[k].name == VCP_TEL)
 			{
-				vcfCanon(filep-cardp[i]->prop[k]);
+				vcfCanProp(&filep->cardp[i]->prop[k]);
 
 			}
 
 			else if (filep->cardp[i]->prop[k].name == VCP_ADR)
 			{
-				vcfCanon(filep->cardp[i]->prop[k]);
+
+				vcfCanProp(&filep->cardp[i]->prop[k]);
 			}
 
 
