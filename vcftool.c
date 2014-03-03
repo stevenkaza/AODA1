@@ -28,7 +28,7 @@ int isSorted(const VcFile *  filep);
 
 int main(int argc, char * argv[])
 {
-	VcStatus newStatus; 
+        VcStatus newStatus; 
 	VcFile * filep=NULL;
 	if (stdin==NULL)
 	{
@@ -46,6 +46,11 @@ int main(int argc, char * argv[])
 
 	if (argv[1]!=NULL)
 	{
+	if (strcmp(argv[1],"-canon") != 0 && strcmp(argv[1],"-info")!=0 && strcmp(argv[1],"-select")!=0 && strcmp(argv[1],"-sort")!=0)
+		{
+		 fprintf(stderr,"Invalid option. Must be canon, info, select, or sort\n");
+		 return EXIT_FAILURE;  
+		}  
 		if (strcasecmp(argv[1],"-select")==0)
 		{
 			if (strlen(argv[2])>3 || strlen(argv[2])<1)
@@ -63,8 +68,13 @@ int main(int argc, char * argv[])
 			vcfSelect(filep,argv[2]);
 		    writeVcFile(stdout,filep); 
 		}
+		/* if its not select, there shouldnt be an argv2 */ 
+		else if (argv[2]!=NULL)
+			return EXIT_FAILURE;
 		if (strcmp(argv[1],"-info")==0)
 		{
+
+	
 			vcfInfo(stdout,filep);
 			writeVcFile(stdout,filep); 
 		}
@@ -79,6 +89,8 @@ int main(int argc, char * argv[])
 			vcfCanon(filep);
 			writeVcFile(stdout,filep);
 		}
+		
+		
 		return EXIT_SUCCESS; 
     }
 }
@@ -156,21 +168,21 @@ int vcfCanon( VcFile *const filep )
 
 		}
 
-		if (nameFlag==2)
 
 
-	}
+}
 	return EXIT_SUCCESS;
+
 }
 
 
-int hasUID(vcard **const cardp) /* Returns a 1 if a UID exists */ 
+/*int hasUID(vcard **const cardp) /* Returns a 1 if a UID exists 
 {
 
 
 
 }
-
+*/
 int vcfInfo( FILE *const outfile, const VcFile *filep )
 {
 	int i = 0; /* Index for going through cards */ 
