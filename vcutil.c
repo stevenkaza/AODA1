@@ -43,7 +43,7 @@ int semiFirst(char * tempString);
   RETURNS: string length in int of whatever property name was written to the file
   -1 if vcp_other */ 
 
-int writePropName(VcPname name);
+int writePropName(FILE * vcf, VcPname name);
 /* Returns a 2 if a period was found first */ 
 int periodFirst(char * string);
 int Contains(char * string, char pattern); 
@@ -766,11 +766,12 @@ VcStatus writeVcFile(FILE  *const  vcf, VcFile const *filep)
   /* Index's for cards and card properties */ 
   int i = 0;
   int k = 0;
-  int j = 0; 
+  int j = 0;
+  int errorFlag = 0; 
   int foldedFlag = 0; 
   int charCounter = 0; /* A counter for each line */ 
-
-
+  int lineCounter = 0; 
+  
   if (vcf==NULL)
   {
 	newStatus.code=IOERR;
@@ -778,35 +779,48 @@ VcStatus writeVcFile(FILE  *const  vcf, VcFile const *filep)
   }
   for (i=0;i<filep->ncards;i++)/*Indexing through each card */
   {
-
-    fprintf(stdout,"BEGIN:VCARD\r\n");
-    fprintf(stdout,"VERSION:3.0\r\n");
+    
+    errorFlag = fprintf(vcf,"BEGIN:VCARD\r\n");
+    if (errorFlag < 0)
+    {
+	newStatus.code = IOERR; 
+	return newStatus; 
+    }
+    fprintf(vcf,"VERSION:3.0\r\n");
     for (k=0;k<filep->cardp[i]->nprops;k++) /* Indexing through the properities of each card */ 
     {
         charCounter = 0; /* reset the charCounter for each line */ 
-        result=writePropName(filep->cardp[i]->prop[k].name);
+        result=writePropName(vcf,filep->cardp[i]->prop[k].name);
         if (result!=-1)
         {
           charCounter=charCounter+result; 
         }
+	else 
+	{
+		fprintf(vcf,"%s\r\n",filep->cardp[i]->prop[k].value);
+	}
         if (filep->cardp[i]->prop[k].partype!=NULL)
         {
               charCounter=charCounter+strlen(filep->cardp[i]->prop[k].partype);
-              fprintf(stdout,";TYPE=%s",filep->cardp[i]->prop[k].partype);
-        charCounter=charCounter + strlen(";TYPE=");
+              fprintf(vcf,";TYPE=%s",filep->cardp[i]->prop[k].partype);
+              charCounter=charCounter + strlen(";TYPE=");
         }
         if (filep->cardp[i]->prop[k].parval!=NULL)
         {
              charCounter=charCounter+strlen(filep->cardp[i]->prop[k].parval);
-             fprintf(stdout,";VALUE=%s",filep->cardp[i]->prop[k].parval);
-       charCounter = charCounter + strlen(";VALUE=");
+             fprintf(vcf,";VALUE=%s",filep->cardp[i]->prop[k].parval);
+             charCounter = charCounter + strlen(";VALUE=");
         }
         if (filep->cardp[i]->prop[k].value!=NULL)
         {
           charCounter=charCounter+strlen(filep->cardp[i]->prop[k].value);
           if (charCounter < FOLD_LEN)
-           fprintf(stdout,":%s\r\n",filep->cardp[i]->prop[k].value);
-    else
+          {
+		 if (result!=-1)
+	         fprintf(vcf,":%s\r\n",filep->cardp[i]->prop[k].value);
+   		lineCounter++; 
+	}
+     else
     {
     charCounter=charCounter-strlen(filep->cardp[i]->prop[k].value);
     for (j=0;j<strlen(filep->cardp[i]->prop[k].value);j++)
@@ -818,122 +832,123 @@ VcStatus writeVcFile(FILE  *const  vcf, VcFile const *filep)
       if (j==0)
       {
         charCounter++;
-        fprintf(stdout,":");
+        fprintf(vcf,":");
       }
-      if (charCounter ==75)
+      if (charCounter ==FOLD_LEN)
       {
          fprintf(stdout,"%c\r\n",filep->cardp[i]->prop[k].value[j]);
          fprintf(stdout," ");
          charCounter=0; 
          foldedFlag=1; 
-               continue; 
+	 lineCounter++;
+         continue; 
       } 
-      fprintf(stdout,"%c",filep->cardp[i]->prop[k].value[j]);     
+      fprintf(vcf,"%c",filep->cardp[i]->prop[k].value[j]);     
   
     }
     foldedFlag=0; 
-    fprintf(stdout,"\r\n");
-    
+    fprintf(vcf,"\r\n");
+    lineCounter++;   
 
-
-
-
-    }
+   }
         }
       
     }
-    fprintf(stdout,"END:VCARD\r\n");
-
+    fprintf(vcf,"END:VCARD\r\n");
+    lineCounter++; 
 
 }
-	return newStatus;
+	
+	newStatus.lineto = lineCounter+2; 
+	newStatus.linefrom = lineCounter+2; 
+	return newStatus; 
 }
 
-int writePropName(VcPname name)
+int writePropName(FILE * vcf,VcPname name)
 {
 
       if (name == VCP_N)
       {
-        fprintf(stdout,"N");
+        fprintf(vcf,"N");
         return 1; 
       }
       if (name == VCP_FN)
       {
-        fprintf(stdout,"FN");
+        fprintf(vcf,"FN");
         return 2; 
       }
       if (name == VCP_NICKNAME)
       {
-        fprintf(stdout,"NICKNAME");
+        fprintf(vcf,"NICKNAME");
         return strlen("NICKNAME");
       }
       if (name == VCP_PHOTO)
       {
-        fprintf(stdout,"PHOTO");
+        fprintf(vcf,"PHOTO");
         return strlen("PHOTO");
       }
       if (name == VCP_BDAY)
       {
-        fprintf(stdout,"BDAY");
+        fprintf(vcf,"BDAY");
         return strlen("BDAY");
       }
       if (name == VCP_ADR)
       {
-        fprintf(stdout,"ADR");
+        fprintf(vcf,"ADR");
         return strlen("ADR");
       }
       if (name == VCP_LABEL)
       {
-        fprintf(stdout,"LABEL");
+        fprintf(vcf,"LABEL");
         return strlen("LABEL");
 
       }
       if (name == VCP_TEL)
       {
-        fprintf(stdout,"TEL");
+        fprintf(vcf,"TEL");
         return strlen("TEL");
       }     
 
       if (name == VCP_EMAIL)
       {
-        fprintf(stdout,"EMAIL");
+        fprintf(vcf,"EMAIL");
         return strlen("EMAIL");
       }
       if (name == VCP_GEO)
       {
-        fprintf(stdout,"GEO");
+        fprintf(vcf,"GEO");
         return strlen("GEO");
       }
       if (name == VCP_TITLE)
       {
-        fprintf(stdout,"TITLE");
+        fprintf(vcf,"TITLE");
         return strlen("TITLE");
       }     
       if (name == VCP_ORG)
       {
-        fprintf(stdout,"ORG");
+        fprintf(vcf,"ORG");
         return strlen("ORG");
       }
       if (name == VCP_NOTE)
       {
-        fprintf(stdout,"NOTE");
+        fprintf(vcf,"NOTE");
         return strlen("NOTE");
       }
       if (name == VCP_UID)
       {
-        fprintf(stdout,"UID");
+        fprintf(vcf,"UID");
         return strlen("UID");
       }     
       if (name == VCP_URL)
       {
-        fprintf(stdout,"URL");
+        fprintf(vcf,"URL");
         return strlen("URL");
       }
       if (name == VCP_OTHER)
       { 
         return -1; 
       }
-      return -1; 
+      return 1; 
     
 }
 
