@@ -1,4 +1,4 @@
-:/* vcftool.c
+/* vcftool.c
 vCard  tool library 
 
 Author:Steven Kazavchinski 
@@ -730,14 +730,14 @@ int vcfSelect( VcFile *const filep, const char *which)
 	}
 
 	/* Re shuffling the array */ 
-	/* Removing the null cards 
+	/* Removing the null cards */
 	for(i = (filep->ncards-1); i >= 0; i--)
 	{
-		/* Bubble Sort Style  
+		/* Bubble Sort Style  */
 	    for(j = (filep->ncards-1); j >= 0; j--)
 	    {
 	    	/* if a card is found to be null, re arrange the array of cards 
-	     														* moving everything down   
+	     														* moving everything down   */
 	        if(filep->cardp[i] == NULL && filep->cardp[j] != NULL) 
 	        {
 		    fprintf(stderr,"i got here \n");
@@ -752,13 +752,13 @@ int vcfSelect( VcFile *const filep, const char *which)
 	{
 		if (filep->cardp[i]!=NULL)
 		{
-			oneCard=1; /* stating that least one card was found */ 
+			oneCard=1; /* stating that least one card was found */
 		}
 
 		if (filep->cardp[i]==NULL)
 		{	
 	         	cardsRemoved++; /* Keep track of how many are null in order to update the ammount of cards */	
-               }
+        }
  } 
 
 	filep->ncards= filep->ncards - cardsRemoved;
