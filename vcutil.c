@@ -787,6 +787,8 @@ VcStatus writeVcFile(FILE  *const  vcf, VcFile const *filep)
 	return newStatus; 
     }
     fprintf(vcf,"VERSION:3.0\r\n");
+    if (filep->cardp[i]==NULL)
+	return newStatus; 
     for (k=0;k<filep->cardp[i]->nprops;k++) /* Indexing through the properities of each card */ 
     {
         charCounter = 0; /* reset the charCounter for each line */ 

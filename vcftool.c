@@ -1,4 +1,4 @@
-/* vcftool.c
+:/* vcftool.c
 vCard  tool library 
 
 Author:Steven Kazavchinski 
@@ -66,7 +66,8 @@ int main(int argc, char * argv[])
 				return EXIT_FAILURE;
 			}
 			vcfSelect(filep,argv[2]);
-		    writeVcFile(stdout,filep); 
+    			 writeVcFile(stdout,filep); 
+  
 		}
 		/* if its not select, there shouldnt be an argv2 */ 
 		else if (argv[2]!=NULL)
@@ -76,12 +77,12 @@ int main(int argc, char * argv[])
 
 	
 			vcfInfo(stdout,filep);
-			writeVcFile(stdout,filep); 
+			//writeVcFile(stdout,filep); 
 		}
 		if (strcasecmp(argv[1],"-sort")==0)
 		{
 			vcfSort(filep);
-		    writeVcFile(stdout,filep); 
+		         writeVcFile(stdout,filep); 
 		}
 
 		if (strcmp(argv[1],"-canon")==0)
@@ -713,7 +714,7 @@ int vcfSelect( VcFile *const filep, const char *which)
 
 	   }
     }
-	for (i=0;i<filep->ncards;i++)
+ 	for (i=0;i<filep->ncards;i++)
 	{
 		if( filep->cardp[i]==NULL)
 		{
@@ -739,13 +740,14 @@ int vcfSelect( VcFile *const filep, const char *which)
 	     														* moving everything down   
 	        if(filep->cardp[i] == NULL && filep->cardp[j] != NULL) 
 	        {
+		    fprintf(stderr,"i got here \n");
 	            filep->cardp[i] = filep->cardp[j];
 	            filep->cardp[j] = NULL;
 	        }      
 	    }
    }
 
-*/
+
 	for (i=0;i<filep->ncards;i++)
 	{
 		if (filep->cardp[i]!=NULL)
@@ -754,17 +756,17 @@ int vcfSelect( VcFile *const filep, const char *which)
 		}
 
 		if (filep->cardp[i]==NULL)
-		{	cardsRemoved++; /* Keep track of how many are null in order to update the ammount of cards */	
-		printf("i=%d\n",i);  
-}
+		{	
+	         	cardsRemoved++; /* Keep track of how many are null in order to update the ammount of cards */	
+               }
  } 
 
 	filep->ncards= filep->ncards - cardsRemoved;
 	if (oneCard == 0)
-    {
-    	fprintf(stderr,"No cards selected");
+        {
+    	         fprintf(stderr,"No cards selected");
 		 return EXIT_FAILURE; 
-    }
+        }
 	return EXIT_SUCCESS; 
 }
 /*
