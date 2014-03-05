@@ -95,6 +95,11 @@ int main(int argc, char * argv[])
 		return EXIT_SUCCESS; 
     }
 }
+/* returns 0 if cannot be canolizied 
+   dont touch UID
+1 means its something that was in canon form already
+2 means it wasnt but now it is 
+3 canon attempted and failed */ 
 int vcfCanProp(VcProp * const propp)
 {
 	if (propp->name != VCP_N && 
@@ -103,7 +108,7 @@ int vcfCanProp(VcProp * const propp)
 	 propp->name !=VCP_TEL)
 	 return 0; 
 
-
+ /*
 
 	if (propp->name == VCP_N)
 	{
@@ -127,17 +132,30 @@ int vcfCanProp(VcProp * const propp)
 	if (propp->name == VCP_TEL)
 	{
 		return 1; 
-	}
+	}*/
+
+    return 0;
 }
+
 int vcfCanon( VcFile *const filep )
 {
 	int i = 0; 
 	int k = 0; 
 	int result; 
+	int uidPos = 0; 
 	int nameFlag=0; 
+	int nameFailed = 0; 
+	int geoFailed = 0; 
+	int telFailed = 0; 
+	int adrFailed = 0; 
 	int geoFlag=0; 
 	int adrFlag=0; 
 	int telFlag=0; 
+
+	int nameCan = 0;
+	int geoCan = 0; 
+	int adrCan = 0; 
+	int telCan = 0; 
 	for (int i = 0; i<filep->ncards;i++)/* send each name to vcfcanonprpo  */
 	{
 		for (k=0;k<filep->cardp[i]->nprops;k++)
@@ -147,6 +165,27 @@ int vcfCanon( VcFile *const filep )
 			if (filep->cardp[i]->prop[k].name == VCP_N)
 			{
 				nameFlag = vcfCanProp(&filep->cardp[i]->prop[k]);
+
+				if (nameFlag ==2)
+				{
+                     nameCan = 1; /* We have canonized at least one name */ 
+				}
+				if (nameFlag == 3)
+				{ /* No dash */
+					nameFailed = 1;  /* Name has failed a canonization */ 
+				}
+
+			    if (nameFlag == 0)
+			    {
+			    	break; 
+			    }
+
+			   if (nameFlag == 1) 
+			   	  nameCan = 1; 
+
+				else if (nameFlag == 3) 
+					then we make it a * 
+
 
 			}	
 			else if (filep->cardp[i]->prop[k].name == VCP_GEO)
@@ -163,27 +202,52 @@ int vcfCanon( VcFile *const filep )
 
 			else if (filep->cardp[i]->prop[k].name == VCP_ADR)
 			{
-
 				adrFlag = vcfCanProp(&filep->cardp[i]->prop[k]);
+
 			}
+
+		}
+        uidPos = hasUID(filep->cardp )
+		if (uidPos >=0)
+		{
+			 /* if the UID exists and is in proper format to be editted, get ready to edit it */ 
+             if (filep->cardp[i]->prop[uidPos].value[0] == '@' && filep->cardp[i]->prop[uidPos].value[5] =='@')
+             {
+                if (nameCan==1 && nameFailed!=1)
+                {
+                	filep->cardp[i]->prop[uidPos].value[1]=='N'; 
+                }
+
+
+             }
+             
+
 
 		}
 
 
 
-}
+   }
+   
+
 	return EXIT_SUCCESS;
 
 }
 
 
-/*int hasUID(vcard **const cardp) /* Returns a 1 if a UID exists 
+int hasUID(Vcard **const cardp) /* Returns a 1 if a UID exists */
 {
 
-
+     int k = 0; 
+     for (k=0; k< cardp->nprops;k++)
+     {
+     	if (cardp->prop[i].name==VCP_UID)
+     		return i; 
+     }
+     return -1; 
 
 }
-*/
+
 int vcfInfo( FILE *const outfile, const VcFile *filep )
 {
 	int i = 0; /* Index for going through cards */ 
