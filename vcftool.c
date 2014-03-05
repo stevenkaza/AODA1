@@ -23,7 +23,7 @@ int freeVcard(const VcFile  * filep,int i);
 /* 
 	Returns a 1 if the cards are sorted */ 
 int isSorted(const VcFile *  filep);
-
+int hasUID(Vcard **const cardp);
 
 
 int main(int argc, char * argv[])
@@ -104,7 +104,7 @@ int vcfCanProp(VcProp * const propp)
 {
 	if (propp->name != VCP_N && 
 	 propp->name !=VCP_GEO && 
-     propp->name != VCP_ADR && 
+         propp->name != VCP_ADR && 
 	 propp->name !=VCP_TEL)
 	 return 0; 
 
@@ -134,7 +134,7 @@ int vcfCanProp(VcProp * const propp)
 		return 1; 
 	}*/
 
-    return 0;
+    return 1;
 }
 
 int vcfCanon( VcFile *const filep )
@@ -151,6 +151,10 @@ int vcfCanon( VcFile *const filep )
 	int geoFlag=0; 
 	int adrFlag=0; 
 	int telFlag=0; 
+	VcProp * uidProp; 
+	
+	
+	
 
 	int nameCan = 0;
 	int geoCan = 0; 
@@ -168,7 +172,7 @@ int vcfCanon( VcFile *const filep )
 
 				if (nameFlag ==2)
 				{
-                     nameCan = 1; /* We have canonized at least one name */ 
+				    nameCan = 1; /* We have canonized at least one name */ 
 				}
 				if (nameFlag == 3)
 				{ /* No dash */
@@ -183,11 +187,9 @@ int vcfCanon( VcFile *const filep )
 			   if (nameFlag == 1) 
 			   	  nameCan = 1; 
 
-				else if (nameFlag == 3) 
-					then we make it a * 
+			        
 
 
-			}	
 			else if (filep->cardp[i]->prop[k].name == VCP_GEO)
 			{
 				geoFlag = vcfCanProp(&filep->cardp[i]->prop[k]);
@@ -207,31 +209,36 @@ int vcfCanon( VcFile *const filep )
 			}
 
 		}
-        uidPos = hasUID(filep->cardp )
-		if (uidPos >=0)
+        	uidPos = hasUID(&filep->cardp[i]);
+		/* If the uid property doesnt exist, create it
+		   and insert it to the end of the vcard */ 
+		if (uidPos < 0)
 		{
-			 /* if the UID exists and is in proper format to be editted, get ready to edit it */ 
-             if (filep->cardp[i]->prop[uidPos].value[0] == '@' && filep->cardp[i]->prop[uidPos].value[5] =='@')
-             {
-                if (nameCan==1 && nameFailed!=1)
-                {
-                	filep->cardp[i]->prop[uidPos].value[1]=='N'; 
-                }
+		    uidProp = malloc(sizeof(VcProp));
+		    uidProp->name=VCP_UID; 
+		    uidProp->value=malloc(sizeof(char)*8);
+		    strcpy(uidProp->value,"@xxxx@");
+                    filep->cardp[i]=realloc((filep->cardp[i]),sizeof(Vcard)+(sizeof(VcProp)*(k+1)));
+		    filep->cardp[i]->prop[k]=*uidProp;
+		    uidPos = k;
+		    
 
-
-             }
-             
-
-
+		  
 		}
-
-
-
-   }
-   
-
+		  
+			 /* if the UID exists and is in proper format to be editted, get ready to edit it */ 
+        	     if (filep->cardp[i]->prop[uidPos].value[0] == '@' && filep->cardp[i]->prop[uidPos].value[5] =='@')
+             	     {
+               	         if (nameCan==1 && nameFailed!=1)
+                        {
+                	//   filep->cardp[i]->prop[uidPos].value[1]='N'; 
+                        }
+                                                
+                      }
+		
+          }
+	}
 	return EXIT_SUCCESS;
-
 }
 
 
@@ -239,10 +246,10 @@ int hasUID(Vcard **const cardp) /* Returns a 1 if a UID exists */
 {
 
      int k = 0; 
-     for (k=0; k< cardp->nprops;k++)
+     for (k=0; k< (*cardp)->nprops;k++)
      {
-     	if (cardp->prop[i].name==VCP_UID)
-     		return i; 
+     	if ((*cardp)->prop[k].name==VCP_UID)
+     		return k; 
      }
      return -1; 
 
@@ -823,7 +830,7 @@ int vcfSelect( VcFile *const filep, const char *which)
 		{	
 	         	cardsRemoved++; /* Keep track of how many are null in order to update the ammount of cards */	
         }
- } 
+     } 
 
 	filep->ncards= filep->ncards - cardsRemoved;
 	if (oneCard == 0)
