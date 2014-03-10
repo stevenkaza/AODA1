@@ -46,7 +46,7 @@ class App:
 
 
     def fileOpen(self):
-                ftypes = [('Python files', '*.py'), ('All files', '*')]
+                ftypes = [('vCard files', '*.vcf'), ('All files', '*')]
                 fname = askopenfilename(filetypes=(ftypes))
                                            
                                         
@@ -57,7 +57,7 @@ class App:
                #        fl = dlg.show()
 
     def displayFileInfo(self,fname):
-        cmd = ['dir']
+        cmd = ['./vcftool','-info <',fname]
 #        print(subprocess.call('dir', shell=True))
         process = subprocess.Popen(cmd, shell=True,
         stdout=subprocess.PIPE, 
