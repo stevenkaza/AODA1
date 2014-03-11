@@ -34,6 +34,7 @@ class App:
         cvpTixThing.pack()
 
         fvpTixThing = tix.TList(self.fvpFrame,height = 10, width = 60)
+        #fvpTixThing.insert(END,"Testing ")
         fvpTixThing.pack()
 
         self.scrolledLog = ScrolledText(self.logFrame,width = 60,height = 10)
@@ -51,26 +52,28 @@ class App:
                                            
                                         
                 data= self.displayFileInfo(fname)
-                self.scrolledLog.insert(END, data)
+               # self.scrolledLog.insert(END, fname)
                                 
-                return data
                #        fl = dlg.show()
 
     def displayFileInfo(self,fname):
-        cmd = ['./vcftool','-info <',fname]
+        #cmd = ['./vcftool','-info','<','wow.vcf']
 #        print(subprocess.call('dir', shell=True))
-        process = subprocess.Popen(cmd, shell=True,
-        stdout=subprocess.PIPE, 
-        stderr=subprocess.PIPE)
-
+       	#cmd = ['./vcftool -info < wow.vcf'] 
+        os.system('./vcftool -info <samples-4.vcf >output.vcf')
+	#subprocess.check_output(["ls","-l"])
+        #process = subprocess.Popen(cmd, shell=True,
+        #stdout=subprocess.PIPE, 
+        #stderr=subprocess.PIPE)
+        with open("output.vcf") as f:
+            content = f.read()
+        self.scrolledLog.insert(END,content)
        # wait for the process to terminate
-        out, err = process.communicate()
-        errcode = process.returncode
+       # out, err = process.communicate()
+       # errcode = process.returncode
         #output = subprocess.Popen( cmd, stdout=subprocess.PIPE ).communicate()[0]
      #print (output)
-        print (out)
-        return out 
-
+     #   print (out)
 
        # os.system("./vcftool -info < %s" % fname)
     def exitProgram(self):
