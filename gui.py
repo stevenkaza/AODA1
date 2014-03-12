@@ -71,7 +71,13 @@ class App:
         upButton = Button(self.fvpFrame, text = "  Up  ")
         downButton = Button(self.fvpFrame, text = "Down ")
         downButton.pack(side= BOTTOM, padx = 10,pady=5)
-        upButton.pack(side=BOTTOM, padx = 10,pady = 5)
+        upButton.pack(side=BOTTOM, padx = 10,pady=5)
+        self.adjustPos()
+        
+    def adjustPos(self):
+        theLabel = Label(self.cvpFrame,text = "  ")
+        theLabel.pack(side = LEFT, padx=20)
+    
 
         
         
@@ -140,7 +146,7 @@ class App:
         #Creating the scrolled list 
         fileViewScrolledList = tix.ScrolledHList(self.fvpFrame, width = 70, options='hlist.columns 7 hlist.header 1 hlist.width 232')
         fileViewScrolledList.config(width = 450)
-        fileViewScrolledList.pack(side = RIGHT)
+        fileViewScrolledList.pack(side =RIGHT )
         #able to access hlist subwidget this way 
         fileView = fileViewScrolledList.hlist
       
@@ -166,13 +172,16 @@ class App:
         #scroll.pack(side=RIGHT, fill=Y)
         cardViewScrolledList = tix.ScrolledHList(self.cvpFrame, width = 70, options='hlist.columns 4 hlist.header 1')
         cardViewScrolledList.config(width = 450)
-        cardViewScrolledList.pack(side = BOTTOM,padx = 1)
+        cardViewScrolledList.pack(side = RIGHT)
         cardView = cardViewScrolledList.hlist
 
         cardView.header_create(0, text = "Name")
         cardView.header_create(1, text = "Type" )
         cardView.header_create(2, text = "Value")
         cardView.header_create(3, text = "Property")
+        for i in range(1,numRows):
+            cardView.add("T"+str(i))
+            cardView.item_create("T"+str(i),0,text = "card "+str(i))
 root = tix.Tk()
 app=App(root)
 #mlb = MultiListbox(tk, (('Subject', 40), ('Sender', 20), ('Date', 10)))
