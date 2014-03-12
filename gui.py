@@ -129,11 +129,14 @@ class App:
         fileView.header_create(4, text = '#ADR')
         fileView.header_create(5, text = "#TEL")
         fileView.header_create(6, text = 'Flags')
-
-
-
+        fileView.add("Row 1")
+        fileView.add("Row 2")
+        fileview.item.create("Row 1",0,"please")
         #fileViewself.Xadd(0,text = "wow")
-        #fileView.add(1,text = "wow1")
+       # for i in range(1,10):
+        #    fileView.add.at(i,2,text="wow")
+        #fileView.add(6,text = "2")
+
 
 
         #scroll = Scrollbar(self.fvpFrame, command=fileView.yview)
