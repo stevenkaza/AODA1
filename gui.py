@@ -18,9 +18,10 @@ class App:
         self.labelsInit()
         #Table/HList Init      
         self.tablesInit()
+        self.buttonsInit()
 
 
-        self.scrolledLog = ScrolledText(self.logFrame,width = 60,height = 10)
+        self.scrolledLog = ScrolledText(self.logFrame,width = 50,height = 10)
         #scrolledLog.insert(END, "This is line %d\n")
 
         self.scrolledLog.pack()
@@ -66,6 +67,14 @@ class App:
 
 
     #def framesInit(self):
+    def buttonsInit(self):
+        upButton = Button(self.fvpFrame, text = "  Up  ")
+        downButton = Button(self.fvpFrame, text = "Down ")
+        downButton.pack(side= BOTTOM, padx = 10,pady=5)
+        upButton.pack(side=BOTTOM, padx = 10,pady = 5)
+
+        
+        
 
 
     def menuInit(self):
@@ -99,29 +108,45 @@ class App:
         menuBar.add_cascade(label='Help', menu = helpMenu)
         root.config(menu=menuBar)
     def framesInit(self):
-        frame =  Frame(root)
+        frame =  Frame(root,width = "1024")
 
-        frame.pack()
+        frame.grid()
         self.fvpFrame = Frame(frame)
-        self.fvpFrame.pack(side = TOP)
+     #   self.fvpFrame.pack(side = LEFT)
         self.cvpFrame = Frame(frame)
+       
+
+
+        self.fvpFrame.grid(row=0,column = 0)
+    #    self.cvpFrame.pack(side=TOP)
+       # self.fvpFrame.pack(side =TOP)
+        # LOGS ---------------------#
 
         self.logFrame = Frame(frame)
-        self.logFrame.pack(side = BOTTOM)
-        
-        self.cvpFrame.pack(side=TOP)
-        self.fvpFrame.pack(side =TOP)
+        #self.logFrame.pack(side = BOTTOM)
+
+
+        self.fvpFrame.grid(row=0,column = 0)
+        self.cvpFrame.grid(row=1,column = 0)
+
+        self.logFrame.grid(row = 3,column = 0)
+
     def labelsInit(self):
         fileLabel = Label(self.fvpFrame,text = "File View Panel")
         fileLabel.pack(side=TOP)
         cardLabel = Label(self.cvpFrame,text = "Card View Panel")
         cardLabel.pack(side=TOP)
     def tablesInit(self):
-        fileView = tix.HList(self.fvpFrame,width = 60, columns = 7,header=True)	
-        fileView.pack(side = BOTTOM)
-
+        #Creating the scrolled list 
+        fileViewScrolledList = tix.ScrolledHList(self.fvpFrame, width = 70, options='hlist.columns 7 hlist.header 1 hlist.width 232')
+        fileViewScrolledList.config(width = 450)
+        fileViewScrolledList.pack(side = RIGHT)
+        #able to access hlist subwidget this way 
+        fileView = fileViewScrolledList.hlist
       
-      #  fileView.header(0)
+        #Creating the headers
+        numCards = 10
+        numRows = numCards 
         fileView.header_create(0, text = "Card #")
         fileView.header_create(1, text = "Name" )
         fileView.header_create(2, text = "Region")
@@ -129,23 +154,20 @@ class App:
         fileView.header_create(4, text = '#ADR')
         fileView.header_create(5, text = "#TEL")
         fileView.header_create(6, text = 'Flags')
-        fileView.add("Row 1")
-        fileView.add("Row 2")
-        fileview.item.create("Row 1",0,"please")
-        #fileViewself.Xadd(0,text = "wow")
-       # for i in range(1,10):
-        #    fileView.add.at(i,2,text="wow")
-        #fileView.add(6,text = "2")
-
-
+        # Loop for filling in Card #'s , creating rows based on # of cards 
+        for i in range(1,numRows):
+            fileView.add("R"+str(i))
+            fileView.item_create("R"+str(i),0,text = "card "+str(i))
 
         #scroll = Scrollbar(self.fvpFrame, command=fileView.yview)
 
         #fileView.configure(yscrollcommand=scroll.set)
 		
         #scroll.pack(side=RIGHT, fill=Y)
-        cardView = tix.HList(self.cvpFrame, width = 60,columns = 4,header = True)
-        cardView.pack(side = BOTTOM)
+        cardViewScrolledList = tix.ScrolledHList(self.cvpFrame, width = 70, options='hlist.columns 4 hlist.header 1')
+        cardViewScrolledList.config(width = 450)
+        cardViewScrolledList.pack(side = BOTTOM,padx = 1)
+        cardView = cardViewScrolledList.hlist
 
         cardView.header_create(0, text = "Name")
         cardView.header_create(1, text = "Type" )
