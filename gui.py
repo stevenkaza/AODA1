@@ -18,15 +18,20 @@ class App:
         self.labelsInit()
         #Table/HList Init      
         self.tablesInit()
+        self.scrolledLog = ScrolledText(self.logFrame,width = 50,height = 10)
+
         self.buttonsInit()
 
 
-        self.scrolledLog = ScrolledText(self.logFrame,width = 50,height = 10)
         #scrolledLog.insert(END, "This is line %d\n")
 
+        #clearButton = Button(self.scrolledLog, text = "Clear")
+       # clearButton.pack(side=LEFT)
+
+
+        logLabel = Label(self.logFrame,text = "Log Display Panel")
+        logLabel.pack(side=TOP)
         self.scrolledLog.pack()
-
-
 
     def fileOpen(self):
         ftypes = [('vCard files', '*.vcf'), ('All files', '*')]
@@ -68,17 +73,31 @@ class App:
 
     #def framesInit(self):
     def buttonsInit(self):
+        #FVP Buttons
         upButton = Button(self.fvpFrame, text = "  Up  ")
         downButton = Button(self.fvpFrame, text = "Down ")
+        addButton = Button(self.fvpFrame, text = "Add")
+        deleteButton = Button(self.fvpFrame, text = "Delete ")
+        revertButton = Button(self.fvpFrame, text = "Revert ")
+        commitButton = Button(self.fvpFrame, text = "Commit")
+        #Log button/clear
+        clearButton = Button(self.logFrame, text = "Clear",command = self.clearLog)
+        clearButton.pack(side=LEFT)
+          
         downButton.pack(side= BOTTOM, padx = 10,pady=5)
         upButton.pack(side=BOTTOM, padx = 10,pady=5)
+        addButton.pack(side= BOTTOM, padx = 10,pady=5)
+        deleteButton.pack(side=BOTTOM, padx = 10,pady=5)
+        revertButton.pack(side= BOTTOM, padx = 10,pady=5)
+        commitButton.pack(side=BOTTOM, padx = 10,pady=5)
         self.adjustPos()
         
     def adjustPos(self):
         theLabel = Label(self.cvpFrame,text = "  ")
         theLabel.pack(side = LEFT, padx=20)
     
-
+    def clearLog(self):
+        self.scrolledLog.delete(0.0,END)
         
         
 
@@ -140,8 +159,10 @@ class App:
     def labelsInit(self):
         fileLabel = Label(self.fvpFrame,text = "File View Panel")
         fileLabel.pack(side=TOP)
+        
         cardLabel = Label(self.cvpFrame,text = "Card View Panel")
         cardLabel.pack(side=TOP)
+
     def tablesInit(self):
         #Creating the scrolled list 
         fileViewScrolledList = tix.ScrolledHList(self.fvpFrame, width = 70, options='hlist.columns 7 hlist.header 1 hlist.width 232')
