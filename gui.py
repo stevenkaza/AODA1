@@ -3,7 +3,7 @@ import os
 import subprocess
 from tkinter import *
 from tkinter import tix
-
+from tkinter import ttk    
 from tkinter.scrolledtext import *
 from tkinter import filedialog
 from tkinter.filedialog import askopenfilename
@@ -16,26 +16,72 @@ class App:
         self.menuInit()
         #self.master.config(menu=menubar)
         #menuBar.pack()
-
         #file menu
 
         #Organize menu
         #self.framesInit()
-
-
         #Frames
         self.fvpFrame = Frame(frame)
+        self.fvpFrame.pack(side = TOP)
         self.cvpFrame = Frame(frame)
 
         self.logFrame = Frame(frame)
         self.logFrame.pack(side = BOTTOM)
+     #   fvpTree = ttk.Treeview(self.fvpFrame)
+      #  fvpTree.insert('',1, text='name first col')
+       # fvpTree.insert('',2, text='name l')
+        fileLabel = Label(self.fvpFrame,text = "File View Panel")
+        fileLabel.pack(side=TOP)
+        fileView = tix.HList(self.fvpFrame,width = 60, columns = 7,header=True)	
+        fileView.pack(side = BOTTOM)
 
-        cvpTixThing = tix.TList(self.cvpFrame,height = 10, width = 60)
-        cvpTixThing.pack()
+      
+      #  fileView.header(0)
+        fileView.header_create(0, text = "Card #")
+        fileView.header_create(1, text = "Name" )
+        fileView.header_create(2, text = "Region")
+        fileView.header_create(3, text = "Country")
+        fileView.header_create(4, text = '#ADR')
+        fileView.header_create(5, text = "#TEL")
+        fileView.header_create(6, text = 'Flags')
 
-        fvpTixThing = tix.TList(self.fvpFrame,height = 10, width = 60)
+
+
+        #fileViewself.Xadd(0,text = "wow")
+        #fileView.add(1,text = "wow1")
+
+
+        #scroll = Scrollbar(self.fvpFrame, command=fileView.yview)
+
+        #fileView.configure(yscrollcommand=scroll.set)
+		
+        #scroll.pack(side=RIGHT, fill=Y)
+        cardView = tix.HList(self.cvpFrame, width = 60,columns = 4,header = True)
+        cardView.pack(side = BOTTOM)
+        cardLabel = Label(self.cvpFrame,text = "Card View Panel")
+        cardLabel.pack(side=TOP)
+        cardView.header_create(0, text = "Name")
+        cardView.header_create(1, text = "Type" )
+        cardView.header_create(2, text = "Value")
+        cardView.header_create(3, text = "Property")
+
+		
+        #fvpTree.pack()
+     #   fvpTree['show'] = 'headings'
+
+       
+        # cvpTree = ttk.Treeview(self.cvpFrame)
+        #cvpTree.pack(side = BOTTOM)+
+      #  fvpBox = Listbox(self.fvpFrame, width=60, borderwidth=0, selectborderwidth=0,
+			 #relief=FLAT, exportselection=FALSE)
+       # cvpTixThing = tix.TList(self.cvpFrame,height = 10, width = 60)
+        #cvpTixThing.pack()
+       # fvpBox.pack()
+       # fvpBox = tix.TList(self.fvpFrame,height = 10, width = 60)
+        #cvpBox=Listbox(self.cvpFrame, width=60, borderwidth=0, selectborderwidth=0,
+			 #relief=FLAT, exportselection=FALSE)
         #fvpTixThing.insert(END,"Testing ")
-        fvpTixThing.pack()
+        #cvpBox.pack()
 
         self.scrolledLog = ScrolledText(self.logFrame,width = 60,height = 10)
         #scrolledLog.insert(END, "This is line %d\n")
@@ -60,7 +106,7 @@ class App:
         #cmd = ['./vcftool','-info','<','wow.vcf']
 #        print(subprocess.call('dir', shell=True))
        	#cmd = ['./vcftool -info < wow.vcf'] 
-        os.system('./vcftool -info <samples-4.vcf >output.vcf')
+        os.system('./vcftool -info <' +fname+' >output.vcf')
 	#subprocess.check_output(["ls","-l"])
         #process = subprocess.Popen(cmd, shell=True,
         #stdout=subprocess.PIPE, 
@@ -123,7 +169,7 @@ class App:
 
 root = tix.Tk()
 app=App(root)
-
+#mlb = MultiListbox(tk, (('Subject', 40), ('Sender', 20), ('Date', 10)))
 
 #fvp = Label(root, text = "File View Panel")
 #cvp = Label(root, text = "Card View Panel")
