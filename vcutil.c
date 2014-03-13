@@ -23,7 +23,8 @@ Contact: skazavch@uoguelph.ca
 #include <stdio.h>
 #include "vcutil.h"
 #include <ctype.h>
-
+#include "/usr/include/python3.1/Python.h"
+    
 
 /* Assigns property name into a VcProp struct
    Also determines which property name to assign based on string 
@@ -50,6 +51,9 @@ int Contains(char * string, char pattern);
 int checkPosition(char * string, int position); 
 void removeSpaces(char * string);
 int removeNewLine(char * string);
+
+PyObject *Vcf_readFile( PyObject *self, PyObject *args ); 
+
 VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
 {
     /* Assigning default values for filep */ 
@@ -980,6 +984,44 @@ void freeVcFile ( VcFile * const filep)
         }
         free(filep->cardp);
 }
+
+
+ PyObject *Vcf_readFile( PyObject *self, PyObject *args )
+ {
+      char *filename;
+      VcStatus status; 
+      VcFile * filep = NULL; 
+      filep = malloc(sizeof(VcFile));
+
+      /* Coverting python object to c file type and storing it in filename */ 
+      PyArg_ParseTuple(args, "s", &filename ); 
+
+      /* How would VcFile struct get to readvcfile??? */
+      status = readvcfile(filename,filep);    
+      prinf("# of cards = %d\n",filep->ncards);
+
+
+ }
+
+static PyMethodDef vcfMethods[] = {
+
+{"readFile", Vcf_readFile, METH_VARARGS},
+{"getCard", Vcf_getCard, METH_VARARGS},
+{"freeFile", Vcf_freeFile, METH_NOARGS},
+{"writeFile", Vcf_writeFile, METH_VARARGS},
+{NULL, NULL} }; 
+
+static struct PyModuleDef vcfModuleDef = {
+
+  PyModuleDef_HEAD_INIT,
+  "Vcf", //enable "import Vcf"
+  NULL, //omit module documentation
+  -1, //module keeps state in global variables
+  vcfMethods //link module name "Vcf" to methods table };
+
+  PyMODINIT_FUNC PyInit_Vcf(void) { PyModule_Create( &vcfModuleDef ); 
+} 
+
 
 int assignPropName(VcProp * const propp,char * propName)
 {

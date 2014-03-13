@@ -12,12 +12,12 @@ Contact: skazavch@uoguelph.ca
 #include <stdlib.h>
 #include "vcftool.h"
 #include <stdio.h>
-#include <string.h>
+#include <string.h>	
 #include <strings.h>
 #include <assert.h>
 #include "vcutil.h"
-#include <Python.h>
-
+#include "/usr/include/python3.1/Python.h"
+		
 /*  freeVcard  
 frees an individual vcard from a vcard array.
 	i is the position in the array of which vcard to free */ 
@@ -30,8 +30,10 @@ int hasUID(Vcard **const cardp);
 
 int main(int argc, char * argv[])
 {
-        VcStatus newStatus; 
+    VcStatus newStatus; 
 	VcFile * filep=NULL;
+	/* How would VcFile struct get to readvcfile??? */
+
 	if (stdin==NULL)
 	{
 		fprintf(stderr, "%s\n", "No file specified");

@@ -6,6 +6,8 @@ from tkinter import tix
 from tkinter import ttk    
 from tkinter.scrolledtext import *
 from tkinter import filedialog
+import Vcf
+from Vcf import readFile
 from tkinter.filedialog import askopenfilename
 class App:
     def __init__(self,master):
@@ -52,7 +54,8 @@ class App:
         #stderr=subprocess.PIPE)
         with open("output.vcf") as f:
             content = f.read()
-        self.scrolledLog.insert(END,content)
+        self.scrolledLog.insert(END,content)	
+       status =  Vcf.readFile(fname)
        # wait for the process to terminate
        # out, err = process.communicate()
        # errcode = process.returncode
@@ -165,7 +168,7 @@ class App:
 
     def tablesInit(self):
         #Creating the scrolled list 
-        fileViewScrolledList = tix.ScrolledHList(self.fvpFrame, width = 70, options='hlist.columns 7 hlist.header 1 hlist.width 232')
+        fileViewScrolledList = tix.ScrolledHList(self.fvpFrame, width = 70, options='hlist.columns 7 hlist.header 1 ')
         fileViewScrolledList.config(width = 450)
         fileViewScrolledList.pack(side =RIGHT )
         #able to access hlist subwidget this way 
