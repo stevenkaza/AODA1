@@ -16,6 +16,8 @@ Contact: skazavch@uoguelph.ca
 #include <strings.h>
 #include <assert.h>
 #include "vcutil.h"
+#include <Python.h>
+
 /*  freeVcard  
 frees an individual vcard from a vcard array.
 	i is the position in the array of which vcard to free */ 
@@ -231,7 +233,7 @@ int vcfCanon( VcFile *const filep )
              	     {
                	         if (nameCan==1 && nameFailed!=1)
                         {
-                	//   filep->cardp[i]->prop[uidPos].value[1]='N'; 
+                	      filep->cardp[i]->prop[uidPos].value[1]='N'; 
                         }
                                                 
                       }
