@@ -51,7 +51,7 @@ int Contains(char * string, char pattern);
 int checkPosition(char * string, int position); 
 void removeSpaces(char * string);
 int removeNewLine(char * string);
-
+PyObject* PyModule_Create2(PyModuleDef *module, int module_api_version);
 PyObject *Vcf_readFile( PyObject *self, PyObject *args ); 
 
 VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
