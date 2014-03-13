@@ -4,12 +4,12 @@ LIB  = -L. -lmylib
 
 all:	vcftool test
 #Done in Thornboro
-vcftool:	vcftool.c vcutil.c vcftool.o vcutil.o 
-	$(CC)	-I/usr/include/python3.1 -fPIC -c vcftool.o vcutil.o -o vcftool	$(LIBS) 
+vcftool:	vcftool.c  -I/usr/include/python3.1 -fPIC -c vcutil.c vcftool.o vcutil.o 
+	$(CC)	-I/usr/include/python3.1 -fPIC vcftool.o vcutil.o -o vcftool	$(LIBS) 
 
 
 test: 
-	gcc -I/usr/include/python3.1 -fPIC -c vcutil.c 
+	gcc  vcutil.c 
 	gcc -shared vcutil.o -o vcutil.so
 	chmod +x gui.py
 	./gui.py
