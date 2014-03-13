@@ -51,7 +51,7 @@ int Contains(char * string, char pattern);
 int checkPosition(char * string, int position); 
 void removeSpaces(char * string);
 int removeNewLine(char * string);
-PyObject* PyModule_Create2(PyModuleDef *module, int module_api_version);
+
 PyObject *Vcf_readFile( PyObject *self, PyObject *args ); 
 
 VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
@@ -990,12 +990,11 @@ void freeVcFile ( VcFile * const filep)
  {
       char *filename;
       VcStatus status; 
-      VcFile * filep = NULL;  
-      FILE * fp = NULL;
+      VcFile * filep = NULL; 
       filep = malloc(sizeof(VcFile));
-      fp = fopen(filename,"r");
       /* Coverting python object to c file type and storing it in filename */ 
       PyArg_ParseTuple(args, "s", &filename ); 
+      FILE *fp = fopen(filename,"r");
 
       /* How would VcFile struct get to readvcfile??? */
       status = readVcFile(fp,filep);    
@@ -1012,17 +1011,21 @@ static PyMethodDef vcfMethods[] = {
 //{"writeFile", Vcf_writeFile, METH_VARARGS},
 {NULL, NULL} }; 
 
-
 static struct PyModuleDef vcfModuleDef = {
 
-PyModuleDef_HEAD_INIT,
-"Vcf", //enable "import Vcf"
-NULL, //omit module documentation
--1, //module keeps state in global variables
-vcfMethods //link module name "Vcf" to methods table
+  PyModuleDef_HEAD_INIT,
+  "Vcf", //enable "import Vcf"
+  NULL, //omit module documentation
+  -1, //module keeps state in global variables
+  vcfMethods //link module name "Vcf" to methods table
  };
 
-PyMODINIT_FUNC PyInit_Vcf(void) { PyModule_Create( &vcfModuleDef ); } 
+  PyMODINIT_FUNC PyInit_vcutil(void) {
+	return  (PyModule_Create( &vcfModuleDef )); 
+} 
+
+
+
 
 
 
@@ -1199,25 +1202,13 @@ int periodFirst(char * tempString)
         }
       if (tempString[i] == ';')
         {
-          if (colonFlag ==1) /* We found colon first */ 
-            {
-                semiFlag = 0; 
-            }
-            else
-            {
-                return 1; 
-                semiFlag = 1; 
-            }
-            break;
-        }
-
         if (tempString[i]=='.' && colonFlag==0 && semiFlag==0)
           return 2; 
     }
  
  return 0;
 }
-
+}
 
 
 /* int Contains(char * string, char pattern);

@@ -6,8 +6,8 @@ from tkinter import tix
 from tkinter import ttk    
 from tkinter.scrolledtext import *
 from tkinter import filedialog
-import Vcf
-from Vcf import readFile
+import vcutil
+#from Vcf import readFile
 from tkinter.filedialog import askopenfilename
 class App:
     def __init__(self,master):
@@ -55,7 +55,7 @@ class App:
         with open("output.vcf") as f:
             content = f.read()
         self.scrolledLog.insert(END,content)	
-       status =  Vcf.readFile(fname)
+        status =  Vcf.readFile(fname)
        # wait for the process to terminate
        # out, err = process.communicate()
        # errcode = process.returncode
