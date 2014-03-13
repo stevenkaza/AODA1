@@ -10,9 +10,9 @@ vcftool:	vcftool.c vcutil.c vcftool.o vcutil.o
  
 test:
 	gcc -c vcutil.c -o vcutil.o -I/usr/include/python3.1 -L. -lpython3.1 -fPIC
-	gcc -shared vcutil.o -o vcutil.so
-	chmod +x gui.py
-#	./gui.py
+	gcc -shared vcutil.o -o Vcf.so
+	chmod +x xvcf.py
+	
  
  
 
