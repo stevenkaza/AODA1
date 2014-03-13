@@ -5,7 +5,7 @@ LIB  = -L. -lmylib
 all:	vcftool test
 #Done in Thornboro
 vcftool:	vcftool.c vcutil.c vcftool.o vcutil.o 
-	$(CC)	vcftool.o vcutil.o -o vcftool	$(LIBS) 
+	$(CC)	-I/usr/include/python3.1 -fPIC -c vcftool.o vcutil.o -o vcftool	$(LIBS) 
 
 
 test: 
