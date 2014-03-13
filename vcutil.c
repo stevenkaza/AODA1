@@ -990,14 +990,15 @@ void freeVcFile ( VcFile * const filep)
  {
       char *filename;
       VcStatus status; 
-      VcFile * filep = NULL; 
+      VcFile * filep = NULL;  
+      FILE * fp = null;
       filep = malloc(sizeof(VcFile));
-
+      fp = fopen(filename,"r");
       /* Coverting python object to c file type and storing it in filename */ 
       PyArg_ParseTuple(args, "s", &filename ); 
 
       /* How would VcFile struct get to readvcfile??? */
-      status = readvcfile(filename,filep);    
+      status = readVcFile(fp,filep);    
       prinf("# of cards = %d\n",filep->ncards);
 
 
