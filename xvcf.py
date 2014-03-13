@@ -11,6 +11,7 @@ from tkinter import ttk
 from tkinter.scrolledtext import *
 from tkinter import filedialog
 import Vcf
+from tkinter import messagebox 
 from tkinter.filedialog import askopenfilename
 class App:
     def __init__(self,master):
@@ -45,6 +46,8 @@ class App:
                # self.scrolledLog.insert(END, fname)
                                 
                #        fl = dlg.show()
+    def aboutProgram(self):
+        messagebox.showinfo("About this program","This is a visual utlity for using Vcards. It is compatibile with vCard versoin 3.0 only, and created by Steven Kazavchinski")
 
     def displayFileInfo(self,fname):
         #cmd = ['./vcftool','-info','<','wow.vcf']
@@ -135,7 +138,7 @@ class App:
 
         helpMenu.add_command(label = "Card flags and colours")
 
-        helpMenu.add_command(label = "About xvcf")
+        helpMenu.add_command(label = "About xvcf",command = self.aboutProgram)
         menuBar.add_cascade(label='Help', menu = helpMenu)
         root.config(menu=menuBar)
     def framesInit(self):

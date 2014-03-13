@@ -17,13 +17,14 @@ Contact: skazavch@uoguelph.ca
 /* Add vcp org to assignPropName */ 
 
 /* Store entire buff as a value if propname = other */ 
+#include <Python.h>
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include "vcutil.h"
 #include <ctype.h>
-#include "/usr/include/python3.1/Python.h"
+//#include "/usr/include/python3.1/Python.h"
     
 
 /* Assigns property name into a VcProp struct
@@ -1020,7 +1021,7 @@ static struct PyModuleDef vcfModuleDef = {
   vcfMethods //link module name "Vcf" to methods table
  };
 
-  PyMODINIT_FUNC PyInit_vcutil(void) {
+  PyMODINIT_FUNC PyInit_Vcf(void) {
 	return  (PyModule_Create( &vcfModuleDef )); 
 } 
 
