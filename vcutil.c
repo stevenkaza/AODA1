@@ -991,7 +991,7 @@ void freeVcFile ( VcFile * const filep)
       char *filename;
       VcStatus status; 
       VcFile * filep = NULL;  
-      FILE * fp = null;
+      FILE * fp = NULL;
       filep = malloc(sizeof(VcFile));
       fp = fopen(filename,"r");
       /* Coverting python object to c file type and storing it in filename */ 
@@ -999,7 +999,7 @@ void freeVcFile ( VcFile * const filep)
 
       /* How would VcFile struct get to readvcfile??? */
       status = readVcFile(fp,filep);    
-      prinf("# of cards = %d\n",filep->ncards);
+      printf("# of cards = %d\n",filep->ncards);
 
 
  }
@@ -1007,21 +1007,31 @@ void freeVcFile ( VcFile * const filep)
 static PyMethodDef vcfMethods[] = {
 
 {"readFile", Vcf_readFile, METH_VARARGS},
-{"getCard", Vcf_getCard, METH_VARARGS},
-{"freeFile", Vcf_freeFile, METH_NOARGS},
-{"writeFile", Vcf_writeFile, METH_VARARGS},
+//{"getCard", Vcf_getCard, METH_VARARGS},
+//{"freeFile", Vcf_freeFile, METH_NOARGS},
+//{"writeFile", Vcf_writeFile, METH_VARARGS},
 {NULL, NULL} }; 
+
 
 static struct PyModuleDef vcfModuleDef = {
 
-  PyModuleDef_HEAD_INIT,
-  "Vcf", //enable "import Vcf"
-  NULL, //omit module documentation
-  -1, //module keeps state in global variables
-  vcfMethods //link module name "Vcf" to methods table };
+PyModuleDef_HEAD_INIT,
+"Vcf", //enable "import Vcf"
+NULL, //omit module documentation
+-1, //module keeps state in global variables
+vcfMethods //link module name "Vcf" to methods table
+ };
 
-  PyMODINIT_FUNC PyInit_Vcf(void) { PyModule_Create( &vcfModuleDef ); 
-} 
+PyMODINIT_FUNC PyInit_Vcf(void) { PyModule_Create( &vcfModuleDef ); } 
+
+
+
+
+
+
+
+
+
 
 
 int assignPropName(VcProp * const propp,char * propName)
