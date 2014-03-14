@@ -10,12 +10,12 @@ from tkinter import tix
 from tkinter import ttk
 from tkinter.scrolledtext import *
 from tkinter import filedialog
-#import Vcf 
+import Vcf 
 from tkinter import messagebox 
 from tkinter.filedialog import askopenfilename
 class App:
     def __init__(self,master):
-      
+        self.fname = None 
         #menu bar intilization 
         self.menuInit()
         #frames intilization
@@ -32,21 +32,22 @@ class App:
 
         #scrolledLog.insert(END, "This is line %d\n")
 
-        #clearButton = Button(self.scrolledLog, text = "Clear")
+        #clearButton = Button(self.crcrolledLog, text = "Clear")
        # clearButton.pack(side=LEFT)
 
 
         logLabel = Label(self.logFrame,text = "Log Display Panel")
         logLabel.pack(side=TOP)
         self.scrolledLog.pack()
-        while (self.photoState==0):
-            print ("true")
+        #while (self.photoState==0):
+         #   print ("true")
             
 
     def fileOpen(self):
         ftypes = [('vCard files', '*.vcf'), ('All files', '*')]
-        returned_values['filename'] = askopenfilename(filetypes=(ftypes))                                                                     
-        data= self.displayFileInfo(returned_values['filename'])
+        returned_values = {}
+        self.fname = askopenfilename(filetypes=(ftypes))                                                                     
+        data= self.displayFileInfo()
                # self.scrolledLog.insert(END, fname)
                                 
                #         fl = dlg.show()
@@ -91,8 +92,8 @@ class App:
            photo = "p"
         if self.urlState == 1:
             url = "u"
-            
-        os.system('./vcftool -select '+returned_values['filename']+location+photo+url)
+        print (self.fname)            
+        os.system('./vcftool -select '+photo+' <'+self.fname)
             
         self.window.destroy()
         #changes the global variable to cancelled state, so main program knows to not select cards
@@ -107,7 +108,7 @@ class App:
     def drawChecks(self):
         integer = 2
         print("wtf")
-    def displayFileInfo(self,fname):
+    def displayFileInfo(self):
         #cmd = ['./vcftool','-info','<','wow.vcf']
 #        print(subprocess.call('dir', shell=True))
         #cmd = ['./vcftool -info < wow.vcf'] 
@@ -118,19 +119,20 @@ class App:
         with open("output.vcf") as f:
             content = f.read()
         self.scrolledLog.insert(END,content)    
-        status =  Vcf.readFile(fname)
+        status =  Vcf.readFile(self.fname)
         print (status)
         
         print (status)
         card = []
         Vcf.getCard(card)
         numCards = Vcf.getNumCards()
+        print ("Here comes the card")
         print(card)
         print("Numcards = "+str(numCards))
         self.updateFVP(numCards)
         print("Do we get here or no way?")
     # wait for the process to terminate
-        os.system('./vcftool -info <' +fname+' >output.vcf')
+        os.system('./vcftool -info <' +self.fname+' >output.vcf')
        # out, err = process.communicate()
        # errcode = process.returncode
         #output = subprocess.Popen( cmd, stdout=subprocess.PIPE ).communicate()[0]

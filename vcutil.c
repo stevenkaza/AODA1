@@ -993,7 +993,7 @@ void freeVcFile ( VcFile * const filep)
       VcStatus status; 
       static VcFile * filep = NULL; 
       if (filep!=NULL)
-	globalFilep=filep;
+	        globalFilep=filep;
       filep = malloc(sizeof(VcFile));
       /* Coverting python object to c file type and storing it in filename */ 
       PyArg_ParseTuple(args, "s", &filename ); 
@@ -1010,13 +1010,33 @@ void freeVcFile ( VcFile * const filep)
 PyObject * Vcf_getCard( PyObject *self, PyObject * args)
 {
 
+      static int  cardCount = 0; 
       PyObject * card;
+      PyObject * tuple; 
       printf("Does it segfault here?\n");
-      
+      int k = 0; 
+      VcFile * filep = globalFilep; 
       if (!PyArg_ParseTuple(args, "O", &card))
         return NULL;
       printf(" in get card %d\n",globalFilep->ncards);
-      return Py_BuildValue("i",globalFilep->ncards);      
+      printf("In get card value = %s",filep->cardp[cardCount]->prop[k].value);  
+     for (int k = 0; k<filep->cardp[cardCount]->nprops;k++)
+     {
+	tuple= Py_BuildValue("isss",filep->cardp[cardCount]->prop[k].name,filep->cardp[cardCount]->prop[k].value,
+	filep->cardp[cardCount]->prop[k].partype,filep->cardp[cardCount]->prop[k].parval);
+	PyList_Append(card,tuple);
+
+      }
+	cardCount++; 
+       return Py_BuildValue("O",card);      
+
+
+}
+
+PyObject * Vcf_getNumCards( PyObject * self, PyObject * args)
+{
+
+  return Py_BuildValue("i",globalFilep->ncards);
 
 
 }
@@ -1024,8 +1044,10 @@ static PyMethodDef vcfMethods[] = {
 
 {"readFile", Vcf_readFile, METH_VARARGS},
 {"getCard", Vcf_getCard, METH_VARARGS},
+{"getNumCards",Vcf_getNumCards,METH_VARARGS}
 //{"freeFile", Vcf_freeFile, METH_NOARGS},
-//{"writeFile", Vcf_writeFile, METH_VARARGS},
+//{"writeFile", Vcf_writeFile, METH_VARARGS}
+,
 {NULL, NULL} }; 
 
 static struct PyModuleDef vcfModuleDef = {
@@ -1297,5 +1319,6 @@ int removeNewLine(char * string)
     }
     return 0; 
 }
+
 
 
