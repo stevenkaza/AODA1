@@ -55,6 +55,7 @@ int removeNewLine(char * string);
 
 //PyObject *Vcf_readFile( PyObject *self, PyObject *args ); 
 static VcFile * globalFilep;
+
 VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
 {
     /* Assigning /default values for filep */ 
@@ -1000,8 +1001,8 @@ void freeVcFile ( VcFile * const filep)
       FILE *fp = fopen(filename,"r");
       globalFilep=filep;
       /* How would VcFile struct get to readvcfile??? */
-      status = readVcFile(fp,filep);    
-      printf("# of cards = %d\n",filep->ncards);
+      status = readVcFile(fp,globalFilep);    
+      printf("# of cards = %d\n",globalFilep->ncards);
       printf("code = %d\n",status.code);
       Py_BuildValue("i",status.code);
  }
@@ -1013,22 +1014,19 @@ PyObject * Vcf_getCard( PyObject *self, PyObject * args)
       static int  cardCount = 0; 
       PyObject * card;
       PyObject * tuple; 
-      printf("Does it segfault here?\n");
-      int k = 0; 
       VcFile * filep = globalFilep; 
       if (!PyArg_ParseTuple(args, "O", &card))
         return NULL;
-      printf(" in get card %d\n",globalFilep->ncards);
-      printf("In get card value = %s",filep->cardp[cardCount]->prop[k].value);  
      for (int k = 0; k<filep->cardp[cardCount]->nprops;k++)
      {
 	tuple= Py_BuildValue("isss",filep->cardp[cardCount]->prop[k].name,filep->cardp[cardCount]->prop[k].value,
 	filep->cardp[cardCount]->prop[k].partype,filep->cardp[cardCount]->prop[k].parval);
-	PyList_Append(card,tuple);
+	PyList_Append(card,tuple); /* Appending each tuple to a python list */ 
 
       }
-	cardCount++; 
-       return Py_BuildValue("O",card);      
+	cardCount++; /*Static counter knows which card program is currently at */
+       return Py_BuildValue("O",card);      /* sending the updated list back to
+					python */ 
 
 
 }
@@ -1247,6 +1245,7 @@ int periodFirst(char * tempString)
  
  return 0;
 }
+ return 0; 
 }
 
 

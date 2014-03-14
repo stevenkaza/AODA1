@@ -32,17 +32,11 @@ class App:
         self.buttonsInit()
 
 
-        #scrolledLog.insert(END, "This is line %d\n")
-
-        #clearButton = Button(self.crcrolledLog, text = "Clear")
-       # clearButton.pack(side=LEFT)
 
 
         logLabel = Label(self.logFrame,text = "Log Display Panel")
         logLabel.pack(side=TOP)
         self.scrolledLog.pack()
-        #while (self.photoState==0):
-         #   print ("true")
             
 
     def fileOpen(self):
@@ -83,7 +77,6 @@ class App:
         ok.grid(row=3,column=0)
         cancel.grid(row=3,column=1)
         
-        print(self.photoState)
     def launchSelect(self):
         location = ""
         photo = ""
@@ -94,7 +87,6 @@ class App:
            photo = "p"
         if self.urlState == 1:
             url = "u"
-        print (self.fname)            
         os.system('./vcftool -select '+photo+' <'+self.fname)
             
         self.window.destroy()
@@ -103,28 +95,17 @@ class App:
         self.cancelSelect = 1
         self.window.destroy
         
-    def checkStates(self,var):
-        print(var.get())
-        print ("anything")
      
     def drawChecks(self):
         integer = 2
-        print("wtf")
     def displayFileInfo(self):
-        #cmd = ['./vcftool','-info','<','wow.vcf']
-#        print(subprocess.call('dir', shell=True))
-        #cmd = ['./vcftool -info < wow.vcf'] 
-        #subprocess.check_output(["ls","-l"])
-        #process = subprocess.Popen(cmd, shell=True,
-        #stdout=subprocess.PIPE, 
-        #stderr=subprocess.PIPE)
+        #opening the output file and updating the log
         with open("output.vcf") as f:
             content = f.read()
+        self.scrolledLog.insert(END," ")
         self.scrolledLog.insert(END,content)    
         status =  Vcf.readFile(self.fname)
-        print (status)
         
-        print (status)
         self.cards = []
         i = 0
         numCards=Vcf.getNumCards() 
@@ -155,7 +136,8 @@ class App:
                   telCount = telCount + 1
             i = i + 1
             self.updateFVP(firstFNVal,adrCount,telCount,i)
-
+         #updating the CVP for the first intial card selection
+        self.updateCVP(self.cards[0])
        
 	 #cards(0)=card
         print ("Here comes the card")
@@ -193,19 +175,16 @@ class App:
     
             #self.cardViewScrolledList.hlist.item_create("R"+str(i),0,text = "card "+str(i))
         if (self.cvpHasData==1):
-            for i in card:
-                self.cardViewScrolledList.hlist.item_delete(i,0)
-                self.cardViewScrolledList.hlist.item_delete(i,1)
-                self.cardViewScrolledList.hlist.item_delete(i,2)
-                self.cardViewScrolledList.hlist.item_delete(i,3)
-                self.cardViewScrolledList.hlist.item_delete(i,4)
-
-                self.cvpHasData=0
-        for i in card:
+            i = 0
+            self.cardViewScrolledList.hlist.delete_all()
+            self.cvpHasData=0
+        i = 0 
+        for prop in card:
+            
             self.cardViewScrolledList.hlist.add(i)
-        i = 0
+            i=i+1
        # for card in cards: 
-        #i = 0 
+        i = 0 
         for Tuple in card:
             self.cardViewScrolledList.hlist.item_create(i,0,text= str(Tuple[0]))   
             self.cardViewScrolledList.hlist.item_create(i,1,text =Tuple[1])
