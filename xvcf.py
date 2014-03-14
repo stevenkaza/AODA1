@@ -130,11 +130,35 @@ class App:
              card=[]
              Vcf.getCard(card)	
              cards.append(card)
-       	     i = i + 1  
+       	     i = i + 1
+        foundFN = 0
+        adrCount = 0 
+        telCount = 0 
+        i = 0 
+        for Card in cards:
+            firstFNVal = None
+            adrCount = 0
+            telCount = 0
+            foundFN = 0 
+            for Tuple in Card:
+              #Looking for firstFN value
+              if (Tuple[0]==4 && foundFN==0):
+                  firstFNVal = Tuple[1]
+                  foundFN = 1
+              #  ADR Counting
+              if (Tuple[0]==8)
+                  adrCount = adrCount +1
+              # tel counting
+              if (Tuple[0]==10)
+                  telCount = telCount + 1
+              i = i + 1
+              self.updateFVP(firstFNVal,adrCount,telCount,i)
+
+       
 	 #cards(0)=card
         print ("Here comes the card")
         print("Numcards = "+str(numCards))
-        self.updateFVP(numCards,cards)
+        #self.updateCVP(numCards,cards)
         print("Do we get here or no way?")
     # wait for the process to terminate
         os.system('./vcftool -info <' +self.fname+' >output.vcf')
@@ -145,26 +169,33 @@ class App:
      #   print (out)
 
        # os.system("./vcftool -info < %s" % fname)
+    
     def exitProgram(self):
 
         root.destroy()
   #  def cvp(self):
         #
-    def updateFVP(self,numCards,cards):
+    def updateFVP(self,firstFNVal,adrCount,telCount,rowNum):
+        self.fileViewScrolledList.hlist.add("frow"+str(row-1))
+        #card sequence, displaying the results for each row 
+        self.fileViewScrolledList.hlist.item_create("frow"+(rowNum-1),0,text = str(row))
+        self.fileViewScrolledList.hlist.item_create("frow"+(rowNum-1),1,text = firstFNVal)
+        self.fileViewScrolledList.hlist.item_create("frow"+(rowNum-1),4,text = str(adrCount))
+        self.fileViewScrolledList.hlist.item_create("frow"+(rowNum-1),5,text = str(telCount))
+    def updateCVP(self,numCards,card):
         for i in range(0,1000):
             self.cardViewScrolledList.hlist.add("R"+str(i))
             #self.cardViewScrolledList.hlist.item_create("R"+str(i),0,text = "card "+str(i))
 
 
         i = 0
-        for card in cards: 
-               i = 0 
-               for Tuple in card:
-			
-                        self.cardViewScrolledList.hlist.item_create("R"+str(i),0,text= str(Tuple[0]))   
-                        self.cardViewScrolledList.hlist.item_create("R"+str(i),1,text =Tuple[1])
-                        self.cardViewScrolledList.hlist.item_create("R"+str(i),2, text =Tuple[2])
-                        i = i + 1
+       # for card in cards: 
+        #i = 0 
+        for Tuple in card:
+            self.cardViewScrolledList.hlist.item_create("R"+str(i),0,text= str(Tuple[0]))   
+            self.cardViewScrolledList.hlist.item_create("R"+str(i),1,text =Tuple[1])
+            self.cardViewScrolledList.hlist.item_create("R"+str(i),2, text =Tuple[2])
+            i = i + 1
     #def framesInit(self):
     def buttonsInit(self):
         #FVP Buttons
