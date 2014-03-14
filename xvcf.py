@@ -123,13 +123,18 @@ class App:
         print (status)
         
         print (status)
-        card = []
-        Vcf.getCard(card)
-        numCards = Vcf.getNumCards()
+        cards = []
+        i = 0
+        numCards=Vcf.getNumCards() 
+        while (i < numCards):
+             card=[]
+             Vcf.getCard(card)	
+             cards.append(card)
+       	     i = i + 1  
+	 #cards(0)=card
         print ("Here comes the card")
-        print(card)
         print("Numcards = "+str(numCards))
-        self.updateFVP(numCards)
+        self.updateFVP(numCards,cards)
         print("Do we get here or no way?")
     # wait for the process to terminate
         os.system('./vcftool -info <' +self.fname+' >output.vcf')
@@ -145,11 +150,21 @@ class App:
         root.destroy()
   #  def cvp(self):
         #
-    def updateFVP(self,numCards):
-        for i in range(1,numCards+1):
-            self.fileViewScrolledList.hlist.add("R"+str(i))
-            self.fileViewScrolledList.hlist.item_create("R"+str(i),0,text = "card "+str(i))
+    def updateFVP(self,numCards,cards):
+        for i in range(0,1000):
+            self.cardViewScrolledList.hlist.add("R"+str(i))
+            #self.cardViewScrolledList.hlist.item_create("R"+str(i),0,text = "card "+str(i))
 
+
+        i = 0
+        for card in cards: 
+               i = 0 
+               for Tuple in card:
+			
+                        self.cardViewScrolledList.hlist.item_create("R"+str(i),0,text= str(Tuple[0]))   
+                        self.cardViewScrolledList.hlist.item_create("R"+str(i),1,text =Tuple[1])
+                        self.cardViewScrolledList.hlist.item_create("R"+str(i),2, text =Tuple[2])
+                        i = i + 1
     #def framesInit(self):
     def buttonsInit(self):
         #FVP Buttons
@@ -272,18 +287,18 @@ class App:
         #fileView.(yscrollcommand=scroll.set)
         
         #scroll.pack(side=RIGHT, fill=Y)
-        cardViewScrolledList = tix.ScrolledHList(self.cvpFrame, width = 70, options='hlist.columns 4 hlist.header 1')
-        cardViewScrolledList.config(width = 450)
-        cardViewScrolledList.pack(side = RIGHT)
-        cardView = cardViewScrolledList.hlist
+        self.cardViewScrolledList = tix.ScrolledHList(self.cvpFrame, width = 70, options='hlist.columns 4 hlist.header 1')
+        self.cardViewScrolledList.config(width = 450)
+        self.cardViewScrolledList.pack(side = RIGHT)
+        cardView = self.cardViewScrolledList.hlist
 
         cardView.header_create(0, text = "Name")
         cardView.header_create(1, text = "Type" )
         cardView.header_create(2, text = "Value")
         cardView.header_create(3, text = "Property")
-        for i in range(1,numRows):
-            cardView.add("T"+str(i))
-            cardView.item_create("T"+str(i),0,text = "card "+str(i))
+       # for i in range(1,numRows):
+            #cardView.add("T"+str(i))
+            #cardView.item_create("T"+str(i),0,text = "card "+str(i))
 root = tix.Tk()
 app=App(root)
 #mlb = MultiListbox(tk, (('Subject', 40), ('Sender', 20), ('Date', 10)))
