@@ -194,17 +194,22 @@ class App:
             #self.cardViewScrolledList.hlist.item_create("R"+str(i),0,text = "card "+str(i))
         if (self.cvpHasData==1):
             for i in card:
-                self.cardViewScrolledList.hlist.item_delete("R"+str(i),0)
+                self.cardViewScrolledList.hlist.item_delete(i,0)
+                self.cardViewScrolledList.hlist.item_delete(i,1)
+                self.cardViewScrolledList.hlist.item_delete(i,2)
+                self.cardViewScrolledList.hlist.item_delete(i,3)
+                self.cardViewScrolledList.hlist.item_delete(i,4)
+
                 self.cvpHasData=0
         for i in card:
-            self.cardViewScrolledList.hlist.add("R"+str(i))
+            self.cardViewScrolledList.hlist.add(i)
         i = 0
        # for card in cards: 
         #i = 0 
         for Tuple in card:
-            self.cardViewScrolledList.hlist.item_create("R"+str(i),0,text= str(Tuple[0]))   
-            self.cardViewScrolledList.hlist.item_create("R"+str(i),1,text =Tuple[1])
-            self.cardViewScrolledList.hlist.item_create("R"+str(i),2, text =Tuple[2])
+            self.cardViewScrolledList.hlist.item_create(i,0,text= str(Tuple[0]))   
+            self.cardViewScrolledList.hlist.item_create(i,1,text =Tuple[1])
+            self.cardViewScrolledList.hlist.item_create(i,2, text =Tuple[2])
             i = i + 1
         self.cvpHasData = 1 
 
