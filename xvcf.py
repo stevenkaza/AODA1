@@ -142,17 +142,17 @@ class App:
             foundFN = 0 
             for Tuple in Card:
               #Looking for firstFN value
-              if (Tuple[0]==4 && foundFN==0):
+              if (Tuple[0]==4 and foundFN==0):
                   firstFNVal = Tuple[1]
                   foundFN = 1
               #  ADR Counting
-              if (Tuple[0]==8)
+              if (Tuple[0]==8):
                   adrCount = adrCount +1
               # tel counting
-              if (Tuple[0]==10)
+              if (Tuple[0]==10):
                   telCount = telCount + 1
-              i = i + 1
-              self.updateFVP(firstFNVal,adrCount,telCount,i)
+            i = i + 1
+            self.updateFVP(firstFNVal,adrCount,telCount,i)
 
        
 	 #cards(0)=card
@@ -162,13 +162,7 @@ class App:
         print("Do we get here or no way?")
     # wait for the process to terminate
         os.system('./vcftool -info <' +self.fname+' >output.vcf')
-       # out, err = process.communicate()
-       # errcode = process.returncode
-        #output = subprocess.Popen( cmd, stdout=subprocess.PIPE ).communicate()[0]
-     #print (output)
-     #   print (out)
 
-       # os.system("./vcftool -info < %s" % fname)
     
     def exitProgram(self):
 
@@ -176,12 +170,18 @@ class App:
   #  def cvp(self):
         #
     def updateFVP(self,firstFNVal,adrCount,telCount,rowNum):
-        self.fileViewScrolledList.hlist.add("frow"+str(row-1))
-        #card sequence, displaying the results for each row 
-        self.fileViewScrolledList.hlist.item_create("frow"+(rowNum-1),0,text = str(row))
-        self.fileViewScrolledList.hlist.item_create("frow"+(rowNum-1),1,text = firstFNVal)
-        self.fileViewScrolledList.hlist.item_create("frow"+(rowNum-1),4,text = str(adrCount))
-        self.fileViewScrolledList.hlist.item_create("frow"+(rowNum-1),5,text = str(telCount))
+        self.fileViewScrolledList.hlist.add((rowNum-1))
+        #card sequence, displaying the results for each row
+        strRowNum = str(rowNum)
+        sstrRowNum = str.format(strRowNum) 
+        strAdrCount = str(adrCount)
+        strTelCount = str(telCount)
+        print(strRowNum)
+        print(rowNum)
+        self.fileViewScrolledList.hlist.item_create((rowNum-1),0,text = strRowNum)
+        self.fileViewScrolledList.hlist.item_create((rowNum-1),1,text = firstFNVal)
+        self.fileViewScrolledList.hlist.item_create((rowNum-1),4,text = strAdrCount)
+        self.fileViewScrolledList.hlist.item_create((rowNum-1),5,text = strTelCount)
     def updateCVP(self,numCards,card):
         for i in range(0,1000):
             self.cardViewScrolledList.hlist.add("R"+str(i))
