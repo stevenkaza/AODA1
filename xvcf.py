@@ -45,8 +45,8 @@ class App:
 
     def fileOpen(self):
         ftypes = [('vCard files', '*.vcf'), ('All files', '*')]
-        self.fname = askopenfilename(filetypes=(ftypes))                                                                     
-        data= self.displayFileInfo(self.fname)
+        returned_values['filename'] = askopenfilename(filetypes=(ftypes))                                                                     
+        data= self.displayFileInfo(returned_values['filename'])
                # self.scrolledLog.insert(END, fname)
                                 
                #         fl = dlg.show()
@@ -92,7 +92,7 @@ class App:
         if self.urlState == 1:
             url = "u"
             
-        os.system('./vcftool -select '+self.fname+location+photo+url)
+        os.system('./vcftool -select '+returned_values['filename']+location+photo+url)
             
         self.window.destroy()
         #changes the global variable to cancelled state, so main program knows to not select cards
@@ -111,14 +111,14 @@ class App:
         #cmd = ['./vcftool','-info','<','wow.vcf']
 #        print(subprocess.call('dir', shell=True))
         #cmd = ['./vcftool -info < wow.vcf'] 
-    #subprocess.check_output(["ls","-l"])
+        #subprocess.check_output(["ls","-l"])
         #process = subprocess.Popen(cmd, shell=True,
         #stdout=subprocess.PIPE, 
         #stderr=subprocess.PIPE)
         with open("output.vcf") as f:
             content = f.read()
         self.scrolledLog.insert(END,content)    
-        status =  Vcf.readFile(self.fname)
+        status =  Vcf.readFile(fname)
         print (status)
         
         print (status)
@@ -130,7 +130,7 @@ class App:
         self.updateFVP(numCards)
         print("Do we get here or no way?")
     # wait for the process to terminate
-        os.system('./vcftool -info <' +self.fname+' >output.vcf')
+        os.system('./vcftool -info <' +fname+' >output.vcf')
        # out, err = process.communicate()
        # errcode = process.returncode
         #output = subprocess.Popen( cmd, stdout=subprocess.PIPE ).communicate()[0]
