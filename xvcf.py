@@ -3,7 +3,7 @@
 #CIS 2750 
 #A3 
 #0761977    
-import os
+import os 
 import subprocess
 from tkinter import *
 from tkinter import tix
@@ -194,22 +194,38 @@ class App:
 
     #def framesInit(self):
     def buttonsInit(self):
-        #FVP Buttons
-        upButton = Button(self.fvpFrame, text = "  Up  ")
-        downButton = Button(self.fvpFrame, text = "Down ")
-        addButton = Button(self.fvpFrame, text = "Add")
-        deleteButton = Button(self.fvpFrame, text = "Delete ")
-        revertButton = Button(self.fvpFrame, text = "Revert ")
-        commitButton = Button(self.fvpFrame, text = "Commit")
+        #CVP Buttons
+        upButton = Button(self.cvpFrame, text = "  Up  ")
+        downButton = Button(self.cvpFrame, text = "Down ")
+        addButton = Button(self.cvpFrame, text = "Add Property")
+        deleteButton = Button(self.cvpFrame, text = "Delete ")
+        revertButton = Button(self.cvpFrame, text = "Revert ")
+        commitButton = Button(self.cvpFrame, text = "Commit")
+
+        #FILE VIEW BUTTONS
+        mapButton = Button(self.cvpFrame, text = " Map Selected")
+        resetButton = Button(self.cvpFrame, text = "Reset Map")
+        browseButton = Button(self.cvpFrame, text = "Browse selected")
+        deleteSelButton = Button(self.cvpFrame, text = "Delete Selected ")
+        addButton = Button(self.cvpFrame, text = "Add card ")
+
         #Log button/clear
         clearButton = Button(self.logFrame, text = "Clear",command = self.clearLog)
-        clearButton.pack(side=LEFT)
+        clearButton.pack(side=BOTTOM)
           
         downButton.pack(side= BOTTOM, padx = 10,pady=5)
         upButton.pack(side=BOTTOM, padx = 10,pady=5)
         addButton.pack(side= BOTTOM, padx = 10,pady=5)
         deleteButton.pack(side=BOTTOM, padx = 10,pady=5)
         revertButton.pack(side= BOTTOM, padx = 10,pady=5)
+        commitButton.pack(side=BOTTOM, padx = 10,pady=5)
+
+        mapButton.pack(side= BOTTOM, padx = 10,pady=5)
+        resetButton.pack(side=BOTTOM, padx = 10,pady=5)
+        browseButton.pack(side= BOTTOM, padx = 10,pady=5)
+        deleteSelButton.pack(side=BOTTOM, padx = 10,pady=5)
+        addButton.pack(side= BOTTOM, padx = 10,pady=5)
+
         commitButton.pack(side=BOTTOM, padx = 10,pady=5)
         self.adjustPos()
         
