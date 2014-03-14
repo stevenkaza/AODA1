@@ -7,10 +7,10 @@ import os
 import subprocess
 from tkinter import *
 from tkinter import tix
-from tkinter import ttk    
+from tkinter import ttk
 from tkinter.scrolledtext import *
 from tkinter import filedialog
-import Vcf 
+#import Vcf 
 from tkinter import messagebox 
 from tkinter.filedialog import askopenfilename
 class App:
@@ -40,16 +40,56 @@ class App:
         logLabel.pack(side=TOP)
         self.scrolledLog.pack()
 
+
     def fileOpen(self):
         ftypes = [('vCard files', '*.vcf'), ('All files', '*')]
         fname = askopenfilename(filetypes=(ftypes))                                                                     
         data= self.displayFileInfo(fname)
                # self.scrolledLog.insert(END, fname)
                                 
-               #        fl = dlg.show()
+               #         fl = dlg.show()
     def aboutProgram(self):
         messagebox.showinfo("About this program","This is a visual utlity for using Vcards. It is compatibile with vCard versoin 3.0 only, and created by Steven Kazavchinski")
+    def selectCards(self):
+        
+        self.photoState = IntVar()
+        self.urlState = IntVar()
+        self.locationState = IntVar()
+        self.cancelSel = 0
+        
+        self.window = Toplevel()
+        test = 5
+        #Check buttons
+        location = Checkbutton(self.window, text = "Location", variable = self.locationState, \
+                 onvalue = 0, offvalue = 1, height=5, \
+                 width = 20)
 
+        photo = Checkbutton(self.window,text = "  Photo", variable = self.photoState)
+        
+        url = Checkbutton(self.window, text = "      URL",variable = self.urlState)
+        ok = Button(self.window,text = "OK",command = self.window.destroy)
+        cancel = Button(self.window,text="Cancel", command = self.cancelSel)
+
+
+        location.grid(row=0,column=0)
+        photo.grid(row=1,column=0)
+        url.grid(row=2,column=0)
+  
+        ok.grid(row=3,column=0)
+        cancel.grid(row=3,column=1)
+
+        #changes the global variable to cancelled state, so main program knows to not select cards
+    def cancelSelect(self):
+        self.cancelSelect = 1
+        self.window.destroy
+        
+    def checkStates(self,var):
+        print(var.get())
+        print ("anything")
+     
+    def drawChecks(self):
+        integer = 2
+        print("wtf")
     def displayFileInfo(self,fname):
         #cmd = ['./vcftool','-info','<','wow.vcf']
 #        print(subprocess.call('dir', shell=True))
@@ -140,7 +180,7 @@ class App:
         orgMenu = Menu(menuBar)
         orgMenu.add_command(label = "Sort")
         orgMenu.add_command(label = "Canonicalize")
-        orgMenu.add_command(label = "Select")
+        orgMenu.add_command(label = "Select",command = self.selectCards)
         orgMenu.add_command(label = "Undo")
 
         menuBar.add_cascade(label='Organize', menu = orgMenu)
@@ -182,6 +222,7 @@ class App:
         
         cardLabel = Label(self.cvpFrame,text = "Card View Panel")
         cardLabel.pack(side=TOP)
+    
 
     def tablesInit(self,numRows):
         #Creating the scrolled list 
@@ -232,5 +273,7 @@ app=App(root)
 #cvp = Label(root, text = "Card View Panel")
 #fvp.pack()
 #cvp.pack()
+print ("test")
+
 root.mainloop()
 
