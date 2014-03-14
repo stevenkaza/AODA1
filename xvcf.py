@@ -16,6 +16,8 @@ from tkinter.filedialog import askopenfilename
 class App:
     def __init__(self,master):
         self.fname = None 
+        self.cvpHasData = 0
+
         #menu bar intilization 
         self.menuInit()
         #frames intilization
@@ -187,11 +189,15 @@ class App:
 
 
     def updateCVP(self,card):
-        for i in range(0,1000):
-            self.cardViewScrolledList.hlist.add("R"+str(i))
+        
+    
             #self.cardViewScrolledList.hlist.item_create("R"+str(i),0,text = "card "+str(i))
-
-
+        if (self.cvpHasData==1):
+            for i in card:
+                self.cardViewScrolledList.hlist.item_delete("R"+str(i),0)
+                self.cvpHasData=0
+        for i in card:
+            self.cardViewScrolledList.hlist.add("R"+str(i))
         i = 0
        # for card in cards: 
         #i = 0 
@@ -200,6 +206,8 @@ class App:
             self.cardViewScrolledList.hlist.item_create("R"+str(i),1,text =Tuple[1])
             self.cardViewScrolledList.hlist.item_create("R"+str(i),2, text =Tuple[2])
             i = i + 1
+        self.cvpHasData = 1 
+
     #def framesInit(self):
     def buttonsInit(self):
         #FVP Buttons
