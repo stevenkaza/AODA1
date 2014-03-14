@@ -169,6 +169,10 @@ class App:
         root.destroy()
   #  def cvp(self):
         #
+    def key(event):
+        print ("pressed")
+        print(event.nearest(event.y))
+
     def updateFVP(self,firstFNVal,adrCount,telCount,rowNum):
         self.fileViewScrolledList.hlist.add((rowNum-1))
         #card sequence, displaying the results for each row
@@ -182,6 +186,8 @@ class App:
         self.fileViewScrolledList.hlist.item_create((rowNum-1),1,text = firstFNVal)
         self.fileViewScrolledList.hlist.item_create((rowNum-1),4,text = strAdrCount)
         self.fileViewScrolledList.hlist.item_create((rowNum-1),5,text = strTelCount)
+
+
     def updateCVP(self,numCards,card):
         for i in range(0,1000):
             self.cardViewScrolledList.hlist.add("R"+str(i))
@@ -291,7 +297,8 @@ class App:
 
     def tablesInit(self,numRows):
         #Creating the scrolled list 
-        self.fileViewScrolledList = tix.ScrolledHList(self.fvpFrame, width = 70, options='hlist.columns 7 hlist.header 1 ')
+        self.fileViewScrolledList = tix.ScrolledHList(self.fvpFrame, width = 70,
+         options='hlist.columns 7 hlist.header 1 ')
         self.fileViewScrolledList.config(width = 450)
         self.fileViewScrolledList.pack(side =RIGHT )
         #able to access hlist subwidget this way 
@@ -307,6 +314,8 @@ class App:
         fileView.header_create(4, text = '#ADR')
         fileView.header_create(5, text = "#TEL")
         fileView.header_create(6, text = 'Flags')
+        self.fileViewScrolledList.hlist.bind.("<Button-1>",key)
+
 
         # Loop for filling in Card #'s , creating rows based on # of cards 
      #   for i in range(1,numRows):
