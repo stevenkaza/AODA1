@@ -10,7 +10,7 @@ from tkinter import tix
 from tkinter import ttk    
 from tkinter.scrolledtext import *
 from tkinter import filedialog
-#import Vcf 
+import Vcf 
 from tkinter import messagebox 
 from tkinter.filedialog import askopenfilename
 class App:
@@ -66,7 +66,9 @@ class App:
         
         print (status)
         card = []
-        numCards=Vcf.getCard(card)
+        Vcf.getCard(card)
+        numCards = Vcf.getNumCards()
+        print(card)
         print("Numcards = "+str(numCards))
         self.updateFVP(numCards)
         print("Do we get here or no way?")
@@ -85,7 +87,7 @@ class App:
   #  def cvp(self):
         #
     def updateFVP(self,numCards):
-        for i in range(1,numCards):
+        for i in range(1,numCards+1):
             self.fileViewScrolledList.hlist.add("R"+str(i))
             self.fileViewScrolledList.hlist.item_create("R"+str(i),0,text = "card "+str(i))
 
