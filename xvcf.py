@@ -10,7 +10,7 @@ from tkinter import tix
 from tkinter import ttk    
 from tkinter.scrolledtext import *
 from tkinter import filedialog
-import Vcf
+import Vcf 
 from tkinter import messagebox 
 from tkinter.filedialog import askopenfilename
 class App:
@@ -23,7 +23,7 @@ class App:
         #Labels init
         self.labelsInit()
         #Table/HList Init      
-        self.tablesInit()
+        self.tablesInit(0)
         self.scrolledLog = ScrolledText(self.logFrame,width = 50,height = 10)
 
         self.buttonsInit()
@@ -53,7 +53,6 @@ class App:
         #cmd = ['./vcftool','-info','<','wow.vcf']
 #        print(subprocess.call('dir', shell=True))
        	#cmd = ['./vcftool -info < wow.vcf'] 
-        os.system('./vcftool -info <' +fname+' >output.vcf')
 	#subprocess.check_output(["ls","-l"])
         #process = subprocess.Popen(cmd, shell=True,
         #stdout=subprocess.PIPE, 
@@ -62,7 +61,16 @@ class App:
             content = f.read()
         self.scrolledLog.insert(END,content)	
         status =  Vcf.readFile(fname)
-       # wait for the process to terminate
+        print (status)
+        
+       	print (status)
+        card = []
+        numCards=Vcf.getCard(card)
+        print("Numcards = "+str(numCards))
+        self.updateFVP(numCards)
+        print("Do we get here or no way?")
+	# wait for the process to terminate
+       	os.system('./vcftool -info <' +fname+' >output.vcf')
        # out, err = process.communicate()
        # errcode = process.returncode
         #output = subprocess.Popen( cmd, stdout=subprocess.PIPE ).communicate()[0]
@@ -76,9 +84,12 @@ class App:
     def cvp(self):
         print ("Card View Panel")
 
-    def fvp(self):
+    def updateFVP(self,numCards):
         print ("File view Panel")
-
+        self.tablesInit(numCards)
+        for i in range(1,numCards):
+            self.fileView.add("R"+str(i))
+            self.fileView.item_create("R"+str(i),0,text = "card "+str(i))
 
     #def framesInit(self):
     def buttonsInit(self):
@@ -172,28 +183,28 @@ class App:
         cardLabel = Label(self.cvpFrame,text = "Card View Panel")
         cardLabel.pack(side=TOP)
 
-    def tablesInit(self):
+    def tablesInit(self,numRows):
         #Creating the scrolled list 
-        fileViewScrolledList = tix.ScrolledHList(self.fvpFrame, width = 70, options='hlist.columns 7 hlist.header 1 ')
-        fileViewScrolledList.config(width = 450)
-        fileViewScrolledList.pack(side =RIGHT )
+        self.fileViewScrolledList = tix.ScrolledHList(self.fvpFrame, width = 70, options='hlist.columns 7 hlist.header 1 ')
+        self.fileViewScrolledList.config(width = 450)
+        self.fileViewScrolledList.pack(side =RIGHT )
         #able to access hlist subwidget this way 
-        fileView = fileViewScrolledList.hlist
+        self.fileView = self.fileViewScrolledList.hlist
       
         #Creating the headers
         numCards = 10
         numRows = numCards 
-        fileView.header_create(0, text = "Card #")
-        fileView.header_create(1, text = "Name" )
-        fileView.header_create(2, text = "Region")
-        fileView.header_create(3, text = "Country")
-        fileView.header_create(4, text = '#ADR')
-        fileView.header_create(5, text = "#TEL")
-        fileView.header_create(6, text = 'Flags')
+        self.fileView.header_create(0, text = "Card #")
+        self.fileView.header_create(1, text = "Name" )
+        self.fileView.header_create(2, text = "Region")
+        self.fileView.header_create(3, text = "Country")
+        self.fileView.header_create(4, text = '#ADR')
+        self.fileView.header_create(5, text = "#TEL")
+        self.fileView.header_create(6, text = 'Flags')
         # Loop for filling in Card #'s , creating rows based on # of cards 
         for i in range(1,numRows):
-            fileView.add("R"+str(i))
-            fileView.item_create("R"+str(i),0,text = "card "+str(i))
+             self.fileView.add("R"+str(i))
+             self.fileView.item_create("R"+str(i),0,text = "card "+str(i))
 
         #scroll = Scrollbar(self.fvpFrame, command=fileView.yview)
 

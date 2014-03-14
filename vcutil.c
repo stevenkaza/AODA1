@@ -17,7 +17,7 @@ Contact: skazavch@uoguelph.ca
 /* Add vcp org to assignPropName */ 
 
 /* Store entire buff as a value if propname = other */ 
-#include <Python.h>
+#include "/usr/include/python3.1/Python.h"
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
@@ -53,11 +53,11 @@ int checkPosition(char * string, int position);
 void removeSpaces(char * string);
 int removeNewLine(char * string);
 
-PyObject *Vcf_readFile( PyObject *self, PyObject *args ); 
-
+//PyObject *Vcf_readFile( PyObject *self, PyObject *args ); 
+static VcFile * globalFilep;
 VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
 {
-    /* Assigning default values for filep */ 
+    /* Assigning /default values for filep */ 
     filep->ncards = 0;
     filep->cardp = NULL;
     VcStatus newStatus;
@@ -629,7 +629,7 @@ VcError parseVcProp(const char * buff,VcProp * const propp)
 
 
        //     if (valueState==1&&valueValue==0)
-		         {
+ {
 		 parvalueString[vIndex]='\0';
  }  
           valueValue=1; 
@@ -986,28 +986,44 @@ void freeVcFile ( VcFile * const filep)
         free(filep->cardp);
 }
 
-
+#ifdef _pyDef
  PyObject *Vcf_readFile( PyObject *self, PyObject *args )
  {
       char *filename;
       VcStatus status; 
-      VcFile * filep = NULL; 
+      static VcFile * filep = NULL; 
+      if (filep!=NULL)
+	globalFilep=filep;
       filep = malloc(sizeof(VcFile));
       /* Coverting python object to c file type and storing it in filename */ 
       PyArg_ParseTuple(args, "s", &filename ); 
       FILE *fp = fopen(filename,"r");
-
+      globalFilep=filep;
       /* How would VcFile struct get to readvcfile??? */
       status = readVcFile(fp,filep);    
       printf("# of cards = %d\n",filep->ncards);
-
-
+      printf("code = %d\n",status.code);
+      Py_BuildValue("i",status.code);
  }
 
+
+PyObject * Vcf_getCard( PyObject *self, PyObject * args)
+{
+
+      PyObject * card;
+      printf("Does it segfault here?\n");
+      
+      if (!PyArg_ParseTuple(args, "O", &card))
+        return NULL;
+      printf(" in get card %d\n",globalFilep->ncards);
+      return Py_BuildValue("i",globalFilep->ncards);      
+
+
+}
 static PyMethodDef vcfMethods[] = {
 
 {"readFile", Vcf_readFile, METH_VARARGS},
-//{"getCard", Vcf_getCard, METH_VARARGS},
+{"getCard", Vcf_getCard, METH_VARARGS},
 //{"freeFile", Vcf_freeFile, METH_NOARGS},
 //{"writeFile", Vcf_writeFile, METH_VARARGS},
 {NULL, NULL} }; 
@@ -1025,7 +1041,7 @@ static struct PyModuleDef vcfModuleDef = {
 	return  (PyModule_Create( &vcfModuleDef )); 
 } 
 
-
+#endif
 
 
 

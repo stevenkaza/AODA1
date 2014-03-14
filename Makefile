@@ -1,38 +1,22 @@
-cC = gcc
-CFLAGS = -Wall -std=c99 -pedantic -g
-LIB  = -L. -lpython3.1
- 
-all:  test vcftool
+CC = gcc 
+CFLAGS = -Wall -std=c99 -pedantic -g 
+LIB  = -L. -lpython3.1 
+
+all:  Vcf.so vcftool
 #Done in Thornboro
-vcftool:	vcftool.c vcutil.c vcftool.o vcutil.o
-	$(CC) $(LIB)	vcftool.o vcutil.o -o vcftool   $(LIBS)
- 
- 
-test:
-	gcc -c vcutil.c -o vcutil.o -I/usr/include/python3.1 -L. -lpython3.1 -fPIC
-	gcc -shared vcutil.o -o Vcf.so
-	chmod +x xvcf.py
-	
- 
- 
+vcftool:   vcftool.o vcutil.o 
+	$(CC) $(LIB)	vcftool.o vcutil.o -o vcftool	$(LIBS) 
+vcftool.o:  vcftool.c vcftool.h
+	$(CC) $(CFLAGS) -c  $< -o $@
+
+vcutil.o:   vcutil.c vcutil.h
+	$(CC) $(CFLAGS) -c $< -o $@
 
 
 
+Vcf.so: VcfPython.o 
+	gcc -shared VcfPython.o -o Vcf.so
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-clean: 
-	rm -f *.o executable core*
-
+VcfPython.o: vcutil.c vcutil.h
+	$(CC) $(CFLAGS)  -I/usr/include/python3.1 -c -fPIC $< -o $@ -D _pyDef 
 
