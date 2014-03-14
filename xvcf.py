@@ -123,19 +123,19 @@ class App:
         print (status)
         
         print (status)
-        cards = []
+        self.cards = []
         i = 0
         numCards=Vcf.getNumCards() 
         while (i < numCards):
              card=[]
              Vcf.getCard(card)	
-             cards.append(card)
+             self.cards.append(card)
        	     i = i + 1
         foundFN = 0
         adrCount = 0 
         telCount = 0 
         i = 0 
-        for Card in cards:
+        for Card in self.cards:
             firstFNVal = None
             adrCount = 0
             telCount = 0
@@ -167,12 +167,12 @@ class App:
     def exitProgram(self):
 
         root.destroy()
-  #  def cvp(self):
-        #
-    def key(event):
-        print ("pressed")
-        print(event.nearest(event.y))
-
+    # Returns the row # that was selected by mouse in file view panel
+    def key(self,event):
+        rowNum = event.widget.nearest(event.y)
+        rowNUM=int(rowNum)
+        self.updateCVP(self.cards[rowNUM])
+	
     def updateFVP(self,firstFNVal,adrCount,telCount,rowNum):
         self.fileViewScrolledList.hlist.add((rowNum-1))
         #card sequence, displaying the results for each row
@@ -180,15 +180,13 @@ class App:
         sstrRowNum = str.format(strRowNum) 
         strAdrCount = str(adrCount)
         strTelCount = str(telCount)
-        print(strRowNum)
-        print(rowNum)
         self.fileViewScrolledList.hlist.item_create((rowNum-1),0,text = strRowNum)
         self.fileViewScrolledList.hlist.item_create((rowNum-1),1,text = firstFNVal)
         self.fileViewScrolledList.hlist.item_create((rowNum-1),4,text = strAdrCount)
         self.fileViewScrolledList.hlist.item_create((rowNum-1),5,text = strTelCount)
 
 
-    def updateCVP(self,numCards,card):
+    def updateCVP(self,card):
         for i in range(0,1000):
             self.cardViewScrolledList.hlist.add("R"+str(i))
             #self.cardViewScrolledList.hlist.item_create("R"+str(i),0,text = "card "+str(i))
@@ -314,7 +312,7 @@ class App:
         fileView.header_create(4, text = '#ADR')
         fileView.header_create(5, text = "#TEL")
         fileView.header_create(6, text = 'Flags')
-        self.fileViewScrolledList.hlist.bind.("<Button-1>",key)
+        self.fileViewScrolledList.hlist.bind("<Button-1>",self.key)
 
 
         # Loop for filling in Card #'s , creating rows based on # of cards 
