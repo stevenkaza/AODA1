@@ -39,12 +39,14 @@ class App:
         logLabel = Label(self.logFrame,text = "Log Display Panel")
         logLabel.pack(side=TOP)
         self.scrolledLog.pack()
-
+        while (self.photoState==0):
+            print ("true")
+            
 
     def fileOpen(self):
         ftypes = [('vCard files', '*.vcf'), ('All files', '*')]
-        fname = askopenfilename(filetypes=(ftypes))                                                                     
-        data= self.displayFileInfo(fname)
+        self.fname = askopenfilename(filetypes=(ftypes))                                                                     
+        data= self.displayFileInfo(self.fname)
                # self.scrolledLog.insert(END, fname)
                                 
                #         fl = dlg.show()
@@ -61,13 +63,13 @@ class App:
         test = 5
         #Check buttons
         location = Checkbutton(self.window, text = "Location", variable = self.locationState, \
-                 onvalue = 0, offvalue = 1, height=5, \
+                 onvalue = 1, offvalue = 0, height=5, \
                  width = 20)
 
         photo = Checkbutton(self.window,text = "  Photo", variable = self.photoState)
         
         url = Checkbutton(self.window, text = "      URL",variable = self.urlState)
-        ok = Button(self.window,text = "OK",command = self.window.destroy)
+        ok = Button(self.window,text = "OK",command = self.launchSelect)
         cancel = Button(self.window,text="Cancel", command = self.cancelSel)
 
 
@@ -77,7 +79,22 @@ class App:
   
         ok.grid(row=3,column=0)
         cancel.grid(row=3,column=1)
-
+        
+        print(self.photoState)
+    def launchSelect(self):
+        location = ""
+        photo = ""
+        url = ""
+        if self.photoState.get() == 1:
+            locaton = "g"
+        if self.photoState.get() == 1:
+           photo = "p"
+        if self.urlState == 1:
+            url = "u"
+            
+        os.system('./vcftool -select '+self.fname+location+photo+url)
+            
+        self.window.destroy()
         #changes the global variable to cancelled state, so main program knows to not select cards
     def cancelSelect(self):
         self.cancelSelect = 1
@@ -101,7 +118,7 @@ class App:
         with open("output.vcf") as f:
             content = f.read()
         self.scrolledLog.insert(END,content)    
-        status =  Vcf.readFile(fname)
+        status =  Vcf.readFile(self.fname)
         print (status)
         
         print (status)
@@ -113,7 +130,7 @@ class App:
         self.updateFVP(numCards)
         print("Do we get here or no way?")
     # wait for the process to terminate
-        os.system('./vcftool -info <' +fname+' >output.vcf')
+        os.system('./vcftool -info <' +self.fname+' >output.vcf')
        # out, err = process.communicate()
        # errcode = process.returncode
         #output = subprocess.Popen( cmd, stdout=subprocess.PIPE ).communicate()[0]
