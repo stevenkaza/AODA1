@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  <title>maptest</title>
+  <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAASveZAKDchy8aE-6K6klrVRTwM0brOpm-All5BF6PoaKBxRWWERS4kZrUi1p4QOZXGVxTLHvCXsg94A"
+          type="text/javascript"></script>
+  <script type="text/javascript">
+  //<![CDATA[
+  function load() {
+    if (GBrowserIsCompatible()) {
+      var baseIcon = new GIcon();
+      baseIcon.shadow = "http://labs.google.com/ridefinder/images/mm_20_shadow.png"
+      baseIcon.iconSize = new GSize(12, 20);
+      baseIcon.shadowSize = new GSize(22, 20);
+      baseIcon.iconAnchor = new GPoint(6, 20);
+      baseIcon.infoWindowAnchor = new GPoint(5, 1);
+      var icons = [new GIcon(G_DEFAULT_ICON),new GIcon(baseIcon),new GIcon(baseIcon),new GIcon(baseIcon)];
+      icons[1].image = "http://labs.google.com/ridefinder/images/mm_20_red.png";
+      icons[2].image = "http://labs.google.com/ridefinder/images/mm_20_green.png";
+      icons[3].image = "http://labs.google.com/ridefinder/images/mm_20_blue.png";
+      var map = new GMap2(document.getElementById("map"));
+      map.addControl(new GSmallMapControl());
+      map.addControl(new GMapTypeControl());
+      map.setCenter(new GLatLng(43.530318, -80.223241), 14);
+      var p = new GLatLng(43.530318, -80.223241);
+      var marker0 = new GMarker(p,icons[3]);
+      map.addOverlay(marker0);
+      GEvent.addListener(marker0, 'click', function(){marker0.openInfoWindowHtml('<div id="content"><table><tr><td><img width="70" src="http://www.uoguelph.ca/~gardnerw/head.gif" /></td><td width="200">;;50 Stone Road East\, Reynolds 105;\nGuelph;Ontario;N1G2W1</td></tr></table></div>')});
+      var points = [];
+      points.push(new GLatLng(43.530318, -80.223241));
+      points.push(new GLatLng(43.535538, -80.223461));
+      points.push(new GLatLng(43.520758, -80.220681));
+      map.addOverlay(new GPolyline(points,"#ff0000"));
+      var points = [];
+      points.push(new GLatLng(43.530318, -80.223241));
+      points.push(new GLatLng(43.515538, -80.220461));
+      points.push(new GLatLng(43.520758, -80.225681));
+      map.addOverlay(new GPolyline(points,"#0000ff"));
+    }
+  }
+  //]]>
+  </script>
+ </head>
+ <body onload="load()" onunload="GUnload()">
+  <h1>Univ. of Guelph</h1>
+  <div id="map" style="width: 500px; height: 300px"></div>
+ </body>
+</html>

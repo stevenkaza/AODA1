@@ -5,6 +5,8 @@
 #0761977    
 import os 
 import subprocess
+import string
+from GMapData import *
 from tkinter import *
 from tkinter import tix
 from tkinter import ttk
@@ -17,7 +19,7 @@ class App:
     def __init__(self,master):
         self.fname = None 
         self.cvpHasData = 0
-
+        self.fvpHasData = 0
         #menu bar intilization 
         self.menuInit()
         #frames intilization
@@ -31,18 +33,62 @@ class App:
 
         self.buttonsInit()
 
-
-
-
         logLabel = Label(self.logFrame,text = "Log Display Panel")
         logLabel.pack(side=TOP)
         self.scrolledLog.pack()
-            
+    #Code from Professor Gardners website        
+    def launchGoogle(selselff):
+	
+	#1. start CGI/HTTP server
+        startWebServer(41977)
 
+	#2. create GMapData object and populate with data
+        gmd = GMapData( "maptest", "Univ. of Guelph", [43.530318,-80.223241], 14 )	# use default values
+        photo = "http://www.uoguelph.ca/~gardnerw/head.gif" # photo url
+        address = ";;50 Stone Road East\, Reynolds 105;\\nGuelph;Ontario;N1G2W1" # address
+        gmd.addPoint( [43.530318,-80.223241], photo, address )	# s.b. center of map
+        gmd.addOverlay( 0, 1, 3 )	# single point, blue icon
+
+	#3. generate HTML to serve
+        gmd.serve( "public_html/index.html" );
+
+	#4. launch browser
+        launchBrowser( "http://localhost:41977/" )
+
+
+        input( "Press enter:" )		# pause
+	
+        gmd.addPoint( [43.530318,-80.223241] )	# 3-point red line
+        gmd.addPoint( [43.535538,-80.223461] )
+        gmd.addPoint( [43.520758,-80.220681] )
+        gmd.addOverlay( 1, 3, 0 )
+	
+        gmd.serve( "public_html/index.html" );
+        launchBrowser( "http://localhost:41977/" )
+
+
+        input( "Press enter:" )
+	
+        gmd.addPoint( [43.530318,-80.223241] )	# 3-point blue line
+        gmd.addPoint( [43.515538,-80.220461] )
+        gmd.addPoint( [43.520758,-80.225681] )
+        gmd.addOverlay( 4, 3, 2 )
+	
+        gmd.serve( "public_html/index.html" );
+        launchBrowser( "http://localhost:41977/" )
+
+
+        print( "Close the Tk window to proceed with server shutdown..." )
+
+	#5. kill servers
+        killServers()
+	
+	
     def fileOpen(self):
-        ftypes = [('vCard files', '*.vcf'), ('All files', '*')]
+        self.ftypes = [('vCard files', '*.vcf'), ('All files', '*')]
         returned_values = {}
-        self.fname = askopenfilename(filetypes=(ftypes))                                                                     
+        self.fname = askopenfilename(filetypes=(self.ftypes))                                                                     
+        root.title(self.fname)
         data= self.displayFileInfo()
                # self.scrolledLog.insert(END, fname)
                                 
@@ -98,13 +144,22 @@ class App:
      
     def drawChecks(self):
         integer = 2
+    def badFile(self,status):
+        messagebox.showinfo("Error","Error code " + str(status)+ "detected. Please choose a proper vcf file")
     def displayFileInfo(self):
         #opening the output file and updating the log
+        os.system('./vcftool -info <' +self.fname+' >output.vcf')
+
         with open("output.vcf") as f:
             content = f.read()
-        self.scrolledLog.insert(END," ")
         self.scrolledLog.insert(END,content)    
+        #self.scrolledLog.state = 'DISABLED'
         status =  Vcf.readFile(self.fname)
+        while status !=0:
+            self.badFile(status)
+            status = Vcf.readFile(self.fname) 
+            self.fname = askopenfilename(filetypes=(self.ftypes))
+            status = Vcf.readFile(self.fname)
         
         self.cards = []
         i = 0
@@ -140,16 +195,12 @@ class App:
         self.updateCVP(self.cards[0])
        
 	 #cards(0)=card
-        print ("Here comes the card")
-        print("Numcards = "+str(numCards))
         #self.updateCVP(numCards,cards)
-        print("Do we get here or no way?")
     # wait for the process to terminate
         os.system('./vcftool -info <' +self.fname+' >output.vcf')
 
     
     def exitProgram(self):
-
         root.destroy()
     # Returns the row # that was selected by mouse in file view panel
     def key(self,event):
@@ -158,6 +209,10 @@ class App:
         self.updateCVP(self.cards[rowNUM])
 	
     def updateFVP(self,firstFNVal,adrCount,telCount,rowNum):
+        if self.fvpHasData==1:
+             print("wtf")
+             self.fileViewScrolledList.hlist.delete_all()
+             self.fvpHasData=0
         self.fileViewScrolledList.hlist.add((rowNum-1))
         #card sequence, displaying the results for each row
         strRowNum = str(rowNum)
@@ -168,7 +223,7 @@ class App:
         self.fileViewScrolledList.hlist.item_create((rowNum-1),1,text = firstFNVal)
         self.fileViewScrolledList.hlist.item_create((rowNum-1),4,text = strAdrCount)
         self.fileViewScrolledList.hlist.item_create((rowNum-1),5,text = strTelCount)
-
+        
 
     def updateCVP(self,card):
         
@@ -191,42 +246,42 @@ class App:
             self.cardViewScrolledList.hlist.item_create(i,2, text =Tuple[2])
             i = i + 1
         self.cvpHasData = 1 
-
+        self.fvpHasData = 1
     #def framesInit(self):
     def buttonsInit(self):
         #CVP Buttons
         upButton = Button(self.cvpFrame, text = "  Up  ")
         downButton = Button(self.cvpFrame, text = "Down ")
-        addButton = Button(self.cvpFrame, text = "Add Property")
+        addPropButton = Button(self.cvpFrame, text = "Add Property")
         deleteButton = Button(self.cvpFrame, text = "Delete ")
         revertButton = Button(self.cvpFrame, text = "Revert ")
         commitButton = Button(self.cvpFrame, text = "Commit")
 
         #FILE VIEW BUTTONS
-        mapButton = Button(self.cvpFrame, text = " Map Selected")
-        resetButton = Button(self.cvpFrame, text = "Reset Map")
-        browseButton = Button(self.cvpFrame, text = "Browse selected")
-        deleteSelButton = Button(self.cvpFrame, text = "Delete Selected ")
-        addButton = Button(self.cvpFrame, text = "Add card ")
+        mapButton = Button(self.fvpFrame, text = " Map Selected",command = self.launchGoogle)
+        resetButton = Button(self.fvpFrame, text = "Reset Map")
+        browseButton = Button(self.fvpFrame, text = "Browse selected")
+        deleteSelButton = Button(self.fvpFrame, text = "Delete Selected ")
+        addButton = Button(self.fvpFrame, text = "Add card ")
 
         #Log button/clear
         clearButton = Button(self.logFrame, text = "Clear",command = self.clearLog)
-        clearButton.pack(side=BOTTOM)
+        clearButton.pack(side=BOTTOM,pady = 8)
           
         downButton.pack(side= BOTTOM, padx = 10,pady=5)
         upButton.pack(side=BOTTOM, padx = 10,pady=5)
-        addButton.pack(side= BOTTOM, padx = 10,pady=5)
+        addPropButton.pack(side= BOTTOM, padx = 10,pady=5)
         deleteButton.pack(side=BOTTOM, padx = 10,pady=5)
         revertButton.pack(side= BOTTOM, padx = 10,pady=5)
         commitButton.pack(side=BOTTOM, padx = 10,pady=5)
 
         mapButton.pack(side= BOTTOM, padx = 10,pady=5)
         resetButton.pack(side=BOTTOM, padx = 10,pady=5)
-        browseButton.pack(side= BOTTOM, padx = 10,pady=5)
+        browseButton.pack(side=BOTTOM, padx = 10,pady=5)
         deleteSelButton.pack(side=BOTTOM, padx = 10,pady=5)
         addButton.pack(side= BOTTOM, padx = 10,pady=5)
 
-        commitButton.pack(side=BOTTOM, padx = 10,pady=5)
+        
         self.adjustPos()
         
     def adjustPos(self):
@@ -270,12 +325,12 @@ class App:
         menuBar.add_cascade(label='Help', menu = helpMenu)
         root.config(menu=menuBar)
     def framesInit(self):
-        frame =  Frame(root,width = "1024")
+        self.frame =  Frame(root,width = "1024")
 
-        frame.grid()
-        self.fvpFrame = Frame(frame)
+        self.frame.grid()
+        self.fvpFrame = Frame(self.frame)
      #   self.fvpFrame.pack(side = LEFT)
-        self.cvpFrame = Frame(frame)
+        self.cvpFrame = Frame(self.frame)
        
 
 
@@ -284,7 +339,7 @@ class App:
        # self.fvpFrame.pack(side =TOP)
         # LOGS ---------------------#
 
-        self.logFrame = Frame(frame)
+        self.logFrame = Frame(self.frame)
         #self.logFrame.pack(side = BOTTOM)
 
 
@@ -353,7 +408,5 @@ app=App(root)
 #cvp = Label(root, text = "Card View Panel")
 #fvp.pack()
 #cvp.pack()
-print ("test")
-
 root.mainloop()
 

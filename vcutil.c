@@ -1000,11 +1000,18 @@ void freeVcFile ( VcFile * const filep)
       PyArg_ParseTuple(args, "s", &filename ); 
       FILE *fp = fopen(filename,"r");
       globalFilep=filep;
+      globalFilep->ncards= filep->ncards;
       /* How would VcFile struct get to readvcfile??? */
       status = readVcFile(fp,globalFilep);    
-      printf("# of cards = %d\n",globalFilep->ncards);
-      printf("code = %d\n",status.code);
-      Py_BuildValue("i",status.code);
+      if (status.code !=0)
+      {
+         // freeVcFile(globalFilep);
+        //  freeVcFile(filep);
+         // filep=NULL;
+          globalFilep = NULL;
+          status.code = 0; 
+      }
+      return (Py_BuildValue("i",status.code));
  }
 
 

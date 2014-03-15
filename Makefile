@@ -1,5 +1,5 @@
 CC = gcc 
-CFLAGS = -Wall -std=c99 -pedantic -g 
+CFLAGS = -Wall -std=c99  -g -DNDEBUG
 LIB  = -L. -lpython3.1 
 
 all:  Vcf.so vcftool
@@ -19,4 +19,7 @@ Vcf.so: VcfPython.o
 
 VcfPython.o: vcutil.c vcutil.h
 	$(CC) $(CFLAGS)  -I/usr/include/python3.1 -c -fPIC $< -o $@ -D _pyDef 
-
+clean:
+	rm *.o 
+	rm vcftool
+	rm *.so  

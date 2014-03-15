@@ -143,27 +143,18 @@ int vcfCanProp(VcProp * const propp)
 
 int vcfCanon( VcFile *const filep )
 {
-	int i = 0; 
 	int k = 0; 
-	int result; 
 	int uidPos = 0; 
 	int nameFlag=0; 
 	int nameFailed = 0; 
-	int geoFailed = 0; 
-	int telFailed = 0; 
-	int adrFailed = 0; 
 	int geoFlag=0; 
 	int adrFlag=0; 
 	int telFlag=0; 
 	VcProp * uidProp; 
 	
-	
+	int nameCan = 0;
 	
 
-	int nameCan = 0;
-	int geoCan = 0; 
-	int adrCan = 0; 
-	int telCan = 0; 
 	for (int i = 0; i<filep->ncards;i++)/* send each name to vcfcanonprpo  */
 	{
 		for (k=0;k<filep->cardp[i]->nprops;k++)
