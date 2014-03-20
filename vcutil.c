@@ -1001,7 +1001,7 @@ void freeVcFile ( VcFile * const filep)
       VcStatus status; 
       static VcFile * filep = NULL; 
       printf("here?\n");
-      if (filep!=NULL)
+      //if (filep!=NULL)
 	        globalFilep=filep;
       if (filep==NULL)
       filep = malloc(sizeof(VcFile));
@@ -1074,7 +1074,7 @@ PyObject * Vcf_freeFile(PyObject * self, PyObject * args)
     freeVcFile(globalFilep);
     
 }
-static PyMethodDef vcfMethods[] = {
+static PyMethodDef vcfMeth  ods[] = {
 
 {"readFile", Vcf_readFile, METH_VARARGS},
 {"getCard", Vcf_getCard, METH_VARARGS},
