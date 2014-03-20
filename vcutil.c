@@ -1001,7 +1001,6 @@ void freeVcFile ( VcFile * const filep)
       VcStatus status; 
       static VcFile * filep = NULL; 
       printf("here?\n");
-      freeVcFile(filep);
       if (filep!=NULL)
 	        globalFilep=filep;
       if (filep==NULL)
@@ -1074,10 +1073,6 @@ PyObject * Vcf_freeFile(PyObject * self, PyObject * args)
 {
     freeVcFile(globalFilep);
     
-
-
-
-
 }
 static PyMethodDef vcfMethods[] = {
 
