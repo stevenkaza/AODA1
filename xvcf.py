@@ -140,6 +140,8 @@ class App:
             
         self.window.destroy()
         self.clearPanels()
+        self.displaySelectedCards()
+
         #changes the global variable to cancelled state, so main program knows to not select cards
     def cancelSelect(self):
         self.cancelSelect = 1
@@ -148,6 +150,9 @@ class App:
     def clearPanels(self):
         self.cardViewScrolledList.hlist.delete_all()
         self.fileViewScrolledList.hlist.delete_all()
+    def displaySelectedCards(self):
+        Vcf.readFile("output.vcf")
+
 
     def drawChecks(self):
         integer = 2
