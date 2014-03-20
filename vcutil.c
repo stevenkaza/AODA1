@@ -36,6 +36,14 @@ RETURNS: The enumrated value of what prop name was found */
 
 int assignPropName(VcProp * const propp,char * propName);
 
+
+
+char *fname(FILE *stream) {
+    static char name[256];
+    sprintf(name, "/proc/%d/fd/%d", getpid(), fileno(stream));
+    return name;
+}
+
 /*
 Returns a 1 if a semi colon was found before a colon */ 
 int semiFirst(char * tempString);
@@ -62,17 +70,14 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
     filep->ncards = 0;
     filep->cardp = NULL;
     VcStatus newStatus;
-
-
     int i=0;
-    /* Checking for invalid file */
+     /* Checking for invalid file */
     if (vcf==NULL)
     {
         newStatus.code =  IOERR;
     }
     /* By default, assigning code to be OK */ 
     newStatus.code = OK;
-   
     /* Until end of file */
    while (feof(vcf)==0)
     { 
@@ -124,6 +129,7 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 
     int i = 0;
     VcProp * tempProp = NULL;
+   // for (i=0;i<12112;i++)
     int beginFlag=0; 
    // for (i=0;i<12112;i++)
      //  testString[i]='t';
@@ -142,7 +148,6 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
             goto end;
          }
          newStatus=getUnfolded(vcf,&buff);
-
 
 
 	
@@ -965,7 +970,8 @@ void freeVcFile ( VcFile * const filep)
         int i, j;
         Vcard * tmp;
         VcProp * tmp2;
- 
+        if (filep==NULL	)
+        return	NULL;
         for(i = 0; i < filep->ncards; i++)
         {
                 tmp = filep->cardp[i];
@@ -990,22 +996,39 @@ void freeVcFile ( VcFile * const filep)
 #ifdef _pyDef
  PyObject *Vcf_readFile( PyObject *self, PyObject *args )
  {
+      char filetext[100];
       char *filename;
       VcStatus status; 
       static VcFile * filep = NULL; 
+      printf("here?\n");
+      freeVcFile(filep);
       if (filep!=NULL)
 	        globalFilep=filep;
+      if (filep==NULL)
       filep = malloc(sizeof(VcFile));
       /* Coverting python object to c file type and storing it in filename */ 
       PyArg_ParseTuple(args, "s", &filename ); 
       FILE *fp = fopen(filename,"r");
       globalFilep=filep;
-      globalFilep->ncards= filep->ncards;
+      printf("fname = %s\n",filename);
+      if (filename[48]=='T'){
+      printf("no way?\n");
+      printf("fp = %s\n",filename);
+       fgets (filetext, 100, fp);
+
+      printf("file text 1 = %s\n",filetext);
+   
+
+      fgets(filetext,100,fp);
+	printf("file text 2 = %s\n",filetext);    
+   }
+  globalFilep->ncards= filep->ncards;
       /* How would VcFile struct get to readvcfile??? */
-      status = readVcFile(fp,globalFilep);    
+      status = readVcFile(fp,globalFilep);
+      printf("code = %d\n",status.code);    
       if (status.code !=0)
       {
-         // freeVcFile(globalFilep);
+         // ``freeVcFile(globalFilep);
         //  freeVcFile(filep);
          // filep=NULL;
           globalFilep = NULL;
@@ -1045,14 +1068,24 @@ PyObject * Vcf_getNumCards( PyObject * self, PyObject * args)
 
 
 }
+
+
+PyObject * Vcf_freeFile(PyObject * self, PyObject * args)
+{
+    freeVcFile(globalFilep);
+    
+
+
+
+
+}
 static PyMethodDef vcfMethods[] = {
 
 {"readFile", Vcf_readFile, METH_VARARGS},
 {"getCard", Vcf_getCard, METH_VARARGS},
-{"getNumCards",Vcf_getNumCards,METH_VARARGS}
-//{"freeFile", Vcf_freeFile, METH_NOARGS},
+{"getNumCards",Vcf_getNumCards,METH_VARARGS},
+{"freeFile", Vcf_freeFile, METH_NOARGS},
 //{"writeFile", Vcf_writeFile, METH_VARARGS}
-,
 {NULL, NULL} }; 
 
 static struct PyModuleDef vcfModuleDef = {
@@ -1308,23 +1341,5 @@ void removeSpaces(char * string)  /*Function to remove spaces, found from  http:
 
 
 }
-
-
-
-int removeNewLine(char * string)
-{
-    int i = 0; 
-    for (i=0;i<=strlen(string);i++)
-    {
-      if (string[i]=='\n')
-        {
-            string[i]='\0';
-            return 1; 
-        }
-
-    }
-    return 0; 
-}
-
 
 

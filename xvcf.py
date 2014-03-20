@@ -30,7 +30,7 @@ class App:
         self.tablesInit(0)
 
         self.scrolledLog = ScrolledText(self.logFrame,width = 50,height = 10)
-
+        self.title=("xvcf Vcutil");
         self.buttonsInit()
 
         logLabel = Label(self.logFrame,text = "Log Display Panel")
@@ -133,7 +133,8 @@ class App:
            photo = "p"
         if self.urlState == 1:
             url = "u"
-        os.system('./vcftool -select '+photo+' <'+self.fname)
+        os.system('./vcftool -select '+photo+url+location+' <'+self.fname+"> out.vcf");
+        Vcf.freeFile();
             
         self.window.destroy()
         #changes the global variable to cancelled state, so main program knows to not select cards
@@ -164,6 +165,7 @@ class App:
         self.cards = []
         i = 0
         numCards=Vcf.getNumCards() 
+        print(numCards)
         while (i < numCards):
              card=[]
              Vcf.getCard(card)	
@@ -197,7 +199,7 @@ class App:
 	 #cards(0)=card
         #self.updateCVP(numCards,cards)
     # wait for the process to terminate
-        os.system('./vcftool -info <' +self.fname+' >output.vcf')
+        #os.system('./vcftool -info <' +self.fname+' >output.vcf')
 
     
     def exitProgram(self):
@@ -242,8 +244,9 @@ class App:
         i = 0 
         for Tuple in card:
             self.cardViewScrolledList.hlist.item_create(i,0,text= str(Tuple[0]))   
-            self.cardViewScrolledList.hlist.item_create(i,1,text =Tuple[1])
-            self.cardViewScrolledList.hlist.item_create(i,2, text =Tuple[2])
+            self.cardViewScrolledList.hlist.item_create(i,3,text =Tuple[1])
+            self.cardViewScrolledList.hlist.item_create(i,1, text =Tuple[2])
+            self.cardViewScrolledList.hlist.item_create(i,2,text = Tuple[3])
             i = i + 1
         self.cvpHasData = 1 
         self.fvpHasData = 1
@@ -359,7 +362,7 @@ class App:
     def tablesInit(self,numRows):
         #Creating the scrolled list 
         self.fileViewScrolledList = tix.ScrolledHList(self.fvpFrame, width = 70,
-         options='hlist.columns 7 hlist.header 1 ')
+         options='hlist.columns 7 hlist.header 1 hlist.selectBackground white ')
         self.fileViewScrolledList.config(width = 450)
         self.fileViewScrolledList.pack(side =RIGHT )
         #able to access hlist subwidget this way 
@@ -401,6 +404,7 @@ class App:
             #cardView.add("T"+str(i))
             #cardView.item_create("T"+str(i),0,text = "card "+str(i))
 root = tix.Tk()
+root.title("Hello");
 app=App(root)
 #mlb = MultiListbox(tk, (('Subject', 40), ('Sender', 20), ('Date', 10)))
 
