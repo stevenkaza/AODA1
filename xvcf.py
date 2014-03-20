@@ -37,7 +37,7 @@ class App:
         logLabel.pack(side=TOP)
         self.scrolledLog.pack()
     #Code from Professor Gardners website        
-    def launchGoogle(selselff):
+    def launchGoogle(self):
 	
 	#1. start CGI/HTTP server
         startWebServer(41977)
@@ -133,16 +133,22 @@ class App:
            photo = "p"
         if self.urlState == 1:
             url = "u"
-        os.system('./vcftool -select '+photo+url+location+' <'+self.fname+"> out.vcf");
+        # removing the already present output.vcf
+        os.system('rm output.vcf')
+        os.system('./vcftool -select '+photo+url+location+' <'+self.fname+"> output.vcf");
         Vcf.freeFile();
             
         self.window.destroy()
+        self.clearPanels()
         #changes the global variable to cancelled state, so main program knows to not select cards
     def cancelSelect(self):
         self.cancelSelect = 1
         self.window.destroy
         
-     
+    def clearPanels(self):
+        self.cardViewScrolledList.hlist.delete_all()
+        self.fileViewScrolledList.hlist.delete_all()
+
     def drawChecks(self):
         integer = 2
     def badFile(self,status):
@@ -380,17 +386,6 @@ class App:
         fileView.header_create(6, text = 'Flags')
         self.fileViewScrolledList.hlist.bind("<Button-1>",self.key)
 
-
-        # Loop for filling in Card #'s , creating rows based on # of cards 
-     #   for i in range(1,numRows):
-      #       fileView.add("R"+str(i))
-       #      fileView.item_create("R"+str(i),0,text = "card "+str(i))
-
-        #scroll = Scrollbar(self.fvpFrame, command=fileView.yview)
-
-        #fileView.(yscrollcommand=scroll.set)
-        
-        #scroll.pack(side=RIGHT, fill=Y)
         self.cardViewScrolledList = tix.ScrolledHList(self.cvpFrame, width = 70, options='hlist.columns 4 hlist.header 1')
         self.cardViewScrolledList.config(width = 450)
         self.cardViewScrolledList.pack(side = RIGHT)
@@ -404,7 +399,7 @@ class App:
             #cardView.add("T"+str(i))
             #cardView.item_create("T"+str(i),0,text = "card "+str(i))
 root = tix.Tk()
-root.title("Hello");
+root.title("xvcf");
 app=App(root)
 #mlb = MultiListbox(tk, (('Subject', 40), ('Sender', 20), ('Date', 10)))
 
