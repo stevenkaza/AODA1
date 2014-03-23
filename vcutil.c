@@ -1036,16 +1036,19 @@ void freeVcFile ( VcFile * const filep)
 PyObject * Vcf_getCard( PyObject *self, PyObject * args)
 {
       printf(" Is there a segfault? \n");
+      /*Checking to see if filep is accurate from readfile */ 
+      printf("# of cards = %d\n",globalfilep->ncards);
       PyObject * card;
       PyObject * tuple; 
       VcFile * filep = globalFilep; 
+      printf("card count = %d \n", cardCount);
       if (!PyArg_ParseTuple(args, "O", &card))
         return NULL;
      for (int k = 0; k<filep->cardp[cardCount]->nprops;k++)
      {
-	tuple= Py_BuildValue("isss",filep->cardp[cardCount]->prop[k].name,filep->cardp[cardCount]->prop[k].value,
-	filep->cardp[cardCount]->prop[k].partype,filep->cardp[cardCount]->prop[k].parval);
-	PyList_Append(card,tuple); /* Appending each tuple to a python list */ 
+	         tuple= Py_BuildValue("isss",filep->cardp[cardCount]->prop[k].name,filep->cardp[cardCount]->prop[k].value,
+	         filep->cardp[cardCount]->prop[k].partype,filep->cardp[cardCount]->prop[k].parval);
+	         PyList_Append(card,tuple); /* Appending each tuple to a python list */ 
 
       }
 	cardCount++; /*Static counter knows which card program is currently at */
