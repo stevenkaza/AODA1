@@ -63,7 +63,7 @@ int removeNewLine(char * string);
 
 //PyObject *Vcf_readFile( PyObject *self, PyObject *args ); 
 static VcFile * globalFilep;
-
+static int cardCount = 0; 
 VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
 {
     /* Assigning /default values for filep */ 
@@ -996,19 +996,16 @@ void freeVcFile ( VcFile * const filep)
 #ifdef _pyDef
  PyObject *Vcf_readFile( PyObject *self, PyObject *args )
  {
+      cardCount = 0; 
       char filetext[100];
       char *filename;
       VcStatus status; 
-      static VcFile * filep = NULL; 
       printf("here?\n");
       //if (filep!=NULL)
-	        globalFilep=filep;
-      if (filep==NULL)
-      filep = malloc(sizeof(VcFile));
+      globalFilep = malloc(sizeof(VcFile));
       /* Coverting python object to c file type and storing it in filename */ 
       PyArg_ParseTuple(args, "s", &filename ); 
       FILE *fp = fopen(filename,"r");
-      globalFilep=filep;
       printf("fname = %s\n",filename);
       if (filename[48]=='T'){
       printf("no way?\n");
@@ -1021,7 +1018,6 @@ void freeVcFile ( VcFile * const filep)
       fgets(filetext,100,fp);
 	printf("file text 2 = %s\n",filetext);    
    }
-  globalFilep->ncards= filep->ncards;
       /* How would VcFile struct get to readvcfile??? */
       status = readVcFile(fp,globalFilep);
       printf("code = %d\n",status.code);    
@@ -1039,8 +1035,7 @@ void freeVcFile ( VcFile * const filep)
 
 PyObject * Vcf_getCard( PyObject *self, PyObject * args)
 {
-
-      static int  cardCount = 0; 
+      printf(" Is there a segfault? \n");
       PyObject * card;
       PyObject * tuple; 
       VcFile * filep = globalFilep; 
@@ -1054,7 +1049,8 @@ PyObject * Vcf_getCard( PyObject *self, PyObject * args)
 
       }
 	cardCount++; /*Static counter knows which card program is currently at */
-       return Py_BuildValue("O",card);      /* sending the updated list back to
+      printf("What about here haha!"); 
+      return Py_BuildValue("O",card);      /* sending the updated list back to
 					python */ 
 
 
@@ -1074,7 +1070,7 @@ PyObject * Vcf_freeFile(PyObject * self, PyObject * args)
     freeVcFile(globalFilep);
     
 }
-static PyMethodDef vcfMeth  ods[] = {
+static PyMethodDef vcfMethods[] = {
 
 {"readFile", Vcf_readFile, METH_VARARGS},
 {"getCard", Vcf_getCard, METH_VARARGS},

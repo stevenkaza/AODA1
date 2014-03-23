@@ -136,12 +136,13 @@ class App:
         # removing the already present output.vcf
         os.system('rm output.vcf')
         os.system('./vcftool -select '+photo+url+location+' <'+self.fname+"> output.vcf");
-        Vcf.freeFile();
+       # Vcf.freeFile();
             
         self.window.destroy()
         self.clearPanels()
+        self.clearCardLists()
         self.displaySelectedCards()
-
+       
         #changes the global variable to cancelled state, so main program knows to not select cards
     def cancelSelect(self):
         self.cancelSelect = 1
@@ -152,8 +153,11 @@ class App:
         self.fileViewScrolledList.hlist.delete_all()
     def displaySelectedCards(self):
         Vcf.readFile("output.vcf")
-
-
+        card  = []
+        Vcf.getCard(card)
+        print (card)  
+    def clearCardLists(self):
+        del self.cards[:]
     def drawChecks(self):
         integer = 2
     def badFile(self,status):
@@ -172,12 +176,13 @@ class App:
             status = Vcf.readFile(self.fname) 
             self.fname = askopenfilename(filetypes=(self.ftypes))
             status = Vcf.readFile(self.fname)
-        
+        #List to hold cards 
         self.cards = []
         i = 0
         numCards=Vcf.getNumCards() 
         print(numCards)
         while (i < numCards):
+             #List to hold each card 
              card=[]
              Vcf.getCard(card)	
              self.cards.append(card)
