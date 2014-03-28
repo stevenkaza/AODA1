@@ -61,15 +61,22 @@ int checkPosition(char * string, int position);
 void removeSpaces(char * string);
 int removeNewLine(char * string);
 
-//PyObject *Vcf_readFile( PyObject *self, PyObject *args ); 
+//PyObject *VcfereadFile( PyObject *self, PyObject *args ); 
 static VcFile * globalFilep;
-static int cardCount = 0; 
+static int cardCount = 0;
+static int newFileFlag = 0; 
+static int prevFileCount = 0; 
+static int fileCount = 0; /*Counts how many files have been opened */ 
 VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
 {
+
+    fprintf(stderr,"Beggining of readVcFile \n");
     /* Assigning /default values for filep */ 
     filep->ncards = 0;
     filep->cardp = NULL;
+    fprintf(stderr,"# cards = %d\n",filep->ncards);
     VcStatus newStatus;
+    char filetext[100];
     int i=0;
      /* Checking for invalid file */
     if (vcf==NULL)
@@ -79,20 +86,22 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
     /* By default, assigning code to be OK */ 
     newStatus.code = OK;
     /* Until end of file */
+  
    while (feof(vcf)==0)
     { 
         /* Incrementing # of cards */ 
         filep->ncards=filep->ncards+1;
 	/* Allocating for a pointer to go inside the array of card pointers */ 
         filep->cardp=realloc(filep->cardp,(sizeof(Vcard*)*filep->ncards));
+	
         if (newStatus.code==OK)
           newStatus = readVcard(vcf,&filep->cardp[i]);
-
+        
        if ( filep->cardp[i]==NULL)
         {
 	          filep->ncards=0;
 	          //free(filep);
-           break;
+                   break;
         }
         i++;
 
@@ -101,6 +110,9 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
 
 
    }/*end of while loop */ 
+    fclose(vcf); 
+    prevFileCount++; 
+    fprintf(stderr,"End of readvcfile\n");
     return newStatus;
 }
 
@@ -116,6 +128,7 @@ VcStatus readVcFile (FILE *const vcf, VcFile *const filep)
 
 VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 {
+
     VcStatus newStatus; 
     char  *buff=NULL;
   //  char testString[2121212];
@@ -147,9 +160,10 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
          {
             goto end;
          }
+        // fprintf(stderr,"getUnfoldedbefore?\n");
          newStatus=getUnfolded(vcf,&buff);
-
-
+        // fprintf(stderr,"After \n");
+        // fprintf(stderr,"buff = %s\n",buff);
 	
 	     // printf("buff!! = %s\n",buff);
         /* If we see another begin before an end, 
@@ -323,15 +337,21 @@ VcStatus readVcard( FILE * const vcf, Vcard **const cardp)
 
 VcStatus getUnfolded ( FILE * const vcf, char **const buff )
 {
+   // fprintf(stderr,"Beggining of get unfolded \n");
+    char filetext[100];
+ 
    /*CRLF Flags */ 
     int rFlag=0; 
     int crlfFlag=0; 
     int i =0; /* String indexing */ 
     static int endOfFile=0; 
+    endOfFile = 1; 
     static char ch; /* static char to hold the last char read in for getUnfolded next call */ 
     static int staticFlag=0; /* this would be 1 its second call*/ 
     char * tempString=NULL;
-    int lineDoneFlag = 0; /*Flag to indicate the buff is ready to be returned and is unfolded */ 
+    if (fileCount >1)
+	staticFlag == 0; 
+      int lineDoneFlag = 0; /*Flag to indicate the buff is ready to be returned and is unfolded */ 
     static int lineCounter=0; 
     VcStatus newStatus;
     newStatus.code = OK;  
@@ -341,9 +361,10 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
         newStatus.linefrom = lineCounter;
     
     /* Satisfiying the "special" case where vcf is NULL */ 
-    if (vcf==NULL) 
+    if (newFileFlag == 1) 
     {
-  //    printf("PPLZPLZ\n");
+      fprintf(stderr,"Special case\n");
+  
       lineCounter=0; 
       endOfFile=0; 
       foldedFlag=0; 
@@ -353,16 +374,30 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
       if (tempString!=NULL)
         free(tempString);
       //*buff =NULL;
-      return newStatus;  
+          fprintf(stderr,"end of get unfolded2 \n");
+
+       fileCount++;
+       newFileFlag = 0; 
+     // return newStatus;  
     }
     /* Looping through char by char until a crlf is found, then a flag is set and 
       those chars are not read into the buff */ 
     do 
     {
+  
       
       if (staticFlag!=1)/* Skips over a char if its static to avoid missing one */ 
          ch = fgetc(vcf); /* Reading a char in */ 
-        // printf("c = %c\n",ch);
+	    /*if (fileCount > 1)
+        {
+           fgets(filetext,100,vcf); 
+            fprintf(stderr,"%s\n",filetext); 
+
+        }*/
+
+      
+        if (fileCount >1 ) 
+         printf("c = %c\n",ch);
         if (ch==EOF&&endOfFile==1)
         {
 //           *buff = NULL;
@@ -396,7 +431,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
             case ' ': /* Its a space */ 
             {
 
-              if (crlfFlag==1) /* If its a folded line, reset the crlf flag and increment lineto */ 
+              if (crlfFlag==1)/* If its a folded line, reset the crlf flag and increment lineto */ 
               {
                     crlfFlag=0;    
                     foldedFlag =1; 
@@ -432,7 +467,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
                     tempString=(char *)malloc(sizeof(char));
                   else
                     tempString=realloc(tempString,sizeof(char)*(i+1));
-                  tempString[i++] = ch; /* Duplicate code. Place outside while loop */ 
+                   tempString[i++] = ch; /* Duplicate code. Place outside while loop */ 
                   staticFlag = 0; 
                }
                break;
@@ -486,7 +521,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
 
     }while (ch!=EOF);
     /* Setting the null terminator for the string */ 
-    if (ch==EOF)
+    if (ch==EOF) /* for some reason, ch = end of file */ 
     {
         tempString=realloc(tempString,sizeof(char)*(i+1));
 
@@ -494,8 +529,10 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
         endOfFile=1; 
         if (strlen(tempString)<2)
         {
-            free(tempString);
-           *buff=NULL;
+               free(tempString);
+               *buff=NULL;
+	       fprintf(stderr,"end of get unfolded 1\n");
+
            return newStatus;
         }
        // staticFlag=1;
@@ -521,6 +558,7 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
       // if (ch==EOF && endOfFile==1&& strlen(*buff)==0)
   // *buff=NULL;
 
+   // fprintf(stderr,"end of get unfolded \n");
     return newStatus;
 
 
@@ -970,8 +1008,6 @@ void freeVcFile ( VcFile * const filep)
         int i, j;
         Vcard * tmp;
         VcProp * tmp2;
-        if (filep==NULL	)
-        return	NULL;
         for(i = 0; i < filep->ncards; i++)
         {
                 tmp = filep->cardp[i];
@@ -996,32 +1032,59 @@ void freeVcFile ( VcFile * const filep)
 #ifdef _pyDef
  PyObject *Vcf_readFile( PyObject *self, PyObject *args )
  {
+      newFileFlag = 1; 
+      fprintf(stderr,"Beggining of readFile\n"); 
       cardCount = 0; 
       char filetext[100];
       char *filename;
       VcStatus status; 
-      printf("here?\n");
+      fileCount ++; /* incrementing the file counter */ 
       //if (filep!=NULL)
       globalFilep = malloc(sizeof(VcFile));
       /* Coverting python object to c file type and storing it in filename */ 
       PyArg_ParseTuple(args, "s", &filename ); 
-      FILE *fp = fopen(filename,"r");
-      printf("fname = %s\n",filename);
-      if (filename[48]=='T'){
-      printf("no way?\n");
-      printf("fp = %s\n",filename);
-       fgets (filetext, 100, fp);
-
-      printf("file text 1 = %s\n",filetext);
-   
-
+      FILE *fp = NULL;
+      FILE * fp1 = NULL; 
+      fprintf(stderr, "first CHAR = %c\n",filename[0]);
+      if (filename[0] == 'o') /*Special fp1 for the second file passed in,
+      i know the second file begins with an o. but it still segfaults */ 
+      {
+         fp1 = fopen(filename,"r");
+         if (fp1==NULL)
+         printf("OMG OMG OMG OMG\n");
+         fprintf(stderr,"fp1 has been opened, %s ",filename); 
+         printf("We are here!!! CONGRATS!!!\n"); 
+         
+         status = readVcFile(fp1,globalFilep);
+         /*Segfaults in this function
+         
+        when i try to access it */ 
+         /*This little function, readVcfile, it segfaults in there
+         when it tries to access the file. 
+         Maybe because its a const?
+         Who knows
+         
+         By the way, even when i use the first fp to poen the second file
+         it still segfaults, i do close the file as you can see at the end of this function */ 
+         
+      }
+      else
+      fp =  fopen(filename,"r");
+      if (fp ==NULL)
+       printf("NULL FP NULL FP");
+      fprintf(stderr,"fname is this%s\n",filename);
+    /*  if (filename[46]=='o')
+     {
       fgets(filetext,100,fp);
-	printf("file text 2 = %s\n",filetext);    
-   }
-      /* How would VcFile struct get to readvcfile??? */
+	fprintf(stderr,"file text 2 = %s\n",filetext);    
+}
+*/
+
+if (filename[0] != 'o') 
+      {
       status = readVcFile(fp,globalFilep);
-      printf("code = %d\n",status.code);    
-      if (status.code !=0)
+     }
+     if (status.code !=0)
       {
          // ``freeVcFile(globalFilep);
         //  freeVcFile(filep);
@@ -1029,30 +1092,34 @@ void freeVcFile ( VcFile * const filep)
           globalFilep = NULL;
           status.code = 0; 
       }
+      fprintf(stderr,"End of readFile\n"); 
+      newFileFlag = 0; 
       return (Py_BuildValue("i",status.code));
  }
 
 
 PyObject * Vcf_getCard( PyObject *self, PyObject * args)
 {
+      fprintf(stderr,"getCard beggining \n"); 
       printf(" Is there a segfault? \n");
       /*Checking to see if filep is accurate from readfile */ 
-      printf("# of cards = %d\n",globalfilep->ncards);
+      printf("# of cards = %d\n",globalFilep->ncards);
       PyObject * card;
       PyObject * tuple; 
       VcFile * filep = globalFilep; 
       printf("card count = %d \n", cardCount);
       if (!PyArg_ParseTuple(args, "O", &card))
         return NULL;
+      
      for (int k = 0; k<filep->cardp[cardCount]->nprops;k++)
      {
-	         tuple= Py_BuildValue("isss",filep->cardp[cardCount]->prop[k].name,filep->cardp[cardCount]->prop[k].value,
-	         filep->cardp[cardCount]->prop[k].partype,filep->cardp[cardCount]->prop[k].parval);
-	         PyList_Append(card,tuple); /* Appending each tuple to a python list */ 
+	tuple= Py_BuildValue("isss",filep->cardp[cardCount]->prop[k].name,filep->cardp[cardCount]->prop[k].value,
+	filep->cardp[cardCount]->prop[k].partype,filep->cardp[cardCount]->prop[k].parval);
+	PyList_Append(card,tuple); /* Appending each tuple to a python list */ 
 
       }
 	cardCount++; /*Static counter knows which card program is currently at */
-      printf("What about here haha!"); 
+      fprintf(stderr,"End of getCard"); 
       return Py_BuildValue("O",card);      /* sending the updated list back to
 					python */ 
 
@@ -1071,6 +1138,8 @@ PyObject * Vcf_getNumCards( PyObject * self, PyObject * args)
 PyObject * Vcf_freeFile(PyObject * self, PyObject * args)
 {
     freeVcFile(globalFilep);
+    globalFilep = NULL;
+    
     
 }
 static PyMethodDef vcfMethods[] = {

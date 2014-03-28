@@ -127,18 +127,20 @@ class App:
         location = ""
         photo = ""
         url = ""
-        if self.photoState.get() == 1:
+        if self.locationState.get() == 1:
             locaton = "g"
         if self.photoState.get() == 1:
            photo = "p"
-        if self.urlState == 1:
+        if self.urlState.get() == 1:
             url = "u"
         # removing the already present output.vcf
         os.system('rm output.vcf')
-        os.system('./vcftool -select '+photo+url+location+' <'+self.fname+"> output.vcf");
+        print (self.fname)
+        os.system('./vcftool -select '+photo+url+location+' <'+self.fname+"> o.vcf")
        # Vcf.freeFile();
             
         self.window.destroy()
+        os.system("chmod +x o.vcf");
         self.clearPanels()
         self.clearCardLists()
         self.displaySelectedCards()
@@ -152,10 +154,20 @@ class App:
         self.cardViewScrolledList.hlist.delete_all()
         self.fileViewScrolledList.hlist.delete_all()
     def displaySelectedCards(self):
-        Vcf.readFile("output.vcf")
-        card  = []
-        Vcf.getCard(card)
-        print (card)  
+        print (self.fname) 
+
+        self.fname = "/home/undergrad/0/skazavch/testA2/AODA1/AODA1/o.vcf"
+        self.displayFileInfo()
+        #Vcf.readFile("/home/undergrad/0/skazavch/testA2/AODA1/AODA1/o.vcf")
+        print ( "Do we get here? ")
+        #card  = []
+       # self.cards = [] 
+       # numCards = Vcf.getNumCards(); 
+        #i = 0 
+        #while i < numCards:
+         #   Vcf.getCard(card)
+          #  self.cards.append(card); 
+           # i = i + 1
     def clearCardLists(self):
         del self.cards[:]
     def drawChecks(self):
@@ -163,14 +175,17 @@ class App:
     def badFile(self,status):
         messagebox.showinfo("Error","Error code " + str(status)+ "detected. Please choose a proper vcf file")
     def displayFileInfo(self):
+        #Deleting the panel 
+        self.fileViewScrolledList.hlist.delete_all()
+        self.cardViewScrolledList.hlist.delete_all()
         #opening the output file and updating the log
         os.system('./vcftool -info <' +self.fname+' >output.vcf')
-
         with open("output.vcf") as f:
             content = f.read()
         self.scrolledLog.insert(END,content)    
         #self.scrolledLog.state = 'DISABLED'
         status =  Vcf.readFile(self.fname)
+
         while status !=0:
             self.badFile(status)
             status = Vcf.readFile(self.fname) 
@@ -211,6 +226,7 @@ class App:
             self.updateFVP(firstFNVal,adrCount,telCount,i)
          #updating the CVP for the first intial card selection
         self.updateCVP(self.cards[0])
+        print (self.cards[0])
        
 	 #cards(0)=card
         #self.updateCVP(numCards,cards)
@@ -228,7 +244,6 @@ class App:
 	
     def updateFVP(self,firstFNVal,adrCount,telCount,rowNum):
         if self.fvpHasData==1:
-             print("wtf")
              self.fileViewScrolledList.hlist.delete_all()
              self.fvpHasData=0
         self.fileViewScrolledList.hlist.add((rowNum-1))
@@ -333,9 +348,15 @@ class App:
         orgMenu.add_command(label = "Canonicalize")
         orgMenu.add_command(label = "Select",command = self.selectCards)
         orgMenu.add_command(label = "Undo")
-
+        
         menuBar.add_cascade(label='Organize', menu = orgMenu)
-
+        dbMenu = Menu(menuBar)
+        dbMenu.add_command(label = "Store Card")
+        dbMenu.add_command(label = "Store Selected")
+        dbMenu.add_command(label = "Open From Database")
+        dbMenu.add_command(label = "Append From Database")
+        dbMenu.add_command(label = "Query")
+        menuBar.add_cascade(label = 'Database', menu = dbMenu)
         helpMenu = Menu(menuBar)
 
         helpMenu.add_command(label = "Card flags and colours")
