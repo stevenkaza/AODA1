@@ -20,6 +20,7 @@ from tkinter import messagebox
 from tkinter.filedialog import askopenfilename
 class App:
     def __init__(self,master):
+        self.createDbTables()
         self.sqlConnection()
         self.fname = None 
         self.cvpHasData = 0
@@ -40,6 +41,8 @@ class App:
         logLabel = Label(self.logFrame,text = "Log Display Panel")
         logLabel.pack(side=TOP)
         self.scrolledLog.pack()
+    def createDbTables(self):
+
     #Code from Professor Gardners website        
     def sqlConnection(self):
         self.username = sys.argv[1]
@@ -55,7 +58,8 @@ class App:
                               host=self.hostname, 
                               database=self.username)
         cursor = cnx.cursor()
-
+        query = "CREATE DATABASE IF NOT EXISTS " + self.username
+        cursor.execute(query)
         print ("Creating Tables")
         query = "CREATE TABLE IF NOT EXISTS NAME (name_id INT PRIMARY KEY, name VARCHAR( 60 ) NOT NULL);"
         cursor.execute(query)        
