@@ -4,7 +4,10 @@
 #A3 
 #0761977    
 import os 
+import sys
 import subprocess
+import mysql.connector 
+
 import string
 from GMapData import *
 from tkinter import *
@@ -17,6 +20,7 @@ from tkinter import messagebox
 from tkinter.filedialog import askopenfilename
 class App:
     def __init__(self,master):
+        self.sqlConnection()
         self.fname = None 
         self.cvpHasData = 0
         self.fvpHasData = 0
@@ -37,6 +41,29 @@ class App:
         logLabel.pack(side=TOP)
         self.scrolledLog.pack()
     #Code from Professor Gardners website        
+    def sqlConnection(self):
+        self.username = sys.argv[1]
+        self.password = sys.argv[2]
+        print (self.password)
+        if len(sys.argv) == 3:
+            self.hostname = "dursley.socs.uoguelph.ca"
+        else:
+            self.hostname = sys.argv[3]
+        print (self.username,self.password,self.hostname)
+        cnx = mysql.connector.connect(user=self.username,
+                              password=self.password ,
+                              host=self.hostname, 
+                              database=self.username)
+        cursor = cnx.cursor()
+
+        print ("Creating Tables")
+        query = "CREATE TABLE IF NOT EXISTS NAME (name_id INT PRIMARY KEY, name VARCHAR( 60 ) NOT NULL);"
+        cursor.execute(query)        
+        query = "CREATE TABLE IF NOT EXISTS PROPERTY  (name_id INT NOT NULL REFERENCES NAME ON DELETE CASCADE,pname CHAR( 8 ) NOT NULL, pinst SMALLINT NOT NULL, partype TINYTEXT, parval TINYTEXT, value TEXT);"
+
+        cursor.execute(query)
+        cursor.close()
+        cnx.close()
     def launchGoogle(self):
 	
 	#1. start CGI/HTTP server
