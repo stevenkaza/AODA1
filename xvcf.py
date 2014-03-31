@@ -60,13 +60,14 @@ class App:
         print ("Creating Tables")
         query = "CREATE TABLE IF NOT EXISTS NAME (name_id INT PRIMARY KEY, name VARCHAR( 60 ) NOT NULL);"
         cursor.execute(query)        
-        query = "CREATE TABLE IF NOT EXISTS PROPERTY  (name_id INT NOT NULL REFERENCES NAME ON DELETE CASCADE,pname CHAR( 8 ) NOT NULL, pinst SMALLINT NOT NULL, partype TINYTEXT, parval TINYTEXT, value TEXT);"
+        query = "CREATE TABLE IF NOT EXISTS PROPERTY (name_id INT NOT NULL REFERENCES NAME ON DELETE CASCADE,pname CHAR( 8 ) NOT NULL, pinst SMALLINT NOT NULL, partype TINYTEXT, parval TINYTEXT, value TEXT);"
 
         cursor.execute(query)
-        query = "INSERT INTO NAME(name_id,name) VALUES (2,'broooo');"
+        query = "INSERT INTO NAME(name_id,name) VALUES(2,'broooo');"
         cursor.execute(query)
         cnx.commit()
         query = "SELECT * FROM NAME;"
+        cursor.execute(query)
         for line in cursor:
             print  (line)
         cursor.close()
