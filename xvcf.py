@@ -20,7 +20,7 @@ from tkinter import messagebox
 from tkinter.filedialog import askopenfilename
 class App:
     def __init__(self,master):
-        self.createDbTables()
+#        self.createDbTables()
         self.sqlConnection()
         self.fname = None 
         self.cvpHasData = 0
@@ -41,7 +41,6 @@ class App:
         logLabel = Label(self.logFrame,text = "Log Display Panel")
         logLabel.pack(side=TOP)
         self.scrolledLog.pack()
-    def createDbTables(self):
 
     #Code from Professor Gardners website        
     def sqlConnection(self):
@@ -58,14 +57,18 @@ class App:
                               host=self.hostname, 
                               database=self.username)
         cursor = cnx.cursor()
-        query = "CREATE DATABASE IF NOT EXISTS " + self.username
-        cursor.execute(query)
         print ("Creating Tables")
         query = "CREATE TABLE IF NOT EXISTS NAME (name_id INT PRIMARY KEY, name VARCHAR( 60 ) NOT NULL);"
         cursor.execute(query)        
         query = "CREATE TABLE IF NOT EXISTS PROPERTY  (name_id INT NOT NULL REFERENCES NAME ON DELETE CASCADE,pname CHAR( 8 ) NOT NULL, pinst SMALLINT NOT NULL, partype TINYTEXT, parval TINYTEXT, value TEXT);"
 
         cursor.execute(query)
+        query = "INSERT INTO NAME(name_id,name) VALUES (2,'broooo');"
+        cursor.execute(query)
+        cnx.commit()
+        query = "SELECT * FROM NAME;"
+        for line in cursor:
+            print  (line)
         cursor.close()
         cnx.close()
     def launchGoogle(self):
@@ -180,6 +183,7 @@ class App:
     def cancelSelect(self):
         self.cancelSelect = 1
         self.window.destroy
+    #def storeAll(self):
         
     def clearPanels(self):
         self.cardViewScrolledList.hlist.delete_all()
@@ -382,7 +386,7 @@ class App:
         
         menuBar.add_cascade(label='Organize', menu = orgMenu)
         dbMenu = Menu(menuBar)
-        dbMenu.add_command(label = "Store Card")
+        dbMenu.add_command(label = "Store All")
         dbMenu.add_command(label = "Store Selected")
         dbMenu.add_command(label = "Open From Database")
         dbMenu.add_command(label = "Append From Database")
