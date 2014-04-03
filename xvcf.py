@@ -187,7 +187,7 @@ class App:
     def storeAll(self):
         for Card in self.cards:
             for Tuple in Card:
-                print Tuple
+                print (Tuple)
         
         print (self.cards)
         print("Storing all")    
@@ -399,7 +399,7 @@ class App:
         dbMenu.add_command(label = "Store Selected")
         dbMenu.add_command(label = "Open From Database")
         dbMenu.add_command(label = "Append From Database")
-        dbMenu.add_command(label = "Query")
+        dbMenu.add_command(label = "Query", command = self.launchQueryWindow)
         menuBar.add_cascade(label = 'Database', menu = dbMenu)
         helpMenu = Menu(menuBar)
 
@@ -408,6 +408,9 @@ class App:
         helpMenu.add_command(label = "About xvcf",command = self.aboutProgram)
         menuBar.add_cascade(label='Help', menu = helpMenu)
         root.config(menu=menuBar)
+    def launchQueryWindow(self):
+        self.queryWindow = Toplevel() 
+        labelQuery = Label(self.queryWindow, text = "Query time")
     def framesInit(self):
         self.frame =  Frame(root,width = "1024")
 

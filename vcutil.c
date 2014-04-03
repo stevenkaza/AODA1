@@ -396,8 +396,6 @@ VcStatus getUnfolded ( FILE * const vcf, char **const buff )
         }*/
 
       
-        if (fileCount >1 ) 
-         printf("c = %c\n",ch);
         if (ch==EOF&&endOfFile==1)
         {
 //           *buff = NULL;
