@@ -52,26 +52,26 @@ class App:
         else:
             self.hostname = sys.argv[3]
         print (self.username,self.password,self.hostname)
-        cnx = mysql.connector.connect(user=self.username,
+        self.cnx = mysql.connector.connect(user=self.username,
                               password=self.password ,
                               host=self.hostname, 
                               database=self.username)
-        cursor = cnx.cursor()
+        self.cursor = self.cnx.cursor()
         print ("Creating Tables")
         query = "CREATE TABLE IF NOT EXISTS NAME (name_id INT PRIMARY KEY, name VARCHAR( 60 ) NOT NULL);"
-        cursor.execute(query)        
+        self.cursor.execute(query)        
         query = "CREATE TABLE IF NOT EXISTS PROPERTY (name_id INT NOT NULL REFERENCES NAME ON DELETE CASCADE,pname CHAR( 8 ) NOT NULL, pinst SMALLINT NOT NULL, partype TINYTEXT, parval TINYTEXT, value TEXT);"
 
-        cursor.execute(query)
-        query = "INSERT INTO NAME(name_id,name) VALUES(2,'broooo');"
-        cursor.execute(query)
-        cnx.commit()
-        query = "SELECT * FROM NAME;"
-        cursor.execute(query)
-        for line in cursor:
-            print  (line)
-        cursor.close()
-        cnx.close()
+        self.cursor.execute(query)
+#        query = "INSERT INTO NAME(name_id,name) VALUES(4,'broooo');"
+ #       cursor.execute(query)
+        self.cnx.commit()
+  #      query = "SELECT * FROM NAME;"
+   #     cursor.execute(query)
+    #    for line in cursor:
+     #       print  (line)
+       # cursor.close()
+       # cnx.close()
     def launchGoogle(self):
 	
 	#1. start CGI/HTTP server
@@ -184,8 +184,16 @@ class App:
     def cancelSelect(self):
         self.cancelSelect = 1
         self.window.destroy
-    #def storeAll(self):
+    def storeAll(self):
+        for Card in self.cards:
+            for Tuple in Card:
+                print Tuple
         
+        print (self.cards)
+        print("Storing all")    
+        # check if name already is in Name table, if not insert it 
+        # go thru the cards one by one 
+        query = "INSERT "
     def clearPanels(self):
         self.cardViewScrolledList.hlist.delete_all()
         self.fileViewScrolledList.hlist.delete_all()
@@ -387,7 +395,7 @@ class App:
         
         menuBar.add_cascade(label='Organize', menu = orgMenu)
         dbMenu = Menu(menuBar)
-        dbMenu.add_command(label = "Store All")
+        dbMenu.add_command(label = "Store All",command = self.storeAll)
         dbMenu.add_command(label = "Store Selected")
         dbMenu.add_command(label = "Open From Database")
         dbMenu.add_command(label = "Append From Database")
