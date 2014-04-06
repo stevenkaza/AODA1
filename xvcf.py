@@ -187,8 +187,9 @@ class App:
     
         
     def storeAll(self):
-    self.foundName = "bro"
-    query = "INSERT " + self.foundName + " INTO NAME;"
+        self.foundName = "bro"
+        query = "INSERT INTO NAME(name) VALUES("+self.foundName+");"
+        self.cursor.execute(query)
         for Card in self.cards:
             for Tuple in Card:
                 # If the tuple property is a name value,
@@ -206,25 +207,26 @@ class App:
                      for line in self.cursor:
                         checkFlag = True
                      if checkFlag == False:
-                        hasName = 0 
+                        hasName = 0 # query didnt return anything
                      else:
                         hasName = 1 
-                     if hasName == 1:
+                     if hasName == 1: #if the name exists already, its time to bring up a popup
                         modulPopup = Toplevel()
                         modulLabel = "Name already in table"
-                        query = "SELECT value FROM PROPERTY where contains '+'"
+                        print (modulLabel)
                      elif hasName ==0:
+                        print ("name did not exist")
                         query = "INSERT INTO NAME(name_id,name) VALUES()"
 
 
 
 
         
-        print (self.cards)
+        #print (self.cards)
         print("Storing all")    
         # check if name already is in Name table, if not insert it 
         # go thru the cards one by one 
-        query = "INSERT "
+        #query = "INSERT "
     def clearPanels(self):
         self.cardViewScrolledList.hlist.delete_all()
         self.fileViewScrolledList.hlist.delete_all()
@@ -442,9 +444,31 @@ class App:
     def launchQueryWindow(self):
         self.queryWindow = Toplevel() 
         labelQuery = Label(self.queryWindow, text = "Query time")
+        queryTop = Frame(self.queryWindow)
+        queryTop.pack(side = TOP)
+        queryBot = Frame(self.queryWindow)
+        queryBot.pack(side = BOTTOM)
 
+        self.selecttextBox = Entry(queryTop)
+        self.selecttextBox.pack(side = TOP)
+        self.selecttextBox.insert(0.0,text = "SELECT ")
 
+       
+        self.queryResults = ScrolledText(queryBot, width = 20, height = 10)
+        self.queryResults.pack(side=TOP)
+        clearQuery = Button(queryBot, text = "Clear",command = self.clearQueryPanel)
+        clearQuery.pack(side=BOTTOM)
+        submitQuery = Button(queryTop, text = "Submit" , command = self.sendQuery)
+        submitQuery.pack(side=BOTTOM)
+        queryHelp = Button(queryTop, text = "Help" , command = self.launchHelp)
+        queryHelp.pack(side = BOTOTM)
+    def launchHelp(self):
+        print( "query help")
+    def clearQueryPanel(self):
+        self.queryResults.delete(0.0,END)
 
+    def sendQuery(self):
+        print ("submitting query")
     def framesInit(self):
         self.frame =  Frame(root,width = "1024")
 
