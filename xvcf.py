@@ -187,7 +187,32 @@ class App:
     def storeAll(self):
         for Card in self.cards:
             for Tuple in Card:
-                print (Tuple)
+                # If the tuple property is a name value,
+                # we need to check if that name currently exists in the 
+                #database, and if not, then we need to insert
+                #that name and the cards properties into the proper tables
+                if Tuple[0] == '3'
+                     self.foundName = Tuple[1]
+                     query = "SELECT " + self.foundName + " FROM NAME;"
+                     self.cursor.execute(query)
+                     #seeing if the results from the query are empty 
+                     checkFlag = False 
+                     for line in self.cursor:
+                        checkFlag = True
+                    if checkFlag == False:
+                        hasName = 0 
+                    else:
+                        hasName = 1 
+                    if hasName == 1:
+                        modulPopup = Toplevel()
+                        modulLabel = "Name already in table"
+                        query = "SELECT value FROM PROPERTY where contains '+'"
+                    else if hasName =0:
+                        query = "INSERT INTO NAME(name_id,name) VALUES()
+
+
+
+
         
         print (self.cards)
         print("Storing all")    
