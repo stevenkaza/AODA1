@@ -58,9 +58,9 @@ class App:
                               database=self.username)
         self.cursor = self.cnx.cursor()
         print ("Creating Tables")
-        query = "CREATE TABLE IF NOT EXISTS NAME (name_id AUTO_INCREMENT  INT PRIMARY KEY, name VARCHAR( 60 ) NOT NULL);"
+        query = "CREATE TABLE IF NOT EXISTS NAME (name_id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR( 60 ) NOT NULL);"
         self.cursor.execute(query)        
-        query = "CREATE TABLE IF NOT EXISTS PROPERTY (FOREIGN KEY(name_id) REFRENCES NAME(name_id) ON DELETE CASCADE INT NOT NULL ,pname CHAR( 8 ) NOT NULL, pinst SMALLINT NOT NULL, partype TINYTEXT, parval TINYTEXT, value TEXT);"
+        query = "CREATE TABLE IF NOT EXISTS PROPERTY (name_id INT NOT NULL ,pname CHAR( 8 ) NOT NULL, pinst SMALLINT NOT NULL, partype TINYTEXT, parval TINYTEXT, value TEXT, FOREIGN KEY(name_id) REFRENCES NAME(name_id) ON DELETE CASCADE);"
 
         self.cursor.execute(query)
 #        query = "NSERT INTO NAME(name_id,name) VALUES(4,'broooo');"
