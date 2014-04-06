@@ -58,12 +58,12 @@ class App:
                               database=self.username)
         self.cursor = self.cnx.cursor()
         print ("Creating Tables")
-        query = "CREATE TABLE IF NOT EXISTS NAME (name_id INT PRIMARY KEY, name VARCHAR( 60 ) NOT NULL);"
+        query = "CREATE TABLE IF NOT EXISTS NAME (name_id AUTO_INCREMENT  INT PRIMARY KEY, name VARCHAR( 60 ) NOT NULL);"
         self.cursor.execute(query)        
-        query = "CREATE TABLE IF NOT EXISTS PROPERTY (name_id INT NOT NULL REFERENCES NAME ON DELETE CASCADE,pname CHAR( 8 ) NOT NULL, pinst SMALLINT NOT NULL, partype TINYTEXT, parval TINYTEXT, value TEXT);"
+        query = "CREATE TABLE IF NOT EXISTS PROPERTY (FOREIGN KEY(name_id) REFRENCES NAME(name_id) ON DELETE CASCADE INT NOT NULL ,pname CHAR( 8 ) NOT NULL, pinst SMALLINT NOT NULL, partype TINYTEXT, parval TINYTEXT, value TEXT);"
 
         self.cursor.execute(query)
-#        query = "INSERT INTO NAME(name_id,name) VALUES(4,'broooo');"
+#        query = "NSERT INTO NAME(name_id,name) VALUES(4,'broooo');"
  #       cursor.execute(query)
         self.cnx.commit()
   #      query = "SELECT * FROM NAME;"
@@ -184,31 +184,37 @@ class App:
     def cancelSelect(self):
         self.cancelSelect = 1
         self.window.destroy
+    
+        
     def storeAll(self):
+    self.foundName = "bro"
+    query = "INSERT " + self.foundName + " INTO NAME;"
         for Card in self.cards:
             for Tuple in Card:
                 # If the tuple property is a name value,
                 # we need to check if that name currently exists in the 
                 #database, and if not, then we need to insert
                 #that name and the cards properties into the proper tables
-                if Tuple[0] == '3'
+        
+               if Tuple[0] == '3':
                      self.foundName = Tuple[1]
+                     self.foundName = "bro"
                      query = "SELECT " + self.foundName + " FROM NAME;"
                      self.cursor.execute(query)
                      #seeing if the results from the query are empty 
                      checkFlag = False 
                      for line in self.cursor:
                         checkFlag = True
-                    if checkFlag == False:
+                     if checkFlag == False:
                         hasName = 0 
-                    else:
+                     else:
                         hasName = 1 
-                    if hasName == 1:
+                     if hasName == 1:
                         modulPopup = Toplevel()
                         modulLabel = "Name already in table"
                         query = "SELECT value FROM PROPERTY where contains '+'"
-                    else if hasName =0:
-                        query = "INSERT INTO NAME(name_id,name) VALUES()
+                     elif hasName ==0:
+                        query = "INSERT INTO NAME(name_id,name) VALUES()"
 
 
 
@@ -436,6 +442,9 @@ class App:
     def launchQueryWindow(self):
         self.queryWindow = Toplevel() 
         labelQuery = Label(self.queryWindow, text = "Query time")
+
+
+
     def framesInit(self):
         self.frame =  Frame(root,width = "1024")
 
