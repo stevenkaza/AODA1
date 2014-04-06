@@ -60,8 +60,8 @@ class App:
         print ("Creating Tables")
         query = "CREATE TABLE IF NOT EXISTS NAME (name_id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR( 60 ) NOT NULL);"
         self.cursor.execute(query)        
-        query = "CREATE TABLE IF NOT EXISTS PROPERTY (name_id INT NOT NULL ,pname CHAR( 8 ) NOT NULL, pinst SMALLINT NOT NULL, partype TINYTEXT, parval TINYTEXT, value TEXT, FOREIGN KEY(name_id) REFRENCES NAME(name_id) ON DELETE CASCADE);"
-
+        #query = "CREATE TABLE IF NOT EXISTS PROPERTY (name_id INT NOT NULL ,pname CHAR( 8 ) NOT NULL, pinst SMALLINT NOT NULL, partype TINYTEXT, parval TINYTEXT, value TEXT, FOREIGN KEY(name_id) REFRENCES NAME(name_id) ON DELETE CASCADE);"
+        query = "CREATE TABLE IF NOT EXISTS PROPERTY( PRIMARY KEY(name_id,pname,pinst), FOREIGN KEY(name_id) REFERENCES NAME(name_id) ON DELETE CASCADE, name_id INT NOT NULL REFERENCES     NAME ON DELETE CASCADE, pname CHAR(8) NOT NULL, pinst SMALLINT NOT NULL, partype TINYTEXT, parval TINYTEXT, value TEXT 
         self.cursor.execute(query)
 #        query = "NSERT INTO NAME(name_id,name) VALUES(4,'broooo');"
  #       cursor.execute(query)
