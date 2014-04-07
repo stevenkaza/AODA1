@@ -199,9 +199,89 @@ class App:
         else:
             intNum = int(self.rowNum)
             myCard = self.cards[intNum]      
+        if Tuple[0] == 3:
         for Tuple in myCard:
-            if Tuple[0] == 3:
+            if cancelStoring ==1:
+                break;
+            pname = self.getPropName(Tuple)
 
+            if Tuple[0]==10:
+               telCount = telCount + 1
+            # If the tuple property is a name value,
+            # we need to check if that name currently exists in the 
+            #database, and if not, then we need to insert
+            #that name and the cards properties into the proper tables
+            if nameFound == 1: 
+               #insert all fields into prop table as long as partype and parval are not null
+               num = random.randint(0,121)
+               if Tuple[2] != None and Tuple[3] != None:
+                   query = "INSERT INTO PROPERTY(name_id,pname,pinst,partype,parval,value) VALUES(LAST_INSERT_ID(),'"+pname+"','"+str(num)+"','"+Tuple[2]+"','"+Tuple[3]+"','"+Tuple[1]+"');"
+
+               # if partype is null but parval is ok 
+               elif Tuple[2] == None and Tuple[3] != None:
+                   query = "INSERT INTO PROPERTY(name_id,pname,pinst,parval,value) VALUES(LAST_INSERT_ID(),'"+pname+"','"+str(num)+"','"+Tuple[3]+"','"+Tuple[1]+"');"
+               # if partype is not null but parval is null
+               elif Tuple[2] != None and Tuple[3] == None:
+                   query = "INSERT INTO PROPERTY(name_id,pname,pinst,partype,value) VALUES(LAST_INSERT_ID(),'"+pname+"','"+str(num)+"','"+Tuple[2]+"','"+Tuple[1]+"');"
+               # if parval and partype are null
+               elif Tuple[2] == None and Tuple[3] == None:
+                   query = "INSERT INTO PROPERTY(name_id,pname,pinst,value) VALUES(LAST_INSERT_ID(),'"+pname+"','"+str(num)+"','"+Tuple[1]+"');"
+               self.cursor.execute(query)
+               
+
+               self.cnx.commit()
+            # if its the first name in the card (checks name value for 3 which represents name a
+                #name flag to be 0)
+            if Tuple[0] == 3 and nameFound == 0:
+
+                 self.foundName = Tuple[1]
+                 query = "SELECT name FROM NAME WHERE NAME = '"+self.foundName+"';"
+                 print (query)
+                 self.cursor.execute(query)
+                 #seeing if the results from the query are empty 
+                 checkFlag = False
+                 hasName = 0 
+                 for line in self.cursor:
+                    hasName = 1
+                    print ("line = ")
+                    print (line)
+                 if hasName == 1: #if the name exists already, its time to bring up a popup
+                     print ("has name")   
+                     modulPopup = Toplevel()
+                     props = Frame(modulPopup)
+                     propField = ScrolledText(props,width = 20, height = 20)
+                     propField.pack(side=TOP)
+
+                     propField.insert(END,Tuple)
+                     choices = Frame(modulPopup)
+                     choices.pack(side = BOTTOM)
+                     props.pack(side = TOP)
+                     choice = IntVar()
+                     Radiobutton(choices, text = "Dont store this card",variable = choice, value = 1).pack(side = TOP)
+                     Radiobutton(choices, text = "Replace with this card", variable = choice, value = 2).pack(side=TOP)
+                     Radiobutton(choices, text = "Merge with this card", variable = choice, value = 3).pack(side = TOP)
+                     Radiobutton(choices, text = "Cancel storing", variable = choice, value = 4).pack(side = TOP)
+                     submitChoice = Button(modulPopup,text = "Submit Choice",command = modulPopup.destroy)
+                     submitChoice.pack(side=BOTTOM)
+                     self.frame.wait_window(modulPopup)
+                     result = choice.get()
+                     #cancel storing if the result was 4 
+                     if result == 4:
+                        cancelStoring = 1
+                        break; 
+                     
+
+                     modulLabel = "Name already in table"
+                     print (modulLabel)
+                 #if its not in the table of names
+                 elif hasName ==0:
+                    print ("name did not exist")
+                    #if cards first name hasnt been stored yet
+                    if nameFound == 0:
+                        query = "INSERT INTO NAME(name) VALUES('"+self.foundName+"');"
+                        self.cursor.execute(query)
+                        self.cnx.commit()
+                        nameFound = 1 
 
     def storeAll(self):
         cancelStoring = 0
