@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 #Steven Kazavchinski
 #CIS 2750 
-#A3 
+#A4 
 #0761977    
 import os 
 import sys
@@ -58,10 +58,16 @@ class App:
                               database=self.username)
         self.cursor = self.cnx.cursor()
         print ("Creating Tables")
+        #query = "DROP TABLE PROPERTY;"
+#        self.cursor.execute(query)
+  #      self.cnx.commit()
+       # query = "DROP TABLE NAME;"
+ #       self.cursor.execute(query)
+   #     self.cnx.commit()
         query = "CREATE TABLE IF NOT EXISTS NAME (name_id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR( 60 ) NOT NULL);"
         self.cursor.execute(query)        
         #query = "CREATE TABLE IF NOT EXISTS PROPERTY (name_id INT NOT NULL ,pname CHAR( 8 ) NOT NULL, pinst SMALLINT NOT NULL, partype TINYTEXT, parval TINYTEXT, value TEXT, FOREIGN KEY(name_id) REFRENCES NAME(name_id) ON DELETE CASCADE);"
-        query = "CREATE TABLE IF NOT EXISTS PROPERTY( PRIMARY KEY(name_id,pname,pinst), FOREIGN KEY(name_id) REFERENCES NAME(name_id) ON DELETE CASCADE, name_id INT NOT NULL REFERENCES     NAME ON DELETE CASCADE, pname CHAR(8) NOT NULL, pinst SMALLINT NOT NULL, partype TINYTEXT, parval TINYTEXT, value TEXT 
+        query = "CREATE TABLE IF NOT EXISTS PROPERTY( PRIMARY KEY(name_id,pname,pinst), FOREIGN KEY(name_id) REFERENCES NAME(name_id) ON DELETE CASCADE, name_id INT NOT NULL REFERENCES     NAME ON DELETE CASCADE, pname CHAR(8) NOT NULL, pinst SMALLINT NOT NULL, partype TINYTEXT, parval TINYTEXT, value TEXT);"
         self.cursor.execute(query)
 #        query = "NSERT INTO NAME(name_id,name) VALUES(4,'broooo');"
  #       cursor.execute(query)
@@ -187,39 +193,59 @@ class App:
     
         
     def storeAll(self):
-        self.foundName = "bro"
-        query = "INSERT INTO NAME(name) VALUES("+self.foundName+");"
-        self.cursor.execute(query)
+        #query = "INSERT INTO NAME (name) VALUES('"+self.foundName+"');"
+        if len(self.cards)==0:
+            print ("error")
+            return 2
         for Card in self.cards:
+            nameFound = 0 
+            print ("new card")
             for Tuple in Card:
+                self.getPname(Tuple)
+                if Tuple[0] == 0:
+                    pname = "Begin"
+                elif Tuple[0] == 1: 
+
+                
                 # If the tuple property is a name value,
                 # we need to check if that name currently exists in the 
                 #database, and if not, then we need to insert
                 #that name and the cards properties into the proper tables
-        
-               if Tuple[0] == '3':
+               if propInsert == 1: 
+                   
+                   query = "INSERT INTO PROPERTY("
+               print (Tuple[0])
+               if Tuple[0] == 3:
+
                      self.foundName = Tuple[1]
-                     self.foundName = "bro"
-                     query = "SELECT " + self.foundName + " FROM NAME;"
+                     query = "SELECT name FROM NAME WHERE NAME = '"+self.foundName+"';"
+                     print (query)
                      self.cursor.execute(query)
                      #seeing if the results from the query are empty 
-                     checkFlag = False 
+                     checkFlag = False
+                     hasName = 0 
                      for line in self.cursor:
-                        checkFlag = True
-                     if checkFlag == False:
-                        hasName = 0 # query didnt return anything
-                     else:
-                        hasName = 1 
+                        hasName = 1
+                        print ("line = ")
+                        print (line)
                      if hasName == 1: #if the name exists already, its time to bring up a popup
+                         print ("has name")   
                         modulPopup = Toplevel()
+                        self.frame.wait_window(modulPopup)
                         modulLabel = "Name already in table"
                         print (modulLabel)
+                     #if its not in the table of names
                      elif hasName ==0:
                         print ("name did not exist")
-                        query = "INSERT INTO NAME(name_id,name) VALUES()"
-
-
-
+                        #if cards first name hasnt been stored yet
+                        if nameFound == 0:
+                            query = "INSERT INTO NAME(name) VALUES('"+self.foundName+"');"
+                            self.cursor.execute(query)
+                            self.cnx.commit()
+                            nameFound = 1 
+         
+                            # but no matter what, we still insert the prop
+                        
 
         
         #print (self.cards)
@@ -227,6 +253,12 @@ class App:
         # check if name already is in Name table, if not insert it 
         # go thru the cards one by one 
         #query = "INSERT "
+    def getPropName(self,Tuple):
+        if Tuple[0] == 0:
+            pname = "BEGIN"
+        if Tuple[1] == 1:
+
+  
     def clearPanels(self):
         self.cardViewScrolledList.hlist.delete_all()
         self.fileViewScrolledList.hlist.delete_all()
@@ -451,7 +483,7 @@ class App:
 
         self.selecttextBox = Entry(queryTop)
         self.selecttextBox.pack(side = TOP)
-        self.selecttextBox.insert(0.0,text = "SELECT ")
+        self.selecttextBox.insert(0, "SELECT ")
 
        
         self.queryResults = ScrolledText(queryBot, width = 20, height = 10)
@@ -460,8 +492,8 @@ class App:
         clearQuery.pack(side=BOTTOM)
         submitQuery = Button(queryTop, text = "Submit" , command = self.sendQuery)
         submitQuery.pack(side=BOTTOM)
-        queryHelp = Button(queryTop, text = "Help" , command = self.launchHelp)
-        queryHelp.pack(side = BOTOTM)
+        queryHelp = Button(queryTop, text = "Help" , command =  self.launchHelp)
+        queryHelp.pack(side = RIGHT)
     def launchHelp(self):
         print( "query help")
     def clearQueryPanel(self):
@@ -469,6 +501,27 @@ class App:
 
     def sendQuery(self):
         print ("submitting query")
+         
+        query = self.selecttextBox.get()
+        #Auto fixing query to make sure it has a semiclon
+        #at the end incase user forgot to enter it
+        if query.find(";") == -1:
+            query = query + ";"
+        upperQuery = query.upper()
+        commitFlag = 0
+        if upperQuery.find("INSERT") != -1:
+            commitFlag = 1
+        else:
+            commitFlag = 0
+        self.cursor.execute(query)
+        if commitFlag == 1:
+            self.cnx.commit()
+        for value in self.cursor:
+            #value = value + "\n"
+            self.queryResults.insert(END,value)
+            self.queryResults.insert(END,"\n")
+            print (value)
+
     def framesInit(self):
         self.frame =  Frame(root,width = "1024")
 
