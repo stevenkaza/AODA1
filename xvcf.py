@@ -7,7 +7,7 @@ import os
 import sys
 import subprocess
 import mysql.connector 
-
+import random
 import string
 from GMapData import *
 from tkinter import *
@@ -22,6 +22,7 @@ class App:
     def __init__(self,master):
 #        self.createDbTables()
         self.sqlConnection()
+        self.selectedFlag = 0 
         self.fname = None 
         self.cvpHasData = 0
         self.fvpHasData = 0
@@ -58,13 +59,13 @@ class App:
                               database=self.username)
         self.cursor = self.cnx.cursor()
         print ("Creating Tables")
-        query = "DROP TABLE PROPERTY;"
+        #query = "DROP TABLE PROPERTY;"
 
-        self.cursor.execute(query)
-        self.cnx.commit()
-        query = "DROP TABLE NAME;"
-        self.cursor.execute(query)
-        self.cnx.commit()
+        #self.cursor.execute(query)
+        #self.cnx.commit()
+        #query = "DROP TABLE NAME;"
+        #self.cursor.execute(query)
+        #self.cnx.commit()
         query = "CREATE TABLE IF NOT EXISTS NAME (name_id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR( 60 ) NOT NULL);"
         self.cursor.execute(query)        
         #query = "CREATE TABLE IF NOT EXISTS PROPERTY (name_id INT NOT NULL ,pname CHAR( 8 ) NOT NULL, pinst SMALLINT NOT NULL, partype TINYTEXT, parval TINYTEXT, value TEXT, FOREIGN KEY(name_id) REFRENCES NAME(name_id) ON DELETE CASCADE);"
@@ -192,37 +193,57 @@ class App:
         self.cancelSelect = 1
         self.window.destroy
     
-        
+    def storeSelected(self):
+        if self.selectedFlag !=1:
+            myCard = self.cards[0]
+        else:
+            intNum = int(self.rowNum)
+            myCard = self.cards[intNum]      
+        for Tuple in myCard:
+            if Tuple[0] == 3:
+
+
     def storeAll(self):
-        #query = "INSERT INTO NAME (name) VALUES('"+self.foundName+"');"
-        if len(self.cards)==0:
-            print ("error")
-            return 2
+        cancelStoring = 0
         for Card in self.cards:
+            if cancelStoring == 1:
+                break; 
             nameFound = 0 
             print ("new card")
+            telCount = 0
+            adrCount = 0
+            geoCount = 0 
+
+            pinstCount = 0
             for Tuple in Card:
+                if cancelStoring ==1:
+                    break;
                 pname = self.getPropName(Tuple)
 
-                
+                if Tuple[0]==10:
+                   telCount = telCount + 1
                 # If the tuple property is a name value,
                 # we need to check if that name currently exists in the 
                 #database, and if not, then we need to insert
                 #that name and the cards properties into the proper tables
                 if nameFound == 1: 
                    #insert all fields into prop table as long as partype and parval are not null
+                   num = random.randint(0,121)
                    if Tuple[2] != None and Tuple[3] != None:
-                       query = "INSERT INTO PROPERTY(name_id,pname,pinst,partype,parval,value) VALUES(LAST_INSERT_ID(),'"+pname+"',1,'"+Tuple[2]+"','"+Tuple[3]+"','"+Tuple[1]+"');"
+                       query = "INSERT INTO PROPERTY(name_id,pname,pinst,partype,parval,value) VALUES(LAST_INSERT_ID(),'"+pname+"','"+str(num)+"','"+Tuple[2]+"','"+Tuple[3]+"','"+Tuple[1]+"');"
+
                    # if partype is null but parval is ok 
                    elif Tuple[2] == None and Tuple[3] != None:
-                       query = "INSERT INTO PROPERTY(name_id,pname,pinst,parval,value) VALUES(LAST_INSERT_ID(),'"+pname+"',1,'"+Tuple[3]+"','"+Tuple[1]+"');"
+                       query = "INSERT INTO PROPERTY(name_id,pname,pinst,parval,value) VALUES(LAST_INSERT_ID(),'"+pname+"','"+str(num)+"','"+Tuple[3]+"','"+Tuple[1]+"');"
                    # if partype is not null but parval is null
                    elif Tuple[2] != None and Tuple[3] == None:
-                       query = "INSERT INTO PROPERTY(name_id,pname,pinst,partype,value) VALUES(LAST_INSERT_ID(),'"+pname+"',1,'"+Tuple[2]+"','"+Tuple[1]+"');"
+                       query = "INSERT INTO PROPERTY(name_id,pname,pinst,partype,value) VALUES(LAST_INSERT_ID(),'"+pname+"','"+str(num)+"','"+Tuple[2]+"','"+Tuple[1]+"');"
                    # if parval and partype are null
                    elif Tuple[2] == None and Tuple[3] == None:
-                       query = "INSERT INTO PROPERTY(name_id,pname,pinst,value) VALUES(LAST_INSERT_ID(),'"+pname+"',1,'"+Tuple[1]+"');"
+                       query = "INSERT INTO PROPERTY(name_id,pname,pinst,value) VALUES(LAST_INSERT_ID(),'"+pname+"','"+str(num)+"','"+Tuple[1]+"');"
                    self.cursor.execute(query)
+                   
+
                    self.cnx.commit()
                 # if its the first name in the card (checks name value for 3 which represents name a
                     #name flag to be 0)
@@ -242,7 +263,29 @@ class App:
                      if hasName == 1: #if the name exists already, its time to bring up a popup
                          print ("has name")   
                          modulPopup = Toplevel()
+                         props = Frame(modulPopup)
+                         propField = ScrolledText(props,width = 20, height = 20)
+                         propField.pack(side=TOP)
+
+                         propField.insert(END,Tuple)
+                         choices = Frame(modulPopup)
+                         choices.pack(side = BOTTOM)
+                         props.pack(side = TOP)
+                         choice = IntVar()
+                         Radiobutton(choices, text = "Dont store this card",variable = choice, value = 1).pack(side = TOP)
+                         Radiobutton(choices, text = "Replace with this card", variable = choice, value = 2).pack(side=TOP)
+                         Radiobutton(choices, text = "Merge with this card", variable = choice, value = 3).pack(side = TOP)
+                         Radiobutton(choices, text = "Cancel storing", variable = choice, value = 4).pack(side = TOP)
+                         submitChoice = Button(modulPopup,text = "Submit Choice",command = modulPopup.destroy)
+                         submitChoice.pack(side=BOTTOM)
                          self.frame.wait_window(modulPopup)
+                         result = choice.get()
+                         #cancel storing if the result was 4 
+                         if result == 4:
+                            cancelStoring = 1
+                            break; 
+                         
+
                          modulLabel = "Name already in table"
                          print (modulLabel)
                      #if its not in the table of names
@@ -392,9 +435,10 @@ class App:
         root.destroy()
     # Returns the row # that was selected by mouse in file view panel
     def key(self,event):
-        rowNum = event.widget.nearest(event.y)
-        rowNUM=int(rowNum)
-        self.updateCVP(self.cards[rowNUM])
+        self.selectedFlag = 1
+        self.rowNum = event.widget.nearest(event.y)
+        self.rowNUM=int(self.rowNum)
+        self.updateCVP(self.cards[self.rowNUM])
 	
     def updateFVP(self,firstFNVal,adrCount,telCount,rowNum):
         if self.fvpHasData==1:
@@ -506,7 +550,7 @@ class App:
         menuBar.add_cascade(label='Organize', menu = orgMenu)
         dbMenu = Menu(menuBar)
         dbMenu.add_command(label = "Store All",command = self.storeAll)
-        dbMenu.add_command(label = "Store Selected")
+        dbMenu.add_command(label = "Store Selected", command = self.storeSelected)
         dbMenu.add_command(label = "Open From Database")
         dbMenu.add_command(label = "Append From Database")
         dbMenu.add_command(label = "Query", command = self.launchQueryWindow)
@@ -525,28 +569,43 @@ class App:
         queryTop.pack(side = TOP)
         queryBot = Frame(self.queryWindow)
         queryBot.pack(side = BOTTOM)
-
+        #control variable for canned options
+        self.vari = StringVar(queryTop)
+        self.vari.set("Choose a canned transaction")
+        cannedChoices = OptionMenu(queryTop,self.vari,"Display properties of all cards with the name ___","How many cards are in ___ Country","How many phone numbers in total?" , "How many websites in total?")
+        cannedChoices.pack(side = TOP)
+        
         self.selecttextBox = Entry(queryTop)
         self.selecttextBox.pack(side = TOP)
         self.selecttextBox.insert(0, "SELECT ")
-
+        
        
-        self.queryResults = ScrolledText(queryBot, width = 20, height = 10)
+        self.queryResults = ScrolledText(queryBot, width = 45, height = 10)
         self.queryResults.pack(side=TOP)
         clearQuery = Button(queryBot, text = "Clear",command = self.clearQueryPanel)
         clearQuery.pack(side=BOTTOM)
         submitQuery = Button(queryTop, text = "Submit" , command = self.sendQuery)
         submitQuery.pack(side=BOTTOM)
         queryHelp = Button(queryTop, text = "Help" , command =  self.launchHelp)
-        queryHelp.pack(side = RIGHT)
+        queryHelp.pack(side = BOTTOM)
     def launchHelp(self):
         print( "query help")
+        tableHelp = Toplevel()
+        tableDescription = Label(tableHelp, text = "There are two tables in the database") 
+        tableDescription.pack(side=TOP)
+        tableFurther = Label(tableHelp, text = "The first is NAME table, which consists of two columns: Name id (auto incremented integer), and name (string value representing name from vcard)")
+        tableFurther.pack(side=TOP)
+        propHelp = Label (tableHelp, text = "The second table is the PROPERTY table. It has six columns:\n 1) name_id, property name(pname), instance of property (pinst), property type (partype), property value(parval), and value. ")
+        propHelp.pack(side= BOTTOM)
     def clearQueryPanel(self):
         self.queryResults.delete(0.0,END)
 
     def sendQuery(self):
         print ("submitting query")
-         
+        result = self.vari.get()
+        if result.find("Choose") != -1:
+            return 1; 
+       
         query = self.selecttextBox.get()
         #Auto fixing query to make sure it has a semiclon
         #at the end incase user forgot to enter it
@@ -564,8 +623,9 @@ class App:
         for value in self.cursor:
             #value = value + "\n"
             self.queryResults.insert(END,value)
+            self.queryResults.insert(END,"-")
             self.queryResults.insert(END,"\n")
-            print (value)
+            self.queryResults.insert(END,"----------------------")
 
     def framesInit(self):
         self.frame =  Frame(root,width = "1024")
