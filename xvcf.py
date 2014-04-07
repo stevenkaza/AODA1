@@ -210,8 +210,22 @@ class App:
                 #database, and if not, then we need to insert
                 #that name and the cards properties into the proper tables
                 if nameFound == 1: 
-                   
-                   query = "INSERT INTO PROPERTY(name_id,pname,pinst,partype,parval,value) VALUES(LAST_INSERT_ID(),'"+pname+"',1,'"+Tuple[2]+"','"+Tuple[3]+"','"+Tuple[1]+"');"
+                   #insert all fields into prop table as long as partype and parval are not null
+                   if Tuple[2] != None and Tuple[3] != None:
+                       query = "INSERT INTO PROPERTY(name_id,pname,pinst,partype,parval,value) VALUES(LAST_INSERT_ID(),'"+pname+"',1,'"+Tuple[2]+"','"+Tuple[3]+"','"+Tuple[1]+"');"
+                   # if partype is null but parval is ok 
+                   elif Tuple[2] == None and Tuple[3] != None:
+                       query = "INSERT INTO PROPERTY(name_id,pname,pinst,parval,value) VALUES(LAST_INSERT_ID(),'"+pname+"',1,'"+Tuple[3]+"','"+Tuple[1]+"');"
+                   # if partype is not null but parval is null
+                   elif Tuple[2] != None and Tuple[3] == None:
+                       query = "INSERT INTO PROPERTY(name_id,pname,pinst,partype,value) VALUES(LAST_INSERT_ID(),'"+pname+"',1,'"+Tuple[2]+"','"+Tuple[1]+"');"
+                   # if parval and partype are null
+                   elif Tuple[2] == None and Tuple[3] == None:
+                       query = "INSERT INTO PROPERTY(name_id,pname,pinst,value) VALUES(LAST_INSERT_ID(),'"+pname+"',1,'"+Tuple[1]+"');"
+                   self.cursor.execute(query)
+                   self.cnx.commit()
+                # if its the first name in the card (checks name value for 3 which represents name a
+                    #name flag to be 0)
                 if Tuple[0] == 3 and nameFound == 0:
 
                      self.foundName = Tuple[1]
