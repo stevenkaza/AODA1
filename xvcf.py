@@ -256,9 +256,43 @@ class App:
     def getPropName(self,Tuple):
         if Tuple[0] == 0:
             pname = "BEGIN"
-        if Tuple[1] == 1:
-
-  
+        elif Tuple[0] == 1:
+            pname = "END"
+        elif Tuple[0] == 2:
+            pname = "VERSION"
+        elif Tuple[0] == 3:
+            pname = "N" 
+        elif Tuple[0] == 4:
+            pname = "FN"
+        elif Tuple[0] == 5:
+            pname = "NICKNAME"
+        elif Tuple[0] == 6:
+            pname = "PHOTO" 
+        elif Tuple[0] == 7:
+            pname = "BDAY"
+        elif Tuple[0] == 8:
+            pname = "ADR"
+        elif Tuple[0] == 9:
+            pname = "LABEL" 
+        elif Tuple[0] == 10:
+            pname = "TEL"
+        elif Tuple[0] == 11:
+            pname = "EMAIL"
+        elif Tuple[0] == 12:
+            pname = "GEO" 
+        elif Tuple[0] == 13:
+            pname = "TITLE"
+        elif Tuple[0] == 14:
+            pname = "ORG"
+        elif Tuple[0] == 15:
+            pname = "NOTE" 
+        elif Tuple[0] == 16:
+            pname = "UID"
+        elif Tuple[0] == 17:
+            pname = "URL"
+        elif Tuple[0] == 18:
+            pname = "OTHER" 
+        return pname 
     def clearPanels(self):
         self.cardViewScrolledList.hlist.delete_all()
         self.fileViewScrolledList.hlist.delete_all()
