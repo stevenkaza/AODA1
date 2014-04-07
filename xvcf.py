@@ -58,12 +58,13 @@ class App:
                               database=self.username)
         self.cursor = self.cnx.cursor()
         print ("Creating Tables")
-        #query = "DROP TABLE PROPERTY;"
-#        self.cursor.execute(query)
-  #      self.cnx.commit()
-       # query = "DROP TABLE NAME;"
- #       self.cursor.execute(query)
-   #     self.cnx.commit()
+        query = "DROP TABLE PROPERTY;"
+
+        self.cursor.execute(query)
+        self.cnx.commit()
+        query = "DROP TABLE NAME;"
+        self.cursor.execute(query)
+        self.cnx.commit()
         query = "CREATE TABLE IF NOT EXISTS NAME (name_id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR( 60 ) NOT NULL);"
         self.cursor.execute(query)        
         #query = "CREATE TABLE IF NOT EXISTS PROPERTY (name_id INT NOT NULL ,pname CHAR( 8 ) NOT NULL, pinst SMALLINT NOT NULL, partype TINYTEXT, parval TINYTEXT, value TEXT, FOREIGN KEY(name_id) REFRENCES NAME(name_id) ON DELETE CASCADE);"
@@ -201,21 +202,17 @@ class App:
             nameFound = 0 
             print ("new card")
             for Tuple in Card:
-                self.getPname(Tuple)
-                if Tuple[0] == 0:
-                    pname = "Begin"
-                elif Tuple[0] == 1: 
+                pname = self.getPropName(Tuple)
 
                 
                 # If the tuple property is a name value,
                 # we need to check if that name currently exists in the 
                 #database, and if not, then we need to insert
                 #that name and the cards properties into the proper tables
-               if propInsert == 1: 
+                if nameFound == 1: 
                    
-                   query = "INSERT INTO PROPERTY("
-               print (Tuple[0])
-               if Tuple[0] == 3:
+                   query = "INSERT INTO PROPERTY(name_id,pname,pinst,partype,parval,value) VALUES(LAST_INSERT_ID(),'"+pname+"',1,'"+Tuple[2]+"','"+Tuple[3]+"','"+Tuple[1]+"');"
+                if Tuple[0] == 3 and nameFound == 0:
 
                      self.foundName = Tuple[1]
                      query = "SELECT name FROM NAME WHERE NAME = '"+self.foundName+"';"
@@ -230,10 +227,10 @@ class App:
                         print (line)
                      if hasName == 1: #if the name exists already, its time to bring up a popup
                          print ("has name")   
-                        modulPopup = Toplevel()
-                        self.frame.wait_window(modulPopup)
-                        modulLabel = "Name already in table"
-                        print (modulLabel)
+                         modulPopup = Toplevel()
+                         self.frame.wait_window(modulPopup)
+                         modulLabel = "Name already in table"
+                         print (modulLabel)
                      #if its not in the table of names
                      elif hasName ==0:
                         print ("name did not exist")
